@@ -1,0 +1,18 @@
+{
+  "name": "video-hub",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/alexbooker/video-hub"
+  },
+  "author": "Alex Booker",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.12.3"
+  }
+}
