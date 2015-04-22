@@ -18,7 +18,7 @@ html
         .navbar-collapse.collapse
           ul.nav.navbar-nav
             li.active
-              a(href='#') Home
+              a(href='/') Home
             li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown')
                 | Learn 
@@ -27,6 +27,10 @@ html
                 each technology in technologies
                   li
                     a(href='/technologies/#{technology}')=technology
-    block body
+          ul.nav.navbar-nav.navbar-right
+            li
+              a(href='/submit') Submit video
+    .container
+      block body
     script(src='vendor/jquery/dist/jquery.min.js')
     script(src='vendor/bootstrap/dist/js/bootstrap.min.js')
