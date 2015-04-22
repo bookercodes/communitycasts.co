@@ -8,7 +8,14 @@ app.set('view engine', 'jade');
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function (req, res) {
-  res.render('index');
+  res.render('index', { 
+    technologies: [ 
+      'Java', 
+      'Javascript', 
+      'Node', 
+      'Mongo',
+      'C#'] 
+  });
 });
 
 app.listen(3000);

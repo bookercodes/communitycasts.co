@@ -19,6 +19,14 @@ html
           ul.nav.navbar-nav
             li.active
               a(href='#') Home
+            li.dropdown
+              a.dropdown-toggle(href='#', data-toggle='dropdown')
+                | Learn 
+                span.caret
+              ul.dropdown-menu
+                each technology in technologies
+                  li
+                    a(href='/technologies/#{technology}')=technology
     block body
     script(src='vendor/jquery/dist/jquery.min.js')
     script(src='vendor/bootstrap/dist/js/bootstrap.min.js')
