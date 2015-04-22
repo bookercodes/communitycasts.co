@@ -1,0 +1,13 @@
+{
+  "name": "video-hub",
+  "version": "0.0.0",
+  "authors": [
+    "Alex Booker"
+  ],
+  "main": "app.js",
+  "license": "MIT",
+  "homepage": "https://bitbucket.org/alexbooker/video-hub",
+  "dependencies": {
+    "bootstrap": "~3.3.4"
+  }
+}
