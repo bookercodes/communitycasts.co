@@ -1,6 +1,15 @@
 var express    = require('express');
 var path       = require('path');
 var bodyParser = require('body-parser');
+var mysql      = require('mysql');
+
+var connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: 'password',
+  database: 'videoHub'
+});
+connection.connect();
 
 var app = express();
 
@@ -31,11 +40,23 @@ app.get('/submit', function(req, res) {
 app.post('/submit', function (req, res) {
   
   var video = req.body;
-  video.technologies = video.technologies.split(', ');
+  var technologies = video.technologies.split(', ');
+  delete video.technologies;
 
-  
-
-
+  // WARNING: PROBABLY SQLI VULN'
+  var query = "insert ignore into technologies (technologyName) values ('" + technologies.join("'),('") + "')";
+  connection.query(query, function (err, result) {
+    connection.query('insert into videos set ?', video, function(err, result) {
+      technologies.forEach(function(technology) {
+        var model = { 
+          videoId: result.insertId, 
+          technologyName: technology 
+        }
+        connection.query('insert into technology_video_map set ?', model);
+      });      
+    });
+  });
+  res.redirect('/');
 });
 
 app.listen(3000);
