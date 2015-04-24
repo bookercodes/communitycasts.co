@@ -9,7 +9,7 @@ block body
   form(method="post")
     .form-group
       label Video link
-      input.form-control#url(type="text", name="url")
+      input.form-control#url(type="text", name="url", pattern="^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$")
     .form-group
       label Video title
       input.form-control#title(type="text", name="title")
