@@ -57,10 +57,10 @@ app.post('/submit', function (req, res) {
           technologyName: technology 
         }
         connection.query('insert into technology_video_map set ?', model);
+        res.redirect('/');
       });      
     });
   });
-  res.redirect('/');
 });
 
 app.listen(3000);
