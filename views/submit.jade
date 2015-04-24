@@ -5,3 +5,21 @@ block vars
 
 block body
   h2 Submit video
+
+  form(method="post")
+    .form-group
+      label Video link
+      input.form-control(type="url", name="url")
+    .form-group
+      label Video title
+      input.form-control(type="text", name="title")
+    .form-group
+      label Video description
+      input.form-control(type="text", name="description")
+    .form-group
+      label Channel name
+      input.form-control(type="text", name="channelName")
+    .form-group
+      label Technologies
+      input.form-control(type="text", name="technologies")
+    button.btn.btn-default(type="Submit") Submit video
