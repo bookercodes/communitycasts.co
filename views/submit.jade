@@ -12,13 +12,13 @@ block body
       input.form-control#url(type="text", name="url", pattern="^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$")
     .form-group
       label Video title
-      input.form-control#title(type="text", name="title")
+      input.form-control#title(type="text", name="title", readonly)
     .form-group
       label Video description
-      input.form-control#description(type="text", name="description")
+      input.form-control#description(type="text", name="description", readonly)
     .form-group
       label Channel name
-      input.form-control#channelName(type="text", name="channelName")
+      input.form-control#channelName(type="text", name="channelName", readonly)
     .form-group
       label Technologies
       input.form-control(type="text", name="technologies")
