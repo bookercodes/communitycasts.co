@@ -28,7 +28,7 @@ app.use(function(req, res, next) {
   ];
   next();
 });
-
+// AIzaSyCKQFYlDRi5BTd1A-9rhFjF8Jb_Hlfnquk
 app.get('/', function (req, res) {
 
   connection.query('select * from videos', function (err, videos) {

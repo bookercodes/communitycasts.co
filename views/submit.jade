@@ -9,17 +9,20 @@ block body
   form(method="post")
     .form-group
       label Video link
-      input.form-control(type="text", name="url")
+      input.form-control#url(type="text", name="url")
     .form-group
       label Video title
-      input.form-control(type="text", name="title")
+      input.form-control#title(type="text", name="title")
     .form-group
       label Video description
-      input.form-control(type="text", name="description")
+      input.form-control#description(type="text", name="description")
     .form-group
       label Channel name
-      input.form-control(type="text", name="channelName")
+      input.form-control#channelName(type="text", name="channelName")
     .form-group
       label Technologies
       input.form-control(type="text", name="technologies")
     button.btn.btn-default(type="Submit") Submit video
+
+block scripts
+  script(src='submit.js')
