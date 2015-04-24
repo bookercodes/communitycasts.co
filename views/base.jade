@@ -5,6 +5,8 @@ html
     title Video Hub | #{title}
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='stylesheet', href='/vendor/bootstrap/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/vendor/font-awesome/css/font-awesome.min.css')
+    link(rel='stylesheet', href='/main.css')
   body
     .navbar.navbar-default
       .container-fluid
@@ -29,7 +31,9 @@ html
                     a(href='/technologies/#{technology.technologyName}')=technology.technologyName
           ul.nav.navbar-nav.navbar-right
             li
-              a(href='/submit') Submit video
+              a(href='/submit')
+                i.fa.fa-plus
+                | Submit
     .container
       block body
     script(src='/vendor/jquery/dist/jquery.min.js')

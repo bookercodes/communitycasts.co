@@ -8,6 +8,7 @@
   "license": "MIT",
   "homepage": "https://bitbucket.org/alexbooker/video-hub",
   "dependencies": {
-    "bootstrap": "~3.3.4"
+    "bootstrap": "~3.3.4",
+    "font-awesome": "~4.3.0"
   }
 }
