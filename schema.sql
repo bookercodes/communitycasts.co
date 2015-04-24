@@ -7,12 +7,13 @@ CREATE TABLE technologies (
 );
 
 CREATE TABLE videos (
-  videoId     INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  title       VARCHAR(300) NOT NULL,
-  description VARCHAR(300) NOT NULL,
-  url         VARCHAR(300) NOT NULL,
-  channelName VARCHAR(300) NOT NULL,
-  referrals   INT          NOT NULL
+  videoId        INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  title          VARCHAR(300) NOT NULL,
+  description    VARCHAR(300) NOT NULL,
+  url            VARCHAR(300) NOT NULL,
+  channelName    VARCHAR(300) NOT NULL,
+  referrals      INT          NOT NULL,
+  submissionDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE technology_video_map (
