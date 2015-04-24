@@ -37,6 +37,17 @@ app.get('/', function (req, res) {
 
 });
 
+app.get('/videos/:videoId', function (req ,res) {
+  var videoId = req.params.videoId;
+
+  connection.query('select url from videos where videoId = ' + videoId, function (err, result) {
+    res.redirect(result[0].url);
+    connection.query('update videos set referrals = referrals + 1 where videoId = ' + videoId);
+  }); 
+
+});
+
+
 app.get('/submit', function(req, res) {
   res.render('submit');
 });

@@ -11,9 +11,8 @@ CREATE TABLE videos (
   title       VARCHAR(300) NOT NULL,
   description VARCHAR(300) NOT NULL,
   url         VARCHAR(300) NOT NULL,
-  channelName VARCHAR(300) NOT NULL/*,
-  referrals   INT          NOT NULL,
-  slug        VARCHAR(300) NOT NULL*/
+  channelName VARCHAR(300) NOT NULL,
+  referrals   INT          NOT NULL
 );
 
 CREATE TABLE technology_video_map (
