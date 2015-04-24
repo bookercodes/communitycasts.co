@@ -4,4 +4,14 @@ block vars
   - var title = "Home"
 
 block body
-  p Hello
+  table.table
+    thead
+      tr
+        th Title
+        th Channel
+    tbody
+      each video in videos
+        tr
+          td 
+            a(href="#{video.url}") #{video.title}
+          td #{video.channelName}

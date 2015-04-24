@@ -30,7 +30,11 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', function (req, res) {
-  res.render('index');
+
+  connection.query('select * from videos', function (err, videos) {
+    res.render('index', {videos: videos});
+  }); 
+
 });
 
 app.get('/submit', function(req, res) {
