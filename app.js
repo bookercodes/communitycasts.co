@@ -28,13 +28,11 @@ app.use(function(req, res, next) {
   ];
   next();
 });
-// AIzaSyCKQFYlDRi5BTd1A-9rhFjF8Jb_Hlfnquk
-app.get('/', function (req, res) {
 
-  connection.query('select * from videos', function (err, videos) {
+app.get('/', function (req, res) {
+  connection.query('select * from videos order by submissionDate desc', function (err, videos) {
     res.render('index', {videos: videos});
   }); 
-
 });
 
 app.get('/videos/:videoId', function (req ,res) {
