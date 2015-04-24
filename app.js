@@ -30,16 +30,35 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', function (req, res) {
-  connection.query('select * from videos order by submissionDate desc', function (err, videos) {
-    res.render('index', {videos: videos});
+
+  connection.query('select * from videos order by referrals desc', function (err, popularVideos) {
+
+    var model = {};
+    model.popularVideos = popularVideos;
+
+    connection.query('select * from videos order by submissionDate desc', function (err, newVideos) {
+      model.newVideos = newVideos;
+
+      // res.send(model);
+
+      res.render('index', model);
+    });
   }); 
+
 });
 
 app.get('/videos/:videoId', function (req ,res) {
   var videoId = req.params.videoId;
-
   connection.query('select url from videos where videoId = ' + videoId, function (err, result) {
-    res.redirect(result[0].url);
+
+    var video = result[0];
+
+    if(!video) {
+      res.sendStatus(404);
+      return;
+    }
+
+    res.redirect(video.url);
     connection.query('update videos set referrals = referrals + 1 where videoId = ' + videoId);
   }); 
 

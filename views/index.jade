@@ -4,13 +4,27 @@ block vars
   - var title = "Home"
 
 block body
+  h2 New videos
   table.table
     thead
       tr
         th Title
         th Channel
     tbody
-      each video in videos
+      each video in newVideos
+        tr
+          td 
+            a(href="videos/#{video.videoId}") #{video.title}
+          td #{video.channelName}z
+
+  h2 Popular videos
+  table.table
+    thead
+      tr
+        th Title
+        th Channel
+    tbody
+      each video in popularVideos
         tr
           td 
             a(href="videos/#{video.videoId}") #{video.title}
