@@ -19,13 +19,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(function(req, res, next) {
-  res.locals.technologies = [ 
-    'Java', 
-    'Javascript', 
-    'Node', 
-    'Python',
-    'C#'
-  ];
+  connection.query('SELECT * FROM videoHub.technologies;', function(err, technologies) {
+    res.locals.technologies = technologies.map(function(technology) { 
+      return technology.technologyName;  
+    })
+  });
   next();
 });
 
