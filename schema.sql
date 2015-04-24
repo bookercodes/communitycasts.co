@@ -1,4 +1,3 @@
-DROP DATABASE videoHub;
 CREATE DATABASE videoHub;
 USE videoHub;
 

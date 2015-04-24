@@ -4,7 +4,7 @@ html
   head
     title Video Hub | #{title}
     meta(name='viewport', content='width=device-width, initial-scale=1')
-    link(rel='stylesheet', href='vendor/bootstrap/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/vendor/bootstrap/dist/css/bootstrap.min.css')
   body
     .navbar.navbar-default
       .container-fluid
@@ -32,6 +32,6 @@ html
               a(href='/submit') Submit video
     .container
       block body
-    script(src='vendor/jquery/dist/jquery.min.js')
-    script(src='vendor/bootstrap/dist/js/bootstrap.min.js')
+    script(src='/vendor/jquery/dist/jquery.min.js')
+    script(src='/vendor/bootstrap/dist/js/bootstrap.min.js')
     block scripts

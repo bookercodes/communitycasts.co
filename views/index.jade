@@ -4,6 +4,9 @@ block vars
   - var title = "Home"
 
 block body
+  if technology
+    h1 Showing videos for #{technology}
+    
   h2 New videos
   table.table
     thead
@@ -15,7 +18,7 @@ block body
         tr
           td 
             a(href="videos/#{video.videoId}") #{video.title}
-          td #{video.channelName}z
+          td #{video.channelName}
 
   h2 Popular videos
   table.table

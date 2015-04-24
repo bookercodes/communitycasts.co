@@ -12,7 +12,7 @@ var connection = mysql.createConnection({
 connection.connect();
 
 var app = express();
-
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -23,7 +23,7 @@ app.use(function(req, res, next) {
     'Java', 
     'Javascript', 
     'Node', 
-    'Mongo',
+    'Python',
     'C#'
   ];
   next();
@@ -63,6 +63,23 @@ app.get('/videos/:videoId', function (req ,res) {
   }); 
 
 });
+
+app.get('/technologies/:technology', function (req, res) {
+
+  var model = {};
+  model.technology = req.params.technology;
+  
+  var query = "SELECT * FROM videoHub.technology_video_map m LEFT JOIN videoHub.videos v ON v.videoId = m.videoId WHERE m.technologyName = '" + req.params.technology + "' ORDER BY v.referrals DESC"
+  var query2 = "SELECT * FROM videoHub.technology_video_map m LEFT JOIN videoHub.videos v ON v.videoId = m.videoId WHERE m.technologyName = '" + req.params.technology + "' ORDER BY v.submissionDate DESC"
+
+  connection.query(query, function(err, popularVideos) {
+    model.popularVideos = popularVideos;
+    connection.query(query, function(err, newVideos) {
+      model.newVideos = newVideos;
+      res.render('index', model);
+    });
+  });
+}) 
 
 
 app.get('/submit', function(req, res) {
