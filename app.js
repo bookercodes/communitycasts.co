@@ -12,6 +12,7 @@ var connection = mysql.createConnection({
 connection.connect();
 
 var app = express();
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -19,79 +20,71 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(function(req, res, next) {
-  connection.query('SELECT * FROM videoHub.technologies;', function(err, technologies) {
-    res.locals.technologies = technologies.map(function(technology) { 
-      return technology.technologyName;  
-    })
+  connection.query('select technologyName from technologies', function(err, technologies) {
+    res.locals.technologies = technologies;
+    next();
   });
-  next();
 });
 
 app.get('/', function (req, res) {
-
-  connection.query('select * from videos order by referrals desc', function (err, popularVideos) {
-
-    var model = {};
-    model.popularVideos = popularVideos;
-
-    connection.query('select * from videos order by submissionDate desc', function (err, newVideos) {
-      model.newVideos = newVideos;
-
-      // res.send(model);
-
+  var model = {};
+  var query = 'select * from videos ';
+  connection.query(query + 'order by referrals desc', function (err, videos) {
+    model.popularVideos = videos;
+    connection.query(query + 'order by submissionDate desc', function (err, videos) {
+      model.newVideos = videos;
       res.render('index', model);
     });
   }); 
-
 });
 
 app.get('/videos/:videoId', function (req ,res) {
-  var videoId = req.params.videoId;
-  connection.query('select url from videos where videoId = ' + videoId, function (err, result) {
-
+  var id = connection.escape(req.params.videoId);
+  connection.query('select url from videos where videoId = ' + id, function (err, result) {
     var video = result[0];
-
     if(!video) {
       res.sendStatus(404);
       return;
     }
-
     res.redirect(video.url);
-    connection.query('update videos set referrals = referrals + 1 where videoId = ' + videoId);
+    connection.query(
+      'update videos \
+         set referrals = referrals + 1 \
+       where videoId = ' + id);
   }); 
-
 });
 
 app.get('/technologies/:technology', function (req, res) {
-
   var model = {};
   model.technology = req.params.technology;
-  
-  var query = "SELECT * FROM videoHub.technology_video_map m LEFT JOIN videoHub.videos v ON v.videoId = m.videoId WHERE m.technologyName = '" + req.params.technology + "' ORDER BY v.referrals DESC"
-  var query2 = "SELECT * FROM videoHub.technology_video_map m LEFT JOIN videoHub.videos v ON v.videoId = m.videoId WHERE m.technologyName = '" + req.params.technology + "' ORDER BY v.submissionDate DESC"
-
-  connection.query(query, function(err, popularVideos) {
+  var query = 
+    'select * \
+     from technology_video_map m \
+     left join videoHub.videos v \
+       on v.videoId = m.videoId \
+     where m.technologyName = ' + connection.escape(req.params.technology);
+  connection.query(query + 'order by v.referrals desc', function(err, popularVideos) {
     model.popularVideos = popularVideos;
-    connection.query(query, function(err, newVideos) {
+    connection.query(query + 'order by v.submissionDate desc', function(err, newVideos) {
       model.newVideos = newVideos;
       res.render('index', model);
     });
   });
-}) 
-
+});
 
 app.get('/submit', function(req, res) {
   res.render('submit');
 });
 
 app.post('/submit', function (req, res) {
-  
   var video = req.body;
   var technologies = video.technologies.split(', ');
   delete video.technologies;
-
-  // WARNING: PROBABLY SQLI VULN'
-  var query = "insert ignore into technologies (technologyName) values ('" + technologies.join("'),('") + "')";
+  var query = 'insert into technologies (technologyname) values ';
+  technologies.forEach(function(technology) {
+    query += '(' + connection.escape(technology) + '),';
+  });
+  query = query.substr(0, query.length - 1);
   connection.query(query, function (err, result) {
     connection.query('insert into videos set ?', video, function(err, result) {
       technologies.forEach(function(technology) {

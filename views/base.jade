@@ -26,7 +26,7 @@ html
               ul.dropdown-menu
                 each technology in technologies
                   li
-                    a(href='/technologies/#{technology}')=technology
+                    a(href='/technologies/#{technology.technologyName}')=technology.technologyName
           ul.nav.navbar-nav.navbar-right
             li
               a(href='/submit') Submit video
