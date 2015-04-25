@@ -12,19 +12,27 @@ block styles
 block body
   h2 Submit video
 
+  if errors
+    for error in errors
+      div!= error.msg
+
   form(method="post")
     .form-group
       label Video link
-      input.form-control#url(type="text", name="url", pattern="^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$")
+      input.form-control#url(
+        type="text", 
+        name="url", 
+        pattern="^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$", 
+        required)
     .form-group
       label Video title
-      input.form-control#title(type="text", name="title", readonly)
+      input.form-control#title(type="text", name="title", readonly, required)
     .form-group
       label Video description
-      input.form-control#description(type="text", name="description", readonly)
+      input.form-control#description(type="text", name="description", readonly, required)
     .form-group
       label Channel name
-      input.form-control#channelName(type="text", name="channelName", readonly)
+      input.form-control#channelName(type="text", name="channelName", readonly, required)
     .form-group
       label Technologies (comma seperated, max of two)
       input.form-control#technologies(type="text", name="technologies", data-role="tagsinput")

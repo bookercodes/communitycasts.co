@@ -1,7 +1,8 @@
-var express    = require('express');
-var path       = require('path');
-var bodyParser = require('body-parser');
-var mysql      = require('mysql');
+var express        = require('express');
+var path           = require('path');
+var bodyParser     = require('body-parser');
+var mysql          = require('mysql');
+var validator      = require('express-validator');
 
 var connection = mysql.createConnection({
   host: 'localhost',
@@ -18,6 +19,7 @@ app.set('view engine', 'jade');
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(validator());
 
 app.use(function(req, res, next) {
   connection.query('select technologyName from technologies', function(err, technologies) {
@@ -77,6 +79,17 @@ app.get('/submit', function(req, res) {
 });
 
 app.post('/submit', function (req, res) {
+  req.checkBody('url', 'YouTube Url is missing.').notEmpty();
+  req.checkBody('url', 'Url must be a YouTube url.').matches(/^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/);
+  req.checkBody('title', 'Title is missing.').notEmpty();
+  req.checkBody('description', 'Description is missing.').notEmpty();
+  req.checkBody('channelName', 'Channel name is missing.').notEmpty();
+  req.checkBody('technologies', 'Please enter at least one technology.').notEmpty();
+  var errors = req.validationErrors();
+  if (errors) {
+    res.render('submit', {errors: errors});
+    return;
+  }
   var video = req.body;
   var technologies = video.technologies.split(',');
   delete video.technologies;
