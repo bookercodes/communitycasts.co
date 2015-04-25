@@ -3,6 +3,12 @@ extends base
 block vars
   - var title = "Submit"
 
+block scripts
+  script(src='/vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js')
+  script(src='submit.js')
+block styles
+  link(rel='stylesheet', href='/vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.css')
+
 block body
   h2 Submit video
 
@@ -21,8 +27,5 @@ block body
       input.form-control#channelName(type="text", name="channelName", readonly)
     .form-group
       label Technologies
-      input.form-control(type="text", name="technologies")
+      input.form-control#technologies(type="text", name="technologies", data-role="tagsinput")
     button.btn.btn-default(type="Submit") Submit video
-
-block scripts
-  script(src='submit.js')

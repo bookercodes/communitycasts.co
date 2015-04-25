@@ -28,4 +28,8 @@ $(function() {
       $("#channelName").val(item.snippet.channelTitle);
     });
   });
+
+  $("#technologies").tagsinput({
+    maxTags: 3
+  });
 }());
