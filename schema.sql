@@ -13,7 +13,7 @@ CREATE TABLE videos (
   url            VARCHAR(300) NOT NULL,
   channelName    VARCHAR(300) NOT NULL,
   referrals      INT          NOT NULL,
-  approved       BIT          NOT NULL DEFAULT 0,
+  approved       BIT          NOT NULL DEFAULT 1,
   submissionDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

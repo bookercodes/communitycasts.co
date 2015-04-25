@@ -158,4 +158,8 @@ function extractId(url) {
   }
 }
 
+app.get('/channels', function(req, res) {
+  res.sendStatus(200);
+});
+
 app.listen(3000);
