@@ -30,6 +30,6 @@ $(function() {
   });
 
   $("#technologies").tagsinput({
-    maxTags: 3
+    maxTags: 2
   });
 }());
