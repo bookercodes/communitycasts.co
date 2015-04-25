@@ -87,7 +87,9 @@ app.post('/submit', function (req, res) {
   req.checkBody('technologies', 'Please enter at least one technology.').notEmpty();
   var errors = req.validationErrors();
   if (errors) {
-    res.render('submit', {errors: errors});
+    res.render('submit', {
+      errors: errors
+    });
     return;
   }
   var video = req.body;

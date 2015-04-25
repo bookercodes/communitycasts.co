@@ -11,10 +11,14 @@ block styles
 
 block body
   h2 Submit video
-
+  
   if errors
-    for error in errors
-      div!= error.msg
+    .alert.alert-danger
+      button.close(data-dismiss="alert")
+        span &times;
+      ul
+        for error in errors
+          li!= error.msg
 
   form(method="post")
     .form-group
