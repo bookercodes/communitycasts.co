@@ -104,24 +104,33 @@ app.post('/submit', function (req, res) {
     });
     return;
   }
-  var video = req.body;
-  var technologies = video.technologies.split(',');
-  delete video.technologies;
-  var query = 'insert ignore into technologies (technologyname) values ';
-  technologies.forEach(function(technology) {
-    query += '(' + connection.escape(technology) + '),';
-  });
-  query = query.substr(0, query.length - 1);
-  connection.query(query, function (err, result) {
-    connection.query('insert into videos set ?', video, function(err, result) {
-      technologies.forEach(function(technology) {
-        var model = { 
-          videoId: result.insertId, 
-          technologyName: technology 
-        }
-        connection.query('insert into technology_video_map set ?', model);
-      });   
-      res.redirect('/');
+  connection.query('select 1 from videos where url = ' + connection.escape(req.body.url), function (err, result) {
+    var video = result[0];
+    if (video) {
+      res.render('submit', {
+        errors: [{msg:'This video has already been submitted.'}]
+      });
+      return;
+    }
+    var video = req.body;
+    var technologies = video.technologies.split(',');
+    delete video.technologies;
+    var query = 'insert ignore into technologies (technologyname) values ';
+    technologies.forEach(function(technology) {
+      query += '(' + connection.escape(technology) + '),';
+    });
+    query = query.substr(0, query.length - 1);
+    connection.query(query, function (err, result) {
+      connection.query('insert into videos set ?', video, function(err, result) {
+        technologies.forEach(function(technology) {
+          var model = { 
+            videoId: result.insertId, 
+            technologyName: technology 
+          }
+          connection.query('insert into technology_video_map set ?', model);
+        });   
+        res.redirect('/');
+      });
     });
   });
 });
