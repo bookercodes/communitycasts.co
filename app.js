@@ -78,9 +78,9 @@ app.get('/submit', function(req, res) {
 
 app.post('/submit', function (req, res) {
   var video = req.body;
-  var technologies = video.technologies.split(', ');
+  var technologies = video.technologies.split(',');
   delete video.technologies;
-  var query = 'insert into technologies (technologyname) values ';
+  var query = 'insert ignore into technologies (technologyname) values ';
   technologies.forEach(function(technology) {
     query += '(' + connection.escape(technology) + '),';
   });
@@ -93,8 +93,8 @@ app.post('/submit', function (req, res) {
           technologyName: technology 
         }
         connection.query('insert into technology_video_map set ?', model);
-        res.redirect('/');
-      });      
+      });   
+      res.redirect('/');
     });
   });
 });
