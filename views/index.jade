@@ -25,10 +25,10 @@ block body
     thead
       tr
         th Title
-        th Channel
+        th Referrals
     tbody
       each video in popularVideos
         tr
           td 
             a(href="/videos/#{video.videoId}") #{video.title}
-          td #{video.channelName}
+          td #{video.referrals}
