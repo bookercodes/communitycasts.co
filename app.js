@@ -22,7 +22,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(validator());
 
 app.use(function(req, res, next) {
-  connection.query('select technologyName from technologies', function(err, technologies) {
+  // find all technologies who are associated with approved videos
+  var query = 
+    'select technologyName \
+     from technologies \
+     where technologyName in ( \
+      select technologyName \
+      from technology_video_map m \
+      left join videos v \
+        on m.videoId = v.videoId \
+      where v.approved = 1)';
+  connection.query(query, function(err, technologies) {
     res.locals.technologies = technologies;
     next();
   });
@@ -30,7 +40,7 @@ app.use(function(req, res, next) {
 
 app.get('/', function (req, res) {
   var model = {};
-  var query = 'select * from videos ';
+  var query = 'select * from videos where approved = 1 ';
   connection.query(query + 'order by referrals desc', function (err, videos) {
     model.popularVideos = videos;
     connection.query(query + 'order by submissionDate desc', function (err, videos) {
@@ -76,7 +86,7 @@ app.get('/technologies/:technology', function (req, res) {
      from technology_video_map m \
      left join videoHub.videos v \
        on v.videoId = m.videoId \
-     where m.technologyName = ' + connection.escape(req.params.technology);
+     where v.approved = 1 and m.technologyName = ' + connection.escape(req.params.technology);
   connection.query(query + 'order by v.referrals desc', function(err, popularVideos) {
     model.popularVideos = popularVideos;
     connection.query(query + 'order by v.submissionDate desc', function(err, newVideos) {
