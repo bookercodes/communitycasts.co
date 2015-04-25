@@ -142,7 +142,9 @@ app.post('/submit', function (req, res) {
           }
           connection.query('insert into technology_video_map set ?', model);
         });   
-        res.redirect('/');
+        res.render('submit', {
+          message: 'Thank you for your submission. Your video will appear in the list as soon as it has been approved.'
+        });
       });
     });
   });
