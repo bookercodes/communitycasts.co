@@ -17,7 +17,7 @@ block body
       each video in newVideos
         tr
           td 
-            a(href="/videos/#{video.videoId}") #{video.title}
+            a(href="/videos/#{video.videoId}", target="_blank") #{video.title}
           td #{video.channelName}
 
   h2 Popular videos
@@ -30,5 +30,5 @@ block body
       each video in popularVideos
         tr
           td 
-            a(href="/videos/#{video.videoId}") #{video.title}
+            a(href="/videos/#{video.videoId}" target="_blank") #{video.title}
           td #{video.referrals}
