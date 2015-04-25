@@ -44,33 +44,27 @@ app.get('/videos/:videoId', function (req ,res) {
   var id = connection.escape(req.params.videoId);
   connection.query('select url from videos where videoId = ' + id, function (err, result) {
     var video = result[0];
-    // return 404 if video with id does not exist
     if(!video) {
       res.sendStatus(404);
       return;
     }
-
-    // check if user has already clicked link
-    var query = 
-      'select 1 \
+    res.redirect(video.url);
+    var query = 'select 1 \
       from referrals \
       where videoId = '+ id + ' and refereeIp = ' + connection.escape(req.connection.remoteAddress);
-
     connection.query(query, function(err, result) {
-      // if the user has not clicked the link..
-      if (!result[0]) {
-        // increment views
+      var referral = result[0]
+      if (!referral) {
         connection.query(
           'update videos \
              set referrals = referrals + 1 \
            where videoId = ' + id);
-        // add user ip to referrals table.
-        var m = {videoId: req.params.videoId, refereeIp: req.connection.remoteAddress};
-        connection.query('insert into referrals set ?', m);
+        connection.query('insert into referrals set ?', { 
+          videoId: req.params.videoId, 
+          refereeIp: req.connection.remoteAddress
+        });
       }
     });
-
-    res.redirect(video.url);
   }); 
 });
 
@@ -132,4 +126,4 @@ app.post('/submit', function (req, res) {
   });
 });
 
-app.listen(32729);
+app.listen(3000);
