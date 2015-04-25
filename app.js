@@ -3,6 +3,7 @@ var path           = require('path');
 var bodyParser     = require('body-parser');
 var mysql          = require('mysql');
 var validator      = require('express-validator');
+var youTube        = require('./youTube');
 
 var connection = mysql.createConnection({
   host: 'localhost',
