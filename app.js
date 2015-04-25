@@ -48,7 +48,7 @@ app.get('/videos/:videoId', function (req ,res) {
       res.sendStatus(404);
       return;
     }
-    res.redirect(video.url);
+    res.redirect('https://www.youtube.com/watch?v=' + video.url);
     var query = 'select 1 \
       from referrals \
       where videoId = '+ id + ' and refereeIp = ' + connection.escape(req.connection.remoteAddress);
@@ -104,14 +104,16 @@ app.post('/submit', function (req, res) {
     });
     return;
   }
-  connection.query('select 1 from videos where url = ' + connection.escape(req.body.url), function (err, result) {
-    var video = result[0];
-    if (video) {
+  connection.query('select * from videos where url = \'' + extractId(req.body.url) + '\'', function (err, result) {
+
+    var exists = !!result[0];
+    if (exists) {
       res.render('submit', {
         errors: [{msg:'This video has already been submitted.'}]
       });
       return;
     }
+
     var video = req.body;
     var technologies = video.technologies.split(',');
     delete video.technologies;
@@ -121,6 +123,7 @@ app.post('/submit', function (req, res) {
     });
     query = query.substr(0, query.length - 1);
     connection.query(query, function (err, result) {
+      video.url = extractId(video.url);
       connection.query('insert into videos set ?', video, function(err, result) {
         technologies.forEach(function(technology) {
           var model = { 
@@ -134,5 +137,13 @@ app.post('/submit', function (req, res) {
     });
   });
 });
+
+function extractId(url) {
+  var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  var match = url.match(regExp);
+  if (match && match[2].length == 11) {
+    return match[2];
+  }
+}
 
 app.listen(3000);
