@@ -1,0 +1,17 @@
+extends base
+
+block vars
+  - var title = "Channels"
+
+block body
+  h2 Channels
+
+  table.table
+    thead
+      tr
+        th Channel
+    tbody
+      each channel in channels
+        tr
+          td 
+            a(href="/channel/#{channel.channelId}", target="_blank") #{channel.channelName}

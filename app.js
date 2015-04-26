@@ -170,7 +170,16 @@ app.post('/submit', function (req, res) {
 });
 
 app.get('/channels', function(req, res) {
-  res.sendStatus(200);
+  connection.query('select * from channels', function (err, result) {
+    res.render('channels', {
+      channels: result
+    });
+  });
+});
+
+// route the redirect through the server in case we want to count referrals in the future.
+app.get('/channel/:channelId', function(req, res) {
+  res.redirect('https://www.youtube.com/channel/' + req.params.channelId);
 });
 
 app.listen(3000);
