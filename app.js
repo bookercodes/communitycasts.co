@@ -43,7 +43,7 @@ app.use(function(req, res, next) {
 
 app.get('/technologies/:technology', function (req, res) {
   var model = {};
-  model.technology = req.params.technology;
+  model.technologyName = req.params.technology;
     var query = 
     'select \
        v.videoId, \
@@ -61,8 +61,18 @@ app.get('/technologies/:technology', function (req, res) {
     where v.approved = 1 and m.technologyname = ' + connection.escape(req.params.technology) +
     ' group by v.videoId ';
   var x = connection.query(query + 'order by v.referrals desc', function(err, popularVideos) {
+    popularVideos.forEach(function(record) {
+      record.technologies = record.technologies.split(',');
+      record.duration = moment.duration(record.durationInSeconds, 'seconds').humanize();
+      delete record.durationInSeconds;
+    });
     model.popularVideos = popularVideos;
     connection.query(query + 'order by v.submissionDate desc', function(err, newVideos) {
+      newVideos.forEach(function(record) {
+        record.technologies = record.technologies.split(',');
+        record.duration = moment.duration(record.durationInSeconds, 'seconds').humanize();
+        delete record.durationInSeconds;
+      });
       model.newVideos = newVideos;
       res.render('index', model);
     });
