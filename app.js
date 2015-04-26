@@ -55,13 +55,13 @@ app.get('/', function (req, res) {
 
 app.get('/videos/:videoId', function (req ,res) {
   var id = connection.escape(req.params.videoId);
-  connection.query('select url from videos where videoId = ' + id, function (err, result) {
+  connection.query('select videoId from videos where videoId = ' + id, function (err, result) {
     var video = result[0];
     if(!video) {
       res.sendStatus(404);
       return;
     }
-    res.redirect('https://www.youtube.com/watch?v=' + video.url);
+    res.redirect('https://www.youtube.com/watch?v=' + video.videoId);
     var query = 'select 1 \
       from referrals \
       where videoId = '+ id + ' and refereeIp = ' + connection.escape(req.connection.remoteAddress);
@@ -168,34 +168,6 @@ app.post('/submit', function (req, res) {
     });
   });
 });
-
-
-  //   var video = req.body;
-  //   var technologies = video.technologies.split(',');
-  //   delete video.technologies;
-  //   var query = 'insert ignore into technologies (technologyname) values ';
-  //   technologies.forEach(function(technology) {
-  //     query += '(' + connection.escape(technology) + '),';
-  //   });
-  //   query = query.substr(0, query.length - 1);
-  //   connection.query(query, function (err, result) {
-  //     video.url = extractId(video.url);
-  //     connection.query('insert into videos set ?', video, function(err, result) {
-  //       technologies.forEach(function(technology) {
-  //         var model = { 
-  //           videoId: result.insertId, 
-  //           technologyName: technology 
-  //         }
-  //         connection.query('insert into technology_video_map set ?', model);
-  //       });   
-  //       res.render('submit', {
-  //         message: 'Thank you for your submission. Your video will appear in the list as soon as it has been approved.'
-  //       });
-  //     });
-  //   });
-  // });
-
-
 
 app.get('/channels', function(req, res) {
   res.sendStatus(200);
