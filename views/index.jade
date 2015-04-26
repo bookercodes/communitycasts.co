@@ -20,19 +20,17 @@ block body
             td 
               a(href="/videos/#{video.videoId}" target="_blank") #{video.title}
             td 
-              span.fa.fa-user
-              span    
+              i.fa.fa-user
               a(href="/channel/#{video.channelId}" target="_blank") #{video.channelName}
             td
-              span.fa.fa-folder-o
-              span    
+              i.fa.fa-folder-o
               a(href="/technologies/#{video.technologies[0]}" target="_blank")=video.technologies[0]
               if video.technologies.length === 2
-                span , 
+                span 
                 a(href="/technologies/#{video.technologies[1]}" target="_blank")=video.technologies[1]
             td
-              span.fa.fa-clock-o 
-              |      #{video.duration}
+              i.fa.fa-clock-o 
+              | #{video.duration}
   div.section
     h2 New
     table.table
@@ -42,17 +40,15 @@ block body
             td 
               a(href="/videos/#{video.videoId}" target="_blank") #{video.title}
             td 
-              span.fa.fa-user
-              span    
+              i.fa.fa-user
               a(href="/channel/#{video.channelId}" target="_blank") #{video.channelName}
             td
-              span.fa.fa-folder-o
-              span    
+              i.fa.fa-folder-o
               a(href="/technologies/#{video.technologies[0]}" target="_blank")=video.technologies[0]
               if video.technologies.length === 2
-                span , 
+                span 
                 a(href="/technologies/#{video.technologies[1]}" target="_blank")=video.technologies[1]
             td
-              span.fa.fa-clock-o 
-              |      #{video.duration}
+              i.fa.fa-clock-o 
+              | #{video.duration}
 
