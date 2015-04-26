@@ -41,6 +41,34 @@ app.use(function(req, res, next) {
   });
 });
 
+app.get('/technologies/:technology', function (req, res) {
+  var model = {};
+  model.technology = req.params.technology;
+    var query = 
+    'select \
+       v.videoId, \
+       v.title, \
+       c.channelId, \
+       c.channelName, \
+       v.durationInSeconds, \
+       v.submissionDate, \
+       GROUP_CONCAT(m.technologyName) as technologies \
+    from videos v \
+    join channels c \
+      on c.channelId = v.channelId \
+    join technology_video_map m \
+      on m.videoId = v.videoId \
+    where v.approved = 1 and m.technologyname = ' + connection.escape(req.params.technology) +
+    ' group by v.videoId ';
+  var x = connection.query(query + 'order by v.referrals desc', function(err, popularVideos) {
+    model.popularVideos = popularVideos;
+    connection.query(query + 'order by v.submissionDate desc', function(err, newVideos) {
+      model.newVideos = newVideos;
+      res.render('index', model);
+    });
+  });
+});
+
 app.get('/', function (req, res) {
   var model = {};
   var query = 
@@ -106,24 +134,6 @@ app.get('/videos/:videoId', function (req ,res) {
       }
     });
   }); 
-});
-
-app.get('/technologies/:technology', function (req, res) {
-  var model = {};
-  model.technology = req.params.technology;
-  var query = 
-    'select * \
-     from technology_video_map m \
-     left join videoHub.videos v \
-       on v.videoId = m.videoId \
-     where v.approved = 1 and m.technologyName = ' + connection.escape(req.params.technology);
-  connection.query(query + 'order by v.referrals desc', function(err, popularVideos) {
-    model.popularVideos = popularVideos;
-    connection.query(query + 'order by v.submissionDate desc', function(err, newVideos) {
-      model.newVideos = newVideos;
-      res.render('index', model);
-    });
-  });
 });
 
 app.get('/submit', function(req, res) {

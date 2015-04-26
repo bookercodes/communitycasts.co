@@ -24,10 +24,10 @@ block body
               a(href="/channel/#{video.channelId}" target="_blank") #{video.channelName}
             td
               i.fa.fa-folder-o
-              a(href="/technologies/#{video.technologies[0]}" target="_blank")=video.technologies[0]
+              a(href="/technologies/#{video.technologies[0]}")=video.technologies[0]
               if video.technologies.length === 2
                 span 
-                a(href="/technologies/#{video.technologies[1]}" target="_blank")=video.technologies[1]
+                a(href="/technologies/#{video.technologies[1]}")=video.technologies[1]
             td
               i.fa.fa-clock-o 
               | #{video.duration}
