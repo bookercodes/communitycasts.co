@@ -14,16 +14,29 @@ block body
   h2 Popular <small>all time</small>
   table.table
     tbody
-      each video in popularVideos
+      each video in videos
         tr
           td 
             a(href="/videos/#{video.videoId}" target="_blank") #{video.title}
-          td #{video.referrals}
-  h2 New
-  table.table
-    tbody
-      each video in newVideos
-        tr
           td 
-            a(href="/videos/#{video.videoId}", target="_blank") #{video.title}
-          td #{video.channelName}
+            span.fa.fa-user
+            span    
+            a(href="/channel/#{video.channelId}" target="_blank") #{video.channelName}
+          td
+            span.fa.fa-folder-o
+            span    
+            a(href="/technologies/#{video.technologies[0]}" target="_blank")=video.technologies[0]
+            if video.technologies.length === 2
+              span , 
+              a(href="/technologies/#{video.technologies[1]}" target="_blank")=video.technologies[1]
+          td
+            span.fa.fa-clock-o 
+            |      #{video.duration}
+  //- h2 New
+  //- table.table
+  //-   tbody
+  //-     each video in newVideos
+  //-       tr
+  //-         td 
+  //-           a(href="/videos/#{video.videoId}", target="_blank") #{video.title}
+  //-         td #{video.channelName}
