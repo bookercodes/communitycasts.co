@@ -232,4 +232,12 @@ app.get('/channel/:channelId', function(req, res) {
   res.redirect('https://www.youtube.com/channel/' + req.params.channelId);
 });
 
+app.get('/terms', function(req, res) {
+  res.render('terms');
+});
+
+app.get('/about', function(req, res) {
+  res.render('about');
+});
+
 app.listen(3000);
