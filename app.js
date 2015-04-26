@@ -42,50 +42,41 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', function (req, res) {
-  // var model = {};
-  // var query = 'select * from videos where approved = 1 ';
-  // connection.query(query + 'order by referrals desc', function (err, videos) {
-  //   model.popularVideos = videos;
-  //   connection.query(query + 'order by submissionDate desc', function (err, videos) {
-  //     model.newVideos = videos;
-  //     res.render('index', model);
-  //   });
-  // }); 
-  
-  // var query = 'select * \
-  // from videos v \
-  // left join channels c \
-  //   on c.channelId = v.channelId \
-  // where v.approved = 1 \
-  // order by v.referrals desc';
+  var model = {};
+  var query = 
+    'select \
+       v.videoId, \
+       v.title, \
+       c.channelId, \
+       c.channelName, \
+       v.durationInSeconds, \
+       v.submissionDate, \
+       GROUP_CONCAT(m.technologyName) as technologies \
+    from videos v \
+    join channels c \
+      on c.channelId = v.channelId \
+    join technology_video_map m \
+      on m.videoId = v.videoId \
+    where v.approved = 1 \
+    group by v.videoId ';
 
-    var query = 
-      'select \
-         v.videoId, \
-         v.title, \
-         c.channelId, \
-         c.channelName, \
-         v.durationInSeconds, \
-         GROUP_CONCAT(m.technologyName) as technologies \
-      from videos v \
-      join channels c \
-        on c.channelId = v.channelId \
-      join technology_video_map m \
-        on m.videoId = v.videoId \
-      where v.approved = 1 \
-      group by v.videoId \
-      order by v.referrals desc';
-
-  connection.query(query, function(err, records) {
+  connection.query(query + 'order by v.referrals desc', function(err, records) {
     records.forEach(function(record) {
       record.technologies = record.technologies.split(',');
       record.duration = moment.duration(record.durationInSeconds, 'seconds').humanize();
       delete record.durationInSeconds;
     });
+    model.popularVideos = records;
 
-    // res.send({videos: records});
-    res.render('index', {videos: records});
-
+    connection.query(query + 'order by v.submissionDate desc', function(err, records) {
+      records.forEach(function(record) {
+        record.technologies = record.technologies.split(',');
+        record.duration = moment.duration(record.durationInSeconds, 'seconds').humanize();
+        delete record.durationInSeconds;
+      });
+      model.newVideos = records;
+      res.render('index', model);
+    });
   });
 });
 
