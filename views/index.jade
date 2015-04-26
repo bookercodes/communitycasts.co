@@ -6,29 +6,24 @@ block vars
 block body
   if technology
     h1 Showing videos for #{technology}
+  
+  .jumbotron
+    h1 Video Hub
+    p Video Hub is the place to find new programming screencasts on <a href="youtube.com">YouTube</a>. Have a gander and learn something new or <a href="/submit">submit</a> your own screencast.
     
-  h2 New videos
+  h2 Popular <small>all time</small>
   table.table
-    thead
-      tr
-        th Title
-        th Channel
-    tbody
-      each video in newVideos
-        tr
-          td 
-            a(href="/videos/#{video.videoId}", target="_blank") #{video.title}
-          td #{video.channelName}
-
-  h2 Popular videos
-  table.table
-    thead
-      tr
-        th Title
-        th Referrals
     tbody
       each video in popularVideos
         tr
           td 
             a(href="/videos/#{video.videoId}" target="_blank") #{video.title}
           td #{video.referrals}
+  h2 New
+  table.table
+    tbody
+      each video in newVideos
+        tr
+          td 
+            a(href="/videos/#{video.videoId}", target="_blank") #{video.title}
+          td #{video.channelName}
