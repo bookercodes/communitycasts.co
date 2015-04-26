@@ -13,10 +13,10 @@ YouTube.prototype.getInfo = function(id, callback) {
   request(url, function (err, res, data) {
     var parsed = JSON.parse(data);
     var video = parsed.items[0];
-    var result = { 
+    var result = {
       title: video.snippet.title,
       description: video.snippet.description,
-      thumbnail: video.snippet.thumbnails.default.url,
+      thumbnailUrl: video.snippet.thumbnails.default.url,
       publishedAt: video.snippet.publishedAt,
       duration: video.contentDetails.duration,
       hd: video.contentDetails.definition == 'hd',
@@ -27,6 +27,14 @@ YouTube.prototype.getInfo = function(id, callback) {
     }
     callback(result);
   });
+}
+
+YouTube.prototype.extractId = function(url) {
+  var pattern = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  var match = url.match(pattern);
+  if (match && match[2].length == 11) {
+    return match[2];
+  }
 }
 
 module.exports = YouTube;

@@ -3,32 +3,30 @@ CREATE DATABASE videoHub;
 USE videoHub;
 
 CREATE TABLE technologies (
-  technologyName VARCHAR(25) NOT NULL PRIMARY KEY
+  technologyName VARCHAR(50) NOT NULL PRIMARY KEY
 );
 
 CREATE TABLE channels (
-  channelId INT AUTO_INCREMENT PRIMARY KEY,
-  url       VARCHAR(24)  NOT NULL,
-  name      VARCHAR(100) NOT NULL
+  channelId   VARCHAR(48) PRIMARY KEY,
+  channelName VARCHAR(200) NOT NULL
 );
 
 CREATE TABLE videos (
-  videoId           INT AUTO_INCREMENT PRIMARY KEY,
-  channelId         INT REFERENCES channels(channelId),
-  url               VARCHAR(11)  NOT NULL,
-  title             VARCHAR(100) NOT NULL,
+  videoId           VARCHAR(11) PRIMARY KEY,
+  channelId         VARCHAR(48) REFERENCES channels(channelId),
+  title             VARCHAR(200) NOT NULL,
   description       TEXT         NOT NULL,
-  thumbnailUrl      VARCHAR(48)  NOT NULL,
+  thumbnailUrl      VARCHAR(98)  NOT NULL,
   durationInSeconds INT          NOT NULL,
   hd                BIT          NOT NULL,
-  approved          BIT          NOT NULL DEFAULT 1,
-  submissionDate    TIMESTAMP             DEFAULT CURRENT_TIMESTAMP,
-  referrals         INT          NOT NULL
+  referrals         INT          NOT NULL,
+  approved          BIT       DEFAULT 1,
+  submissionDate    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE technologies_video_map (
-  videoId        INT         REFERENCES videos(videoId),
-  technologyName VARCHAR(25) REFERENCES technologies(technologyName),
+CREATE TABLE technology_video_map (
+  videoId        VARCHAR(11) REFERENCES videos(videoId),
+  technologyName VARCHAR(50) REFERENCES technologies(technologyName),
 
   PRIMARY KEY (videoId, technologyName) 
 );
