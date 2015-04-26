@@ -74,7 +74,7 @@ app.get('/technologies/:technology', function (req, res) {
         delete record.durationInSeconds;
       });
       model.newVideos = newVideos;
-      res.render('index', model);
+      res.render('technology', model);
     });
   });
 });

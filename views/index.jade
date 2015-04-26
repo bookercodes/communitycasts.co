@@ -4,51 +4,10 @@ block vars
   - var title = "Home"
 
 block body
-  if technologyName
-    h1 Browse all #{technologyName} screencasts
+
   
   .jumbotron
     h1 Video Hub
     p Video Hub is the place to find new programming screencasts on <a href="youtube.com">YouTube</a>. Have a gander and learn something new or <a href="/submit">submit</a> your own screencast.
-
-  div.section
-    h2 Popular <small>all time</small>
-    table.table
-      tbody
-        each video in popularVideos
-          tr
-            td 
-              a(href="/videos/#{video.videoId}" target="_blank", title="Video title") #{video.title}
-            td 
-              i.fa.fa-user
-              a(href="/channel/#{video.channelId}" target="_blank", title="Channel name") #{video.channelName}
-            td
-              i.fa.fa-folder-o
-              a(href="/technologies/#{video.technologies[0]}", title="Technology")=video.technologies[0]
-              if video.technologies.length === 2
-                span 
-                a(href="/technologies/#{video.technologies[1]}", title="Technology 2")=video.technologies[1]
-            td
-              i.fa.fa-clock-o 
-              span(title="Screencast duration") #{video.duration}
-  div.section
-    h2 New
-    table.table
-      tbody
-        each video in newVideos
-          tr
-            td 
-              a(href="/videos/#{video.videoId}" target="_blank") #{video.title}
-            td 
-              i.fa.fa-user
-              a(href="/channel/#{video.channelId}" target="_blank") #{video.channelName}
-            td
-              i.fa.fa-folder-o
-              a(href="/technologies/#{video.technologies[0]}" target="_blank")=video.technologies[0]
-              if video.technologies.length === 2
-                span 
-                a(href="/technologies/#{video.technologies[1]}" target="_blank")=video.technologies[1]
-            td
-              i.fa.fa-clock-o 
-              | #{video.duration}
-
+  
+  include partials/tables
