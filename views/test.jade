@@ -6,19 +6,19 @@ block vars
 block scripts
   script(src='/vendor/bootstrap-table/dist/bootstrap-table.min.js')
 block styles
-  link(rel='stylesheet', href='/vendor/dist/bootstrap-table.min.css')
+  //- link(rel='stylesheet', href='/vendor/bootstrap-table/dist/bootstrap-table.min.css')
 
 block body
   
   table(
     data-toggle="table", 
-    data-url="http://mikepenz.com/jsfiddle/", 
+    data-url="/data", 
     data-pagination="true", 
     data-side-pagination="server", 
-    data-height="300")
+    data-height="300",
+    data-page-list="[]")
     thead
       tr
-        th(data-field="id")
-        th(data-field="name")
-        th(data-field="price")
-
+        th(data-field="title")
+        th(data-field="channelName")
+        th(data-field="duration")
