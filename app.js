@@ -240,10 +240,6 @@ app.get('/about', function(req, res) {
   res.render('about');
 });
 
-app.get('/test', function(req, res) {
-  res.render('test');
-});
-
 app.get('/data/', function(req,res) {
 
   var model = {};
@@ -279,25 +275,6 @@ app.get('/data/', function(req,res) {
     });
 
   });
-
-  // var model = {};
-  // model.total = 10;
-  // model.rows = [
-  //   {  
-  //     "id":31,
-  //     "name":"test31",
-  //     "price":"$31"
-  //   },
-  //   {  
-  //     "id":32,
-  //     "name":"test32",
-  //     "price":"$32"
-  //   }
-  // ];
-
-  // res.send(model);
-
-
 });
 
 app.listen(53111);
