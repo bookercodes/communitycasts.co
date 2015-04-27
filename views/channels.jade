@@ -2,6 +2,8 @@ extends base
 
 block vars
   - var title = "Channels"
+block scripts
+  script(src="https://apis.google.com/js/platform.js")
 
 block body
   h2 Channels
@@ -13,5 +15,5 @@ block body
     tbody
       each channel in channels
         tr
-          td 
-            a(href="/channel/#{channel.channelId}", target="_blank") #{channel.channelName}
+          td
+            div.g-ytsubscribe(data-channelid="#{channel.channelId}", data-layout="full", data-count="default")
