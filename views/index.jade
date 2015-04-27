@@ -2,22 +2,35 @@ extends base
 
 block vars
   - var title = "Home"
-  
+
 block scripts
   script(src='/vendor/bootstrap-table/dist/bootstrap-table.min.js')
   script(src='/table.js')
 
-block styles
-  link(rel='stylesheet', href='/vendor/bootstrap-table/dist/bootstrap-table.min.css')
-
 block body
-
   
   .jumbotron
     h1 Video Hub
     p Video Hub is the place to find new programming screencasts on <a href="youtube.com">YouTube</a>. Have a gander and learn something new or <a href="/submit">submit</a> your own screencast.
   
   //- include partials/tables
+  
+  h2 Popular <small>all time</small>
+  table(
+    data-toggle="table", 
+    data-url="/data", 
+    data-pagination="true", 
+    data-side-pagination="server", 
+    data-show-header="false",
+    data-page-list="[]")
+    thead
+      tr
+        th(data-field="title", data-formatter="titleFormatter")
+        th(data-field="channelName" data-formatter="channelNameFormatter")
+        th(data-field="technologies" data-formatter="technologiesFormatter")
+        th(data-field="duration" data-formatter="durationFormatter")
+
+  h2 New
   table(
     data-toggle="table", 
     data-url="/data", 

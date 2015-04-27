@@ -27,18 +27,30 @@ app.use(validator());
 app.use(function(req, res, next) {
   // find all technologies who are associated with approved videos
   var query = 
-    'select technologyName \
-     from technologies \
-     where technologyName in ( \
-      select technologyName \
-      from technology_video_map m \
-      left join videos v \
-        on m.videoId = v.videoId \
-      where v.approved = 1)';
+    'select \
+       t.technologyName, \
+       count(*) as count \
+     from technologies t \
+     join technology_video_map m \
+       on m.technologyName = t.technologyName \
+     where t.technologyName in ( \
+       select technologyName \
+       from technology_video_map m \
+       join videos v \
+         on m.videoId = v.videoId \
+       where v.approved = 1) \
+     group by t.technologyName \
+     order by count desc \
+     limit 9';
   connection.query(query, function(err, technologies) {
+    technologies.push({technologyName:'Other'});
     res.locals.technologies = technologies;
     next();
   });
+});
+  
+app.get('/technologies/other', function(req, res) {
+  res.send('this is good');
 });
 
 app.get('/technologies/:technology', function (req, res) {

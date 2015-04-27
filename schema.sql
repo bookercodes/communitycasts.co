@@ -24,6 +24,7 @@ CREATE TABLE videos (
   submissionDate    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- CREATE TABLE videoTechnologies (
 CREATE TABLE technology_video_map (
   videoId        VARCHAR(11) REFERENCES videos(videoId),
   technologyName VARCHAR(50) REFERENCES technologies(technologyName),
@@ -31,6 +32,7 @@ CREATE TABLE technology_video_map (
   PRIMARY KEY (videoId, technologyName) 
 );
 
+-- CREATE TABLE videoReferrals
 CREATE TABLE referrals (
   videoId   INT         NOT NULL REFERENCES videos(videoId),
   refereeIp VARCHAR(20) NOT NULL,
