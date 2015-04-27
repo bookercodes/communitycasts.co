@@ -50,7 +50,55 @@ app.use(function(req, res, next) {
 });
   
 app.get('/technologies/other', function(req, res) {
-  res.send('this is good');
+  var model = {};
+  model.technologyName = 'Other';
+  var query = 
+  'select \
+     v.videoId, \
+     v.title, \
+     c.channelId, \
+     c.channelName, \
+     v.durationInSeconds, \
+     v.submissionDate, \
+     GROUP_CONCAT(m.technologyName) as technologies \
+   from videos v \
+   join technology_video_map m \
+     on v.videoId = m.videoId \
+   join channels c \
+     on c.channelId = v.channelId \
+   where m.technologyName not in ( \
+     select * from ( \
+       select t.technologyName \
+       from technologies t \
+       join technology_video_map m \
+         on m.technologyName = t.technologyName \
+       where t.technologyName in ( \
+         select technologyName \
+         from technology_video_map m \
+         join videos v \
+           on m.videoId = v.videoId \
+         where v.approved = 1) \
+       group by t.technologyName \
+       order by count(*) desc \
+       limit 0, 10) as t) \
+  group by v.videoId '
+  connection.query(query + 'order by v.referrals desc', function(err, records) {
+    records.forEach(function(record) {
+      record.technologies = record.technologies.split(',');
+      record.duration = moment.duration(record.durationInSeconds, 'seconds').humanize();
+      delete record.durationInSeconds;
+    });
+    model.popularVideos = records;
+    connection.query(query + 'order by v.submissionDate desc', function(err, records) {
+      records.forEach(function(record) {
+        record.technologies = record.technologies.split(',');
+        record.duration = moment.duration(record.durationInSeconds, 'seconds').humanize();
+        delete record.durationInSeconds;
+      });
+      model.newVideos = records;
+      res.render('technology', model);
+    });
+  });
 });
 
 app.get('/technologies/:technology', function (req, res) {
