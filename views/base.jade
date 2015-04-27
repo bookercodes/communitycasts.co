@@ -31,7 +31,10 @@ html
                 if technologies
                   each technology in technologies
                     li
-                      a(href='/technologies/#{technology.technologyName}')=technology.technologyName
+                      a(href='/technologies/#{technology.technologyName}')
+                        | #{technology.technologyName}
+                        span.label.label-default.technology-label=technology.count
+
             li
               a(href='/channels') Channels
           ul.nav.navbar-nav.navbar-right

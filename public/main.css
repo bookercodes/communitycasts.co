@@ -16,4 +16,12 @@ i {
 
 .bootstrap-tagsinput .label {
   font-size: 14px;
+.}
+
+.technology-label {
+  float: right;
+}
+
+a:hover .technology-label {
+  background-color: black;
 }
