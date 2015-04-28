@@ -34,7 +34,7 @@ CREATE TABLE technology_video_map (
 
 -- CREATE TABLE videoReferrals
 CREATE TABLE referrals (
-  videoId   INT         NOT NULL REFERENCES videos(videoId),
+  videoId   VARCHAR(11) NOT NULL REFERENCES videos(videoId),
   refereeIp VARCHAR(20) NOT NULL,
 
   PRIMARY KEY (videoId, refereeIp)
