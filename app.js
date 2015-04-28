@@ -118,8 +118,12 @@ app.get('/technologies/:technology', function (req, res) {
       on c.channelId = v.channelId \
     join technology_video_map m \
       on m.videoId = v.videoId \
-    where v.approved = 1 and m.technologyname = ' + connection.escape(req.params.technology) +
-    ' group by v.videoId ';
+    where v.approved = 1 and v.videoId in ( \
+      select videoId \
+      from technology_video_map m \
+      where m.technologyName = ' + connection.escape(req.params.technology) + ') \
+      group by v.videoId ';
+
   var x = connection.query(query + 'order by v.referrals desc', function(err, popularVideos) {
     popularVideos.forEach(function(record) {
       record.technologies = record.technologies.split(',');
