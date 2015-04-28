@@ -40,7 +40,7 @@ app.use(function(req, res, next) {
          on m.videoId = v.videoId \
        where v.approved = 1) \
      group by t.technologyName \
-     order by count desc \
+     order by count desc, t.technologyName desc \
      limit 9';
   connection.query(query, function(err, technologies) {
     technologies.push({technologyName:'Other'});
@@ -79,8 +79,8 @@ app.get('/technologies/other', function(req, res) {
            on m.videoId = v.videoId \
          where v.approved = 1) \
        group by t.technologyName \
-       order by count(*) desc \
-       limit 0, 10) as t) \
+       order by count(*) desc, t.technologyName desc\
+       limit 9) as t) \
   group by v.videoId '
   connection.query(query + 'order by v.referrals desc', function(err, records) {
     records.forEach(function(record) {
