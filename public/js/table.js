@@ -20,7 +20,7 @@ function durationFormatter(value, row) {
 }
 
 function technologiesFormatter(value, row) {
-  var html = "<i class='fa fa-folder-o'/> <a href='technologies/"+ encodeURIComponent(row.technologies[0]) + "'>{technology1}</a>";
+  var html = "<i class='fa fa-folder-o'/> <a href='/technologies/"+ encodeURIComponent(row.technologies[0]) + "'>{technology1}</a>";
   if (row.technologies[1] != null)
     html += " <a href='technologies/" + encodeURIComponent(row.technologies[0]) +"'>{technology2}</a>";
   return html.supplant({
