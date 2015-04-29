@@ -22,8 +22,16 @@ router.get('/', function(req,res) {
       join technology_video_map m \
         on m.videoId = v.videoId \
       where v.approved = 1 \
-      group by v.videoId \
-      limit ' + req.query.offset + ', ' + req.query.limit
+      group by v.videoId';
+
+    if (req.query.kind === 'popular')
+      query += ' order by v.referrals desc';
+    else
+      query += ' order by v.submissionDate desc';
+
+    // pagination
+    query += ' limit ' + req.query.offset + ', ' + req.query.limit
+
     connection.query(query, function (err, videos) {
       common.convertRecordsToLocals(videos);
       body.rows = videos;
