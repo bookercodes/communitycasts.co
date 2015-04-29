@@ -12,38 +12,36 @@ block styles
 
 block body
   h3 Browse all <em>#{technologyName}</em> screencasts
+  
+  h2 Popular <small>all time</small>
+  table(
+    data-toggle="table", 
+    data-url="/technologies/api/#{technologyName}", 
+    data-pagination="true", 
+    data-side-pagination="server", 
+    data-show-header="false",
+    data-page-list="[]",
+    data-query-params="popularParams",
+    data-height="450")
+    thead
+      tr
+        th(data-field="title", data-formatter="titleFormatter")
+        th(data-field="channelName" data-formatter="channelNameFormatter")
+        th(data-field="technologies" data-formatter="technologiesFormatter")
+        th(data-field="duration" data-formatter="durationFormatter")
 
-  div.section
-    h2 Popular <small>all time</small>
-    table(
-      data-toggle="table", 
-      data-url="/technologies/api/#{technologyName}", 
-      data-pagination="true", 
-      data-side-pagination="server", 
-      data-show-header="false",
-      data-page-list="[]",
-      data-query-params="popularParams",
-      data-height="450")
-      thead
-        tr
-          th(data-field="title", data-formatter="titleFormatter")
-          th(data-field="channelName" data-formatter="channelNameFormatter")
-          th(data-field="technologies" data-formatter="technologiesFormatter")
-          th(data-field="duration" data-formatter="durationFormatter")
-
-  div.section
-    h2 New
-    table(
-      data-toggle="table", 
-      data-url="/technologies/api/#{technologyName}", 
-      data-pagination="true", 
-      data-side-pagination="server", 
-      data-show-header="false",
-      data-page-list="[]"
-      data-height="450")
-      thead
-        tr
-          th(data-field="title", data-formatter="titleFormatter")
-          th(data-field="channelName" data-formatter="channelNameFormatter")
-          th(data-field="technologies" data-formatter="technologiesFormatter")
-          th(data-field="duration" data-formatter="durationFormatter")
+  h2 New
+  table(
+    data-toggle="table", 
+    data-url="/technologies/api/#{technologyName}", 
+    data-pagination="true", 
+    data-side-pagination="server", 
+    data-show-header="false",
+    data-page-list="[]"
+    data-height="450")
+    thead
+      tr
+        th(data-field="title", data-formatter="titleFormatter")
+        th(data-field="channelName" data-formatter="channelNameFormatter")
+        th(data-field="technologies" data-formatter="technologiesFormatter")
+        th(data-field="duration" data-formatter="durationFormatter")
