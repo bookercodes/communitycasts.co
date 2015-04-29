@@ -31,7 +31,7 @@ html
                 ul.dropdown-menu
                     each technology in technologies
                       li
-                        a(href='/technologies/#{technology.technologyName}')
+                        a(href='/technologies/#{encodeURIComponent(technology.technologyName)}')
                           | #{technology.technologyName}
                           span.label.label-default.technology-label=technology.count
 
