@@ -18,6 +18,7 @@ var channels = require('./routes/channels');
 var technologies = require('./routes/technologies');
 var submit = require('./routes/submit');
 var index = require('./routes/index');
+var videos = require('./routes/videos');
 
 var app = express();
 var ytClient = new youTube('AIzaSyCKQFYlDRi5BTd1A-9rhFjF8Jb_Hlfnquk');
@@ -58,38 +59,9 @@ app.use('/', index);
 app.use('/channels', channels);
 app.use('/technologies', technologies);
 app.use('/submit', submit);
+app.use('/videos', videos);
 
 
-
-
-
-app.get('/videos/:videoId', function (req ,res) {
-  var id = connection.escape(req.params.videoId);
-  connection.query('select videoId from videos where videoId = ' + id, function (err, result) {
-    var video = result[0];
-    if(!video) {
-      res.sendStatus(404);
-      return;
-    }
-    res.redirect('https://www.youtube.com/watch?v=' + video.videoId);
-    var query = 'select 1 \
-      from referrals \
-      where videoId = '+ id + ' and refereeIp = ' + connection.escape(req.connection.remoteAddress);
-    connection.query(query, function(err, result) {
-      var referral = result[0]
-      if (!referral) {
-        connection.query(
-          'update videos \
-             set referrals = referrals + 1 \
-           where videoId = ' + id);
-        connection.query('insert into referrals set ?', { 
-          videoId: req.params.videoId, 
-          refereeIp: req.connection.remoteAddress
-        });
-      }
-    });
-  }); 
-});
 
 app.get('/terms', function(req, res) {
   res.render('terms');
