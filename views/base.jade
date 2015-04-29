@@ -4,10 +4,10 @@ html
   head
     title Video Hub | #{title}
     meta(name='viewport', content='width=device-width, initial-scale=1')
-    link(rel='stylesheet', href='/vendor/bootstrap/dist/css/bootstrap.min.css')
-    link(rel='stylesheet', href='/vendor/font-awesome/css/font-awesome.min.css')
+    link(rel='stylesheet', href='/components/bootstrap/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/components/font-awesome/css/font-awesome.min.css')
     link(rel='stylesheet', href='https://bootswatch.com/lumen/bootstrap.min.css')
-    link(rel='stylesheet', href='/main.css')
+    link(rel='stylesheet', href='/css/main.css')
     block styles
   body
     .navbar.navbar-default
@@ -23,17 +23,17 @@ html
           ul.nav.navbar-nav
             li.active
               a(href='/') Home
-            li.dropdown
-              a.dropdown-toggle(href='#', data-toggle='dropdown')
-                | Learn 
-                span.caret
-              ul.dropdown-menu
-                if technologies
-                  each technology in technologies
-                    li
-                      a(href='/technologies/#{technology.technologyName}')
-                        | #{technology.technologyName}
-                        span.label.label-default.technology-label=technology.count
+            if technologies.length > 0
+              li.dropdown
+                a.dropdown-toggle(href='#', data-toggle='dropdown')
+                  | Learn 
+                  span.caret
+                ul.dropdown-menu
+                    each technology in technologies
+                      li
+                        a(href='/technologies/#{encodeURIComponent(technology.technologyName)}')
+                          | #{technology.technologyName}
+                          span.label.label-default.technology-label=technology.count
 
             li
               a(href='/channels') Channels
@@ -65,6 +65,6 @@ html
 
         p Made in the United Kingdom by <a href="/">Alex Booker</a>.
 
-    script(src='/vendor/jquery/dist/jquery.min.js')
-    script(src='/vendor/bootstrap/dist/js/bootstrap.min.js')
+    script(src='/components/jquery/dist/jquery.min.js')
+    script(src='/components/bootstrap/dist/js/bootstrap.min.js')
     block scripts

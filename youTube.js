@@ -12,6 +12,12 @@ YouTube.prototype.getInfo = function(id, callback) {
   var url = this.endpoint + '?part=snippet,contentDetails&id=' + id + '&key=' + this.key;
   request(url, function (err, res, data) {
     var parsed = JSON.parse(data);
+
+    if(parsed.pageInfo.totalResults == 0) {
+      callback(null);
+      return;
+    }
+
     var video = parsed.items[0];
     var result = {
       title: video.snippet.title,
@@ -27,14 +33,6 @@ YouTube.prototype.getInfo = function(id, callback) {
     }
     callback(result);
   });
-}
-
-YouTube.prototype.extractId = function(url) {
-  var pattern = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-  var match = url.match(pattern);
-  if (match && match[2].length == 11) {
-    return match[2];
-  }
 }
 
 module.exports = YouTube;

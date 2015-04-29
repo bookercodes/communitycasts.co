@@ -8,7 +8,7 @@ div.section
               a(href="/videos/#{video.videoId}" target="_blank", title="Video title") #{video.title}
             td 
               i.fa.fa-user
-              a(href="/channel/#{video.channelId}" target="_blank", title="Channel name") #{video.channelName}
+              a(href="/channels/#{video.channelId}" target="_blank", title="Channel name") #{video.channelName}
             td
               i.fa.fa-folder-o
               a(href="/technologies/#{video.technologies[0]}", title="Technology")=video.technologies[0]
@@ -28,7 +28,7 @@ div.section
               a(href="/videos/#{video.videoId}" target="_blank") #{video.title}
             td 
               i.fa.fa-user
-              a(href="/channel/#{video.channelId}" target="_blank") #{video.channelName}
+              a(href="/channels/#{video.channelId}" target="_blank") #{video.channelName}
             td
               i.fa.fa-folder-o
               a(href="/technologies/#{video.technologies[0]}" target="_blank")=video.technologies[0]
