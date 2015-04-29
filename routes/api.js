@@ -1,9 +1,11 @@
 var express = require('express');
-var router = express.Router();
-var moment         = require('moment');
+var moment  = require('moment');
+
+var router  = express.Router();
+
 router.get('/', function(req,res) {
   var model = {};
-  connection.query('select count(*) as total from videos; ', function(err, result) {
+  connection.query('select count(*) as total from videos', function(err, result) {
     model.total = result[0].total;
     var query = 
       'select \
@@ -22,17 +24,16 @@ router.get('/', function(req,res) {
       where v.approved = 1 \
       group by v.videoId \
       limit ' + req.query.offset + ', ' + req.query.limit
-
-    connection.query(query, function (err, result) {
-      result.forEach(function(record) {
-        record.technologies = record.technologies.split(',');
-        record.duration = moment.duration(record.durationInSeconds, 'seconds').humanize();
-        delete record.durationInSeconds;
+    connection.query(query, function (err, videos) {
+      videos.forEach(function(video) {
+        video.technologies = video.technologies.split(',');
+        video.duration = moment.duration(video.durationInSeconds, 'seconds').humanize();
+        delete video.durationInSeconds;
       });
-      model.rows = result;
+      model.rows = videos;
       res.send(model);
     });
-
   });
 });
+
 module.exports = router;

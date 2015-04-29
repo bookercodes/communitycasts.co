@@ -1,11 +1,10 @@
 var express = require('express');
-var router = express.Router();
+
+var router  = express.Router();
 
 router.get('/', function(req, res) {
   connection.query('select * from channels', function (err, channels) {
-    res.render('channels', {
-      channels: channels
-    });
+    res.render('channels', { channels: channels });
   });
 });
 
