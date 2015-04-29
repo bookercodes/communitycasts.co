@@ -8,43 +8,39 @@ router.get('/', function(req, res) {
   res.render('submit');
 });
 
-router.post('/', function (req, res) {
-  // validate input
-  req.checkBody('url', 'YouTube Url is missing.').notEmpty();
-  req.checkBody('url', 'Url must be a YouTube url.').matches(/^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/);
-  req.checkBody('technologies', 'Please enter at least one technology.').notEmpty();
+function extractIdFromUrl (url) {
+  var pattern = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  var match = url.match(pattern);
+  if (match && match[2].length == 11) {
+    return match[2];
+  }
+}
 
+router.post('/', function (req, res) {
+  req.checkBody('url', 'YouTube Url is missing.').notEmpty();
+  req.checkBody('url', 'Url must be a YouTube url.')
+    .matches(/^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/);
+  req.checkBody('technologies', 'Please enter at least one technology.').notEmpty();
   var errors = req.validationErrors();
   if (errors) {
-    res.render('submit', {
-      errors: errors
-    });
+    res.render('submit', { errors: errors });
     return;
   }
-
-  var videoId = ytClient.extractId(req.body.url);
-
-  // check if video with the given id already exists in the db
+  var videoId = extractIdFromUrl(req.body.url);
   var query = 'select * from videos where videoId = ' + connection.escape(videoId);
   connection.query(query, function (err, result) {
-    var alreadySubmitted = result.length === 1;
-    if (alreadySubmitted) {
-      res.render('submit', {
-        errors: [{ msg:'This video has already been submitted.' }]
-      })
+    // if the query results in one or more records, then a video with this
+    // id already exists and we must reject it.
+    var alreadyExists = result.length >= 1;
+    if (alreadyExists) {
+      res.render('submit', { errors: [{ msg:'This video has already been submitted.' }] })
       return;
     }
-    // download information about the video
     ytClient.getInfo(videoId, function(video) {
-
       if (video == null) {
-        res.render('submit', {
-          errors: [{ msg:'This video could not be found.' }]
-        })
+        res.render('submit', { errors: [{ msg:'This video could not be found.' }] })
         return;
       }
-
-      // insert channel
       connection.query('insert ignore into channels set ?', video.channel, function(err, result) {
         var record = {
           videoId: videoId,
@@ -55,7 +51,6 @@ router.post('/', function (req, res) {
           durationInSeconds: moment.duration(video.duration).asSeconds(),
           hd: video.hd
         }
-        // insert video
         connection.query('insert into videos set ?', record, function(err, result) {
           var technologies = req.body.technologies.split(',');
           var query = 'insert ignore into technologies (technologyname) values ';
@@ -63,19 +58,18 @@ router.post('/', function (req, res) {
             query += '(' + connection.escape(technology) + '),';
           });
           query = query.substr(0, query.length - 1);
-          // insert tags
+
           connection.query(query, function(err, result) {
             technologies.forEach(function(technology, index, array) {
               var record = { 
                 videoId: videoId, 
                 technologyName: technology 
               }
-              // insert video - tag maps
               connection.query('insert into technology_video_map set ?', record, function(err, result) {
-
-                if (index === array.length - 1)
+                // if this is the final iteration, redirect the user.
+                if (index === array.length - 1) {
                   res.redirect('/');
-
+                }
               });
             }); 
           })
