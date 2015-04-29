@@ -20,6 +20,7 @@ var submit = require('./routes/submit');
 var index = require('./routes/index');
 var videos = require('./routes/videos');
 var api = require('./routes/api');
+var terms = require('./routes/terms');
 
 var app = express();
 var ytClient = new youTube('AIzaSyCKQFYlDRi5BTd1A-9rhFjF8Jb_Hlfnquk');
@@ -62,15 +63,10 @@ app.use('/technologies', technologies);
 app.use('/submit', submit);
 app.use('/videos', videos);
 app.use('/data', api);
-
-app.get('/terms', function(req, res) {
-  res.render('terms');
-});
+app.use('/terms', terms);
 
 app.get('/about', function(req, res) {
   res.render('about');
 });
-
-
 
 app.listen(3000);
