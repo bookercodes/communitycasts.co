@@ -4,9 +4,9 @@ var moment  = require('moment');
 var router  = express.Router();
 
 router.get('/', function(req,res) {
-  var model = {};
+  var body = {};
   connection.query('select count(*) as total from videos', function(err, result) {
-    model.total = result[0].total;
+    body.total = result[0].total;
     var query = 
       'select \
          v.videoId, \
@@ -25,13 +25,9 @@ router.get('/', function(req,res) {
       group by v.videoId \
       limit ' + req.query.offset + ', ' + req.query.limit
     connection.query(query, function (err, videos) {
-      videos.forEach(function(video) {
-        video.technologies = video.technologies.split(',');
-        video.duration = moment.duration(video.durationInSeconds, 'seconds').humanize();
-        delete video.durationInSeconds;
-      });
-      model.rows = videos;
-      res.send(model);
+      convertRecordsToLocals(videos);
+      body.rows = videos;
+      res.send(body);
     });
   });
 });

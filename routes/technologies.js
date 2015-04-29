@@ -2,7 +2,7 @@ var express = require('express');
 var router  = express.Router();
 var moment  = require('moment');
 
-var convertRecordsToLocals = function (records) {
+convertRecordsToLocals = function (records) {
   records.forEach(function(record) {
     record.technologies = record.technologies.split(',');
     record.duration = moment.duration(record.durationInSeconds, 'seconds').humanize();
