@@ -1,10 +1,23 @@
-var express        = require('express');
-var path           = require('path');
-var bodyParser     = require('body-parser');
-var mysql          = require('mysql');
-var validator      = require('express-validator');
-var moment         = require('moment');
-var youTube        = require('./youTube');
+var express    = require('express');
+var path       = require('path');
+var bodyParser = require('body-parser');
+var mysql      = require('mysql');
+var validator  = require('express-validator');
+var moment     = require('moment');
+var youTube    = require('./youTube');
+
+var channels     = require('./routes/channels');
+var technologies = require('./routes/technologies');
+var submit       = require('./routes/submit');
+var index        = require('./routes/index');
+var videos       = require('./routes/videos');
+var api          = require('./routes/api');
+var terms        = require('./routes/terms');
+var about        = require('./routes/about');
+
+var app = express();
+
+var ytClient = new youTube('AIzaSyCKQFYlDRi5BTd1A-9rhFjF8Jb_Hlfnquk');
 
 connection = mysql.createConnection({
   host: 'localhost',
@@ -14,27 +27,16 @@ connection = mysql.createConnection({
 });
 connection.connect();
 
-var channels = require('./routes/channels');
-var technologies = require('./routes/technologies');
-var submit = require('./routes/submit');
-var index = require('./routes/index');
-var videos = require('./routes/videos');
-var api = require('./routes/api');
-var terms = require('./routes/terms');
-var about = require('./routes/about');
-
-var app = express();
-var ytClient = new youTube('AIzaSyCKQFYlDRi5BTd1A-9rhFjF8Jb_Hlfnquk');
-
+// settings
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+// middlware
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(validator());
 
 app.use(function(req, res, next) {
-  // find all technologies who are associated with approved videos
   var query = 
     'select \
        t.technologyName, \
@@ -57,7 +59,8 @@ app.use(function(req, res, next) {
     next();
   });
 });
-  
+
+// routes
 app.use('/', index);
 app.use('/channels', channels);
 app.use('/technologies', technologies);
