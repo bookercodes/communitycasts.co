@@ -6,7 +6,7 @@ var validator      = require('express-validator');
 var moment         = require('moment');
 var youTube        = require('./youTube');
 
-var connection = mysql.createConnection({
+connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'password',
@@ -14,8 +14,11 @@ var connection = mysql.createConnection({
 });
 connection.connect();
 
+var channels = require('./routes/channels');
+
 var app = express();
 var ytClient = new youTube('AIzaSyCKQFYlDRi5BTd1A-9rhFjF8Jb_Hlfnquk');
+app.use('/channels', channels);
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -283,18 +286,7 @@ app.post('/submit', function (req, res) {
   });
 });
 
-app.get('/channels', function(req, res) {
-  connection.query('select * from channels', function (err, result) {
-    res.render('channels', {
-      channels: result
-    });
-  });
-});
 
-// route the redirect through the server in case we want to count referrals in the future.
-app.get('/channel/:channelId', function(req, res) {
-  res.redirect('https://www.youtube.com/channel/' + req.params.channelId);
-});
 
 app.get('/terms', function(req, res) {
   res.render('terms');
