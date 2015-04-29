@@ -10,6 +10,7 @@
   "dependencies": {
     "bootstrap": "~3.3.4",
     "font-awesome": "~4.3.0",
-    "bootstrap-tagsinput": "~0.4.2"
+    "bootstrap-tagsinput": "~0.4.2",
+    "bootstrap-table": "~1.7.0"
   }
 }
