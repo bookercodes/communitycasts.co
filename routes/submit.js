@@ -36,6 +36,14 @@ router.post('/', function (req, res) {
     }
     // download information about the video
     ytClient.getInfo(videoId, function(video) {
+
+      if (video == null) {
+        res.render('submit', {
+          errors: [{ msg:'This video could not be found.' }]
+        })
+        return;
+      }
+
       // insert channel
       connection.query('insert ignore into channels set ?', video.channel, function(err, result) {
         var record = {
