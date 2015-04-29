@@ -21,6 +21,7 @@ var index = require('./routes/index');
 var videos = require('./routes/videos');
 var api = require('./routes/api');
 var terms = require('./routes/terms');
+var about = require('./routes/about');
 
 var app = express();
 var ytClient = new youTube('AIzaSyCKQFYlDRi5BTd1A-9rhFjF8Jb_Hlfnquk');
@@ -64,9 +65,6 @@ app.use('/submit', submit);
 app.use('/videos', videos);
 app.use('/data', api);
 app.use('/terms', terms);
-
-app.get('/about', function(req, res) {
-  res.render('about');
-});
+app.use('/about', about);
 
 app.listen(3000);
