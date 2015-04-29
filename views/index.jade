@@ -6,6 +6,9 @@ block vars
 block scripts
   script(src='/components/bootstrap-table/dist/bootstrap-table.min.js')
   script(src='/js/table.js')
+block styles
+  link(rel='stylesheet', href='/components/bootstrap-table/dist/bootstrap-table.min.css')
+
 
 block body
   
@@ -23,7 +26,8 @@ block body
     data-side-pagination="server", 
     data-show-header="false",
     data-page-list="[]",
-    data-query-params="popularParams")
+    data-query-params="popularParams",
+    data-height="450")
     thead
       tr
         th(data-field="title", data-formatter="titleFormatter")
@@ -38,7 +42,8 @@ block body
     data-pagination="true", 
     data-side-pagination="server", 
     data-show-header="false",
-    data-page-list="[]")
+    data-page-list="[]",
+    data-height="450")
     thead
       tr
         th(data-field="title", data-formatter="titleFormatter")
