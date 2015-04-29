@@ -1,5 +1,5 @@
 var express = require('express');
-var moment  = require('moment');
+var common  = require('../common');
 
 var router  = express.Router();
 
@@ -25,7 +25,7 @@ router.get('/', function(req,res) {
       group by v.videoId \
       limit ' + req.query.offset + ', ' + req.query.limit
     connection.query(query, function (err, videos) {
-      convertRecordsToLocals(videos);
+      common.convertRecordsToLocals(videos);
       body.rows = videos;
       res.send(body);
     });

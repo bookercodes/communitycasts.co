@@ -1,14 +1,6 @@
 var express = require('express');
 var router  = express.Router();
-var moment  = require('moment');
-
-convertRecordsToLocals = function (records) {
-  records.forEach(function(record) {
-    record.technologies = record.technologies.split(',');
-    record.duration = moment.duration(record.durationInSeconds, 'seconds').humanize();
-    delete record.durationInSeconds;
-  });
-}
+var common  = require('../common')
 
 router.get('/other', function(req, res) {
   var locals = {};
@@ -45,10 +37,10 @@ router.get('/other', function(req, res) {
     group by v.videoId '
 
   connection.query(query + 'order by v.referrals desc', function(err, popularVideos) {
-    convertRecordsToLocals(popularVideos);
+    common.convertRecordsToLocals(popularVideos);
     locals.popularVideos = popularVideos;
     connection.query(query + 'order by v.submissionDate desc', function(err, newVideos) {
-      convertRecordsToLocals(newVideos);
+      common.convertRecordsToLocals(newVideos);
       locals.newVideos = newVideos;
       res.render('technology', locals);
     });
@@ -79,10 +71,10 @@ router.get('/:technology', function (req, res) {
       group by v.videoId ';
 
   connection.query(query + 'order by v.referrals desc', function(err, popularVideos) {
-    convertRecordsToLocals(popularVideos);
+    common.convertRecordsToLocals(popularVideos);
     locals.popularVideos = popularVideos;
     connection.query(query + 'order by v.submissionDate desc', function(err, newVideos) {
-      convertRecordsToLocals(newVideos);
+      common.convertRecordsToLocals(newVideos);
       locals.newVideos = newVideos;
       res.render('technology', locals);
     });
