@@ -35,7 +35,6 @@ app.set('view engine', 'jade');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(validator());
-
 app.use(function(req, res, next) {
   var query = 
     'select \
@@ -54,7 +53,9 @@ app.use(function(req, res, next) {
      order by count desc, t.technologyName desc \
      limit 9';
   connection.query(query, function(err, technologies) {
-    technologies.push({technologyName:'Other'});
+    if (technologies.length === 9) {
+      technologies.push({ technologyName:'Other' });
+    }
     res.locals.technologies = technologies;
     next();
   });
