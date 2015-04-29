@@ -1,8 +1,8 @@
 var express = require('express');
-var router = express.Router();
-var youTube        = require('../youTube');
-var ytClient = new youTube('AIzaSyCKQFYlDRi5BTd1A-9rhFjF8Jb_Hlfnquk');
-var moment         = require('moment');
+var moment  = require('moment');
+var common  = require('../common');
+
+var router  = express.Router();
 
 router.get('/', function(req, res) {
   res.render('submit');
@@ -36,7 +36,7 @@ router.post('/', function (req, res) {
       res.render('submit', { errors: [{ msg:'This video has already been submitted.' }] })
       return;
     }
-    ytClient.getInfo(videoId, function(video) {
+    common.getVideo(videoId, function(video) {
       if (video == null) {
         res.render('submit', { errors: [{ msg:'This video could not be found.' }] })
         return;

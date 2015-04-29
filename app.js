@@ -4,7 +4,6 @@ var bodyParser = require('body-parser');
 var mysql      = require('mysql');
 var validator  = require('express-validator');
 var moment     = require('moment');
-var youTube    = require('./youTube');
 
 var channels     = require('./routes/channels');
 var technologies = require('./routes/technologies');
@@ -16,8 +15,6 @@ var terms        = require('./routes/terms');
 var about        = require('./routes/about');
 
 var app = express();
-
-var ytClient = new youTube('AIzaSyCKQFYlDRi5BTd1A-9rhFjF8Jb_Hlfnquk');
 
 connection = mysql.createConnection({
   host: 'localhost',
