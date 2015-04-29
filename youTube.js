@@ -35,12 +35,4 @@ YouTube.prototype.getInfo = function(id, callback) {
   });
 }
 
-YouTube.prototype.extractId = function(url) {
-  var pattern = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-  var match = url.match(pattern);
-  if (match && match[2].length == 11) {
-    return match[2];
-  }
-}
-
 module.exports = YouTube;
