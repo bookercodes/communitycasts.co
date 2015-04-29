@@ -17,6 +17,7 @@ connection.connect();
 var channels = require('./routes/channels');
 var technologies = require('./routes/technologies');
 var submit = require('./routes/submit');
+var index = require('./routes/index');
 
 var app = express();
 var ytClient = new youTube('AIzaSyCKQFYlDRi5BTd1A-9rhFjF8Jb_Hlfnquk');
@@ -53,15 +54,14 @@ app.use(function(req, res, next) {
   });
 });
   
+app.use('/', index);
 app.use('/channels', channels);
 app.use('/technologies', technologies);
 app.use('/submit', submit);
 
 
 
-app.get('/', function (req, res) {
-  res.render('index');
-});
+
 
 app.get('/videos/:videoId', function (req ,res) {
   var id = connection.escape(req.params.videoId);
