@@ -65,7 +65,7 @@ router.get('/api/other', function(req, res) {
       query += ' order by v.referrals desc';
     else
       query += ' order by v.submissionDate desc';
-    query += ' limit ' + req.query.offset + ', ' + req.query.limit;
+    query += ' limit ' + parseInt(req.query.offset) + ', ' + parseInt(req.query.limit);
     connection.query(query, function(err, records) {
       common.convertRecordsToLocals(records);
       body.rows = records;
@@ -113,7 +113,8 @@ router.get('/api/:technology',function(req,res) {
       query += ' order by v.referrals desc';
     else
       query += ' order by v.submissionDate desc';
-    query += ' limit ' + req.query.offset + ', ' + req.query.limit;
+    query += ' limit ' + parseInt(req.query.offset) + ', ' + parseInt(req.query.limit);
+
 
     connection.query(query, function(err, popularVideos) {
       if (err) { res.send(err); return;}

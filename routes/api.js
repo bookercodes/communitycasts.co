@@ -30,7 +30,7 @@ router.get('/', function(req,res) {
       query += ' order by v.submissionDate desc';
 
     // pagination
-    query += ' limit ' + req.query.offset + ', ' + req.query.limit
+    query += ' limit ' + parseInt(req.query.offset) + ', ' + parseInt(req.query.limit);
 
     connection.query(query, function (err, videos) {
       common.convertRecordsToLocals(videos);
