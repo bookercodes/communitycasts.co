@@ -8,7 +8,7 @@ var moment     = require('moment');
 var channels     = require('./routes/channels');
 var technologies = require('./routes/technologies');
 var submit       = require('./routes/submit');
-var index        = require('./routes/index');
+var home         = require('./routes/home');
 var videos       = require('./routes/videos');
 var api          = require('./routes/api');
 var terms        = require('./routes/terms');
@@ -59,7 +59,7 @@ app.use(function(req, res, next) {
 });
 
 // routes
-app.use('/', index);
+app.use('/', home);
 app.use('/channels', channels);
 app.use('/technologies', technologies);
 app.use('/submit', submit);
