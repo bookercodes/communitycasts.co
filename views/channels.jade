@@ -2,18 +2,8 @@ extends base
 
 block vars
   - var title = "Channels"
-block scripts
-  script(src="https://apis.google.com/js/platform.js")
-
+  
 block body
   h2 Channels
 
-  table.table
-    thead
-      tr
-        th Channel
-    tbody
-      each channel in channels
-        tr
-          td
-            div.g-ytsubscribe(data-channelid="#{channel.channelId}", data-layout="full", data-count="default")
+  p Coming soon..
