@@ -3,13 +3,15 @@ extends base
 block vars
   - var title = "Submit"
 
+block styles
+  link(rel='stylesheet', href='/components/bootstrap-tagsinput/dist/bootstrap-tagsinput.css')
+  link(rel='stylesheet', href='/css/submit.css')
+    
 block scripts
   script(src='/components/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js')
   script(src='/components/typeahead.js/dist/typeahead.bundle.min.js')
   script(src='/js/submit.js')
-block styles
-  link(rel='stylesheet', href='/components/bootstrap-tagsinput/dist/bootstrap-tagsinput.css')
-  link(rel='stylesheet', href='/css/submit.css')
+
 block body
   h2 Submit video
   
@@ -20,14 +22,6 @@ block body
       ul
         for error in errors
           li!= error.msg
-
-  if message
-    .alert.alert-success
-      button.close(data-dismiss="alert")
-        span &times;
-      ul 
-        li!= message
-
 
   form(method="post")
     .form-group

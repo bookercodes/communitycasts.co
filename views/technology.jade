@@ -3,12 +3,12 @@ extends base
 block vars
   - var title = technologyName
 
+block styles
+  link(rel='stylesheet', href='/components/bootstrap-table/dist/bootstrap-table.min.css')
+    
 block scripts
   script(src='/components/bootstrap-table/dist/bootstrap-table.min.js')
   script(src='/js/table.js')
-
-block styles
-  link(rel='stylesheet', href='/components/bootstrap-table/dist/bootstrap-table.min.css')
 
 block body
   h3 Browse all <em>#{technologyName}</em> screencasts
