@@ -10,6 +10,8 @@
   font-size: 14px;
 .}
 
+
+/* attribution: https://github.com/timschlechter/bootstrap-tagsinput/blob/cc8969f2fb5faeeac03a71f86361643eca44e5a7/examples/assets/app.css#L17 */
 .twitter-typeahead .tt-query,
 .twitter-typeahead .tt-hint {
   margin-bottom: 0;
@@ -40,6 +42,7 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   background-clip: padding-box;
 }
+
 .tt-suggestion > p {
   display: block;
   padding: 3px 20px;
@@ -49,6 +52,7 @@
   color: #333333;
   white-space: nowrap;
 }
+
 .tt-suggestion > p:hover,
 .tt-suggestion > p:focus,
 .tt-suggestion.tt-cursor p {
