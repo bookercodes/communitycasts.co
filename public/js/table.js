@@ -28,8 +28,3 @@ function technologiesFormatter(value, row) {
     technology2: row.technologies[1],
   });
 }
-
-function popularParams(params) {
-  params.kind = 'popular';
-  return params;
-}

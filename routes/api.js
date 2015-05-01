@@ -24,7 +24,7 @@ router.get('/screencasts', function(req,res) {
       where v.approved = 1 \
       group by v.videoId';
 
-    if (req.query.kind === 'popular')
+    if (req.query.sort === 'popular')
       query += ' order by v.referrals desc';
     else
       query += ' order by v.submissionDate desc';

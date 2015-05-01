@@ -19,12 +19,11 @@ block body
   h2 Popular <small>all time</small>
   table(
     data-toggle="table", 
-    data-url="/api/screencasts", 
+    data-url="/api/screencasts?sort=popular", 
     data-pagination="true", 
     data-side-pagination="server", 
     data-show-header="false",
-    data-page-list="[]",
-    data-query-params="popularParams",
+    data-page-list="[]"
     data-height="450")
     thead
       tr
