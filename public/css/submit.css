@@ -1,3 +1,7 @@
+.bootstrap-tagsinput input {
+  min-width: 150px;
+ }
+
 .bootstrap-tagsinput {
   width: 100%;
 }
