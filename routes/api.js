@@ -40,4 +40,10 @@ router.get('/', function(req,res) {
   });
 });
 
+router.get('/technologies',function(req,res) { 
+  connection.query('select technologyName from technologies', function(err, result) {
+    res.send(result);
+  });
+});
+
 module.exports = router;

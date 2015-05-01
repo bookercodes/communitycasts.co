@@ -28,28 +28,29 @@ $(function() {
       $("#channelName").val(item.snippet.channelTitle);
     });
   });
-  var citynames = new Bloodhound({
+
+  var technologies = new Bloodhound({
     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     prefetch: {
-      url: 'http://timschlechter.github.io/bootstrap-tagsinput/examples/assets/citynames.json',
+      url: './data/technologies',
       filter: function(list) {
-        return $.map(list, function(cityname) {
-          return { name: cityname }; });
+        return $.map(list, function(technology) {
+          return { name: technology.technologyName }; });
       }
     }
   });
-  citynames.initialize();
+  technologies.initialize();
 
   $("#technologies").tagsinput({
     maxTags: 2,
     typeaheadjs: {
-        name: 'citynames',
+        name: 'technologies',
         displayKey: 'name',
         valueKey: 'name',
-        source: citynames.ttAdapter()
+        highlight: true,
+        source: technologies.ttAdapter()
       }
   });
-
 
 }());
