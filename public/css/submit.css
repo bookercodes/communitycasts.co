@@ -1,3 +1,6 @@
+textarea { 
+  min-height: 90px;
+}
 .bootstrap-tagsinput input {
   min-width: 150px;
  }
