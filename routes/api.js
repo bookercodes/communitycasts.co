@@ -3,7 +3,7 @@ var common  = require('../common');
 
 var router  = express.Router();
 
-router.get('/', function(req,res) {
+router.get('/screencasts', function(req,res) {
   var body = {};
   connection.query('select count(*) as total from videos', function(err, result) {
     body.total = result[0].total;

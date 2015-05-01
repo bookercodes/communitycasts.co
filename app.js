@@ -64,7 +64,7 @@ app.use('/channels', channels);
 app.use('/technologies', technologies);
 app.use('/submit', submit);
 app.use('/videos', videos);
-app.use('/data', api);
+app.use('/api', api);
 app.use('/terms', terms);
 app.use('/about', about);
 
