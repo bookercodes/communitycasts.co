@@ -1,5 +1,13 @@
 $(function() {
 
+  var validator = $("#submitForm").validate({
+    messages: {
+      url: {
+        pattern: "Enter a YouTube video Url."
+      }
+    }
+  });
+
   // http://stackoverflow.com/a/9102270/4804328
   function extractId(url) {
     var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
@@ -16,6 +24,11 @@ $(function() {
 
   $("#url").change(function() {
     var videoUrl = $(this).val();
+
+    if(!$(this)[0].checkValidity()) {
+      return;
+    }
+
     var id = extractId(videoUrl);
     var parts = "snippet,contentDetails";
     var key = "AIzaSyCKQFYlDRi5BTd1A-9rhFjF8Jb_Hlfnquk";
@@ -23,9 +36,18 @@ $(function() {
 
     $.get(apiUrl, function(data) {
       var item = data.items[0];
-      $("#title").val(item.snippet.title);
-      $("#description").val(item.snippet.description);
-      $("#channelName").val(item.snippet.channelTitle);
+      if (item == undefined) {
+        $("#title").val('');
+        $("#description").val('');
+        $("#channelName").val('');
+        validator.showErrors({
+          "url": "This video does not exist."
+        });
+      } else {
+        $("#title").val(item.snippet.title);
+        $("#description").val(item.snippet.description);
+        $("#channelName").val(item.snippet.channelTitle);
+      }
     });
   });
 
@@ -53,12 +75,10 @@ $(function() {
       }
   });
 
-  $("#submitForm").validate({
-    messages: {
-      url: {
-        pattern: "Enter a YouTube video Url."
-      }
-    }
+
+
+  $("#submitForm").submit(function(e) {
+
   });
 
 }());
