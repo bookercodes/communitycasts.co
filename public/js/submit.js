@@ -55,7 +55,7 @@ $(function() {
     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     prefetch: {
-      url: './data/technologies',
+      url: './api/technologies',
       filter: function(list) {
         return $.map(list, function(technology) {
           return { name: technology.technologyName }; });
