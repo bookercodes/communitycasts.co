@@ -12,6 +12,7 @@
     "bootstrap-tagsinput": "~0.4.2",
     "bootstrap-table": "~1.7.0",
     "typeahead.js": "~0.10.5",
-    "bootswatch-dist": "3.3.4-lumen"
+    "bootswatch-dist": "3.3.4-lumen",
+    "jquery-validation": "~1.13.1"
   }
 }
