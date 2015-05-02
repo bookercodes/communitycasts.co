@@ -11,6 +11,7 @@ block scripts
   script(src='/components/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js')
   script(src='/components/typeahead.js/dist/typeahead.bundle.min.js')
   script(src='/components/jquery-validation/dist/jquery.validate.min.js')
+  script(src='/components/jquery-validation/dist/additional-methods.min.js')
   script(src='/js/submit.js')
 
 block body
@@ -24,14 +25,14 @@ block body
         for error in errors
           li!= error.msg
 
-  form(method="post")
+  form#submitForm(method="post")
     .form-group
       label Video link
       input.form-control#url(
         type="text", 
-        name="url", 
-        pattern="^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$", 
-        required)
+        name="url",
+        required,
+        pattern="^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$")
     .form-group
       label Video title
       input.form-control#title(type="text", readonly)

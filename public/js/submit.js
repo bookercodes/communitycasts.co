@@ -53,4 +53,12 @@ $(function() {
       }
   });
 
+  $("#submitForm").validate({
+    messages: {
+      url: {
+        pattern: "Enter a YouTube video Url."
+      }
+    }
+  });
+
 }());
