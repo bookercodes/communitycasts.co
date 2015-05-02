@@ -64,7 +64,7 @@ $(function() {
   });
   technologies.initialize();
 
-  $("#technologies").tagsinput({
+  var tagsInput = $("#technologies").tagsinput({
     maxTags: 2,
     typeaheadjs: {
         name: 'technologies',
@@ -75,10 +75,14 @@ $(function() {
       }
   });
 
-
-
   $("#submitForm").submit(function(e) {
-
+    var technologyCount = tagsInput[0].itemsArray.length;
+    if (technologyCount < 1) {
+      validator.showErrors({
+        "technologies": "You must specify at least one technology."
+      });
+      e.preventDefault();
+    }
   });
 
 }());
