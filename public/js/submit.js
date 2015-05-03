@@ -52,6 +52,13 @@ $(function() {
         .closest('.form-group')
         .removeClass('has-error');
     },
+    errorPlacement: function(error, element) {
+      if(element.attr("id") === "technologies") {
+        error.insertAfter($(".bootstrap-tagsinput"));
+      } else {
+        error.insertAfter(element);
+      }
+    },
     rules: {
       url: {
         youtubeVideoUrl: true
@@ -62,7 +69,7 @@ $(function() {
     },
     messages: {
       technologies: {
-        required: 'Please enter at least one tag.'
+        required: 'Please enter at least one technology.'
       }
     }
   });
