@@ -34,6 +34,7 @@ $(function() {
     $(this).valid();
   });
 
+
   $.validator.addMethod("youtubeVideoUrl", function (value, element) {
     return /^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/.test(value);
   }, "Please enter a valid YouTube video url.");
@@ -111,9 +112,9 @@ $(function() {
         $("#title").val('');
         $("#description").val('');
         $("#channelName").val('');
-        // validator.showErrors({
-        //   "url": "This video does not exist."
-        // });
+        validator.showErrors({
+          "url": "This video does not exist."
+        });
       } else {
         $("#title").val(item.snippet.title);
         $("#description").val(item.snippet.description);
