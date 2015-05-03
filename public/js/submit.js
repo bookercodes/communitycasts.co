@@ -1,12 +1,36 @@
 $(function() {
 
-  var validator = $("#submitForm").validate({
-    messages: {
+  $.validator.addMethod("youtubeVideoUrl", function (value, element) {
+    return /^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/.test(value);
+  }, "Enter a valid YouTube video url.");
+
+  $("#submitForm").validate({
+    errorElement: "span",
+    errorClass: "help-block",
+    highlight: function(element) {
+      $(element)
+        .closest('.form-group')
+        .addClass('has-error');
+    },
+    unhighlight: function(element) {
+      $(element)
+        .closest('.form-group')
+        .removeClass('has-error');
+    },
+    rules: {
       url: {
-        pattern: "Enter a YouTube video Url."
+        youtubeVideoUrl: true
       }
     }
   });
+
+  // var validator = $("#submitForm").validate({
+  //   messages: {
+  //     url: {
+  //       pattern: "Enter a YouTube video Url."
+  //     }
+  //   }
+  // });
 
   // http://stackoverflow.com/a/9102270/4804328
   function extractId(url) {
@@ -40,9 +64,9 @@ $(function() {
         $("#title").val('');
         $("#description").val('');
         $("#channelName").val('');
-        validator.showErrors({
-          "url": "This video does not exist."
-        });
+        // validator.showErrors({
+        //   "url": "This video does not exist."
+        // });
       } else {
         $("#title").val(item.snippet.title);
         $("#description").val(item.snippet.description);
@@ -75,14 +99,14 @@ $(function() {
       }
   });
 
-  $("#submitForm").submit(function(e) {
-    var technologyCount = tagsInput[0].itemsArray.length;
-    if (technologyCount < 1) {
-      validator.showErrors({
-        "technologies": "You must specify at least one technology."
-      });
-      e.preventDefault();
-    }
-  });
+  // $("#submitForm").submit(function(e) {
+  //   var technologyCount = tagsInput[0].itemsArray.length;
+  //   if (technologyCount < 1) {
+  //     validator.showErrors({
+  //       "technologies": "You must specify at least one technology."
+  //     });
+  //     e.preventDefault();
+  //   }
+  // });
 
 }());
