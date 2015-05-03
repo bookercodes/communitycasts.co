@@ -1,5 +1,43 @@
 $(function() {
 
+  function parseVideoId(url) {
+    var pattern = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    var match = url.match(pattern);
+    if (match && match[2].length == 11) {
+      return match[2];
+    }
+  }
+
+  function buildVideoApiUrl(id) {
+    var base = "https://www.googleapis.com/youtube/v3/videos";
+    var parts = "snippet,contentDetails";
+    var key = "AIzaSyCKQFYlDRi5BTd1A-9rhFjF8Jb_Hlfnquk";
+    return base + "?part=" + parts + "&id=" + id + "&key=" + key;
+  }
+
+  $("#url").change(function() {
+    var videoUrl = $(this).val();
+    // if the input is not a valid YouTube url, return.
+    if(!$(this)[0].checkValidity()) {
+      return;
+    }
+    var id = parseVideoId(videoUrl);
+    var apiUrl = buildVideoApiUrl(id);
+    $.get(apiUrl, function(data) {
+      var item = data.items[0];
+      // if the video does not exist
+      if (item == undefined) {
+        $("#title").val('');
+        $("#description").val('');
+        $("#channelName").val('');
+      } else {
+        $("#title").val(item.snippet.title);
+        $("#description").val(item.snippet.description);
+        $("#channelName").val(item.snippet.channelTitle);
+      }
+    });
+  });
+
   var technologies = new Bloodhound({
     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
     queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -12,7 +50,6 @@ $(function() {
     }
   });
   technologies.initialize();
-
   var tagsInput = $("#technologies").tagsinput({
     maxTags: 2,
     typeaheadjs: {
@@ -23,17 +60,6 @@ $(function() {
         source: technologies.ttAdapter()
       }
   });
-
-  // jQuery validator only performs validation upon an input element losing focus or a key being pressed up. Because
-  // the #technologies input is hidden and updated by the bootstrap-tagsinput plugin, we need to manually invoke
-  // the "valid" method.
-  $('#technologies').on('itemAdded', function(event) {
-    $(this).valid();
-  });
-  $('#technologies').on('itemRemoved', function(event) {
-    $(this).valid();
-  });
-
 
   $.validator.addMethod("youtubeVideoUrl", function (value, element) {
     return /^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/.test(value);
@@ -65,7 +91,7 @@ $(function() {
         youtubeVideoUrl: true,
         remote: function () {
           return {
-            url: buildApiUrl("snippet,contentDetails", extractId($("#url").val()), "AIzaSyCKQFYlDRi5BTd1A-9rhFjF8Jb_Hlfnquk"),
+            url: buildVideoApiUrl(parseVideoId($("#url").val())),
             dataFilter: function(response) {
               var json = JSON.parse(response);
               console.log(json);
@@ -88,50 +114,18 @@ $(function() {
     }
   });
 
+  // jQuery validator only performs validation upon an input element losing focus or a key being pressed up. Because
+  // the #technologies input is hidden and updated by the bootstrap-tagsinput plugin, we need to manually invoke
+  // the "valid" method.
+  $('#technologies').on('itemAdded', function(event) {
+    $(this).valid();
+  });
+  $('#technologies').on('itemRemoved', function(event) {
+    $(this).valid();
+  });
+
   $("#technologies").change(function(e){
-    console.log('my value changed');
     validator.valid();
   });
 
-  // http://stackoverflow.com/a/9102270/4804328
-  function extractId(url) {
-    var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-    var match = url.match(regExp);
-    if (match && match[2].length == 11) {
-      return match[2];
-    }
-  }
-
-  function buildApiUrl(parts, id, key) {
-    var base = "https://www.googleapis.com/youtube/v3/videos";
-    return base + "?part=" + parts + "&id=" + id + "&key=" + key;
-  }
-
-  $("#url").change(function() {
-    var videoUrl = $(this).val();
-
-    if(!$(this)[0].checkValidity()) {
-      return;
-    }
-
-    var id = extractId(videoUrl);
-    var parts = "snippet,contentDetails";
-    var key = "AIzaSyCKQFYlDRi5BTd1A-9rhFjF8Jb_Hlfnquk";
-    var apiUrl = buildApiUrl(parts, id, key);
-
-    $.get(apiUrl, function(data) {
-      var item = data.items[0];
-      if (item == undefined) {
-        $("#title").val('');
-        $("#description").val('');
-        $("#channelName").val('');
-      } else {
-        $("#title").val(item.snippet.title);
-        $("#description").val(item.snippet.description);
-        $("#channelName").val(item.snippet.channelTitle);
-      }
-    });
-  });
-
-
-}());
+});
