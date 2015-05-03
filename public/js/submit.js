@@ -62,13 +62,26 @@ $(function() {
     },
     rules: {
       url: {
-        youtubeVideoUrl: true
+        youtubeVideoUrl: true,
+        remote: function () {
+          return {
+            url: buildApiUrl("snippet,contentDetails", extractId($("#url").val()), "AIzaSyCKQFYlDRi5BTd1A-9rhFjF8Jb_Hlfnquk"),
+            dataFilter: function(response) {
+              var json = JSON.parse(response);
+              console.log(json);
+              return json.items.length !== 0;
+            }
+          };
+        }
       },
       technologies: {
         required: true
       }
     },
     messages: {
+      url: {
+        remote: "This video does not exist."
+      },
       technologies: {
         required: 'Please enter at least one technology.'
       }
@@ -112,9 +125,6 @@ $(function() {
         $("#title").val('');
         $("#description").val('');
         $("#channelName").val('');
-        validator.showErrors({
-          "url": "This video does not exist."
-        });
       } else {
         $("#title").val(item.snippet.title);
         $("#description").val(item.snippet.description);
