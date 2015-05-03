@@ -39,3 +39,9 @@ CREATE TABLE referrals (
 
   PRIMARY KEY (videoId, refereeIp)
 );
+
+CREATE TABLE technologySynonyms (
+	synonymId	INT PRIMARY KEY AUTO_INCREMENT,
+	sourceTechnologyName VARCHAR(50),
+    targetTechnologyName VARCHAR(50) REFERENCES technologies(targetTechnologyName)
+);
