@@ -1,10 +1,35 @@
 $(function() {
 
+  var technologies = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    prefetch: {
+      url: './api/technologies',
+      filter: function(list) {
+        return $.map(list, function(technology) {
+          return { name: technology.technologyName }; });
+      }
+    }
+  });
+  technologies.initialize();
+
+  var tagsInput = $("#technologies").tagsinput({
+    maxTags: 2,
+    typeaheadjs: {
+        name: 'technologies',
+        displayKey: 'name',
+        valueKey: 'name',
+        highlight: true,
+        source: technologies.ttAdapter()
+      }
+  });
+
   $.validator.addMethod("youtubeVideoUrl", function (value, element) {
     return /^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/.test(value);
-  }, "Enter a valid YouTube video url.");
+  }, "Please enter a valid YouTube video url.");
 
-  $("#submitForm").validate({
+  var validator = $("#submitForm").validate({
+    ignore: [],
     errorElement: "span",
     errorClass: "help-block",
     highlight: function(element) {
@@ -20,17 +45,22 @@ $(function() {
     rules: {
       url: {
         youtubeVideoUrl: true
+      },
+      technologies: {
+        required: true
+      }
+    },
+    messages: {
+      technologies: {
+        required: 'Please enter at least one tag.'
       }
     }
   });
 
-  // var validator = $("#submitForm").validate({
-  //   messages: {
-  //     url: {
-  //       pattern: "Enter a YouTube video Url."
-  //     }
-  //   }
-  // });
+  $("#technologies").change(function(e){
+    console.log('my value changed');
+    validator.valid();
+  });
 
   // http://stackoverflow.com/a/9102270/4804328
   function extractId(url) {
@@ -75,38 +105,5 @@ $(function() {
     });
   });
 
-  var technologies = new Bloodhound({
-    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    prefetch: {
-      url: './api/technologies',
-      filter: function(list) {
-        return $.map(list, function(technology) {
-          return { name: technology.technologyName }; });
-      }
-    }
-  });
-  technologies.initialize();
-
-  var tagsInput = $("#technologies").tagsinput({
-    maxTags: 2,
-    typeaheadjs: {
-        name: 'technologies',
-        displayKey: 'name',
-        valueKey: 'name',
-        highlight: true,
-        source: technologies.ttAdapter()
-      }
-  });
-
-  // $("#submitForm").submit(function(e) {
-  //   var technologyCount = tagsInput[0].itemsArray.length;
-  //   if (technologyCount < 1) {
-  //     validator.showErrors({
-  //       "technologies": "You must specify at least one technology."
-  //     });
-  //     e.preventDefault();
-  //   }
-  // });
 
 }());

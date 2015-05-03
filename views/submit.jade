@@ -25,7 +25,7 @@ block body
         for error in errors
           li!= error.msg
 
-  form#submitForm(method="post")
+  form#submitForm(method="post", novalidate)
     .form-group
       label Video link
       input.form-control#url(
