@@ -61,7 +61,7 @@ router.get('/api/other', function(req, res) {
          order by count(*) desc, t.technologyName desc\
          limit 9) as t) \
     group by v.videoId '
-    if (req.query.kind === 'popular')
+    if (req.query.sort === 'popular')
       query += ' order by v.referrals desc';
     else
       query += ' order by v.submissionDate desc';
@@ -109,7 +109,7 @@ router.get('/api/:technology',function(req,res) {
       from technology_video_map m \
       where m.technologyName = ' + connection.escape(req.params.technology) + ') \
       group by v.videoId';
-    if (req.query.kind === 'popular')
+    if (req.query.sort === 'popular')
       query += ' order by v.referrals desc';
     else
       query += ' order by v.submissionDate desc';

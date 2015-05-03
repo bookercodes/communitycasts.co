@@ -16,12 +16,11 @@ block body
   h2 Popular <small>all time</small>
   table(
     data-toggle="table", 
-    data-url="/technologies/api/#{technologyName}", 
+    data-url="/technologies/api/#{technologyName}?sort=popular", 
     data-pagination="true", 
     data-side-pagination="server", 
     data-show-header="false",
     data-page-list="[]",
-    data-query-params="popularParams",
     data-height="450")
     thead
       tr
