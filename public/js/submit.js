@@ -24,6 +24,16 @@ $(function() {
       }
   });
 
+  // jQuery validator only performs validation upon an input element losing focus or a key being pressed up. Because
+  // the #technologies input is hidden and updated by the bootstrap-tagsinput plugin, we need to manually invoke
+  // the "valid" method.
+  $('#technologies').on('itemAdded', function(event) {
+    $(this).valid();
+  });
+  $('#technologies').on('itemRemoved', function(event) {
+    $(this).valid();
+  });
+
   $.validator.addMethod("youtubeVideoUrl", function (value, element) {
     return /^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/.test(value);
   }, "Please enter a valid YouTube video url.");
