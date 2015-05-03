@@ -94,7 +94,6 @@ $(function() {
             url: buildVideoApiUrl(parseVideoId($("#url").val())),
             dataFilter: function(response) {
               var json = JSON.parse(response);
-              console.log(json);
               return json.items.length !== 0;
             }
           };
