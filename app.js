@@ -13,6 +13,7 @@ var videos       = require('./routes/videos');
 var api          = require('./routes/api');
 var terms        = require('./routes/terms');
 var about        = require('./routes/about');
+var admin        = require('./routes/admin');
 
 var app = express();
 
@@ -67,6 +68,7 @@ app.use('/videos', videos);
 app.use('/api', api);
 app.use('/terms', terms);
 app.use('/about', about);
+app.use('/admin', admin);
 
 app.use(function(req, res, next) {
   res.status(404).render('404');

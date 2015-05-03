@@ -20,7 +20,7 @@ CREATE TABLE videos (
   durationInSeconds INT          NOT NULL,
   hd                BIT          NOT NULL,
   referrals         INT          NOT NULL,
-  approved          BIT       DEFAULT 1,
+  approved          BIT       DEFAULT 0,
   submissionDate    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
