@@ -55,7 +55,7 @@ app.use(function(req, res, next) {
        ON screencasts.screencastId = screencastTags.screencastId \
      WHERE screencasts.approved = 1) \
    GROUP BY tags.tagName \
-   ORDER BY count DESC, tags.tagName DESC \
+   ORDER BY count DESC, tags.creationDate \
    LIMIT 9';
   connection.queryAsync(query).spread(function(tags) {
     if (tags.length === 9) {
