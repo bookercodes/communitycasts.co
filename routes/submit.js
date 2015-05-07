@@ -10,14 +10,6 @@ router.get('/', function(req, res) {
   res.render('submit');
 });
 
-function extractIdFromUrl (url) {
-  var pattern = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-  var match = url.match(pattern);
-  if (match && match[2].length == 11) {
-    return match[2];
-  }
-}
-
 router.post('/', function (req, res) {
   req.checkBody('url', 'YouTube Url is missing.').notEmpty();
   req.checkBody('url', 'Url must be a YouTube url.')
@@ -28,7 +20,7 @@ router.post('/', function (req, res) {
     res.render('submit', { errors: errors });
     return;
   }
-  var videoId = extractIdFromUrl(req.body.url);
+  var videoId = youtube.parseIdFromUrl(req.body.url);
   var query = 'SELECT * FROM screencasts WHERE screencastId = ' + connection.escape(videoId);
   connection.query(query, function (err, result) {
     // if the query results in one or more records, then a video with this

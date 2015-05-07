@@ -27,6 +27,13 @@ Youtube.prototype.get = function (id) {
       }
     };
   });
-}
+};
 
+Youtube.prototype.parseIdFromUrl = function (url) {
+  var pattern = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  var match = url.match(pattern);
+  if (match && match[2].length == 11) {
+    return match[2];
+  }
+}
 module.exports = new Youtube();
