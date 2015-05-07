@@ -115,8 +115,7 @@ router.get('/api/:technology',function(req,res) {
       query += ' ORDER BY v.submissionDate DESC';
     query += ' LIMIT ' + parseInt(req.query.offset) + ', ' + parseInt(req.query.limit);
 
-    var x = connection.query(query, function(err, popularVideos) {
-      console.log(popularVideos);
+    connection.query(query, function(err, popularVideos) {
       common.convertRecordsToLocals(popularVideos);
       body.rows = popularVideos;
       res.send(body);
