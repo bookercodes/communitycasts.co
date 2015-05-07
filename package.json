@@ -13,6 +13,7 @@
   "author": "Alex Booker",
   "license": "MIT",
   "dependencies": {
+    "bluebird": "^2.9.25",
     "body-parser": "^1.12.3",
     "express": "^4.12.3",
     "express-validator": "^2.9.0",
