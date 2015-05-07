@@ -22,17 +22,17 @@ html
           ul.nav.navbar-nav
             li.active
               a(href='/') Home
-            if technologies.length > 0
+            if tags.length > 0
               li.dropdown
                 a.dropdown-toggle(href='#', data-toggle='dropdown')
                   | Learn 
                   span.caret
                 ul.dropdown-menu
-                    each technology in technologies
+                    each tag in tags
                       li
-                        a(href='/technologies/#{encodeURIComponent(technology.technologyName)}')
-                          | #{technology.technologyName}
-                          span.label.label-default.technology-label=technology.count
+                        a(href='/technologies/#{encodeURIComponent(tag.tagName)}')
+                          | #{tag.tagName}
+                          span.label.label-default.technology-label=tag.count
             li
               a(href='/channels') Channels
           ul.nav.navbar-nav.navbar-right

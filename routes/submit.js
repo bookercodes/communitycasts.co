@@ -27,7 +27,7 @@ router.post('/', function (req, res) {
     return;
   }
   var videoId = extractIdFromUrl(req.body.url);
-  var query = 'select * from videos where videoId = ' + connection.escape(videoId);
+  var query = 'SELECT * FROM screencasts WHERE screencastId = ' + connection.escape(videoId);
   connection.query(query, function (err, result) {
     // if the query results in one or more records, then a video with this
     // id already exists and we must reject it.
@@ -41,31 +41,40 @@ router.post('/', function (req, res) {
         res.render('submit', { errors: [{ msg:'This video could not be found.' }] })
         return;
       }
-      connection.query('insert ignore into channels set ?', video.channel, function(err, result) {
+      connection.query('INSERT IGNORE INTO channels SET ?', video.channel, function(err, result) {
+                  if (err) {
+            console.log(err);
+          }
         var record = {
-          videoId: videoId,
+          screencastId: videoId,
           channelId: video.channel.channelId,
           title: video.title,
-          description: video.description,
-          thumbnailUrl: video.thumbnailUrl,
           durationInSeconds: moment.duration(video.duration).asSeconds(),
-          hd: video.hd
         }
-        connection.query('insert into videos set ?', record, function(err, result) {
+        connection.query('INSERT INTO screencasts SET ?', record, function(err, result) {
+          if (err) {
+            console.log(err);
+          }
           var technologies = req.body.technologies.split(',');
-          var query = 'insert ignore into technologies (technologyname) values ';
+          var query = 'INSERT IGNORE INTO tags VALUES ';
           technologies.forEach(function(technology) {
             query += '(' + connection.escape(technology) + '),';
           });
           query = query.substr(0, query.length - 1);
 
           connection.query(query, function(err, result) {
+                      if (err) {
+            console.log(err);
+          }
             technologies.forEach(function(technology, index, array) {
               var record = { 
-                videoId: videoId, 
-                technologyName: technology 
+                screencastId: videoId, 
+                tagName: technology 
               }
-              connection.query('insert into technology_video_map set ?', record, function(err, result) {
+              connection.query('INSERT INTO screencastTags SET ?', record, function(err, result) {
+                          if (err) {
+            console.log(err);
+          }
                 // if this is the final iteration, redirect the user.
                 if (index === array.length - 1) {
                   res.redirect('/');

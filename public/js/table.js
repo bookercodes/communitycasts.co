@@ -8,7 +8,7 @@ String.prototype.supplant = function (o) {
 };
 
 function titleFormatter(value, row) {
-  return "<a target=\"_blank\" href='/videos/{videoId}'>{title}</a>".supplant(row);
+  return "<a target=\"_blank\" href='/videos/{screencastId}'>{title}</a>".supplant(row);
 }
 
 function channelNameFormatter(value, row) {

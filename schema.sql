@@ -1,47 +1,59 @@
-DROP DATABASE videoHub;
-CREATE DATABASE videoHub;
-USE videoHub;
-
-CREATE TABLE technologies (
-  technologyName VARCHAR(50) NOT NULL PRIMARY KEY
-);
+DROP DATABASE IF EXISTS screencastHub;
+CREATE DATABASE screencastHub;
+USE screencastHub;
 
 CREATE TABLE channels (
-  channelId   VARCHAR(48) PRIMARY KEY,
-  channelName VARCHAR(200) NOT NULL
+  channelId   VARCHAR(48),
+  channelName VARCHAR(200) NOT NULL,
+
+  PRIMARY KEY (channelId)
 );
 
-CREATE TABLE videos (
-  videoId           VARCHAR(11) PRIMARY KEY,
-  channelId         VARCHAR(48) REFERENCES channels(channelId),
+CREATE TABLE tags (
+  tagName VARCHAR(50),
+
+  PRIMARY KEY (tagName)
+);
+
+CREATE TABLE screencasts (
+  screencastId      VARCHAR(11),
+  channelId         VARCHAR(48),
   title             VARCHAR(200) NOT NULL,
-  description       TEXT         NOT NULL,
-  thumbnailUrl      VARCHAR(98)  NOT NULL,
   durationInSeconds INT          NOT NULL,
-  hd                BIT          NOT NULL,
-  referrals         INT          NOT NULL,
+  referralCount     INT       DEFAULT 0,
   approved          BIT       DEFAULT 0,
-  submissionDate    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  submissionDate    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+  PRIMARY KEY(screencastId),
+  FOREIGN KEY (channelId)
+    REFERENCES channels(channelId)
 );
 
--- CREATE TABLE videoTechnologies (
-CREATE TABLE technology_video_map (
-  videoId        VARCHAR(11) REFERENCES videos(videoId),
-  technologyName VARCHAR(50) REFERENCES technologies(technologyName),
+CREATE TABLE screencastTags (
+  screencastId VARCHAR(11),
+  tagName      VARCHAR(50),
 
-  PRIMARY KEY (videoId, technologyName) 
+  PRIMARY KEY (screencastId, tagName),
+  FOREIGN KEY (screencastId)
+    REFERENCES screencasts(screencastId),
+  FOREIGN KEY (tagName)
+    REFERENCES tags(tagName)
 );
 
--- CREATE TABLE videoReferrals
 CREATE TABLE referrals (
-  videoId   VARCHAR(11) NOT NULL REFERENCES videos(videoId),
-  refereeIp VARCHAR(20) NOT NULL,
+  screencastId  VARCHAR(11),
+  refereeRemoteAddress VARCHAR(20) NOT NULL,
 
-  PRIMARY KEY (videoId, refereeIp)
+  PRIMARY KEY (screencastId, refereeRemoteAddress),
+  FOREIGN KEY (screencastId)
+    REFERENCES screencasts(ScreencastId)
 );
 
-CREATE TABLE technologySynonyms (
-	synonymId	INT PRIMARY KEY AUTO_INCREMENT,
-	sourceTechnologyName VARCHAR(50),
-    targetTechnologyName VARCHAR(50) REFERENCES technologies(targetTechnologyName)
+CREATE TABLE tagSynonyms (
+  sourceTagName VARCHAR(50),
+  targetTagName VARCHAR(50),
+
+  PRIMARY KEY (sourceTagName),
+  FOREIGN KEY (targetTagName)
+    REFERENCES tags(tagName)
 );

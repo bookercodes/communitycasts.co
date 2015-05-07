@@ -21,7 +21,7 @@ connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'password',
-  database: 'videoHub'
+  database: 'screencastHub'
 });
 connection.connect();
 
@@ -35,26 +35,28 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(validator());
 app.use(function(req, res, next) {
   var query = 
-    'select \
-       t.technologyName, \
-       count(*) as count \
-     from technologies t \
-     join technology_video_map m \
-       on m.technologyName = t.technologyName \
-     where t.technologyName in ( \
-       select technologyName \
-       from technology_video_map m \
-       join videos v \
-         on m.videoId = v.videoId \
-       where v.approved = 1) \
-     group by t.technologyName \
-     order by count desc, t.technologyName desc \
-     limit 9';
-  connection.query(query, function(err, technologies) {
-    if (technologies.length === 9) {
-      technologies.push({ technologyName:'Other' });
+  'SELECT \
+     tags.tagName, \
+     COUNT(*) AS count \
+   FROM tags \
+   JOIN screencastTags \
+     ON screencastTags.tagName = tags.tagName \
+   WHERE tags.tagName IN ( \
+     SELECT tagName \
+     FROM screencastTags \
+     JOIN screencasts \
+       ON screencasts.screencastId = screencastTags.screencastId \
+     WHERE screencasts.approved = 1) \
+   GROUP BY tags.tagName \
+   ORDER BY count DESC, tags.tagName DESC \
+   LIMIT 9';
+  connection.query(query, function(err, tags) {
+    if (tags.length === 9) {
+      tags.push({ 
+        tagName:'Other' 
+      });
     }
-    res.locals.technologies = technologies;
+    res.locals.tags = tags;
     next();
   });
 });

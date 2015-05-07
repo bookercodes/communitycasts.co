@@ -3,69 +3,69 @@ var router  = express.Router();
 var common  = require('../common')
 
 router.get('/other',function(req,res) { 
-  res.render('technology', { technologyName:'Other' });
+  res.render('technology', { tagName:'Other' });
 });
 
 router.get('/api/other', function(req, res) {
 
   var body = {};
   var query = 
-  'select \
-     count(m.technologyName) as total \
-   from technology_video_map m \
-   where m.technologyName not in ( \
-     select * from ( \
-       select t.technologyName \
-       from technologies t \
-       join technology_video_map m \
-         on m.technologyName = t.technologyName \
-       where t.technologyName in ( \
-         select technologyName \
-         from technology_video_map m \
-         join videos v \
-           on m.videoId = v.videoId \
-         where v.approved = 1) \
-       group by t.technologyName \
-       order by count(*) desc, t.technologyName desc \
-       limit 9) as t)';
+  'SELECT \
+     COUNT(m.tagName) AS total \
+   FROM screencastTags m \
+   WHERE m.tagName NOT IN ( \
+     SELECT * FROM ( \
+       SELECT t.tagName \
+       FROM tags t \
+       JOIN screencastTags m \
+         ON m.tagName = t.tagName \
+       WHERE t.tagName in ( \
+         SELECT tagName \
+         FROM screencastTags m \
+         JOIN screencasts v \
+           ON m.screencastId = v.screencastId \
+         WHERE v.approved = 1) \
+       GROUP by t.tagName \
+       ORDER BY COUNT(*) desc, t.tagName desc \
+       LIMIT 9) as t)';
 
   connection.query(query, function (err, result) {
     body.total = result[0].total;
     var query = 
-    'select \
-       v.videoId, \
+    'SELECT \
+       v.screencastId, \
        v.title, \
        c.channelId, \
        c.channelName, \
        v.durationInSeconds, \
        v.submissionDate, \
-       GROUP_CONCAT(m.technologyName) as technologies \
-     from videos v \
-     join technology_video_map m \
-       on v.videoId = m.videoId \
-     join channels c \
-       on c.channelId = v.channelId \
-     where m.technologyName not in ( \
-       select * from ( \
-         select t.technologyName \
-         from technologies t \
-         join technology_video_map m \
-           on m.technologyName = t.technologyName \
-         where t.technologyName in ( \
-           select technologyName \
-           from technology_video_map m \
-           join videos v \
-             on m.videoId = v.videoId \
-           where v.approved = 1) \
-         group by t.technologyName \
-         order by count(*) desc, t.technologyName desc\
-         limit 9) as t) \
-    group by v.videoId '
+       GROUP_CONCAT(m.tagName) as tags \
+     FROM screencasts v \
+     JOIN screencastTags m \
+       ON v.screencastId = m.screencastId \
+     JOIN channels c \
+       ON c.channelId = v.channelId \
+     WHERE m.tagName not in ( \
+       SELECT * FROM ( \
+         SELECT t.tagName \
+         FROM tags t \
+         JOIN screencastTags m \
+           ON m.tagName = t.tagName \
+         WHERE t.tagName in ( \
+           SELECT tagName \
+           FROM screencastTags m \
+           JOIN screencasts v \
+             ON m.screencastId = v.screencastId \
+           WHERE v.approved = 1) \
+         GROUP by t.tagName \
+         ORDER BY COUNT(*) desc, t.tagName desc\
+         LIMIT 9) as t) \
+    GROUP by v.screencastId '
     if (req.query.sort === 'popular')
-      query += ' order by v.referrals desc';
+      query += ' ORDER BY v.referralCount desc';
     else
-      query += ' order by v.submissionDate desc';
-    query += ' limit ' + parseInt(req.query.offset) + ', ' + parseInt(req.query.limit);
+      query += ' ORDER BY v.submissionDate desc';
+    query += ' LIMIT ' + parseInt(req.query.offset) + ', ' + parseInt(req.query.limit);
     connection.query(query, function(err, records) {
       common.convertRecordsToLocals(records);
       body.rows = records;
@@ -75,49 +75,48 @@ router.get('/api/other', function(req, res) {
 });
 
 router.get('/:technology', function (req, res) {
-  res.render('technology', {technologyName:req.params.technology});
+  res.render('technology', {tagName:req.params.technology});
 });
 
 router.get('/api/:technology',function(req,res) { 
   var body = {};
   var query = 
-  'select count(*) as total \
-   from technologies t \
-   join technology_video_map m \
-     on m.technologyName = t.technologyName \
-   where t.technologyName = ' + connection.escape(req.params.technology) + '\
-   group by t.technologyName';
+  'SELECT COUNT(*) as total \
+   FROM tags t \
+   JOIN screencastTags m \
+     ON m.tagName = t.tagName \
+   WHERE t.tagName = ' + connection.escape(req.params.technology) + '\
+   GROUP by t.tagName';
 
   connection.query(query, function(err, result) {
     body.total = result[0].total;
     var query = 
-    'select \
-       v.videoId, \
+    'SELECT \
+       v.screencastId, \
        v.title, \
        c.channelId, \
        c.channelName, \
        v.durationInSeconds, \
        v.submissionDate, \
-       GROUP_CONCAT(m.technologyName) as technologies \
-    from videos v \
-    join channels c \
-      on c.channelId = v.channelId \
-    join technology_video_map m \
-      on m.videoId = v.videoId \
-    where v.approved = 1 and v.videoId in ( \
-      select videoId \
-      from technology_video_map m \
-      where m.technologyName = ' + connection.escape(req.params.technology) + ') \
-      group by v.videoId';
+       GROUP_CONCAT(m.tagName) as tags \
+    FROM screencasts v \
+    JOIN channels c \
+      ON c.channelId = v.channelId \
+    JOIN screencastTags m \
+      ON m.screencastId = v.screencastId \
+    WHERE v.approved = 1 and v.screencastId in ( \
+      SELECT screencastId \
+      FROM screencastTags m \
+      WHERE m.tagName = ' + connection.escape(req.params.technology) + ') \
+      GROUP BY v.screencastId';
     if (req.query.sort === 'popular')
-      query += ' order by v.referrals desc';
-    else
-      query += ' order by v.submissionDate desc';
-    query += ' limit ' + parseInt(req.query.offset) + ', ' + parseInt(req.query.limit);
+      query += ' ORDER BY v.referralCount DESC';
+    else  
+      query += ' ORDER BY v.submissionDate DESC';
+    query += ' LIMIT ' + parseInt(req.query.offset) + ', ' + parseInt(req.query.limit);
 
-
-    connection.query(query, function(err, popularVideos) {
-      if (err) { res.send(err); return;}
+    var x = connection.query(query, function(err, popularVideos) {
+      console.log(popularVideos);
       common.convertRecordsToLocals(popularVideos);
       body.rows = popularVideos;
       res.send(body);
