@@ -1,5 +1,4 @@
 var express = require('express');
-var moment  = require('moment');
 var youtube = require('../youtube');
 
 var router  = express.Router();
@@ -41,12 +40,9 @@ router.post('/', function (req, res) {
       connection.beginTransactionAsync().then(function() {
         return connection.queryAsync('INSERT IGNORE INTO channels SET ?', screencast.channel);
       }).then(function(result) {
-        var record = {
-          screencastId: screencastId,
-          channelId: screencast.channel.channelId,
-          title: screencast.title,
-          durationInSeconds: moment.duration(screencast.duration).asSeconds(),
-        }
+        var record = screencast;
+        record.channelId = screencast.channel.channelId;
+        delete record.channel;
         return connection.query('INSERT INTO screencasts SET ?', record);
       }).then(function(result) {
         var values = tags.map(function(tag) { return [tag]; });
@@ -58,7 +54,7 @@ router.post('/', function (req, res) {
         res.redirect('/');
         return connection.commit();
       }).error(function(){
-        connection.rollback();
+        return connection.rollback();
       });
     });
   });

@@ -1,4 +1,5 @@
-var Promise = require("bluebird");
+var Promise = require('bluebird');
+var moment  = require('moment');
 var request = Promise.promisify(require('request'));
 
 function Youtube() {
@@ -20,7 +21,7 @@ Youtube.prototype.get = function (id) {
     return {
       screencastId: id,
       title: screencast.snippet.title,
-      duration: screencast.contentDetails.duration,
+      durationInSeconds: moment.duration(screencast.contentDetails.duration).asSeconds(),
       channel: {
         channelName: screencast.snippet.channelTitle,
         channelId: screencast.snippet.channelId,  
