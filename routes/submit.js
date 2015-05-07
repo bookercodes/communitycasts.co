@@ -38,7 +38,9 @@ router.post('/', function (req, res) {
         res.render('submit', { errors: [{ msg:'This screencast could not be found.' }] })
         return;
       }
-      connection.queryAsync('INSERT IGNORE INTO channels SET ?', screencast.channel).then(function(result) {
+      connection.beginTransactionAsync().then(function() {
+        return connection.queryAsync('INSERT IGNORE INTO channels SET ?', screencast.channel);
+      }).then(function(result) {
         var record = {
           screencastId: screencastId,
           channelId: screencast.channel.channelId,
@@ -47,12 +49,16 @@ router.post('/', function (req, res) {
         }
         return connection.query('INSERT INTO screencasts SET ?', record);
       }).then(function(result) {
-          var values = tags.map(function(tag) { return [tag]; });
-          return connection.queryAsync('INSERT IGNORE INTO tags VALUES ?', [values])
+        var values = tags.map(function(tag) { return [tag]; });
+        return connection.queryAsync('INSERT IGNORE INTO tags VALUES ?', [values])
       }).then(function(result) {
         var values = tags.map(function(tag) { return [screencast.screencastId, tag]; });
-        connection.queryAsync('INSERT INTO screencastTags VALUES ?', [values])
+        return connection.queryAsync('INSERT INTO screencastTags VALUES ?', [values])
+      }).then(function() {
         res.redirect('/');
+        return connection.commit();
+      }).error(function(){
+        connection.rollback();
       });
     });
   });
