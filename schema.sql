@@ -21,7 +21,7 @@ CREATE TABLE screencasts (
   title             VARCHAR(200) NOT NULL,
   durationInSeconds INT          NOT NULL,
   referralCount     INT       DEFAULT 0,
-  approved          BIT       DEFAULT 0,
+  approved          BIT       DEFAULT 1,
   submissionDate    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
   PRIMARY KEY(screencastId),
