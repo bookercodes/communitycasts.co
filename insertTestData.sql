@@ -1,4 +1,4 @@
-INSERT INTO tags VALUES 
+INSERT INTO tags(tagName) VALUES 
   ('Python'),
   ('Html'),
   ('Java'),

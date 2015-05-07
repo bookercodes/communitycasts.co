@@ -53,7 +53,7 @@ router.post('/', function (req, res) {
         return connection.query('INSERT INTO screencasts SET ?', record);
       }).then(function(result) {
         var values = tags.map(function(tag) { return [tag]; });
-        return connection.queryAsync('INSERT IGNORE INTO tags VALUES ?', [values])
+        return connection.queryAsync('INSERT IGNORE INTO tags(tagName) VALUES ?', [values])
       }).then(function(result) {
         var values = tags.map(function(tag) { return [screencast.screencastId, tag]; });
         return connection.queryAsync('INSERT INTO screencastTags VALUES ?', [values])

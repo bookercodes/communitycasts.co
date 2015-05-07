@@ -10,7 +10,8 @@ CREATE TABLE channels (
 );
 
 CREATE TABLE tags (
-  tagName VARCHAR(50),
+  tagName      VARCHAR(50),
+  creationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
   PRIMARY KEY (tagName)
 );
