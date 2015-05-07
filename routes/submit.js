@@ -11,9 +11,9 @@ router.get('/', function(req, res) {
 
 router.post('/', function (req, res) {
 
-  req.checkBody('url', 'YouTube Url is missing.').notEmpty();
-  req.checkBody('url', 'Url must be a YouTube url.').matches(/^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/);
-  req.checkBody('technologies', 'Please enter at least one technology.').notEmpty();
+  req.checkBody('url', 'Enter a <strong>screencast link</strong>.').notEmpty();
+  req.checkBody('url', 'Enter a valid YouTube <strong>screencast link</strong>.').matches(/^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/);
+  req.checkBody('technologies', 'Enter at least one <strong>technology</strong>').notEmpty();
   var errors = req.validationErrors();
   if (errors) {
     res.render('submit', { errors: errors });
@@ -29,12 +29,14 @@ router.post('/', function (req, res) {
      WHERE screencastId = ?';
   connection.queryAsync(query, screencastId).spread(function (screencasts) {
     if (screencasts.length === 1) {
-      res.render('submit', { errors: [{ msg: 'This video has already been submitted.' }] })
+      res.locals.errors = ['This <strong>screencast link</strong> has already been submitted.'];
+      res.render('submit');
       return;
     }
     youtube.get(screencastId).then(function(screencast) {
       if (screencast === null) {
-        res.render('submit', { errors: [{ msg:'This screencast could not be found.' }] })
+        res.locals.errors = ['The <strong>screencast link</strong> you entered does not exist.'];
+        res.render('submit');
         return;
       }
       connection.beginTransactionAsync().then(function() {

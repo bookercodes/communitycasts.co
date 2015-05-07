@@ -29,7 +29,7 @@ block body
         span &times;
       ul
         for error in errors
-          li!= error.msg
+          li!= error
 
   form#submitForm(method="post", novalidate)
     .form-group

@@ -35,7 +35,11 @@ app.set('view engine', 'jade');
 // middlware
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(validator());
+app.use(validator({
+  errorFormatter: function(param, msg) {
+    return msg;
+  }
+}));
 app.use(function(req, res, next) {
   var query = 
   'SELECT \
