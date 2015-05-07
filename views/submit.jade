@@ -17,6 +17,12 @@ block scripts
 block body
   h2 Submit video
   
+  if message
+    .alert.alert-success
+      button.close(data-dismiss="alert")
+        span &times;
+      p=message
+  
   if errors
     .alert.alert-danger
       button.close(data-dismiss="alert")

@@ -49,9 +49,10 @@ router.post('/', function (req, res) {
         return connection.queryAsync('INSERT IGNORE INTO tags VALUES ?', [values])
       }).then(function(result) {
         var values = tags.map(function(tag) { return [screencast.screencastId, tag]; });
-        return connection.queryAsync('INSERT INTO screenxcastTags VALUES ?', [values])
+        return connection.queryAsync('INSERT INTO screencastTags VALUES ?', [values])
       }).then(function() {
-        res.redirect('/');
+        res.locals.message = 'Thank you for your submission. Your submission will be reviewed by the moderators and if it meets our guidelines, it\'ll appear on the home page soon!';
+        res.render('submit');
         return connection.commit();
       }).error(function(){
         res.status(500).send('We apologize, but an error occured while submitting this screencast. It\'s not you, it\'s us. This is our fault. Information about this error has been automatically recorded. If you want, you can try submitting your screencast again.');
