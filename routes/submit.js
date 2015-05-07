@@ -1,9 +1,14 @@
 var express = require('express');
+var winston = require('winston');
 var youtube = require('../youtube');
 
 var router  = express.Router();
 
+winston.add(winston.transports.File, { 
+  filename: 'errors.log' 
+});
 youtube.authenticate('AIzaSyCKQFYlDRi5BTd1A-9rhFjF8Jb_Hlfnquk');
+
 
 router.get('/', function(req, res) {
   res.render('submit');
@@ -56,7 +61,8 @@ router.post('/', function (req, res) {
         res.locals.message = 'Thank you for your submission. Your submission will be reviewed by the moderators and if it meets our guidelines, it\'ll appear on the home page soon!';
         res.render('submit');
         return connection.commit();
-      }).error(function(){
+      }).error(function(error){
+        winston.error(error);
         res.status(500).send('We apologize, but an error occured while submitting this screencast. It\'s not you, it\'s us. This is our fault. Information about this error has been automatically recorded. If you want, you can try submitting your screencast again.');
         return connection.rollback();
       });

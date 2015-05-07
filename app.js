@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var mysql      = require('mysql');
 var validator  = require('express-validator');
 var moment     = require('moment');
-var promise = require('bluebird');
+var promise    = require('bluebird');
 
 var channels     = require('./routes/channels');
 var technologies = require('./routes/technologies');
