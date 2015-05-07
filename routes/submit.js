@@ -1,8 +1,10 @@
 var express = require('express');
 var moment  = require('moment');
-var common  = require('../common');
+var youtube = require('../youtube');
 
 var router  = express.Router();
+
+youtube.authenticate('AIzaSyCKQFYlDRi5BTd1A-9rhFjF8Jb_Hlfnquk');
 
 router.get('/', function(req, res) {
   res.render('submit');
@@ -36,7 +38,7 @@ router.post('/', function (req, res) {
       res.render('submit', { errors: [{ msg:'This video has already been submitted.' }] })
       return;
     }
-    common.getVideo(videoId, function(video) {
+    youtube.get(videoId).then(function(video) {
       if (video == null) {
         res.render('submit', { errors: [{ msg:'This video could not be found.' }] })
         return;
