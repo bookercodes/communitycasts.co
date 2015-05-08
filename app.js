@@ -6,7 +6,6 @@ var validator  = require('express-validator');
 var moment     = require('moment');
 var promise    = require('bluebird');
 
-var submit       = require('./routes/submit');
 var screencasts  = require('./routes/screencasts');
 var screencastsApi  = require('./routes/api/screencasts');
 
@@ -63,7 +62,6 @@ app.use(function(req, res, next) {
 });
 
 // routes
-app.use('/submit', submit);
 app.use('/screencasts', screencasts);
 app.use('/api/screencasts', screencastsApi);
 app.get('/', function (req, res) {
