@@ -6,15 +6,11 @@ var validator  = require('express-validator');
 var moment     = require('moment');
 var promise    = require('bluebird');
 
-var channels     = require('./routes/channels');
 var technologies = require('./routes/technologies');
 var submit       = require('./routes/submit');
 var home         = require('./routes/home');
 var screencasts  = require('./routes/screencasts');
 var api          = require('./routes/api');
-var terms        = require('./routes/terms');
-var about        = require('./routes/about');
-var admin        = require('./routes/admin');
 
 var app = express();
 
@@ -70,17 +66,25 @@ app.use(function(req, res, next) {
 
 // routes
 app.use('/', home);
-app.use('/channels', channels);
 app.use('/technologies', technologies);
 app.use('/submit', submit);
 app.use('/screencasts', screencasts);
 app.use('/api', api);
-app.use('/terms', terms);
-app.use('/about', about);
-app.use('/admin', admin);
+
+
+app.get('/terms', function(req, res) {
+  res.render('terms');
+});
+
+
+app.get('/about', function(req, res) {
+  res.render('about');
+});
 
 app.use(function(req, res, next) {
   res.status(404).render('404');
 });
+
+
 
 app.listen(53111);
