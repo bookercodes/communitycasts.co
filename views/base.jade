@@ -30,7 +30,7 @@ html
                 ul.dropdown-menu
                     each tag in tags
                       li
-                        a(href='/technologies/#{encodeURIComponent(tag.tagName)}')
+                        a(href='/screencasts/tagged/#{encodeURIComponent(tag.tagName)}')
                           | #{tag.tagName}
                           span.label.label-default.technology-label=tag.count
           ul.nav.navbar-nav.navbar-right

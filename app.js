@@ -6,11 +6,9 @@ var validator  = require('express-validator');
 var moment     = require('moment');
 var promise    = require('bluebird');
 
-var technologies = require('./routes/technologies');
 var submit       = require('./routes/submit');
-var home         = require('./routes/home');
 var screencasts  = require('./routes/screencasts');
-var api          = require('./routes/api');
+var screencastsApi  = require('./routes/api/screencasts');
 
 var app = express();
 
@@ -65,18 +63,16 @@ app.use(function(req, res, next) {
 });
 
 // routes
-app.use('/', home);
-app.use('/technologies', technologies);
 app.use('/submit', submit);
 app.use('/screencasts', screencasts);
-app.use('/api', api);
-
+app.use('/api/screencasts', screencastsApi);
+app.get('/', function (req, res) {
+  res.render('home');
+});
 
 app.get('/terms', function(req, res) {
   res.render('terms');
 });
-
-
 app.get('/about', function(req, res) {
   res.render('about');
 });

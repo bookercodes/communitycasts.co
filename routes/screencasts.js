@@ -38,4 +38,12 @@ function incrementViews(screencastId, refereeRemoteAddress) {
   });
 }
 
+router.get('/tagged/other',function(req,res) { 
+  res.render('technology', { tagName:'Other' });
+});
+
+router.get('/tagged/:technology', function (req, res) {
+  res.render('technology', {tagName:req.params.technology});
+});
+
 module.exports = router;

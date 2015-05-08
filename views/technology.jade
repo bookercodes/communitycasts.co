@@ -16,7 +16,7 @@ block body
   h2 Popular <small>all time</small>
   table(
     data-toggle="table", 
-    data-url="/technologies/api/#{tagName}?sort=popular", 
+    data-url="/api/screencasts/tagged/#{tagName}?sort=popular", 
     data-pagination="true", 
     data-side-pagination="server", 
     data-show-header="false",
@@ -32,7 +32,7 @@ block body
   h2 New
   table(
     data-toggle="table", 
-    data-url="/technologies/api/#{tagName}", 
+    data-url="/api/screencasts/tagged/#{tagName}", 
     data-pagination="true", 
     data-side-pagination="server", 
     data-show-header="false",

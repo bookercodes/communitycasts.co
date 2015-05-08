@@ -1,12 +1,45 @@
 var express = require('express');
 var router  = express.Router();
-var common  = require('../common')
+var common  = require('../../common');
 
-router.get('/other',function(req,res) { 
-  res.render('technology', { tagName:'Other' });
+router.get('/', function(req,res) {
+  var body = {};
+  connection.query('SELECT COUNT(*) AS total FROM screencasts', function(err, result) {
+    body.total = result[0].total;
+    var query = 
+      'SELECT \
+         v.screencastId, \
+         v.title, \
+         c.channelId, \
+         c.channelName, \
+         v.durationInSeconds, \
+         v.submissionDate, \
+         GROUP_CONCAT(m.tagName) as tags \
+      FROM screencasts v \
+      JOIN channels c \
+        ON c.channelId = v.channelId \
+      JOIN screencastTags m \
+        ON m.screencastId = v.screencastId \
+      WHERE v.approved = 1 \
+      GROUP by v.screencastId';
+
+    if (req.query.sort === 'popular')
+      query += ' ORDER BY v.referralCount DESC';
+    else
+      query += ' ORDER BY v.submissionDate DESC';
+
+    // pagination
+    query += ' LIMIT ' + parseInt(req.query.offset) + ', ' + parseInt(req.query.limit);
+
+    connection.query(query, function (err, videos) {
+      common.convertRecordsToLocals(videos);
+      body.rows = videos;
+      res.send(body);
+    });
+  });
 });
 
-router.get('/api/other', function(req, res) {
+router.get('/tagged/other', function(req, res) {
 
   var body = {};
   var query = 
@@ -74,11 +107,7 @@ router.get('/api/other', function(req, res) {
   });
 });
 
-router.get('/:technology', function (req, res) {
-  res.render('technology', {tagName:req.params.technology});
-});
-
-router.get('/api/:technology',function(req,res) { 
+router.get('/tagged/:technology',function(req,res) { 
   var body = {};
   var query = 
   'SELECT COUNT(*) as total \
@@ -122,5 +151,7 @@ router.get('/api/:technology',function(req,res) {
     });
   });
 });
+
+
 
 module.exports = router;
