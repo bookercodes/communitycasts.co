@@ -2,19 +2,13 @@ var express = require('express');
 var winston = require('winston');
 var youtube = require('../youtube');
 
-winston.add(winston.transports.File, { 
-  filename: 'errors.log' 
-});
+winston.add(winston.transports.File, {  filename: 'errors.log' });
 youtube.authenticate('AIzaSyCKQFYlDRi5BTd1A-9rhFjF8Jb_Hlfnquk');
 
 var router = express.Router();
 
-router.get('/submit', function(req, res) {
-  res.render('submit');
-});
-
+router.get('/submit', function(req, res) { res.render('submit'); });
 router.post('/submit', function (req, res) {
-
   req.checkBody('url', 'Enter a <strong>screencast link</strong>.').notEmpty();
   req.checkBody('url', 'Enter a valid YouTube <strong>screencast link</strong>.').matches(/^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/);
   req.checkBody('technologies', 'Enter at least one <strong>technology</strong>').notEmpty();
@@ -23,10 +17,8 @@ router.post('/submit', function (req, res) {
     res.render('submit', { errors: errors });
     return;
   }
-
   var screencastId = youtube.parseIdFromUrl(req.body.url);
   var tags = req.body.technologies.split(',');
-
   var query = 
     'SELECT screencastId \
      FROM screencasts \
@@ -80,37 +72,35 @@ router.get('/:screencastId', function (req ,res) {
       return res.sendStatus(404);  
     res.redirect('https://www.youtube.com/watch?v=' + req.params.screencastId);
     // redirect the user as soon as possible, then record their view in the background.
-    incrementViews(req.params.screencastId, req.connection.remoteAddress);
+    var query = 
+      'SELECT screencastId \
+       FROM referrals \
+       WHERE screencastId = ? AND refereeRemoteAddress = ?';
+    connection.queryAsync(query, [req.params.screencastId, req.connection.remoteAddress]).spread(function(referrals) {
+      if (referrals.length !== 0) 
+        // the user with this ip has seen the screencast before, do not count the view again.
+        return;
+      var query = 
+        'UPDATE screencasts \
+           SET referralCount = referralCount + 1 \
+         WHERE screencastId = ?';
+      connection.queryAsync(query, req.params.screencastId);
+      connection.query('INSERT INTO referrals SET ?', { 
+        screencastId: req.params.screencastId, 
+        refereeRemoteAddress: req.connection.remoteAddress
+      });
+    });
   }); 
 });
 
-function incrementViews(screencastId, refereeRemoteAddress) {
-  var query = 
-    'SELECT screencastId \
-     FROM referrals \
-     WHERE screencastId = ? AND refereeRemoteAddress = ?';
-  connection.queryAsync(query, [screencastId, refereeRemoteAddress]).spread(function(referrals) {
-    if (referrals.length !== 0) 
-      // the user with this ip has seen the screencast before, do not count the view again.
-      return;
-    var query = 
-      'UPDATE screencasts \
-         SET referralCount = referralCount + 1 \
-       WHERE screencastId = ?';
-    connection.queryAsync(query, screencastId);
-    connection.query('INSERT INTO referrals SET ?', { 
-      screencastId: screencastId, 
-      refereeRemoteAddress: refereeRemoteAddress
-    });
-  });
-}
-
 router.get('/tagged/other',function(req,res) { 
-  res.render('technology', { tagName:'Other' });
+  res.locals.tagName = 'Other';
+  res.render('technology');
 });
 
 router.get('/tagged/:technology', function (req, res) {
-  res.render('technology', {tagName:req.params.technology});
+  res.locals.tagName = req.params.technology;
+  res.render('technology');
 });
 
 module.exports = router;

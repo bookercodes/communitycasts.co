@@ -7,7 +7,7 @@ var moment     = require('moment');
 var promise    = require('bluebird');
 
 var screencasts  = require('./routes/screencasts');
-var screencastsApi  = require('./routes/api/screencasts');
+var screencastsApi  = require('./routes/screencastsApi');
 
 var app = express();
 
