@@ -78,19 +78,27 @@ router.get('/:screencastId', function (req ,res) {
        WHERE screencastId = ? AND refereeRemoteAddress = ?';
     connection.queryAsync(query, [req.params.screencastId, req.connection.remoteAddress]).spread(function(referrals) {
       if (referrals.length !== 0) 
-        // the user with this ip has seen the screencast before, do not count the view again.
+        // the user with this ip has seen the screencast before, do not increment the referral count again.
         return;
-      var query = 
-        'UPDATE screencasts \
-           SET referralCount = referralCount + 1 \
-         WHERE screencastId = ?';
-      connection.queryAsync(query, req.params.screencastId);
-      connection.query('INSERT INTO referrals SET ?', { 
-        screencastId: req.params.screencastId, 
-        refereeRemoteAddress: req.connection.remoteAddress
+      connection.beginTransactionAsync().then (function() {
+        var query = 
+          'UPDATE screencasts \
+             SET referralCount = referralCount + 1 \
+           WHERE screencastId = ?';
+        return connection.queryAsync(query, req.params.screencastId)
+      }).then(function() {
+        return connection.queryAsync('INSERT INTO referrals SET ?', { 
+          screencastId: req.params.screencastId, 
+          refereeRemoteAddress: req.connection.remoteAddress
+        });
+      }).then(function() {
+        return connection.commit();
+      }).error(function(error){
+        winston.error(error);
+        return connection.rollback();
       });
     });
-  }); 
+  });
 });
 
 router.get('/tagged/other',function(req,res) { 
