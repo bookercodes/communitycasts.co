@@ -66,32 +66,28 @@ router.get('/tagged/other', function(req, res) {
          c.channelName, \
          v.durationInSeconds, \
          v.submissionDate, \
-         GROUP_CONCAT(m.tagName) as tags \
+       GROUP_CONCAT(m.tagName) as tags \
        FROM screencasts v \
        JOIN screencastTags m \
          ON v.screencastId = m.screencastId \
        JOIN channels c \
          ON c.channelId = v.channelId \
-       WHERE m.tagName not in ( \
-         SELECT * FROM ( \
-           SELECT t.tagName \
-           FROM tags t \
-           JOIN screencastTags m \
-             ON m.tagName = t.tagName \
-           WHERE t.tagName in ( \
-             SELECT tagName \
-             FROM screencastTags m \
-             JOIN screencasts v \
-               ON m.screencastId = v.screencastId \
-             WHERE v.approved = 1) \
-           GROUP by t.tagName \
-           ORDER BY COUNT(*) desc, t.tagName desc\
-           LIMIT 9) as t) \
-      GROUP by v.screencastId '
+       LEFT JOIN ( \
+         SELECT t.tagName \
+         FROM tags t \
+         JOIN screencastTags m \
+           ON m.tagName = t.tagName \
+         GROUP BY t.tagName \
+         ORDER BY COUNT(*) DESC, t.tagName DESC \
+         LIMIT 9 \
+       ) tags9 \
+       ON m.tagname = tags9.tagname \
+       GROUP BY v.screencastId, v.title \
+       HAVING SUM(tags9.tagname IS NULL) > 0';
       if (req.query.sort === 'popular')
-        query += ' ORDER BY v.referralCount desc';
+        query += ' ORDER BY v.referralCount DESC';
       else
-        query += ' ORDER BY v.submissionDate desc';
+        query += ' ORDER BY v.submissionDate DESC';
       query += ' LIMIT ' + parseInt(req.query.offset) + ', ' + parseInt(req.query.limit);
       return connection.queryAsync(query);
   }).spread(function(screencasts) {
