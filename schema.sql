@@ -3,21 +3,21 @@ CREATE DATABASE screencastHub;
 USE screencastHub;
 
 CREATE TABLE channels (
-  channelId   VARCHAR(48),
-  channelName VARCHAR(200) NOT NULL,
+  channelId   NVARCHAR(48),
+  channelName NVARCHAR(200) NOT NULL,
 
   PRIMARY KEY (channelId)
 );
 
 CREATE TABLE tags (
-  tagName      VARCHAR(50),
+  tagName      NVARCHAR(50),
   creationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
   PRIMARY KEY (tagName)
 );
 
 CREATE TABLE screencastStatus (
-  status VARCHAR(50),
+  status NVARCHAR(50),
 
   PRIMARY KEY (status)
 );
@@ -26,12 +26,12 @@ INSERT INTO screencastStatus
   VALUES ('approved'), ('pending'), ('denied');
 
 CREATE TABLE screencasts (
-  screencastId      VARCHAR(11),
-  channelId         VARCHAR(48),
-  title             VARCHAR(200) NOT NULL,
+  screencastId      NVARCHAR(11),
+  channelId         NVARCHAR(48),
+  title             NVARCHAR(200) NOT NULL,
   durationInSeconds INT          NOT NULL,
   referralCount     INT         DEFAULT 0,
-  status            VARCHAR(50) DEFAULT 'pending',
+  status            NVARCHAR(50) DEFAULT 'pending',
   submissionDate    TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
 
   PRIMARY KEY(screencastId),
@@ -42,8 +42,8 @@ CREATE TABLE screencasts (
 );
 
 CREATE TABLE screencastTags (
-  screencastId VARCHAR(11),
-  tagName      VARCHAR(50),
+  screencastId NVARCHAR(11),
+  tagName      NVARCHAR(50),
 
   PRIMARY KEY (screencastId, tagName),
   FOREIGN KEY (screencastId)
@@ -53,8 +53,8 @@ CREATE TABLE screencastTags (
 );
 
 CREATE TABLE referrals (
-  screencastId  VARCHAR(11),
-  refereeRemoteAddress VARCHAR(20) NOT NULL,
+  screencastId  NVARCHAR(11),
+  refereeRemoteAddress NVARCHAR(20) NOT NULL,
 
   PRIMARY KEY (screencastId, refereeRemoteAddress),
   FOREIGN KEY (screencastId)
@@ -62,8 +62,8 @@ CREATE TABLE referrals (
 );
 
 CREATE TABLE tagSynonyms (
-  sourceTagName VARCHAR(50),
-  targetTagName VARCHAR(50),
+  sourceTagName NVARCHAR(50),
+  targetTagName NVARCHAR(50),
 
   PRIMARY KEY (sourceTagName),
   FOREIGN KEY (targetTagName)
