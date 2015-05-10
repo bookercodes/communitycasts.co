@@ -1,12 +1,14 @@
-var express    = require('express');
-var path       = require('path');
-var bodyParser = require('body-parser');
-var mysql      = require('mysql');
-var validator  = require('express-validator');
-var moment     = require('moment');
-var promise    = require('bluebird');
+var express         = require('express');
+var path            = require('path');
+var bodyParser      = require('body-parser');
+var mysql           = require('mysql');
+var validator       = require('express-validator');
+var moment          = require('moment');
+var promise         = require('bluebird');
+var session         = require('express-session');
+var flash           = require('express-flash');
 
-var screencasts  = require('./routes/screencasts');
+var screencasts     = require('./routes/screencasts');
 var screencastsApi  = require('./routes/screencastsApi');
 
 var app = express();
@@ -28,6 +30,12 @@ app.set('view engine', 'jade');
 // middlware
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(session({
+  secret: 'hello 123',
+  resave: true,
+  saveUninitialized: true
+}));
+app.use(flash());
 app.use(validator({
   errorFormatter: function(param, msg) {
     return msg;

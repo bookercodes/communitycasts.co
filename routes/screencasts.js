@@ -59,8 +59,8 @@ router.post('/submit', function (req, res) {
         var values = tags.map(function(tag) { return [screencast.screencastId, tag]; });
         return connection.queryAsync('INSERT INTO screencastTags VALUES ?', [values])
       }).then(function() {
-        res.locals.message = 'Thank you for your submission. Your submission will be reviewed by the moderators and if it meets our guidelines, it\'ll appear on the home page soon!';
-        res.render('submit');
+        req.flash('success', 'Thank you for your submission. Your submission will be reviewed by the moderators and if it meets our guidelines, it\'ll appear on the home page soon!');
+        res.redirect('/screencasts/submit');
         return connection.commit();
       }).error(function(error){
         winston.error(error);
