@@ -106,6 +106,9 @@ router.get('/tagged/:technology',function(req,res) {
        ON m.tagName = t.tagName \
      WHERE t.tagName = ' + connection.escape(req.params.technology) + '\
      GROUP by t.tagName';
+  console.log(query);
+  console.log(req.params.technology);
+  console.log(connection.escape(req.params.technology));
   connection.queryAsync(query).spread(function(records) {
     if (records.length === 0) {
       return res.sendStatus(404)
