@@ -16,18 +16,29 @@ CREATE TABLE tags (
   PRIMARY KEY (tagName)
 );
 
+CREATE TABLE screencastStatus (
+  status VARCHAR(50),
+
+  PRIMARY KEY (status)
+);
+
+INSERT INTO screencastStatus 
+  VALUES ('approved'), ('pending'), ('denied');
+
 CREATE TABLE screencasts (
   screencastId      VARCHAR(11),
   channelId         VARCHAR(48),
   title             VARCHAR(200) NOT NULL,
   durationInSeconds INT          NOT NULL,
-  referralCount     INT       DEFAULT 0,
-  approved          BIT       DEFAULT 1,
-  submissionDate    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  referralCount     INT         DEFAULT 0,
+  status            VARCHAR(50) DEFAULT 'pending',
+  submissionDate    TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
 
   PRIMARY KEY(screencastId),
   FOREIGN KEY (channelId)
-    REFERENCES channels(channelId)
+    REFERENCES channels(channelId),
+  FOREIGN KEY (status)
+    REFERENCES screencastStatus(status)
 );
 
 CREATE TABLE screencastTags (

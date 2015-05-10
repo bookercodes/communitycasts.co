@@ -20,7 +20,7 @@ router.get('/', function(req, res) {
          ON channels.channelId = screencasts.channelId \
        JOIN screencastTags screencastTags \
          ON screencastTags.screencastId = screencasts.screencastId \
-       WHERE screencasts.approved = 1 \
+       WHERE screencasts.status = \'approved\' \
        GROUP BY screencasts.screencastId';
       if (req.query.sort === 'popular') 
         query += ' ORDER BY screencasts.referralCount DESC';
@@ -52,7 +52,7 @@ router.get('/tagged/other', function(req, res) {
            FROM screencastTags m \
            JOIN screencasts v \
              ON m.screencastId = v.screencastId \
-           WHERE v.approved = 1) \
+           WHERE v.status = \'approved\') \
          GROUP by t.tagName \
          ORDER BY COUNT(*) desc, t.tagName desc \
          LIMIT 9) as t)';
@@ -122,7 +122,7 @@ router.get('/tagged/:technology',function(req,res) {
         ON c.channelId = v.channelId \
       JOIN screencastTags m \
         ON m.screencastId = v.screencastId \
-      WHERE v.approved = 1 and v.screencastId in ( \
+      WHERE v.status = \'approved\' and v.screencastId in ( \
         SELECT screencastId \
         FROM screencastTags m \
         WHERE m.tagName = ' + connection.escape(req.params.technology) + ') \

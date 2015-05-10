@@ -46,7 +46,7 @@ app.use(function(req, res, next) {
      FROM screencastTags \
      JOIN screencasts \
        ON screencasts.screencastId = screencastTags.screencastId \
-     WHERE screencasts.approved = 1) \
+     WHERE screencasts.status = \'approved\') \
    GROUP BY tags.tagName \
    ORDER BY count DESC, tags.creationDate \
    LIMIT 9';

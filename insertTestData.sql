@@ -1,3 +1,5 @@
+USE screencastHub;
+
 INSERT INTO tags(tagName) VALUES 
   ('Python'),
   ('Html'),
@@ -27,7 +29,7 @@ INSERT INTO screencasts (screencastId, channelId, title, durationInSeconds) VALU
   ('F3WpBsc0QEw', 'UCpOIUW62tnJTtpWFABxWZ8g', 'Git & GitHub: Creating a Repository (2/11)', 100);
 
 UPDATE screencasts SET
-  approved = 1;
+  status = 'approved';
 
 INSERT INTO screencastTags VALUES   
   ('N4mEzFDjqtA', 'Python'),

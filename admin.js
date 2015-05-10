@@ -28,11 +28,11 @@ var property = {
 
 function process(screencastId, approve) {
   if (approve) {
-    connection.queryAsync('UPDATE screencasts SET approved = 1 WHERE screencastId = ?', screencastId);
+    connection.queryAsync('UPDATE screencasts SET status = \'approved\' WHERE screencastId = ?', screencastId);
   }
 }
 
-connection.queryAsync('SELECT * FROM screencasts WHERE approved = 0').spread(function(screencasts) {
+connection.queryAsync('SELECT * FROM screencasts WHERE status = \'pending\'').spread(function(screencasts) {
   var current = promise.resolve();
   promise.map(screencasts, function(screencast) {
     current = current.then(function() {
