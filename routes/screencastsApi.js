@@ -107,6 +107,9 @@ router.get('/tagged/:technology',function(req,res) {
      WHERE t.tagName = ' + connection.escape(req.params.technology) + '\
      GROUP by t.tagName';
   connection.queryAsync(query).spread(function(records) {
+    if (records.length === 0) {
+      return res.sendStatus(404)
+    }
     response.total = records[0].total;
     var query = 
       'SELECT \
@@ -132,11 +135,12 @@ router.get('/tagged/:technology',function(req,res) {
     else  
       query += ' ORDER BY v.submissionDate DESC';
     query += ' LIMIT ' + parseInt(req.query.offset) + ', ' + parseInt(req.query.limit);
-    return connection.queryAsync(query);
-  }).spread(function (screencasts) {
-    common.convertRecordsToLocals(screencasts);
-    response.rows = screencasts;
-    res.send(response);
+
+    connection.queryAsync(query).spread(function (screencasts) {
+      common.convertRecordsToLocals(screencasts);
+      response.rows = screencasts;
+      res.send(response);
+    });
   });
 });
 
