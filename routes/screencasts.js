@@ -20,12 +20,22 @@ router.post('/submit', function (req, res) {
   var screencastId = youtube.parseIdFromUrl(req.body.url);
   var tags = req.body.technologies.split(',');
   var query = 
-    'SELECT screencastId \
+    'SELECT screencastId, status \
      FROM screencasts \
      WHERE screencastId = ?';
   connection.queryAsync(query, screencastId).spread(function (screencasts) {
     if (screencasts.length === 1) {
-      res.locals.errors = ['This <strong>screencast link</strong> has already been submitted.'];
+      switch (screencasts[0].status) {
+        case 'approved': 
+          res.locals.errors = ['This <strong>screencast link</strong> has already been submitted.'];
+          break;
+        case 'pending': 
+          res.locals.errors = ['This <strong>screencast link</strong> has already been submitted and is <strong>pending approval</strong>. Hopefully it\'ll appear on the site soon.'];
+          break;
+        case 'denied': 
+          res.locals.errors = ['This <strong>screencast link</strong> has already been submitted and <strong>denied</strong> because it does not meet our guidelines. If you would like to dispute this, please get in touch.'];
+          break;
+      }
       res.render('submit');
       return;
     }

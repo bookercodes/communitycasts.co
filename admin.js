@@ -29,6 +29,8 @@ var property = {
 function process(screencastId, approve) {
   if (approve) {
     connection.queryAsync('UPDATE screencasts SET status = \'approved\' WHERE screencastId = ?', screencastId);
+  } else {
+    connection.queryAsync('UPDATE screencasts SET status = \'denied\' WHERE screencastId = ?', screencastId);
   }
 }
 
