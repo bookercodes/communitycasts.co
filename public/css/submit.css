@@ -39,6 +39,7 @@ textarea {
   border: 1px solid #ff4136;
   -webkit-box-shadow: inset 0 2px 0 rgba(0,0,0,0.075);
   box-shadow: inset 0 2px 0 rgba(0,0,0,0.075);
+}
 
 /* attribution: https://github.com/timschlechter/bootstrap-tagsinput/blob/cc8969f2fb5faeeac03a71f86361643eca44e5a7/examples/assets/app.css#L17 */
 .twitter-typeahead .tt-query,
