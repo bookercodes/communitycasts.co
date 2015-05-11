@@ -47,15 +47,15 @@ router.post('/submit', function (req, res) {
       }
       connection.beginTransactionAsync().then(function() {
         return connection.queryAsync('INSERT IGNORE INTO channels SET ?', screencast.channel);
-      }).then(function(result) {
+      }).then(function() {
         var record = screencast;
         record.channelId = screencast.channel.channelId;
         delete record.channel;
         return connection.query('INSERT INTO screencasts SET ?', record);
-      }).then(function(result) {
+      }).then(function() {
         var values = tags.map(function(tag) { return [tag]; });
         return connection.queryAsync('INSERT IGNORE INTO tags(tagName) VALUES ?', [values])
-      }).then(function(result) {
+      }).then(function() {
         var values = tags.map(function(tag) { return [screencast.screencastId, tag]; });
         return connection.queryAsync('INSERT INTO screencastTags VALUES ?', [values])
       }).then(function() {
