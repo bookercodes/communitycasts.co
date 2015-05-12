@@ -1,13 +1,13 @@
-UPDATE technology_video_map
-  JOIN technologySynonyms
-    ON technology_video_map.technologyName = technologySynonyms.sourcetechnologyName
+UPDATE screencastTags
+  JOIN tagSynonyms
+    ON screencastTags.tagName = tagSynonyms.sourceTagName
 SET 
-  technologyName = technologySynonyms.targetTechnologyName;
+  tagName = technologySynonyms.targetTagName;
     
 DELETE
-FROM technologies
-WHERE technologyName NOT IN (
-  SELECT technologyName
-  FROM technology_video_map
-  WHERE technology_video_map.technologyName = technologies.technologyName
+FROM tags
+WHERE tagName NOT IN (
+  SELECT tagName
+  FROM screencastTags
+  WHERE screencastTags.tagName = tags.tagName
 );
