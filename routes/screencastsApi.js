@@ -26,7 +26,7 @@ router.get('/', function(req, res) {
         query += ' ORDER BY screencasts.referralCount DESC';
       else 
         query += ' ORDER BY screencasts.submissionDate DESC';
-      query += ' LIMIT ' + parseInt(req.query.offset) + ', ' + parseInt(req.query.limit);
+      query += ' LIMIT ' + (parseInt(req.query.offset) || 0) + ', ' + (parseInt(req.query.limit) || 10);
       return connection.queryAsync(query);
   }).spread(function(screencasts) {
     common.convertRecordsToLocals(screencasts);
@@ -88,7 +88,7 @@ router.get('/tagged/other', function(req, res) {
         query += ' ORDER BY v.referralCount DESC';
       else
         query += ' ORDER BY v.submissionDate DESC';
-      query += ' LIMIT ' + parseInt(req.query.offset) + ', ' + parseInt(req.query.limit);
+      query += ' LIMIT ' + (parseInt(req.query.offset) || 0) + ', ' + (parseInt(req.query.limit) || 10);
       return connection.queryAsync(query);
   }).spread(function(screencasts) {
     common.convertRecordsToLocals(screencasts);
@@ -137,7 +137,7 @@ router.get('/tagged/:technology',function(req,res) {
       query += ' ORDER BY v.referralCount DESC';
     else  
       query += ' ORDER BY v.submissionDate DESC';
-    query += ' LIMIT ' + parseInt(req.query.offset) + ', ' + parseInt(req.query.limit);
+    query += ' LIMIT ' + (parseInt(req.query.offset) || 0) + ', ' + (parseInt(req.query.limit) || 10);
 
     connection.queryAsync(query).spread(function (screencasts) {
       common.convertRecordsToLocals(screencasts);
