@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var promise = require('bluebird');
 var prompt = require('prompt');
 var mysql   = require('mysql');
