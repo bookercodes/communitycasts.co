@@ -46,6 +46,12 @@ app.use(validator({
       tags = tags.filter(function(tag) { return tag != '' });
       tags = tags.filter(function(item, pos, self) { return self.indexOf(item) == pos; });
       return tags.length < 3;
+    },
+    doesNotContainTagOther: function(value) {
+      var tags = value.split(',');
+      tags = tags.map(function(tag) { return tag.toLowerCase(); }); 
+      var found = tags.some(function(tag) { return tag.indexOf('other') != -1; });
+      return !found;
     }
   }
 }));
