@@ -41,25 +41,25 @@ router.get('/', function(req, res) {
 
 router.get('/tagged/other', function(req, res) {
   var response = {};
-  var query = 
-    'SELECT \
-       COUNT(m.tagName) AS total \
-     FROM screencastTags m \
-     WHERE m.tagName NOT IN ( \
-       SELECT * FROM ( \
+    var query = 
+      'SELECT \
+         COUNT(*) AS total \
+       FROM screencasts v \
+       JOIN screencastTags m \
+         ON v.screencastId = m.screencastId \
+       LEFT JOIN ( \
          SELECT t.tagName \
          FROM tags t \
          JOIN screencastTags m \
            ON m.tagName = t.tagName \
-         WHERE t.tagName in ( \
-           SELECT tagName \
-           FROM screencastTags m \
-           JOIN screencasts v \
-             ON m.screencastId = v.screencastId \
-           WHERE v.status = \'approved\') \
-         GROUP by t.tagName \
-         ORDER BY COUNT(*) desc, t.tagName desc \
-         LIMIT 9) as t)';
+         GROUP BY t.tagName \
+         ORDER BY COUNT(*) DESC, t.creationDate \
+         LIMIT 9 \
+       ) tags9 \
+       ON m.tagname = tags9.tagname \
+       WHERE v.status = \'approved\' \
+       GROUP BY v.screencastId, v.title \
+       HAVING SUM(tags9.tagname IS NULL) > 0';
   connection.queryAsync(query).spread(function (records) {
     response.total = records[0].total;
     var query = 
@@ -86,6 +86,7 @@ router.get('/tagged/other', function(req, res) {
          LIMIT 9 \
        ) tags9 \
        ON m.tagname = tags9.tagname \
+       WHERE v.status = \'approved\' \
        GROUP BY v.screencastId, v.title \
        HAVING SUM(tags9.tagname IS NULL) > 0';
       if (req.query.sort === 'popular')
@@ -103,14 +104,19 @@ router.get('/tagged/other', function(req, res) {
 
 router.get('/tagged/:technology',function(req,res) { 
   var response = {};
+
   var query = 
-    'SELECT COUNT(*) as total \
-     FROM tags t \
+    'SELECT COUNT(*) AS total \
+     FROM screencasts v \
      JOIN screencastTags m \
-       ON m.tagName = t.tagName \
-     WHERE t.tagName = ' + connection.escape(req.params.technology) + '\
-     GROUP by t.tagName';
-  connection.queryAsync(query).spread(function(records) {
+       ON m.screencastId = v.screencastId \
+     WHERE v.status = \'approved\' AND v.screencastId IN ( \
+       SELECT screencastId \
+       FROM screencastTags m \
+       WHERE m.tagName = ?) \
+     GROUP BY v.screencastId'
+
+  connection.queryAsync(query, req.params.technology).spread(function(records) {
     if (records.length === 0) {
       return res.sendStatus(404)
     }
@@ -129,7 +135,7 @@ router.get('/tagged/:technology',function(req,res) {
         ON c.channelId = v.channelId \
       JOIN screencastTags m \
         ON m.screencastId = v.screencastId \
-      WHERE v.status = \'approved\' and v.screencastId in ( \
+      WHERE v.status = \'approved\' AND v.screencastId IN ( \
         SELECT screencastId \
         FROM screencastTags m \
         WHERE m.tagName = ' + connection.escape(req.params.technology) + ') \

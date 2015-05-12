@@ -61,24 +61,18 @@ app.use(function(req, res, next) {
     return;
   }
 
-  var countQuery = 
-  '';
-
   var query = 
   'SELECT \
-     tags.tagName, \
+     t.tagName, \
      COUNT(*) AS count \
-   FROM tags \
-   JOIN screencastTags \
-     ON screencastTags.tagName = tags.tagName \
-   WHERE tags.tagName IN ( \
-     SELECT tagName \
-     FROM screencastTags \
-     JOIN screencasts \
-       ON screencasts.screencastId = screencastTags.screencastId \
-     WHERE screencasts.status = \'approved\') \
-   GROUP BY tags.tagName \
-   ORDER BY count DESC, tags.creationDate \
+   FROM tags t \
+   JOIN screencastTags st \
+     ON st.tagName = t.tagName \
+   JOIN screencasts s \
+     ON s.screencastId = st.screencastId \
+   WHERE s.status = \'approved\' \
+   GROUP BY t.tagName \
+   ORDER BY count DESC, t.creationDate \
    LIMIT 10';
   connection.queryAsync(query).spread(function(tags) {
     if (tags.length === 10) {
