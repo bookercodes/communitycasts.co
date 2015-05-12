@@ -4,7 +4,11 @@ var common  = require('../common');
 
 router.get('/', function(req, res) {
   var response = {};
-  connection.queryAsync('SELECT COUNT(*) AS screncastCount FROM screencasts').spread(function(records) {
+  var query = 
+    'SELECT COUNT(*) AS screncastCount \
+     FROM screencasts \
+     WHERE screencasts.status = \'approved\'';
+  connection.queryAsync(query).spread(function(records) {
     response.total = records[0].screncastCount
     var query = 
       'SELECT \
