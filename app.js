@@ -39,6 +39,14 @@ app.use(flash());
 app.use(validator({
   errorFormatter: function(param, msg) {
     return msg;
+  },
+  customValidators: {
+    hasLessThan3Tags: function(value) {
+      var tags = value.split(',');
+      tags = tags.filter(function(tag) { return tag != '' });
+      tags = tags.filter(function(item, pos, self) { return self.indexOf(item) == pos; });
+      return tags.length < 3;
+    }
   }
 }));
 app.use(function(req, res, next) {

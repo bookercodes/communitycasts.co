@@ -12,6 +12,7 @@ router.post('/submit', function (req, res) {
   req.checkBody('url', 'Enter a <strong>screencast link</strong>.').notEmpty();
   req.checkBody('url', 'Enter a valid YouTube <strong>screencast link</strong>.').matches(/^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/);
   req.checkBody('technologies', 'Enter at least one <strong>technology</strong>').notEmpty();
+  req.checkBody('technologies', 'Enter less than three <strong>technologies</strong>.').hasLessThan3Tags();
   var errors = req.validationErrors();
   if (errors) {
     res.render('submit', { errors: errors });
