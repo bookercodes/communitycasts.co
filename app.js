@@ -50,6 +50,10 @@ app.use(validator({
   }
 }));
 app.use(function(req, res, next) {
+  if(req.url.indexOf('/api/') === 0) {
+    next();
+    return;
+  }
   var query = 
   'SELECT \
      tags.tagName, \
