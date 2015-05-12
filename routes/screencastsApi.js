@@ -82,7 +82,7 @@ router.get('/tagged/other', function(req, res) {
          JOIN screencastTags m \
            ON m.tagName = t.tagName \
          GROUP BY t.tagName \
-         ORDER BY COUNT(*) DESC, t.tagName DESC \
+         ORDER BY COUNT(*) DESC, t.creationDate \
          LIMIT 9 \
        ) tags9 \
        ON m.tagname = tags9.tagname \
