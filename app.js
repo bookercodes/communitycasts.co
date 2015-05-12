@@ -54,6 +54,10 @@ app.use(function(req, res, next) {
     next();
     return;
   }
+
+  var countQuery = 
+  '';
+
   var query = 
   'SELECT \
      tags.tagName, \
@@ -69,9 +73,10 @@ app.use(function(req, res, next) {
      WHERE screencasts.status = \'approved\') \
    GROUP BY tags.tagName \
    ORDER BY count DESC, tags.creationDate \
-   LIMIT 9';
+   LIMIT 10';
   connection.queryAsync(query).spread(function(tags) {
-    if (tags.length === 9) {
+    if (tags.length === 10) {
+      tags.pop();
       tags.push({ 
         tagName:'Other' 
       });
