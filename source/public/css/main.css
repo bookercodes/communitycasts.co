@@ -34,3 +34,34 @@ button.close {
 button.close:hover {
   color: black;
 }
+
+
+.banner {
+  background-color: #158cba;
+  display: none;
+}
+
+.banner-text {
+  color: white;
+  padding: 15px;
+  margin: 0;
+}
+
+.banner-text a {
+  color: white;
+  text-decoration: underline;
+}
+
+.banner-info-icon {
+  margin-right: 10px;
+}
+
+.banner .close {
+  color: white;
+  font-size: 16px;
+  opacity: 1;
+}
+
+.banner .close:hover {
+  color: white;
+}

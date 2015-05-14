@@ -5,7 +5,7 @@ $(function() {
     $(".jumbotron").show();
   }
   
-  $("button.close").click(function() {
+  $(".jumbotron button.close").click(function() {
     $(".jumbotron").hide();
     setCookie('jumbotron-visible', 'false');
   });
