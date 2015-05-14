@@ -7,12 +7,16 @@ block styles
   link(rel='stylesheet', href='/components/bootstrap-table/dist/bootstrap-table.min.css')
 
 block scripts
+  script(src='/components/js-cookie/src/js.cookie.js')
   script(src='/components/bootstrap-table/dist/bootstrap-table.min.js')
   script(src='/js/table.js')
+  script(src='/js/jumbotron.js')
 
 block body
   
   .jumbotron
+    button.close
+      span &times;
     h1 Video Hub
     p Video Hub is the place to find new programming screencasts on <a href="youtube.com">YouTube</a>. Have a gander and learn something new or <a href="/submit">submit</a> your own screencast.
   

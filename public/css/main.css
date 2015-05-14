@@ -19,3 +19,18 @@ footer {
   padding: 35px 0;
   margin-top: 20px;
 }
+
+.jumbotron {
+  position: relative;
+  display: none;
+}
+
+button.close {
+  top: 18px;
+  right: 18px;
+  position: absolute;
+  color: #999999;
+}
+button.close:hover {
+  color: black;
+}
