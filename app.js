@@ -93,12 +93,6 @@ app.get('/', function (req, res) {
   res.render('home');
 });
 
-app.get('/terms', function(req, res) {
-  res.render('terms');
-});
-app.get('/about', function(req, res) {
-  res.render('about');
-});
 app.get('/api/tags', function(req, res) {
   connection.queryAsync('SELECT tagName FROM tags').spread(function(tags) {
     res.send(tags);
