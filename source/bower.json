@@ -13,6 +13,7 @@
     "typeahead.js": "~0.10.5",
     "bootswatch-dist": "3.3.4-lumen",
     "jquery-validation": "~1.13.1",
-    "js-cookie": "~1.5.1"
+    "js-cookie": "~1.5.1",
+    "jquery-ui": "~1.11.4"
   }
 }

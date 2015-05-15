@@ -96,8 +96,12 @@ app.get('/about', function (req, res) {
   res.render('about');
 });
 app.get('/api/tags', function(req, res) {
-  connection.queryAsync('SELECT tagName FROM tags').spread(function(tags) {
-    res.send(tags);
+  var term = req.query.term;
+  // TODO: SQLi
+  connection.queryAsync('SELECT tagName FROM tags WHERE tagName LIKE \'%' + term + '%\' LIMIT 5').spread(function(tags) {
+    var x = tags.map(function(tag) { return tag.tagName });
+    console.log(x);
+    res.send(x);
   })
 })
 app.use(function(req, res, next) {
