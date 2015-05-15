@@ -62,7 +62,7 @@ $(function() {
   $.validator.addMethod("maximumOf2Tags", function (value, element) {
     var tags = attainDistinctTags(value);
     return tags.length <= 2;
-  }, "You cannot enter more than three tags.");
+  }, "You cannot enter more than two tags.");
 
   var validationRules = {
     url: {
