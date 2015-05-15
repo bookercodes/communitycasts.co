@@ -38,32 +38,16 @@ $(function() {
     });
   });
 
-  var technologies = new Bloodhound({
-    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    prefetch: {
-      url: '../api/tags',
-      filter: function(list) {
-        return $.map(list, function(tag) {
-          return { name: tag.tagName }; });
-      }
-    }
-  });
-  technologies.initialize();
-  var tagsInput = $("#technologies").tagsinput({
-    maxTags: 2,
-    typeaheadjs: {
-        name: 'technologies',
-        displayKey: 'name',
-        valueKey: 'name',
-        highlight: true,
-        source: technologies.ttAdapter()
-      }
-  });
-
   $.validator.addMethod("youtubeVideoUrl", function (value, element) {
     return /^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/.test(value);
   }, "Please enter a valid YouTube video url.");
+
+  $.validator.addMethod("maximumOf2Tags", function (value, element) {
+    var tags = value.split(',');
+    tags = tags.filter(function(tag) { return tag != '' });
+    tags = tags.filter(function(item, pos, self) { return self.indexOf(item) == pos; });
+    return tags.length < 3;
+  }, "You cannot enter more than three tags.");
 
   var validator = $("#submitForm").validate({
     ignore: [],
@@ -79,13 +63,6 @@ $(function() {
         .closest('.form-group')
         .removeClass('has-error');
     },
-    errorPlacement: function(error, element) {
-      if(element.attr("id") === "technologies") {
-        error.insertAfter($(".bootstrap-tagsinput"));
-      } else {
-        error.insertAfter(element);
-      }
-    },
     rules: {
       url: {
         youtubeVideoUrl: true,
@@ -100,7 +77,8 @@ $(function() {
         }
       },
       technologies: {
-        required: true
+        required: true,
+        maximumOf2Tags: true
       }
     },
     messages: {
@@ -113,18 +91,18 @@ $(function() {
     }
   });
 
-  // jQuery validator only performs validation upon an input element losing focus or a key being pressed up. Because
-  // the #technologies input is hidden and updated by the bootstrap-tagsinput plugin, we need to manually invoke
-  // the "valid" method.
-  $('#technologies').on('itemAdded', function(event) {
-    $(this).valid();
-  });
-  $('#technologies').on('itemRemoved', function(event) {
-    $(this).valid();
-  });
+  $("#technologies").keyup(function() {
 
-  $("#technologies").change(function(e){
-    validator.valid();
+    var tags = $(this).val().split(',');
+    tags = tags.filter(function(tag) { return tag != '' });
+    tags = tags.filter(function(item, pos, self) { return self.indexOf(item) == pos; });
+
+    
+    $("#tags").empty();
+    tags.forEach(function(tag) {
+      $("#tags").append("<li>" + tag + "</li>");
+    });
+
   });
 
 });
