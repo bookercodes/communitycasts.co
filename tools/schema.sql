@@ -49,7 +49,7 @@ CREATE TABLE screencastTags (
   FOREIGN KEY (screencastId)
     REFERENCES screencasts(screencastId),
   FOREIGN KEY (tagName)
-    REFERENCES tags(tagName)
+    REFERENCES tags(tagName) ON UPDATE CASCADE
 );
 
 CREATE TABLE referrals (
