@@ -22,6 +22,8 @@ router.post('/submit', function (req, res) {
   }
   var screencastId = youtube.parseIdFromUrl(req.body.url);
   var tags = req.body.technologies.split(',');
+  tags = tags.filter(function(tag) { return tag != '' });
+  tags = tags.filter(function(item, pos, self) { return self.indexOf(item) == pos; });
   var query = 
     'SELECT screencastId, status \
      FROM screencasts \
