@@ -1,5 +1,7 @@
 $(function() {
 
+
+
   function attainDistinctTags(value) {
     var tags = value.split(',');
     tags = tags.filter(function(tag) { return tag != '' });
@@ -49,7 +51,7 @@ $(function() {
     var tags = attainDistinctTags($(this).val());
     $("#tags").empty();
     tags.forEach(function(tag) {
-      $("#tags").append("<li>" + tag + "</li>");
+      $("#tags").append("<li> <span class=\"fa fa-tag\"></span>" + tag + "</li>");
     });
   });
   
