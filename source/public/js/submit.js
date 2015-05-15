@@ -1,5 +1,12 @@
 $(function() {
 
+  function attainDistinctTags(value) {
+    var tags = value.split(',');
+    tags = tags.filter(function(tag) { return tag != '' });
+    tags = tags.filter(function(item, pos, self) { return self.indexOf(item) == pos; });
+    return tags;
+  }
+  
   function parseVideoId(url) {
     var pattern = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     var match = url.match(pattern);
@@ -38,18 +45,52 @@ $(function() {
     });
   });
 
+  $("#technologies").keyup(function() {
+    var tags = attainDistinctTags($(this).val());
+    $("#tags").empty();
+    tags.forEach(function(tag) {
+      $("#tags").append("<li>" + tag + "</li>");
+    });
+  });
+  
   $.validator.addMethod("youtubeVideoUrl", function (value, element) {
     return /^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/.test(value);
   }, "Please enter a valid YouTube video url.");
 
   $.validator.addMethod("maximumOf2Tags", function (value, element) {
-    var tags = value.split(',');
-    tags = tags.filter(function(tag) { return tag != '' });
-    tags = tags.filter(function(item, pos, self) { return self.indexOf(item) == pos; });
-    return tags.length < 3;
+    var tags = attainDistinctTags(value);
+    return tags.length <= 2;
   }, "You cannot enter more than three tags.");
 
-  var validator = $("#submitForm").validate({
+  var validationRules = {
+    url: {
+      youtubeVideoUrl: true,
+      remote: function () {
+        return {
+          url: buildVideoApiUrl(parseVideoId($("#url").val())),
+          dataFilter: function(response) {
+            var json = JSON.parse(response);
+            return json.items.length !== 0;
+          }
+        };
+      }
+    },
+    technologies: {
+      required: true,
+      maximumOf2Tags: true
+    }
+  };
+
+  var validationMessages = {
+    url: {
+      remote: "This video does not exist."
+    },
+    technologies: {
+      required: 'Please enter at least one technology.'
+    }
+  };
+
+  $("#submitForm").validate({
     ignore: [],
     errorElement: "span",
     errorClass: "help-block",
@@ -63,46 +104,8 @@ $(function() {
         .closest('.form-group')
         .removeClass('has-error');
     },
-    rules: {
-      url: {
-        youtubeVideoUrl: true,
-        remote: function () {
-          return {
-            url: buildVideoApiUrl(parseVideoId($("#url").val())),
-            dataFilter: function(response) {
-              var json = JSON.parse(response);
-              return json.items.length !== 0;
-            }
-          };
-        }
-      },
-      technologies: {
-        required: true,
-        maximumOf2Tags: true
-      }
-    },
-    messages: {
-      url: {
-        remote: "This video does not exist."
-      },
-      technologies: {
-        required: 'Please enter at least one technology.'
-      }
-    }
+    rules: validationRules,
+    messages: validationMessages
   });
-
-  $("#technologies").keyup(function() {
-
-    var tags = $(this).val().split(',');
-    tags = tags.filter(function(tag) { return tag != '' });
-    tags = tags.filter(function(item, pos, self) { return self.indexOf(item) == pos; });
-
-    
-    $("#tags").empty();
-    tags.forEach(function(tag) {
-      $("#tags").append("<li>" + tag + "</li>");
-    });
-
-  });
-
+  
 });
