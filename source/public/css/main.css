@@ -25,12 +25,14 @@ footer {
   display: none;
 }
 
-button.close {
+.banner .close,
+.jumbotron .close {
   top: 18px;
   right: 18px;
   position: absolute;
   color: #999999;
 }
+
 button.close:hover {
   color: black;
 }
