@@ -37,13 +37,13 @@ block body
         name="url")
     .form-group
       label Video title
-      input.form-control#title(type="text", readonly)
+      input.form-control#title(type="text", readonly, tabindex="-1")
     .form-group
       label Video description
-      textarea.form-control#description(type="text", readonly)
+      textarea.form-control#description(type="text", readonly, tabindex="-1")
     .form-group
       label Channel name
-      input.form-control#channelName(type="text", readonly)
+      input.form-control#channelName(type="text", readonly, tabindex="-1")
     .form-group
       label Technologies (comma separated, max of two)
       input.form-control#technologies(
