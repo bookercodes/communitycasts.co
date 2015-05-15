@@ -4,7 +4,7 @@ $(function() {
 
   function attainDistinctTags(value) {
     var tags = value.split(',');
-    tags = tags.filter(function(tag) { return tag != '' });
+    tags = tags.filter(function(tag) { return /\S/.test(tag) });
     tags = tags.filter(function(item, pos, self) { return self.indexOf(item) == pos; });
     return tags;
   }
