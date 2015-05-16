@@ -1,4 +1,4 @@
-USE screencastHub;
+USE communityCasts;
 
 INSERT INTO tags(tagName) VALUES 
   ('Python'),

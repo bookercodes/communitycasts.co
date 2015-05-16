@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS screencastHub;
-CREATE DATABASE screencastHub;
-USE screencastHub;
+DROP DATABASE IF EXISTS communityCasts;
+CREATE DATABASE communityCasts;
+USE communityCasts;
 
 CREATE TABLE channels (
   channelId   NVARCHAR(48),
