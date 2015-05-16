@@ -97,10 +97,20 @@ app.get('/about', function (req, res) {
 });
 app.get('/api/tags', function(req, res) {
   var term = req.query.term;
-  // TODO: SQLi
-  connection.queryAsync('SELECT tagName FROM tags WHERE tagName LIKE \'%' + term + '%\' LIMIT 5').spread(function(tags) {
-    var x = tags.map(function(tag) { return tag.tagName });
-    res.send(x);
+  var query = 
+  'SELECT \
+     t.tagName \
+   FROM tags t \
+   JOIN screencastTags st \
+     ON st.tagName = t.tagName \
+   JOIN screencasts s \
+     ON s.screencastId = st.screencastId \
+   WHERE s.status = \'approved\' AND t.tagName LIKE \'%' + term + '%\' \
+   GROUP BY t.tagName \
+   LIMIT 5';
+  connection.queryAsync(query).spread(function(tags) {
+    tags = tags.map(function(tag) { return tag.tagName });
+    res.send(tags);
   })
 })
 app.use(function(req, res, next) {
