@@ -100,7 +100,6 @@ app.get('/api/tags', function(req, res) {
   // TODO: SQLi
   connection.queryAsync('SELECT tagName FROM tags WHERE tagName LIKE \'%' + term + '%\' LIMIT 5').spread(function(tags) {
     var x = tags.map(function(tag) { return tag.tagName });
-    console.log(x);
     res.send(x);
   })
 })
