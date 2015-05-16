@@ -99,11 +99,13 @@ $(function() {
     highlight: function(element) {
       $(element)
         .closest('.form-group')
-        .addClass('has-error');
+        .addClass('has-error')
+        .removeClass('has-success');
     },
     unhighlight: function(element) {
       $(element)
         .closest('.form-group')
+        .addClass('has-success')
         .removeClass('has-error');
     },
     rules: validationRules,
