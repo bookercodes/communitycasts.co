@@ -18,3 +18,7 @@
 textarea { 
   min-height: 90px;
 }
+
+.form-control {
+  border-radius: 0;
+}
