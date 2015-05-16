@@ -19,7 +19,7 @@ connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'password',
-  database: 'screencastHub'
+  database: 'communityCasts'
 });
 connection.connect();
 
