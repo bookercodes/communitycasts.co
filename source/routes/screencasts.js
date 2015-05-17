@@ -24,6 +24,7 @@ router.post('/submit', function (req, res) {
   var tags = req.body.technologies.split(',');
   tags = tags.filter(function(tag) { return /\S/.test(tag) });
   tags = tags.filter(function(item, pos, self) { return self.indexOf(item) == pos; });
+  tags = tags.map(function(tag) { return tag.trim(); });
   var query = 
     'SELECT screencastId, status \
      FROM screencasts \
