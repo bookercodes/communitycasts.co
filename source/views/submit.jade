@@ -15,7 +15,7 @@ block scripts
   script(src='/js/submit.js')
 
 block body
-  h2 Submit video
+  h2 Submit a screencast
   
   if messages.success
     .alert.alert-success
@@ -33,23 +33,23 @@ block body
 
   form#submitForm(method="post", novalidate)
     .form-group
-      label Video link
+      label Screencast link
       input.form-control#url(
         type="text", 
         name="url")
     .form-group
-      label Video title
+      label Screencast title
       input.form-control#title(type="text", readonly, tabindex="-1")
     .form-group
-      label Video description
+      label Screencast description
       textarea.form-control#description(type="text", readonly, tabindex="-1")
     .form-group
       label Channel name
       input.form-control#channelName(type="text", readonly, tabindex="-1")
     .form-group
-      label Technologies (comma separated, max of two)
-      input.form-control#technologies(
+      label Tags (comma separated, max of two)
+      input.form-control#tags-input(
         type="text", 
-        name="technologies")
+        name="tags")
       ul#tags
-    button.btn.btn-default(type="Submit") Submit video
+    button.btn.btn-default(type="Submit") Submit screencast

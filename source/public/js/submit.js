@@ -47,7 +47,7 @@ $(function() {
     });
   });
 
-  $("#technologies").keyup(function() {
+  $("#tags-input").keyup(function() {
     var tags = attainDistinctTags($(this).val());
     $("#tags").empty();
     tags.forEach(function(tag) {
@@ -77,7 +77,7 @@ $(function() {
         };
       }
     },
-    technologies: {
+    tags: {
       required: true,
       maximumOf2Tags: true
     }
@@ -87,8 +87,8 @@ $(function() {
     url: {
       remote: "This video does not exist."
     },
-    technologies: {
-      required: 'Please enter at least one technology.'
+    tags: {
+      required: 'Please enter at least one tag.'
     }
   };
 
@@ -143,7 +143,7 @@ $(function() {
     return split( term ).pop();
   }
 
-  $( "#technologies" )
+  $( "#tags-input" )
       // don't navigate away from the field on tab when selecting an item
       .bind( "keydown", function( event ) {
         if ( event.keyCode === $.ui.keyCode.TAB &&
