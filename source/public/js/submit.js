@@ -66,6 +66,7 @@ $(function() {
 
   var validationRules = {
     url: {
+      required: true,
       youtubeVideoUrl: true,
       remote: function () {
         return {
@@ -85,6 +86,7 @@ $(function() {
 
   var validationMessages = {
     url: {
+      required: "Please enter a screencast link.",
       remote: "This video does not exist."
     },
     tags: {

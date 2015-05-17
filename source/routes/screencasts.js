@@ -11,13 +11,14 @@ router.get('/submit', function(req, res) { res.render('submit'); });
 router.post('/submit', function (req, res) {
   req.checkBody('url', 'Enter a <strong>screencast link</strong>.').notEmpty();
   req.checkBody('url', 'Enter a valid YouTube <strong>screencast link</strong>.').matches(/^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/);
-  req.checkBody('tags', 'Enter at least one <strong>tag</strong>').notEmpty();
+  req.checkBody('tags', 'Enter at least one <strong>tag</strong>.').notEmpty();
   req.checkBody('tags', 'Enter less than three <strong>tags</strong>.').hasLessThan3Tags();
   req.checkBody('tags', 'You cannot enter the <strong>tag</strong> "Other". That is a reserved tag.').doesNotContainTagOther();
 
   var errors = req.validationErrors();
   if (errors) {
-    res.render('submit', { errors: errors });
+    req.flash('errors', errors);
+    res.redirect('/screencasts/submit');
     return;
   }
   var screencastId = youtube.parseIdFromUrl(req.body.url);
@@ -33,16 +34,16 @@ router.post('/submit', function (req, res) {
     if (screencasts.length === 1) {
       switch (screencasts[0].status) {
         case 'approved': 
-          res.locals.errors = ['This <strong>screencast link</strong> has already been submitted.'];
+          req.flash('errors', ['This <strong>screencast link</strong> has already been submitted.']);
           break;
         case 'pending': 
-          res.locals.errors = ['This <strong>screencast link</strong> has already been submitted and is <strong>pending approval</strong>. Hopefully it\'ll appear on the site soon.'];
+          req.flash('errors', ['This <strong>screencast link</strong> has already been submitted and is <strong>pending approval</strong>. Hopefully it\'ll appear on the site soon.']);
           break;
         case 'denied': 
-          res.locals.errors = ['This <strong>screencast link</strong> has already been submitted and <strong>denied</strong> because it does not meet our guidelines. If you would like to dispute this, please get in touch.'];
+          req.flash('errors', ['This <strong>screencast link</strong> has already been submitted and <strong>denied</strong> because it does not meet our guidelines. Sometimes mistakes happen. If you would like to dispute this, please <a href="mailto:alexbooker@fastmail.im">get in touch</a>.']);
           break;
       }
-      res.render('submit');
+      res.redirect('/screencasts/submit');
       return;
     }
     youtube.get(screencastId).then(function(screencast) {

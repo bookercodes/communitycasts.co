@@ -23,12 +23,12 @@ block body
         span &times;
       p=messages.success
   
-  if errors
+  if messages.errors
     .alert.alert-danger
       button.close(data-dismiss="alert")
         span &times;
       ul
-        for error in errors
+        for error in messages.errors
           li!= error
 
   form#submitForm(method="post", novalidate)

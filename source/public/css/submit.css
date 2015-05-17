@@ -23,3 +23,12 @@ textarea {
 .form-control {
   border-radius: 0;
 }
+
+.alert a {
+  color: white;
+  text-decoration: underline;
+}
+
+.alert a:hover {
+  text-decoration: none;
+}
