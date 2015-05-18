@@ -29,12 +29,10 @@ block body
         for error in messages.errors
           li!= error
 
-  form#submitForm(method="post", novalidate)
+  form#submitForm(method="post")
     .form-group
       label Screencast link
-      input.form-control#url(
-        type="text",
-        name="url")
+      input.form-control#url(type="text", name="url")
     .form-group
       label Screencast title
       input.form-control#title(type="text", readonly, tabindex="-1")
@@ -46,8 +44,6 @@ block body
       input.form-control#channelName(type="text", readonly, tabindex="-1")
     .form-group
       label Tags (comma separated, max of two)
-      input.form-control#tags-input(
-        type="text",
-        name="tags")
-      ul#tags
+      input.form-control#tags-input(type="text", name="tags")
+      ul.tag-list#tag-list
     button.btn.btn-primary(type="Submit") Submit screencast

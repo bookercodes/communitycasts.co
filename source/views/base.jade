@@ -7,7 +7,7 @@ html
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     meta(http-equiv='x-ua-compatible' content='ie=edge')
-      
+
     link(rel='stylesheet', href='/components/bootswatch-dist/css/bootstrap.min.css')
     link(rel='stylesheet', href='/components/font-awesome/css/font-awesome.min.css')
     link(rel='stylesheet', href='/css/main.css')
@@ -31,14 +31,14 @@ html
             if tags.length > 0
               li.dropdown
                 a.dropdown-toggle(href='#', data-toggle='dropdown')
-                  | Learn 
+                  | Learn
                   span.caret
                 ul.dropdown-menu
                     each tag in tags
                       li
                         a(href='/screencasts/tagged/#{encodeURIComponent(tag.tagName)}')
                           | #{tag.tagName}
-                          span.label.label-default.technology-label=tag.count
+                          span.label.label-default.tag-count=tag.count
           ul.nav.navbar-nav.navbar-right
             li
               a(href='/screencasts/submit')
@@ -46,11 +46,11 @@ html
                 | Submit
     .container
       block body
-    
+
     footer.footer
       div.container
         p Made in the United Kingdom by <a href="/">Booker</a>.
-  
+
     script(src='/components/jquery/dist/jquery.min.js')
     script(src='/components/bootswatch-dist/js/bootstrap.min.js')
     script(src='/components/js-cookie/src/js.cookie.js')

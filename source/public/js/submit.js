@@ -8,7 +8,7 @@ $(function() {
     tags = tags.filter(function(item, pos, self) { return self.indexOf(item) == pos; });
     return tags;
   }
-  
+
   function parseVideoId(url) {
     var pattern = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     var match = url.match(pattern);
@@ -49,12 +49,12 @@ $(function() {
 
   $("#tags-input").keyup(function() {
     var tags = attainDistinctTags($(this).val());
-    $("#tags").empty();
+    $("#tag-list").empty();
     tags.forEach(function(tag) {
-      $("#tags").append("<li> <span class=\"fa fa-tag\"></span>" + tag + "</li>");
+      $("#tag-list").append("<li> <span class=\"fa fa-tag\"></span>" + tag + "</li>");
     });
   });
-  
+
   $.validator.addMethod("youtubeVideoUrl", function (value, element) {
     return /^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/.test(value);
   }, "Please enter a valid YouTube video url.");
@@ -113,7 +113,7 @@ $(function() {
     rules: validationRules,
     messages: validationMessages
   });
-  
+
   var availableTags = [
     "ActionScript",
     "AppleScript",
