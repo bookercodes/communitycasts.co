@@ -1,42 +1,41 @@
-
-
-String.prototype.supplant = function (o) {
-  return this.replace(/{([^{}]*)}/g,
-    function (a, b) {
-      var r = o[b];
-      return typeof r === 'string' || typeof r === 'number' ? r : a;
+// sprintf is dependency function taken from bootstrap-table.js source code
+function sprintf (str) {
+  var args = arguments,
+    flag = true,
+    i = 1;
+  str = str.replace(/%s/g, function () {
+    var arg = args[i++];
+    if (typeof arg === 'undefined') {
+      flag = false;
+      return '';
     }
-  );
+    return arg;
+  });
+  return flag ? str : '';
 };
 
 function titleFormatter(value, row) {
-  return "<span title='Screencast title'><a target=\"_blank\" href='/screencasts/{screencastId}'>{title}</a></span>".supplant(row);
+  return sprintf('<span title="Screencast title"><a target=\"_blank\" href="/screencasts/%s">%s</a></span>', row.screencastId, row.title);
 }
 
 function channelNameFormatter(value, row) {
-  return "<span title='Channel name'><i class='fa fa-user'/>{channelName}</span>".supplant(row);
+  return sprintf('<span title="Channel name"><i class="fa fa-user"/>%s</span>', row.channelName);
 }
 
 function durationFormatter(value, row) {
-  return "<span title='Screencast duration'><i class='fa fa-clock-o'/>{duration}</span>".supplant(row);
+  return sprintf('<span title="Screencast duration"><i class="fa fa-clock-o"/>%s</span>', row.duration);
 }
 
 function technologiesFormatter(value, row) {
-  var html = "<i class='fa fa-folder-o'/> <a href='/screencasts/tagged/"+ encodeURIComponent(row.technologies[0]) + "' title='Tag 1'>{technology1}</a>";
-  if (row.technologies[1] != null)
-    html += " <a href='/screencasts/tagged/" + encodeURIComponent(row.technologies[1]) +"'  title='Tag 2'>{technology2}</a>";
-  return html.supplant({
-    technology1: row.technologies[0],
-    technology2: row.technologies[1],
-  });
+  var html = '<i class="fa fa-folder-o"/> <a href="/screencasts/tagged/'+ encodeURIComponent(row.technologies[0]) + '" title="Tag 1">%s</a>';
+  if (row.technologies[1] != null) {
+    html += ' <a href="/screencasts/tagged/' + encodeURIComponent(row.technologies[1]) + '"  title="Tag 2">%s</a>';
+  }
+  return sprintf(html, row.technologies[0], row.technologies[1]);
 }
 
 function showingRowsFormatter (pageFrom, pageTo, totalRows) {
-  return 'Showing {pageFrom} to {pageTo} of {totalRows} screencasts'.supplant({
-    pageFrom: pageFrom,
-    pageTo: pageTo,
-    totalRows: totalRows
-  });
+  return sprintf('Showing %s to %s of %s screencasts', pageFrom, pageTo, totalRows);
 };
 
 $('table').bootstrapTable({
