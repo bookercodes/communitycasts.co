@@ -4,7 +4,6 @@ block vars
   - var title = "Submit"
 
 block styles
-  link(rel='stylesheet', href='/css/submit.css')
   link(rel='stylesheet', href='/components/jquery-ui/themes/smoothness/jquery-ui.min.css')
 
 block scripts
@@ -15,13 +14,13 @@ block scripts
 
 block body
   h2 Submit a screencast
-  
+
   if messages.success
     .alert.alert-success
       button.close(data-dismiss="alert")
         span &times;
       p=messages.success
-  
+
   if messages.errors
     .alert.alert-danger
       button.close(data-dismiss="alert")
@@ -34,7 +33,7 @@ block body
     .form-group
       label Screencast link
       input.form-control#url(
-        type="text", 
+        type="text",
         name="url")
     .form-group
       label Screencast title
@@ -48,7 +47,7 @@ block body
     .form-group
       label Tags (comma separated, max of two)
       input.form-control#tags-input(
-        type="text", 
+        type="text",
         name="tags")
       ul#tags
     button.btn.btn-primary(type="Submit") Submit screencast

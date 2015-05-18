@@ -49,7 +49,7 @@ app.use(validator({
     },
     doesNotContainTagOther: function(value) {
       var tags = value.split(',');
-      tags = tags.map(function(tag) { return tag.toLowerCase(); }); 
+      tags = tags.map(function(tag) { return tag.toLowerCase(); });
       var found = tags.some(function(tag) { return tag.indexOf('other') != -1; });
       return !found;
     }
@@ -61,7 +61,7 @@ app.use(function(req, res, next) {
     return;
   }
 
-  var query = 
+  var query =
   'SELECT \
      t.tagName, \
      COUNT(*) AS count \
@@ -77,8 +77,8 @@ app.use(function(req, res, next) {
   connection.queryAsync(query).spread(function(tags) {
     if (tags.length === 10) {
       tags.pop();
-      tags.push({ 
-        tagName:'Other' 
+      tags.push({
+        tagName:'Other'
       });
     }
     res.locals.tags = tags;
@@ -97,7 +97,7 @@ app.get('/about', function (req, res) {
 });
 app.get('/api/tags', function(req, res) {
   var term = req.query.term;
-  var query = 
+  var query =
   'SELECT \
      t.tagName \
    FROM tags t \
@@ -117,5 +117,5 @@ app.use(function(req, res, next) {
   res.status(404).render('404');
 });
 
-app.listen(52929);
+app.listen(3000);
 

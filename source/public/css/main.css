@@ -1,3 +1,39 @@
+
+#tags {
+  padding-left: 0;
+  margin-top: 12px;
+}
+#tags li {
+  display: inline;
+  list-style: none;
+  padding: 0;
+  background-color: #E9E9E9;
+  margin-right: 10px;
+  padding: 5px;
+}
+
+#tags li span {
+  margin-right: 5px;
+}
+
+textarea {
+  min-height: 90px;
+  max-width: 100%;
+}
+
+.form-control {
+  border-radius: 0;
+}
+
+.alert a {
+  color: white;
+  text-decoration: underline;
+}
+
+.alert a:hover {
+  text-decoration: none;
+}
+
 .section {
   margin-bottom: 50px;
 }
