@@ -1,3 +1,5 @@
+
+
 String.prototype.supplant = function (o) {
   return this.replace(/{([^{}]*)}/g,
     function (a, b) {
@@ -28,3 +30,15 @@ function technologiesFormatter(value, row) {
     technology2: row.technologies[1],
   });
 }
+
+function showingRowsFormatter (pageFrom, pageTo, totalRows) {
+  return 'Showing {pageFrom} to {pageTo} of {totalRows} screencasts'.supplant({
+    pageFrom: pageFrom,
+    pageTo: pageTo,
+    totalRows: totalRows
+  });
+};
+
+$('table').bootstrapTable({
+  formatShowingRows: showingRowsFormatter
+});
