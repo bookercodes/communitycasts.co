@@ -1,14 +1,12 @@
 $(function() {
 
-
-
+  // Functions
   function attainDistinctTags(value) {
     var tags = value.split(',');
     tags = tags.filter(function(tag) { return /\S/.test(tag) });
     tags = tags.filter(function(item, pos, self) { return self.indexOf(item) == pos; });
     return tags;
   }
-
   function parseVideoId(url) {
     var pattern = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     var match = url.match(pattern);
@@ -16,7 +14,6 @@ $(function() {
       return match[2];
     }
   }
-
   function buildVideoApiUrl(id) {
     var base = "https://www.googleapis.com/youtube/v3/videos";
     var parts = "snippet,contentDetails";
@@ -24,6 +21,61 @@ $(function() {
     return base + "?part=" + parts + "&id=" + id + "&key=" + key;
   }
 
+  // Validation
+  $.validator.addMethod("youtubeVideoUrl", function (value, element) {
+    return /^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/.test(value);
+  }, "Please enter a valid YouTube video url.");
+  $.validator.addMethod("maximumOf2Tags", function (value, element) {
+    var tags = attainDistinctTags(value);
+    return tags.length <= 2;
+  }, "You cannot enter more than two tags.");
+  $("#submitForm").validate({
+    ignore: [],
+    errorElement: "span",
+    errorClass: "help-block",
+    highlight: function(element) {
+      $(element)
+        .closest('.form-group')
+        .addClass('has-error')
+        .removeClass('has-success');
+    },
+    unhighlight: function(element) {
+      $(element)
+        .closest('.form-group')
+        .addClass('has-success')
+        .removeClass('has-error');
+    },
+    rules: {
+      url: {
+        required: true,
+        youtubeVideoUrl: true,
+        remote: function () {
+          return {
+            url: buildVideoApiUrl(parseVideoId($("#url").val())),
+            dataFilter: function(response) {
+              var json = JSON.parse(response);
+              return json.items.length !== 0;
+            }
+          };
+        }
+      },
+      tags: {
+        required: true,
+        maximumOf2Tags: true
+      }
+    },
+    messages: {
+      url: {
+        required: "Please enter a screencast link.",
+        remote: "This video does not exist."
+      },
+      tags: {
+        required: 'Please enter at least one tag.'
+      }
+    }
+  });
+
+  // Automatic title and description loading
   $("#url").change(function() {
     var videoUrl = $(this).val();
     // if the input is not a valid YouTube url, return.
@@ -47,6 +99,7 @@ $(function() {
     });
   });
 
+  // Tag input control
   $("#tags-input").keyup(function() {
     var tags = attainDistinctTags($(this).val());
     $("#tag-list").empty();
@@ -55,126 +108,35 @@ $(function() {
     });
   });
 
-  $.validator.addMethod("youtubeVideoUrl", function (value, element) {
-    return /^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/.test(value);
-  }, "Please enter a valid YouTube video url.");
-
-  $.validator.addMethod("maximumOf2Tags", function (value, element) {
-    var tags = attainDistinctTags(value);
-    return tags.length <= 2;
-  }, "You cannot enter more than two tags.");
-
-  var validationRules = {
-    url: {
-      required: true,
-      youtubeVideoUrl: true,
-      remote: function () {
-        return {
-          url: buildVideoApiUrl(parseVideoId($("#url").val())),
-          dataFilter: function(response) {
-            var json = JSON.parse(response);
-            return json.items.length !== 0;
-          }
-        };
+  // Tag autocomplete
+  function split(val) {
+    return val.split(/,\s*/);
+  }
+  function extractLast(term) {
+    return split(term).pop();
+  }
+  $('#tags-input').bind('keydown', function(event) {
+    if ( event.keyCode === $.ui.keyCode.TAB &&
+      $( this ).autocomplete( "instance" ).menu.active ) {
+        event.preventDefault();
       }
+  }).autocomplete({
+    source: function( request, response ) {
+      $.getJSON( "/api/tags", {
+        term: extractLast( request.term )
+      }, response );
     },
-    tags: {
-      required: true,
-      maximumOf2Tags: true
+    focus: function() {
+      return false;
+    },
+    select: function( event, ui ) {
+      var terms = split( this.value );
+      terms.pop();
+      terms.push( ui.item.value );
+      terms.push( "" );
+      this.value = terms.join( ", " );
+      return false;
     }
-  };
-
-  var validationMessages = {
-    url: {
-      required: "Please enter a screencast link.",
-      remote: "This video does not exist."
-    },
-    tags: {
-      required: 'Please enter at least one tag.'
-    }
-  };
-
-  $("#submitForm").validate({
-    ignore: [],
-    errorElement: "span",
-    errorClass: "help-block",
-    highlight: function(element) {
-      $(element)
-        .closest('.form-group')
-        .addClass('has-error')
-        .removeClass('has-success');
-    },
-    unhighlight: function(element) {
-      $(element)
-        .closest('.form-group')
-        .addClass('has-success')
-        .removeClass('has-error');
-    },
-    rules: validationRules,
-    messages: validationMessages
   });
-
-  var availableTags = [
-    "ActionScript",
-    "AppleScript",
-    "Asp",
-    "BASIC",
-    "C",
-    "C++",
-    "Clojure",
-    "COBOL",
-    "ColdFusion",
-    "Erlang",
-    "Fortran",
-    "Groovy",
-    "Haskell",
-    "Java",
-    "JavaScript",
-    "Lisp",
-    "Perl",
-    "PHP",
-    "Python",
-    "Ruby",
-    "Scala",
-    "Scheme"
-  ];
-  function split( val ) {
-    return val.split( /,\s*/ );
-  }
-  function extractLast( term ) {
-    return split( term ).pop();
-  }
-
-  $( "#tags-input" )
-      // don't navigate away from the field on tab when selecting an item
-      .bind( "keydown", function( event ) {
-        if ( event.keyCode === $.ui.keyCode.TAB &&
-            $( this ).autocomplete( "instance" ).menu.active ) {
-          event.preventDefault();
-        }
-      })
-      .autocomplete({
-        source: function( request, response ) {
-          $.getJSON( "/api/tags", {
-            term: extractLast( request.term )
-          }, response );
-        },
-        focus: function() {
-          // prevent value inserted on focus
-          return false;
-        },
-        select: function( event, ui ) {
-          var terms = split( this.value );
-          // remove the current input
-          terms.pop();
-          // add the selected item
-          terms.push( ui.item.value );
-          // add placeholder to get the comma-and-space at the end
-          terms.push( "" );
-          this.value = terms.join( ", " );
-          return false;
-        }
-      });
-
 
 });
