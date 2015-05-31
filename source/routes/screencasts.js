@@ -3,7 +3,7 @@ var winston = require('winston');
 var youtube = require('../youtube');
 
 winston.add(winston.transports.File, {  filename: 'errors.log' });
-youtube.authenticate('AIzaSyCKQFYlDRi5BTd1A-9rhFjF8Jb_Hlfnquk');
+youtube.authenticate('AIzaSyAMkYVIPo7ZuX5lWjLvSXCcG0zBuBy799U');
 
 var router = express.Router();
 

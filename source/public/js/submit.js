@@ -17,7 +17,7 @@ $(function() {
   function buildVideoApiUrl(id) {
     var base = "https://www.googleapis.com/youtube/v3/videos";
     var parts = "snippet,contentDetails";
-    var key = "AIzaSyCKQFYlDRi5BTd1A-9rhFjF8Jb_Hlfnquk";
+    var key = "AIzaSyAMkYVIPo7ZuX5lWjLvSXCcG0zBuBy799U";
     return base + "?part=" + parts + "&id=" + id + "&key=" + key;
   }
 
