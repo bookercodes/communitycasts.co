@@ -18,7 +18,7 @@ promise.promisifyAll(require('mysql/lib/Connection').prototype);
 connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '',
+  password: process.env.MYSQL_PASSWORD || '',
   database: 'communityCasts'
 });
 connection.connect();
