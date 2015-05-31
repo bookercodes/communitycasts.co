@@ -28,5 +28,8 @@
   "devDependencies": {
     "flightplan": "^0.6.2",
     "fly": "0.0.0"
+  },
+  "scripts": {
+    "postinstall": "bower install"
   }
 }
