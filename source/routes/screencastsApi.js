@@ -41,9 +41,11 @@ router.get('/', function(req, res) {
 
 router.get('/tagged/other', function(req, res) {
   var response = {};
-    var query = 
-      'SELECT \
-         COUNT(*) AS total \
+  var query = 
+    'SELECT \
+       COUNT(*) AS total \
+     FROM ( \
+       SELECT v.screencastId \
        FROM screencasts v \
        JOIN screencastTags m \
          ON v.screencastId = m.screencastId \
@@ -56,10 +58,11 @@ router.get('/tagged/other', function(req, res) {
          ORDER BY COUNT(*) DESC, t.creationDate \
          LIMIT 9 \
        ) tags9 \
-       ON m.tagname = tags9.tagname \
+         ON m.tagname = tags9.tagname \
        WHERE v.status = \'approved\' \
        GROUP BY v.screencastId, v.title \
-       HAVING SUM(tags9.tagname IS NULL) > 0';
+       HAVING SUM(tags9.tagname IS NULL) > 0) AS Foo';
+
   connection.queryAsync(query).spread(function (records) {
     response.total = records[0].total;
     var query = 
@@ -106,15 +109,18 @@ router.get('/tagged/:technology',function(req,res) {
   var response = {};
 
   var query = 
-    'SELECT COUNT(*) AS total \
-     FROM screencasts v \
-     JOIN screencastTags m \
-       ON m.screencastId = v.screencastId \
-     WHERE v.status = \'approved\' AND v.screencastId IN ( \
-       SELECT screencastId \
-       FROM screencastTags m \
-       WHERE m.tagName = ?) \
-     GROUP BY v.screencastId'
+    'SELECT \
+      COUNT(*) AS total \
+     FROM ( \
+       SELECT v.screencastId \
+       FROM screencasts v \
+       JOIN screencastTags m \
+         ON m.screencastId = v.screencastId \
+       WHERE v.status = \'approved\' AND v.screencastId IN ( \
+         SELECT screencastId \
+         FROM screencastTags m \
+         WHERE m.tagName = ?) \
+       GROUP BY v.screencastId) As Foo'
 
   connection.queryAsync(query, req.params.technology).spread(function(records) {
     if (records.length === 0) {
