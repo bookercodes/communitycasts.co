@@ -1,4 +1,3 @@
-// sprintf is dependency function taken from bootstrap-table.js source code
 function sprintf (str) {
   var args = arguments,
     flag = true,
@@ -13,6 +12,15 @@ function sprintf (str) {
   });
   return flag ? str : '';
 };
+  
+function htmlEscape(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
 
 function titleFormatter(value, row) {
   return sprintf('<span title="Screencast title"><a target=\"_blank\" href="/screencasts/%s">%s</a></span>', row.screencastId, row.title);
@@ -31,7 +39,8 @@ function technologiesFormatter(value, row) {
   if (row.technologies[1] != null) {
     html += ' <a href="/screencasts/tagged/' + encodeURIComponent(row.technologies[1]) + '"  title="Tag 2">%s</a>';
   }
-  return sprintf(html, row.technologies[0], row.technologies[1]);
+
+  return sprintf(html, htmlEscape(row.technologies[0]), htmlEscape(row.technologies[1]));
 }
 
 function showingRowsFormatter (pageFrom, pageTo, totalRows) {

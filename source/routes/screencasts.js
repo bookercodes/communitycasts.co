@@ -26,7 +26,6 @@ router.post('/submit', function (req, res) {
   tags = tags.filter(function(tag) { return /\S/.test(tag) });  // remove empty tags
   tags = tags.filter(function(item, pos, self) { return self.indexOf(item) == pos; }); // remove duplicate tags
   tags = tags.map(function(tag) { return tag.trim(); }); // remove trailing whitespace
-  tags = tags.map(function(tag) { return tag.trim(); }); // remove trailing whitespace
   var query = 
     'SELECT screencastId, status \
      FROM screencasts \
