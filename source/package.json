@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "bower install"
   },
   "repository": {
     "type": "git",
@@ -23,13 +23,11 @@
     "moment": "^2.10.2",
     "mysql": "^2.6.2",
     "request": "^2.55.0",
+    "sitemap": "^0.8.1",
     "winston": "^1.0.0"
   },
   "devDependencies": {
     "flightplan": "^0.6.2",
     "fly": "0.0.0"
-  },
-  "scripts": {
-    "postinstall": "bower install"
   }
 }

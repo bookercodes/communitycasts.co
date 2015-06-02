@@ -7,6 +7,7 @@ var moment          = require('moment');
 var promise         = require('bluebird');
 var session         = require('express-session');
 var flash           = require('express-flash');
+var sitemap         = require('sitemap');
 
 var screencasts     = require('./routes/screencasts');
 var screencastsApi  = require('./routes/screencastsApi');
@@ -86,6 +87,36 @@ app.use(function(req, res, next) {
   });
 });
 
+var map = sitemap.createSitemap ({
+  hostname: 'http://communitycasts.co/',
+  cacheTime: 600000,
+  urls: [
+    { url: 'about',  changefreq: 'monthly',  priority: 0.5 },
+    { url: 'submit',  changefreq: 'monthly',  priority: 0.5 },
+  ]
+});
+
+var query =
+  'SELECT \
+     t.tagName \
+   FROM tags t \
+   JOIN screencastTags st \
+     ON st.tagName = t.tagName \
+   JOIN screencasts s \
+     ON s.screencastId = st.screencastId \
+   WHERE s.status = \'approved\'';
+connection.queryAsync(query).spread(function(tags) {
+  tags.forEach(function(tag) {
+    map.add({ url: 'screencasts/tagged/' + tag.tagName,  changefreq: 'daily',  priority: 0.5 });
+  });
+});
+app.get('/sitemap.xml', function(req, res) {
+  map.toXML( function (xml) {
+    res.header('Content-Type', 'application/xml');
+    res.send( xml );
+  });
+});
+
 // routes
 app.use('/screencasts', screencasts);
 app.use('/api/screencasts', screencastsApi);
@@ -116,6 +147,9 @@ app.get('/api/tags', function(req, res) {
 app.use(function(req, res, next) {
   res.status(404).render('404');
 });
+
+
+
 
 app.listen(process.env.PORT || '3000');
 
