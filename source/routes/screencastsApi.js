@@ -1,6 +1,14 @@
 var express = require('express');
+var moment = require('moment');
 var router  = express.Router();
-var common  = require('../common');
+
+function convertRecordsToLocals (records) {
+  records.forEach(function(record) {
+    record.technologies = record.tags.split(',');
+    record.duration = moment.duration(record.durationInSeconds, 'seconds').humanize();
+    delete record.durationInSeconds;
+  });
+};
 
 router.get('/', function(req, res) {
   var response = {};
@@ -33,7 +41,7 @@ router.get('/', function(req, res) {
       query += ' LIMIT ' + (parseInt(req.query.offset) || 0) + ', ' + (parseInt(req.query.limit) || 10);
       return connection.queryAsync(query);
   }).spread(function(screencasts) {
-    common.convertRecordsToLocals(screencasts);
+    convertRecordsToLocals(screencasts);
     response.rows = screencasts;
     res.send(response);
   });
@@ -99,7 +107,7 @@ router.get('/tagged/other', function(req, res) {
       query += ' LIMIT ' + (parseInt(req.query.offset) || 0) + ', ' + (parseInt(req.query.limit) || 10);
       return connection.queryAsync(query);
   }).spread(function(screencasts) {
-    common.convertRecordsToLocals(screencasts);
+    convertRecordsToLocals(screencasts);
     response.rows = screencasts;
     res.send(response);
   });
@@ -153,7 +161,7 @@ router.get('/tagged/:technology',function(req,res) {
     query += ' LIMIT ' + (parseInt(req.query.offset) || 0) + ', ' + (parseInt(req.query.limit) || 10);
 
     connection.queryAsync(query).spread(function (screencasts) {
-      common.convertRecordsToLocals(screencasts);
+      convertRecordsToLocals(screencasts);
       response.rows = screencasts;
       res.send(response);
     });
