@@ -105,10 +105,10 @@ app.get('/api/tags', function(req, res) {
      ON st.tagName = t.tagName \
    JOIN screencasts s \
      ON s.screencastId = st.screencastId \
-   WHERE s.status = \'approved\' AND t.tagName LIKE \'%' + term + '%\' \
+   WHERE s.status = \'approved\' AND t.tagName LIKE ? \
    GROUP BY t.tagName \
    LIMIT 5';
-  connection.queryAsync(query).spread(function(tags) {
+  connection.queryAsync(query, '%' + term + '%').spread(function(tags) {
     tags = tags.map(function(tag) { return tag.tagName });
     res.send(tags);
   })
