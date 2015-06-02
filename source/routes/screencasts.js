@@ -23,9 +23,9 @@ router.post('/submit', function (req, res) {
   }
   var screencastId = youtube.parseIdFromUrl(req.body.url);
   var tags = req.body.tags.split(',');
-  tags = tags.filter(function(tag) { return /\S/.test(tag) });
-  tags = tags.filter(function(item, pos, self) { return self.indexOf(item) == pos; });
-  tags = tags.map(function(tag) { return tag.trim(); });
+  tags = tags.filter(function(tag) { return /\S/.test(tag) });  // remove empty tags
+  tags = tags.filter(function(item, pos, self) { return self.indexOf(item) == pos; }); // remove duplicate tags
+  tags = tags.map(function(tag) { return tag.trim(); }); // remove trailing whitespace
   var query = 
     'SELECT screencastId, status \
      FROM screencasts \
