@@ -1,14 +1,14 @@
 {
-  "name": "community_casts",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "communitycasts.co",
+  "version": "0.0.0",
+  "description": "Source code for http://communitycasts.co.",
+  "main": "app.js",
   "scripts": {
     "postinstall": "bower install"
   },
   "repository": {
     "type": "git",
-    "url": "https://bitbucket.org/alexbooker/video-hub"
+    "url": "https://github.com/alexbooker/communitycasts.co"
   },
   "author": "Alex Booker",
   "license": "MIT",

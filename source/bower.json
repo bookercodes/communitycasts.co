@@ -1,12 +1,12 @@
 {
-  "name": "video-hub",
+  "name": "communitycasts.co",
   "version": "0.0.0",
   "authors": [
     "Alex Booker"
   ],
   "main": "app.js",
-  "license": "MIT",
-  "homepage": "https://bitbucket.org/alexbooker/video-hub",
+  "license": "GNU",
+  "homepage": "https://github.com/alexbooker/communitycasts.co",
   "dependencies": {
     "font-awesome": "~4.3.0",
     "bootstrap-table": "~1.7.0",
