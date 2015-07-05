@@ -24,10 +24,8 @@ plan.remote(function(remote) {
   remote.log('Move folder to root');
   remote.sudo('cp -R /tmp/' + tmpDir + ' ~', {user: username});
   remote.rm('-rf /tmp/' + tmpDir);
-
-  remote.log('Install dependencies');
   remote.sudo('npm --production --prefix ~/' + tmpDir + ' install ~/' + tmpDir, {user: username});
-
-  remote.log('Reload application');
   remote.sudo('ln -snf ~/' + tmpDir + ' ~/'+appName, {user: username});
+  remote.exec('pm2 stop ~/'+appName+'/'+startFile, {failsafe: true});
+  remote.exec('pm2 start ~/'+appName+'/'+startFile);
 });

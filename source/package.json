@@ -27,7 +27,7 @@
     "winston": "^1.0.0"
   },
   "devDependencies": {
-    "flightplan": "^0.6.2",
-    "fly": "0.0.0"
+    "flightplan": "^0.6.2"
   }
+
 }
