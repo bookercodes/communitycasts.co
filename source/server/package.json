@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "express": "^4.13.1"
+    "express": "^4.13.1",
+    "mysql": "^2.7.0",
   }
 }
