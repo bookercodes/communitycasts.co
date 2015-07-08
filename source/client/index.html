@@ -8,10 +8,10 @@
 
 <body ng-app="communityCasts" ng-controller="homeController">
 
-  <select>
-    <option value="Test">Today</option>
-    <option value="Test">Week</option>
-    <option value="Test">Month</option>
+  <select ng-model="sortOption" ng-change="fetchScreencasts()" ng-init="sortOption='today'">
+    <option value="today">Today</option>
+    <option value="week">Week</option>
+    <option value="month">Month</option>
   </select>
 
   <input type="text" placeholder="Search">
