@@ -3,10 +3,12 @@
   "bitwise": true,
   "camelcase": true,
   "curly": true,
-  "immed": true,
-  "newcap": true,
+  "eqeqeq": true,
+  "indent": 2,
+  "latedef": true,
   "noarg": true,
+  "quotmark": "single",
   "undef": true,
-  "unused": "vars",
-  "maxparams" : 3
+  "unused": true,
+  "strict": true
 }
