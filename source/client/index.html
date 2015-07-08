@@ -8,7 +8,7 @@
 
 <body ng-app="communityCasts" ng-controller="homeController">
 
-  <select ng-model="sortOption" ng-change="fetchScreencasts()" ng-init="sortOption='today'">
+  <select ng-model="sortOption" ng-change="fetchScreencasts()">
     <option value="today">Today</option>
     <option value="week">Week</option>
     <option value="month">Month</option>
@@ -17,13 +17,7 @@
   <input type="text" placeholder="Search">
   <input type="submit" value="Search">
 
-  <div infinite-scroll="fetchNextPage()" infinite-scroll-distance="0">
-    <div ng-repeat="screencast in screencasts">
-      <p>{{screencast.title}}</p>
-    </div>
-  </div>
-
-  <!-- <table>
+  <table infinite-scroll="fetchScreencasts()" infinite-scroll-distance="0">
     <thead>
       <tr>
         <th>Title</th>
@@ -40,7 +34,7 @@
         <td>{{screencast.referralCount}}</td>
       </tr>
     </tbody>
-  </table> -->
+  </table>
 
   <script src="app/components/angular/angular.min.js"></script>
   <script src="app/components/jquery/dist/jquery.min.js"></script>
