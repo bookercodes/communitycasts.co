@@ -7,5 +7,6 @@ CREATE TABLE screencasts (
   title               NVARCHAR(200) NOT NULL,
   durationInSeconds   INT           NOT NULL,
   submissionDate      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  referralCount       INT       DEFAULT 0,
   PRIMARY KEY(screencastId)
 );
