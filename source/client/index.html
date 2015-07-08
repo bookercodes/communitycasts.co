@@ -1,15 +1,33 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
 </head>
+
 <body ng-app="communityCasts" ng-controller="homeController">
 
-  {{message}}
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Duration</th>
+        <th>Submitted</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="screencast in screencasts">
+        <td>{{screencast.title}}</td>
+        <td>{{screencast.durationInSeconds}}</td>
+        <td>{{screencast.submissionDate}}</td>
+      </tr>
+    </tbody>
+  </table>
 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
   <script src="app/app.js"></script>
   <script src="app/controllers/homeController.js"></script>
 </body>
+
 </html>
