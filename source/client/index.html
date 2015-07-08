@@ -17,7 +17,13 @@
   <input type="text" placeholder="Search">
   <input type="submit" value="Search">
 
-  <table>
+  <div infinite-scroll="fetchNextPage()" infinite-scroll-distance="0">
+    <div ng-repeat="screencast in screencasts">
+      <p>{{screencast.title}}</p>
+    </div>
+  </div>
+
+  <!-- <table>
     <thead>
       <tr>
         <th>Title</th>
@@ -34,9 +40,11 @@
         <td>{{screencast.referralCount}}</td>
       </tr>
     </tbody>
-  </table>
+  </table> -->
 
   <script src="app/components/angular/angular.min.js"></script>
+  <script src="app/components/jquery/dist/jquery.min.js"></script>
+  <script src="app/components/ngInfiniteScroll/build/ng-infinite-scroll.min.js"></script>
   <script src="app/app.js"></script>
   <script src="app/controllers/homeController.js"></script>
 </body>

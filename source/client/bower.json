@@ -2,6 +2,7 @@
   "name": "communityCasts",
   "dependencies": {
     "ngInfiniteScroll": "~1.2.1",
-    "angular": "~1.4.2"
+    "angular": "~1.4.2",
+    "jquery": "~2.1.4"
   }
 }
