@@ -1,1 +1,1 @@
-var app = angular.module('communityCasts', ['infinite-scroll']);
+var app = angular.module('communityCasts', []);
