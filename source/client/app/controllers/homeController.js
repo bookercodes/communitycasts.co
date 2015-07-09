@@ -5,16 +5,14 @@ app.controller('homeController', function ($scope, $http) {
   $scope.hasMore = true;
   $scope.busy = false;
   $scope.fetchScreencasts = function () {
+    $scope.busy = true;
     var base = 'http://localhost:3000/screencasts';
     var url = base + '/top/' + $scope.sortOption + '?page=' + $scope.page;
-    $scope.busy = true;
-    $http.get(url).success(function (body) {
-      $scope.screencasts = $scope.screencasts.concat(body.screencasts);
-      $scope.page += 1;
-      if (!body.hasMore) {
-        $scope.hasMore = false;
-      }
+    $http.get(url).success(function (response) {
       $scope.busy = false;
+      $scope.page += 1;
+      $scope.hasMore = response.hasMore;
+      $scope.screencasts = $scope.screencasts.concat(response.screencasts);
     });
   };
   $scope.changeSortOption = function () {
