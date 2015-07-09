@@ -8,6 +8,16 @@
 
 <body ng-app="communityCasts" ng-controller="homeController">
 
+  <header>
+    <h1>Community Casts</h1>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
   <select ng-model="sortOption" ng-change="changeSortOption()">
     <option value="today">Today</option>
     <option value="week">Week</option>
