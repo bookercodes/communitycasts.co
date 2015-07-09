@@ -7,7 +7,6 @@
 </head>
 
 <body ng-app="communityCasts" ng-controller="homeController">
-
   <header>
     <h1>Community Casts</h1>
     <nav>
@@ -49,7 +48,9 @@
     </tbody>
   </table>
   <button ng-click="fetchScreencasts()" ng-disabled="busy || !hasMore">Load More</button>
-
+  <script type='text/javascript' id="__bs_script__">//<![CDATA[
+    document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.2.7.13.js'><\/script>".replace("HOST", location.hostname));
+//]]></script>
   <script src="app/components/angular/angular.min.js"></script>
   <script src="app/components/angular-ui-router/release/angular-ui-router.min.js"></script>
   <script src="app/app.js"></script>
