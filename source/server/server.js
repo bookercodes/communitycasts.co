@@ -46,6 +46,7 @@ app.get('/screencasts/top/:period', function (req, res) {
         query += ' WHERE s.submissionDate > DATE_SUB(NOW(), INTERVAL 1 DAY)';
         break;
     }
+    query += ' ORDER BY referralCount DESC';
     query += ' LIMIT ' + start + ', ' + finish;
     connection.query(query, function (error, screencasts) {
       res.json({
