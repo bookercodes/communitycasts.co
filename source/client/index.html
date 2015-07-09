@@ -8,6 +8,7 @@
 
 <body ng-app="communityCasts" ng-controller="homeController">
 
+  {{page}}
   <select ng-model="sortOption" ng-change="fetchScreencasts()">
     <option value="today">Today</option>
     <option value="week">Week</option>
@@ -17,7 +18,7 @@
   <input type="text" placeholder="Search">
   <input type="submit" value="Search">
 
-  <table infinite-scroll="fetchScreencasts()" infinite-scroll-distance="0">
+  <table>
     <thead>
       <tr>
         <th>Title</th>
@@ -35,6 +36,7 @@
       </tr>
     </tbody>
   </table>
+  <button ng-click="fetchScreencasts()" ng-disabled="!hasMore">Load More</button>
 
   <script src="app/components/angular/angular.min.js"></script>
   <script src="app/components/jquery/dist/jquery.min.js"></script>
