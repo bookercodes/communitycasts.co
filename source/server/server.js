@@ -1,6 +1,7 @@
 var express = require('express');
 var mysql = require('mysql');
 var cors = require('cors');
+var sleep = require('sleep');
 
 var connection = mysql.createConnection({
   host: 'localhost',
@@ -16,6 +17,7 @@ app.use(cors());
 app.get('/screencasts/top/:period', function (req, res) {
 
   connection.query('SELECT COUNT(*) AS count FROM screencasts', function (error, result) {
+
 
     var page = req.query.page;
     var perPage = 5;
