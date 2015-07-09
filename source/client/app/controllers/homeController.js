@@ -17,5 +17,12 @@ app.controller('homeController', function ($scope, $http) {
       $scope.busy = false;
     });
   };
+  $scope.changeSortOption = function () {
+    $scope.screencasts = [];
+    $scope.page = 1;
+    $scope.hasMore = true;
+    $scope.busy = false;
+    $scope.fetchScreencasts();
+  };
   $scope.fetchScreencasts();
 });
