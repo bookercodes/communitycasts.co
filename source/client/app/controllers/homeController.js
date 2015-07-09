@@ -4,6 +4,7 @@ app.controller('homeController', function ($scope, $http) {
   $scope.sortOption = 'today';
   $scope.hasMore = true;
   $scope.busy = false;
+  $scope.loaded = false;
   $scope.fetchScreencasts = function () {
     $scope.busy = true;
     var base = 'http://localhost:3000/screencasts';
@@ -13,9 +14,11 @@ app.controller('homeController', function ($scope, $http) {
       $scope.page += 1;
       $scope.hasMore = response.hasMore;
       $scope.screencasts = $scope.screencasts.concat(response.screencasts);
+      $scope.loaded = true;
     });
   };
   $scope.changeSortOption = function () {
+    $scope.loaded = false;
     $scope.screencasts = [];
     $scope.page = 1;
     $scope.hasMore = true;

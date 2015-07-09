@@ -14,10 +14,13 @@
     <option value="month">Month</option>
   </select>
 
-  <input type="text" placeholder="Search">
-  <input type="submit" value="Search">
+  <input type="text" placeholder="Search" disabled>
+  <input type="submit" value="Search" disabled>
 
-  <table>
+  <div ng-show="!loaded">
+    <p>Loading...</p>
+  </div>
+  <table ng-show="loaded">
     <thead>
       <tr>
         <th>Title</th>
