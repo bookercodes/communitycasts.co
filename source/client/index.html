@@ -6,50 +6,21 @@
   <title>Document</title>
 </head>
 
-<body ng-app="communityCasts" ng-controller="homeController">
+<body ng-app="communityCasts">
   <header>
     <h1>Community Casts</h1>
     <nav>
       <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/">About</a></li>
+        <li><a ng-href="#/">Home</a></li>
+        <li><a ng-href="#/about">About</a></li>
       </ul>
     </nav>
   </header>
 
-  <select ng-model="sortOption" ng-change="changeSortOption()">
-    <option value="today">Today</option>
-    <option value="week">Week</option>
-    <option value="month">Month</option>
-  </select>
+  <div ui-view></div>
 
-  <input type="text" placeholder="Search" disabled>
-  <input type="submit" value="Search" disabled>
-
-  <div ng-show="!loaded">
-    <p>Loading...</p>
-  </div>
-  <table ng-show="loaded">
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Duration</th>
-        <th>Submitted</th>
-        <th>Referrals</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="screencast in screencasts">
-        <td>{{screencast.title}}</td>
-        <td>{{screencast.durationInSeconds}}</td>
-        <td>{{screencast.submissionDate}}</td>
-        <td>{{screencast.referralCount}}</td>
-      </tr>
-    </tbody>
-  </table>
-  <button ng-click="fetchScreencasts()" ng-disabled="busy || !hasMore">Load More</button>
   <script type='text/javascript' id="__bs_script__">//<![CDATA[
-    document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.2.7.13.js'><\/script>".replace("HOST", location.hostname));
+    document.write("<script async src='http://HOST:3001/browser-sync/browser-sync-client.2.7.13.js'><\/script>".replace("HOST", location.hostname));
 //]]></script>
   <script src="app/components/angular/angular.min.js"></script>
   <script src="app/components/angular-ui-router/release/angular-ui-router.min.js"></script>
