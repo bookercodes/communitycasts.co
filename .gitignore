@@ -1,3 +1,4 @@
 node_modules
 components
 errors.log
+npm-debug.log 
