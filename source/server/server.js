@@ -1,6 +1,7 @@
 var express = require('express');
 var mysql = require('mysql');
 var cors = require('cors');
+var bodyParser = require('body-parser');
 
 var connection = mysql.createConnection({
   host: 'localhost',
@@ -12,6 +13,7 @@ connection.connect();
 
 var app = express();
 app.use(cors());
+app.use(bodyParser.json());
 
 app.get('/screencasts/top/:period', function (req, res) {
   var query = 'SELECT COUNT(*) AS count FROM screencasts s';
@@ -55,6 +57,10 @@ app.get('/screencasts/top/:period', function (req, res) {
       });
     });
   });
+});
+
+app.post('/screencasts', function (req, res) {
+  res.status(201).send();
 });
 
 app.listen(3000);
