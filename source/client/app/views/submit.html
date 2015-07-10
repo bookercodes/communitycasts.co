@@ -1,14 +1,14 @@
-<form name="submitForm" novalidate>
+<form name="submitForm" ng-submit="submitScreencast()" novalidate>
 
   <div>
     <label>Screencast link:</label>
-    <input type="text" name="screencastLink" required ng-model="screencastLink">
+    <input type="text" name="screencastLink" required ng-model="screencast.link">
     <span ng-show="submitForm.screencastLink.$dirty && submitForm.screencastLink.$error.required">Screencast link is required.</span>
   </div>
 
   <div>
     <label>Tags (comma seperated)</label>
-    <input type="text" name="tags" ng-model="tags" required>
+    <input type="text" name="tags" ng-model="screencast.tags" required>
     <span ng-show="submitForm.tags.$dirty && submitForm.tags.$error.required">You need to specify at least one tag.</span>
   </div>
 
