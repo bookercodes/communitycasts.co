@@ -6,6 +6,7 @@ var should = require('should');
 
 describe('split', function () {
   it('returns correct result', function () {
+    sut.split('tag, tag').should.eql(['tag']);
     sut.split('tag').should.eql(['tag']);
     sut.split(' tag').should.eql(['tag']);
     sut.split(' tag  ').should.eql(['tag']);
