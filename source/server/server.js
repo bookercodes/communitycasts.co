@@ -73,8 +73,17 @@ app.post('/screencasts', function (req, res) {
     title: 'Undefined',
     durationInSeconds: 0
   };
-  connection.query('INSERT INTO screencasts SET ?', screencast, function () {
-    res.status(201).send({message:'Thank you for your submission. Your submission will be reviewed by the moderators and if it meets our guidelines, it\'ll appear on the home page soon!'});
+  var tags = req.body.tags.split(',');
+  connection.query('INSERT INTO screencasts SET ?', screencast, function (error, result) {
+    screencast.id = result.insertId;
+    console.log(screencast.id);
+    var values = tags.map(function(tag) { return [tag]; });
+    connection.query('INSERT IGNORE INTO tags VALUES ?', [values], function () {
+      var values = tags.map(function(tag) { return [screencast.id, tag]; });
+      connection.query('INSERT IGNORE INTO screencastTags VALUES ?', [values], function () {
+        res.status(201).send({message:'Thank you for your submission. Your submission will be reviewed by the moderators and if it meets our guidelines, it\'ll appear on the home page soon!'});
+      });
+    });
   });
 });
 
