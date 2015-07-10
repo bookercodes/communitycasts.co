@@ -1,7 +1,11 @@
+'use strict';
+
 var express = require('express');
 var mysql = require('mysql');
 var cors = require('cors');
 var bodyParser = require('body-parser');
+var youtube = require('./youtube');
+var vimeo = require('./vimeo');
 
 var connection = mysql.createConnection({
   host: 'localhost',
@@ -60,7 +64,11 @@ app.get('/screencasts/top/:period', function (req, res) {
 });
 
 app.post('/screencasts', function (req, res) {
-  res.status(201).send();
+  if (!youtube.isYouTubeUrl(req.body.link) && !vimeo.isVimeoUrl(req.body.link)) {
+    res.status(400).send('You did not supply a link to a YouTube or Vimeo video.');
+  } else {
+    res.status(201).send();
+  }
 });
 
 app.listen(3000);
