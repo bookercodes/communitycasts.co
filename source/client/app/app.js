@@ -10,4 +10,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     url: '/about',
     templateUrl: '/app/views/about.html'
   });
+  $stateProvider.state('submit', {
+    url: '/submit',
+    templateUrl: '/app/views/submit.html',
+    controller: 'submitController'
+  });
 });
