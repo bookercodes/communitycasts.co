@@ -4,7 +4,7 @@ var express = require('express');
 var mysql = require('mysql');
 var cors = require('cors');
 var bodyParser = require('body-parser');
-var youtube = require('./youtube');
+var youtube = require('./youtube')();
 var vimeo = require('./vimeo');
 
 var connection = mysql.createConnection({

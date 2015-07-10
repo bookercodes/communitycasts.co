@@ -1,5 +1,15 @@
 'use strict';
 
-module.exports.isYouTubeUrl = function (url) {
-  return /^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/.test(url);
-};
+function Youtube(key) {
+  if (!(this instanceof Youtube)) {
+    return new Youtube(key);
+  }
+
+  this.key = key;
+
+  this.isYouTubeUrl = function (url) {
+    return /^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/.test(url);
+  };
+}
+
+module.exports = Youtube;

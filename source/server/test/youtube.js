@@ -1,10 +1,25 @@
 'use strict';
 
-var sut = require('../youtube');
+var sut = require('../youtube')();
 /*jshint unused:false*/
 var should = require('should');
 
 describe('youtube', function () {
+
+  describe('constructor', function () {
+    it('should set key', function () {
+      var KEY = 'foo';
+      var Youtube = require('../youtube');
+      var instance = new Youtube(KEY);
+      instance.key.should.equal(KEY);
+    });
+    it('should return instance', function () {
+      var KEY = 'foo';
+      var instance = require('../youtube')(KEY);
+      instance.key.should.equal(KEY);
+    });
+  });
+
   describe('isYouTubeUrl', function () {
     it('returns correct result', function () {
       // TODO: What about domains other than .com, should they be valid, too?
