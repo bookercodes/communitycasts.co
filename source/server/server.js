@@ -65,9 +65,9 @@ app.get('/screencasts/top/:period', function (req, res) {
 
 app.post('/screencasts', function (req, res) {
   if (!youtube.isYouTubeUrl(req.body.link) && !vimeo.isVimeoUrl(req.body.link)) {
-    res.status(400).send('You did not supply a link to a YouTube or Vimeo video.');
+    res.status(400).send({message:'Please enter a valid YouTube or Vimeo video url.'});
   } else {
-    res.status(201).send();
+    res.status(201).send({message:'Thank you for your submission. Your submission will be reviewed by the moderators and if it meets our guidelines, it\'ll appear on the home page soon!'});
   }
 });
 
