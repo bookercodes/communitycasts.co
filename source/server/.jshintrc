@@ -10,5 +10,13 @@
   "quotmark": "single",
   "undef": true,
   "unused": true,
-  "strict": true
+  "strict": true,
+  "globals"   : {
+    "describe"   : false,
+    "it"         : false,
+    "before"     : false,
+    "beforeEach" : false,
+    "after"      : false,
+    "afterEach"  : false
+  }
 }

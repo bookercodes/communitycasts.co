@@ -1,4 +1,7 @@
+'use strict';
+
 var sut = require('../youtube');
+/*jshint unused:false*/
 var should = require('should');
 
 describe('the isYouTubeUrl function', function () {
