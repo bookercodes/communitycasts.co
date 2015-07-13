@@ -4,7 +4,7 @@ var express = require('express');
 var mysql = require('mysql');
 var cors = require('cors');
 var bodyParser = require('body-parser');
-var youtube = require('./youtube')();
+var youtube = require('./youtube')('AIzaSyAMkYVIPo7ZuX5lWjLvSXCcG0zBuBy799U');
 var vimeo = require('./vimeo')();
 
 var connection = mysql.createConnection({
@@ -68,23 +68,30 @@ app.post('/screencasts', function (req, res) {
     res.status(400).send({message:'Please enter a valid YouTube or Vimeo video url.'});
     return;
   }
+
   var screencast = {
     link: req.body.link,
-    title: 'Undefined',
-    durationInSeconds: 0
   };
-  var tags = req.body.tags.split(',');
-  connection.query('INSERT INTO screencasts SET ?', screencast, function (error, result) {
-    screencast.id = result.insertId;
-    console.log(screencast.id);
-    var values = tags.map(function(tag) { return [tag]; });
-    connection.query('INSERT IGNORE INTO tags VALUES ?', [values], function () {
-      var values = tags.map(function(tag) { return [screencast.id, tag]; });
-      connection.query('INSERT IGNORE INTO screencastTags VALUES ?', [values], function () {
-        res.status(201).send({message:'Thank you for your submission. Your submission will be reviewed by the moderators and if it meets our guidelines, it\'ll appear on the home page soon!'});
+
+  if (youtube.isYouTubeUrl(req.body.link)) {
+    youtube.fetchVideoDetails(req.body.link, function(error, details) {
+      screencast.title = details.title;
+      screencast.durationInSeconds = details.durationInSeconds;
+      connection.query('INSERT INTO screencasts SET ?', screencast, function (error, result) {
+        screencast.id = result.insertId;
+        var tags = req.body.tags.split(',');
+        var values = tags.map(function(tag) { return [tag]; });
+        connection.query('INSERT IGNORE INTO tags VALUES ?', [values], function () {
+          var values = tags.map(function(tag) { return [screencast.id, tag]; });
+          connection.query('INSERT IGNORE INTO screencastTags VALUES ?', [values], function () {
+            res.status(201).send({message:'Thank you for your submission. Your submission will be reviewed by the moderators and if it meets our guidelines, it\'ll appear on the home page soon!'});
+          });
+        });
       });
     });
-  });
+    return;
+  }
+  res.status(400).send({message:'Support for Vimeo videos is coming really soon, bro!'});
 });
 
 app.listen(3000);
