@@ -2,3 +2,4 @@ node_modules
 components
 errors.log
 npm-debug.log 
+source/server/config/local.json

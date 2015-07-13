@@ -1,6 +1,7 @@
 'use strict';
 
-var sut = require('../vimeo')('');
+var config = require('config');
+var sut = require('../vimeo')(config.vimeoKey);
 /*jshint unused:false*/
 var should = require('should');
 
