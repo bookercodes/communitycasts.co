@@ -25,6 +25,7 @@ describe('vimeo', function () {
       // TODO: What about domains other than .com, should they be valid, too?
       // Domains that start with http:// rather than https://?
       // Domains that without www.?
+      // https://twitter.com/Vimeo/status/620631334847799296 ?
       sut.isVimeoUrl('https://vimeo.com/60131454').should.equal(true);
       sut.isVimeoUrl('https://vimeo.com/61905359').should.equal(true);
 
