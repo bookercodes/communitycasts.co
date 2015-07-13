@@ -1,6 +1,6 @@
 'use strict';
 
-var sut = require('../youtube')();
+var sut = require('../youtube')('AIzaSyAMkYVIPo7ZuX5lWjLvSXCcG0zBuBy799U');
 /*jshint unused:false*/
 var should = require('should');
 
@@ -35,5 +35,18 @@ describe('youtube', function () {
       sut.isYouTubeUrl('https://youtube.com/').should.equal(false);
       sut.isYouTubeUrl('https://youtu.be/').should.equal(false);
     });
-});
+  });
+
+
+
+  describe('fetchVideoDetails', function () {
+    it('should return correct details', function (done) {
+      sut.fetchVideoDetails('https://www.youtube.com/watch?v=jNQXAC9IVRw', function (error, details) {
+        details.title.should.equal('Me at the zoo');
+        details.channel.name.should.equal('jawed');
+        done();
+      });
+    });
+  });
+
 });
