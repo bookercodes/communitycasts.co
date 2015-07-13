@@ -4,6 +4,7 @@ var config = require('config');
 var sut = require('../vimeo')(config.vimeoKey);
 /*jshint unused:false*/
 var should = require('should');
+var async = require('async');
 
 describe('vimeo', function () {
 
@@ -37,10 +38,24 @@ describe('vimeo', function () {
 
   describe('fetchVideoDetails', function () {
     it('should return correct details', function (done) {
-      sut.fetchVideoDetails('https://vimeo.com/120981003', function (error, details) {
-        details.title.should.equal('We love the floor we step on');
-        details.durationInSeconds.should.equal(77);
-        details.channel.name.should.equal('Alberto Gastesi');
+      async.parallel([
+        function (done) {
+          sut.fetchVideoDetails('https://vimeo.com/120981003', function (error, details) {
+            details.title.should.equal('We love the floor we step on');
+            details.durationInSeconds.should.equal(77);
+            details.channel.name.should.equal('Alberto Gastesi');
+            done();
+          });
+        },
+        function (done) {
+          sut.fetchVideoDetails('https://vimeo.com/133342821', function (error, details) {
+            details.title.should.equal('DELOREAN \'CRYSTAL\'');
+            details.durationInSeconds.should.equal(220);
+            details.channel.name.should.equal('Joan Guasch');
+            done();
+          });
+        }
+      ], function () {
         done();
       });
     });
