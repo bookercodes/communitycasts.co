@@ -59,5 +59,14 @@ describe('vimeo', function () {
         done();
       });
     });
+    it('should throw if key has not been supplied', function() {
+      var instanceWithoutKey = require('../vimeo')();
+      (function() {
+        instanceWithoutKey.fetchVideoDetails(
+          'https://vimeo.com/133342821');
+      }).should.throw(Error, {
+        message: 'This function requires that you supply a key.'
+      });
+    });
   });
 });

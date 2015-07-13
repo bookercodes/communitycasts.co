@@ -15,6 +15,9 @@ function Vimeo(key) {
   };
 
   this.fetchVideoDetails = function (url, callback) {
+    if (!this.key) {
+      throw new Error('This function requires that you supply a key.');
+    }
     var id = parseVideoId(url);
     var options = {
       url: 'https://api.vimeo.com/videos/' + id,
