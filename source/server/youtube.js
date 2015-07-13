@@ -22,6 +22,9 @@ function Youtube(key) {
   };
 
   this.fetchVideoDetails = function (url, callback) {
+    if (!this.key) {
+      throw new Error('This function requires that you supply a key.');
+    }
     var id = parseIdFromUrl(url);
     var apiUrl = 'https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=' + id + '&key=' + this.key;
     request(apiUrl, function (error, request, body) {

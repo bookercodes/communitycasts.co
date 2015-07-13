@@ -37,14 +37,20 @@ describe('youtube', function () {
     });
   });
 
-
-
   describe('fetchVideoDetails', function () {
     it('should return correct details', function (done) {
       sut.fetchVideoDetails('https://www.youtube.com/watch?v=jNQXAC9IVRw', function (error, details) {
         details.title.should.equal('Me at the zoo');
-        details.channel.name.should.equal('jawed');
         done();
+        details.channel.name.should.equal('jawed');
+      });
+    });
+    it('should throw if key has not been supplied', function () {
+      var instanceWithoutKey = require('../youtube')();
+      (function() {
+        instanceWithoutKey.fetchVideoDetails('https://www.youtube.com/watch?v=jNQXAC9IVRw');
+      }).should.throw(Error, {
+        message: 'This function requires that you supply a key.'
       });
     });
   });
