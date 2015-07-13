@@ -1,6 +1,6 @@
 'use strict';
 
-var sut = require('../vimeo')();
+var sut = require('../vimeo')('');
 /*jshint unused:false*/
 var should = require('should');
 
@@ -31,6 +31,17 @@ describe('vimeo', function () {
 
       sut.isVimeoUrl('https://communitycasts.co').should.equal(false);
       sut.isVimeoUrl('https://vimeo.com/').should.equal(false);
+    });
+  });
+
+  describe('fetchVideoDetails', function () {
+    it('should return correct details', function (done) {
+      sut.fetchVideoDetails('https://vimeo.com/120981003', function (error, details) {
+        details.title.should.equal('We love the floor we step on');
+        details.durationInSeconds.should.equal(77);
+        details.channel.name.should.equal('Alberto Gastesi');
+        done();
+      });
     });
   });
 });
