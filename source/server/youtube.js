@@ -1,6 +1,7 @@
 'use strict';
 
 var request = require('request');
+var moment = require('moment');
 
 function Youtube(key) {
   if (!(this instanceof Youtube)) {
@@ -34,6 +35,7 @@ function Youtube(key) {
       return callback(null, {
         screencastId: id,
         title: video.snippet.title,
+        durationInSeconds: moment.duration(video.contentDetails.duration).asSeconds(),
         channel: {
           name: video.snippet.channelTitle,
        }

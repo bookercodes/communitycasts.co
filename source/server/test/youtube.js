@@ -41,6 +41,7 @@ describe('youtube', function () {
     it('should return correct details', function (done) {
       sut.fetchVideoDetails('https://www.youtube.com/watch?v=jNQXAC9IVRw', function (error, details) {
         details.title.should.equal('Me at the zoo');
+        details.durationInSeconds.should.equal(19);
         details.channel.name.should.equal('jawed');
         done();
       });
