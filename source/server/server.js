@@ -23,3 +23,5 @@ app.get('/screencasts/top/:period', screencastsController.sendScreencasts);
 app.post('/screencasts', screencastsController.createScreencast);
 
 app.listen(3000);
+
+module.exports = app;
