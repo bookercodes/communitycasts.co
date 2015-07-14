@@ -7,6 +7,7 @@ var config = require('config');
 var bodyParser = require('body-parser');
 var youtube = require('./youtube')('AIzaSyAMkYVIPo7ZuX5lWjLvSXCcG0zBuBy799U');
 var vimeo = require('./vimeo')(config.vimeoKey);
+var commaSplit = require('comma-split');
 
 var connection = mysql.createConnection({
   host: 'localhost',
@@ -77,7 +78,10 @@ app.post('/screencasts', function (req, res) {
   function insert() {
     connection.query('INSERT INTO screencasts SET ?', screencast, function (error, result) {
       screencast.id = result.insertId;
-      var tags = req.body.tags.split(',');
+      var tags = commaSplit(req.body.tags, {
+        ignoreWhitespace: true,
+        ignoreBlank: true
+      });
       var values = tags.map(function(tag) { return [tag]; });
       connection.query('INSERT IGNORE INTO tags VALUES ?', [values], function () {
         var values = tags.map(function(tag) { return [screencast.id, tag]; });
