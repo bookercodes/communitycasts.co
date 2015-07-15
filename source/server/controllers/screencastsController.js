@@ -42,6 +42,11 @@ var screencastsController = function (connection) {
       query += ' ORDER BY referralCount DESC';
       query += ' LIMIT ' + start + ', ' + finish;
       connection.query(query, function (error, screencasts) {
+        screencasts = screencasts.map(function (screencast) {
+          screencast.href = 'http://localhost:3000/screencasts/' + screencast.screencastId;
+          delete screencast.link;
+          return screencast;
+        });
         res.json({
           screencasts: screencasts,
           hasMore: hasNextPage
