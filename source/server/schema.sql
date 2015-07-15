@@ -29,7 +29,7 @@ CREATE TABLE screencastTags (
 );
 
 CREATE TABLE referrals (
-  screencastId INT
+  screencastId INT,
   refereeRemoteAddress NVARCHAR(20) NOT NULL,
 
   PRIMARY KEY (screencastId, refereeRemoteAddress),
