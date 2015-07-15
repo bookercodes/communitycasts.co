@@ -21,7 +21,7 @@
   </thead>
   <tbody>
     <tr ng-repeat="screencast in screencasts">
-      <td>{{screencast.title}}</td>
+      <td><a href="{{screencast.href}}" target="_blank">{{screencast.title}}</a></td>
       <td>{{screencast.durationInSeconds}}</td>
       <td>{{screencast.submissionDate}}</td>
       <td>{{screencast.referralCount}}</td>
