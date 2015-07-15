@@ -27,3 +27,12 @@ CREATE TABLE screencastTags (
   FOREIGN KEY (tagName)
     REFERENCES tags(tagName) ON UPDATE CASCADE
 );
+
+CREATE TABLE referrals (
+  screencastId INT
+  refereeRemoteAddress NVARCHAR(20) NOT NULL,
+
+  PRIMARY KEY (screencastId, refereeRemoteAddress),
+  FOREIGN KEY (screencastId)
+    REFERENCES screencasts(screencastId)
+);
