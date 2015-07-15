@@ -93,9 +93,16 @@ var screencastsController = function (connection) {
       insert();
     });
   };
+  var redirectToScreencast = function (req, res) {
+    connection.query('SELECT link FROM screencasts WHERE screencastId = ?', req.params.screencastId, function (error, results) {
+      var screencast = results[0];
+      res.redirect(screencast.link);
+    });
+  };
   return {
     createScreencast: createScreencast,
-    sendScreencasts: sendScreencasts
+    sendScreencasts: sendScreencasts,
+    redirectToScreencast: redirectToScreencast
   };
 };
 
