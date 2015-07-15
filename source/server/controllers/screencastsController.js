@@ -97,6 +97,27 @@ var screencastsController = function (connection) {
     connection.query('SELECT link FROM screencasts WHERE screencastId = ?', req.params.screencastId, function (error, results) {
       var screencast = results[0];
       res.redirect(screencast.link);
+      /*jshint multistr:true*/
+      var query =
+        'SELECT screencastId \
+         FROM referrals \
+         WHERE screencastId = ? AND refereeRemoteAddress = ?';
+      connection.query(query, [req.params.screencastId, req.connection.remoteAddress], function (errors, referrals) {
+        if (referrals.length !== 0) {
+          return;
+        }
+        /*jshint multistr:true*/
+        var query =
+          'UPDATE screencasts \
+             SET referralCount = referralCount + 1 \
+           WHERE screencastId = ?';
+        connection.query(query, req.params.screencastId, function () {
+          connection.query('INSERT INTO referrals SET ?', {
+            screencastId: req.params.screencastId,
+            refereeRemoteAddress: req.connection.remoteAddress
+          });
+        });
+      });
     });
   };
   return {
