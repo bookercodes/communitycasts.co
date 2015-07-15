@@ -27,7 +27,13 @@ var screencastsController = function (connection) {
       var total = result[0].count;
       var totalPageCount = Math.ceil(total / perPage);
       var hasNextPage =  page < totalPageCount;
-      var query = 'SELECT * FROM screencasts s';
+      /*jshint multistr:true*/
+      var query = 'SELECT \
+          s.*, \
+          GROUP_CONCAT(screencastTags.tagName) AS tags \
+        FROM screencasts s \
+        JOIN screencastTags \
+          ON s.screencastId = screencastTags.screencastId';
       switch (req.params.period) {
         case 'month':
           query += ' WHERE s.submissionDate > DATE_SUB(NOW(), INTERVAL 1 MONTH)';
@@ -39,11 +45,12 @@ var screencastsController = function (connection) {
           query += ' WHERE s.submissionDate > DATE_SUB(NOW(), INTERVAL 1 DAY)';
           break;
       }
-      query += ' ORDER BY referralCount DESC';
+      query += ' GROUP BY s.screencastId ORDER BY referralCount DESC';
       query += ' LIMIT ' + start + ', ' + finish;
       connection.query(query, function (error, screencasts) {
         screencasts = screencasts.map(function (screencast) {
           screencast.href = 'http://localhost:3000/screencasts/' + screencast.screencastId;
+          screencast.tags = screencast.tags.split(',');
           delete screencast.link;
           return screencast;
         });
