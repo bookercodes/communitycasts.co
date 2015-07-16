@@ -102,6 +102,9 @@ var screencastsController = function (connection) {
   };
   var redirectToScreencast = function (req, res) {
     connection.query('SELECT link FROM screencasts WHERE screencastId = ?', req.params.screencastId, function (error, results) {
+      if (results.length === 0) {
+        return res.status(404).send();
+      }
       var screencast = results[0];
       res.redirect(screencast.link);
       /*jshint multistr:true*/
