@@ -11,20 +11,18 @@ function cleanDatabase(done) {
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'communityCasts'
+    database: 'communityCasts',
+    multipleStatements: true,
   });
-  connection.connect();
   /* jshint multistr:true*/
   var query = '\
-  SET FOREIGN_KEY_CHECKS=0; \
-  TRUNCATE TABLE screencasts; \
-  TRUNCATE TABLE tags; \
-  TRUNCATE TABLE screencastTags; \
-  TRUNCATE TABLE referrals; \
-  SET FOREIGN_KEY_CHECKS=1;';
-  connection.query(query, function () {
-    done();
-  });
+    SET FOREIGN_KEY_CHECKS=0; \
+    TRUNCATE TABLE screencasts; \
+    TRUNCATE TABLE tags; \
+    TRUNCATE TABLE screencastTags; \
+    TRUNCATE TABLE referrals; \
+    SET FOREIGN_KEY_CHECKS=1;';
+  connection.query(query, done);
 }
 
 describe('createScreencast()', function () {
