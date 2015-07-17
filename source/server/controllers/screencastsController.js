@@ -78,13 +78,18 @@ var screencastsController = function (connection) {
     var screencast = {
       link: req.body.link,
     };
+    var tags = commaSplit(req.body.tags, {
+      ignoreWhitespace: true,
+      ignoreBlank: true
+    });
+    if (tags.length > 5) {
+      res.status(400).send({message:'You must specify 5 or less tags.'});
+      return;
+    }
     function insert() {
       connection.query('INSERT INTO screencasts SET ?', screencast, function (error, result) {
         screencast.id = result.insertId;
-        var tags = commaSplit(req.body.tags, {
-          ignoreWhitespace: true,
-          ignoreBlank: true
-        });
+
         var values = tags.map(function(tag) { return [tag]; });
         connection.query('INSERT IGNORE INTO tags VALUES ?', [values], function () {
           var values = tags.map(function(tag) { return [screencast.id, tag]; });

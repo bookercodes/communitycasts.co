@@ -28,4 +28,12 @@ describe('createScreencast()', function () {
       .expect(400)
       .expect({ message: 'Tags cannot be blank.'}, done);
   });
+  it('should return error if there are more than 5 tags', function (done) {
+    var screencast = { link: 'https://www.youtube.com/watch?v=9bZkp7q19f0', tags: 'one,two,three,four,five,toomany'};
+    request(server)
+      .post('/screencasts')
+      .send(screencast)
+      .expect(400)
+      .expect({ message: 'You must specify 5 or less tags.'}, done);
+  });
 });
