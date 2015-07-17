@@ -81,7 +81,7 @@ var screencastsController = function (connection) {
         connection.query('INSERT IGNORE INTO tags VALUES ?', [values], function () {
           var values = tags.map(function(tag) { return [screencast.id, tag]; });
           connection.query('INSERT IGNORE INTO screencastTags VALUES ?', [values], function () {
-            res.status(201).send({message:'Thank you for your submission. Your submission will be reviewed by the moderators and if it meets our guidelines, it\'ll appear on the home page soon!'});
+            res.status(201).send({screencastId: screencast.id, message:'Thank you for your submission. Your submission will be reviewed by the moderators and if it meets our guidelines, it\'ll appear on the home page soon!'});
           });
         });
       });
