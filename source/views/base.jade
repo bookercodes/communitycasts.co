@@ -48,7 +48,7 @@ html
                     each tag in tags
                       li
                         a(href='/screencasts/tagged/#{encodeURIComponent(tag.tagName)}')
-                          | #{tag.tagName}
+                          | #{tag.displayText}
                           span.label.label-default.tag-count(title="The number of " + tag.tagName + " screencasts")=tag.count
           ul.nav.navbar-nav.navbar-right
             li

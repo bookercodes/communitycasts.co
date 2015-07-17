@@ -82,9 +82,12 @@ app.use(function(req, res, next) {
         tagName:'Other'
       });
     }
+
     tags = tags.map(function (tag) {
       if (tag.tagName.length >= 9) {
-        tag.tagName = tag.tagName.substring(0, 9) + '...';
+        tag.displayText = tag.tagName.substring(0, 9) + '...';
+      } else {
+        tag.displayText = tag.tagName;
       }
       return tag;
     });
