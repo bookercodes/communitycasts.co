@@ -63,6 +63,14 @@ var screencastsController = function (connection) {
   };
 
   var createScreencast = function (req,res) {
+    if (!req.body.link) {
+      res.status(400).send({message:'Screencast link cannot be blank.'});
+      return;
+    }
+    if (!req.body.tags) {
+      res.status(400).send({message:'Tags cannot be blank.'});
+      return;
+    }
     if (!youtube.isYouTubeUrl(req.body.link) && !vimeo.isVimeoUrl(req.body.link)) {
       res.status(400).send({message:'Please enter a valid YouTube or Vimeo video url.'});
       return;
