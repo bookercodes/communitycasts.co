@@ -72,45 +72,44 @@ var screencastsController = function (connection) {
     }
   };
 
+  var send400 = function (res) {
+    // curry the func
+    return function (message) {
+      res.status(400).send({
+        message: message
+      });
+    };
+  };
+
   var createScreencast = function(req, res) {
     var link = req.body.link;
-
+    var sendErr = send400(res);
     if (!link) {
-      return res.status(400).send({
-        message: 'Screencast link cannot be blank.'
-      });
+      return sendErr('Screencast link cannot be blank.');
     }
     if (!youtube.isYouTubeUrl(link) && !vimeo.isVimeoUrl(link)) {
-      return res.status(400).send({
-        message: 'Please enter a valid YouTube or Vimeo video url.'
-      });
+      return sendErr('Please enter a valid YouTube or Vimeo video url.');
     }
     if (!req.body.tags) {
-      return res.status(400).send({
-        message: 'Tags cannot be blank.'
-      });
+      return sendErr('Tags cannot be blank.');
     }
     var tags = commaSplit(req.body.tags, {
       ignoreWhitespace: true,
       ignoreBlank: true
     });
     if (tags.length > 5) {
-      return res.status(400).send({
-        message: 'You must specify 5 or less tags.'
-      });
+      return sendErr('You must specify 5 or less tags.');
     }
-
     fetchVideoDetails(link, function(e, details) {
-
       var screencastId;
       var screencast = {
         link: link,
         title: details.title,
         durationInSeconds: details.durationInSeconds
       };
-
-      connection.beginTransactionAsync().then(function () {
-        return connection.queryAsync('INSERT INTO screencasts SET ?', screencast);
+      connection.beginTransactionAsync().then(function() {
+        return connection.queryAsync('INSERT INTO screencasts SET ?',
+          screencast);
       }).spread(function(result) {
         screencastId = result.insertId;
         var values = tags.map(function(tag) {
@@ -131,12 +130,11 @@ var screencastsController = function (connection) {
           message: 'Thank you for your submission. Your submission will be reviewed by the moderators and if it meets our guidelines, it\'ll appear on the home page soon!'
         });
         return connection.commit();
-      }).error(function () {
+      }).error(function() {
         return connection.rollback();
       });
     });
   };
-
 
   var redirectToScreencast = function(req, res) {
     var screencastId = req.params.screencastId;
