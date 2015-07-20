@@ -5,6 +5,8 @@ var mysql = require('mysql');
 var cors = require('cors');
 var bodyParser = require('body-parser');
 var config = require('config');
+var promise = require('bluebird');
+promise.promisifyAll(require('mysql/lib/Connection').prototype);
 
 var connection = mysql.createConnection({
   host: 'localhost',

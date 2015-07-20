@@ -113,34 +113,41 @@ var screencastsController = function (connection) {
       insert();
     });
   };
-  var redirectToScreencast = function (req, res) {
-    connection.query('SELECT link FROM screencasts WHERE screencastId = ?', req.params.screencastId, function (error, results) {
-      if (results.length === 0) {
+  var redirectToScreencast = function(req, res) {
+    var screencastId = req.params.screencastId;
+    var remoteAddress = req.connection.remoteAddress;
+    /* jshint multistr:true */
+    var query =
+      'SELECT link \
+       FROM screencasts \
+       WHERE screencastId = ?';
+    connection.queryAsync(query, screencastId).spread(function(screencasts) {
+      var screencast = screencasts.shift();
+      if (!screencast) {
         return res.status(404).send();
       }
-      var screencast = results[0];
       res.redirect(screencast.link);
-      /*jshint multistr:true*/
       var query =
         'SELECT screencastId \
          FROM referrals \
          WHERE screencastId = ? AND refereeRemoteAddress = ?';
-      connection.query(query, [req.params.screencastId, req.connection.remoteAddress], function (errors, referrals) {
-        if (referrals.length !== 0) {
-          return;
-        }
-        /*jshint multistr:true*/
-        var query =
-          'UPDATE screencasts \
-             SET referralCount = referralCount + 1 \
+      connection.queryAsync(query, [screencastId, remoteAddress]).spread(
+        function(referrals) {
+          if (referrals.length > 0) {
+            return;
+          }
+          /*jshint multistr:true*/
+          var query =
+            'UPDATE screencasts \
+           SET referralCount = referralCount + 1 \
            WHERE screencastId = ?';
-        connection.query(query, req.params.screencastId, function () {
-          connection.query('INSERT INTO referrals SET ?', {
-            screencastId: req.params.screencastId,
-            refereeRemoteAddress: req.connection.remoteAddress
+          connection.queryAsync(query, screencastId).then(function() {
+            connection.queryAsync('INSERT INTO referrals SET ?', {
+              screencastId: screencastId,
+              refereeRemoteAddress: remoteAddress
+            });
           });
         });
-      });
     });
   };
   return {
