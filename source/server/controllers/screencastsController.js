@@ -101,33 +101,39 @@ var screencastsController = function (connection) {
     }
 
     fetchVideoDetails(link, function(e, details) {
+
       var screencastId;
       var screencast = {
         link: link,
         title: details.title,
         durationInSeconds: details.durationInSeconds
       };
-      connection.queryAsync('INSERT INTO screencasts SET ?', screencast).spread(
-        function(result) {
-          screencastId = result.insertId;
-          var values = tags.map(function(tag) {
-            return [tag];
-          });
-          return connection.queryAsync('INSERT IGNORE INTO tags VALUES ?', [
-            values
-          ]);
-        }).then(function() {
-          var values = tags.map(function(tag) {
-            return [screencastId, tag];
-          });
-          return connection.queryAsync(
-            'INSERT IGNORE INTO screencastTags VALUES ?', [values]);
-        }).then(function() {
-          res.status(201).send({
-            screencastId: screencastId,
-            message: 'Thank you for your submission. Your submission will be reviewed by the moderators and if it meets our guidelines, it\'ll appear on the home page soon!'
-          });
+
+      connection.beginTransactionAsync().then(function () {
+        return connection.queryAsync('INSERT INTO screencasts SET ?', screencast);
+      }).spread(function(result) {
+        screencastId = result.insertId;
+        var values = tags.map(function(tag) {
+          return [tag];
         });
+        return connection.queryAsync('INSERT IGNORE INTO tags VALUES ?', [
+          values
+        ]);
+      }).then(function() {
+        var values = tags.map(function(tag) {
+          return [screencastId, tag];
+        });
+        return connection.queryAsync(
+          'INSERT IGNORE INTO screencastTagsX VALUES ?', [values]);
+      }).then(function() {
+        res.status(201).send({
+          screencastId: screencastId,
+          message: 'Thank you for your submission. Your submission will be reviewed by the moderators and if it meets our guidelines, it\'ll appear on the home page soon!'
+        });
+        return connection.commit();
+      }).error(function () {
+        return connection.rollback();
+      });
     });
   };
 
