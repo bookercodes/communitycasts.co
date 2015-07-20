@@ -4,13 +4,14 @@ var Code = require('code');
 var request = require('supertest');
 var server = require('../server');
 var expect = Code.expect;
+var config = require('config');
 
 function cleanDatabase(done) {
   var mysql = require('mysql');
   var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '',
+    password: config.databasePassword,
     database: 'communityCasts',
     multipleStatements: true,
   });
