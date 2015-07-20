@@ -62,57 +62,76 @@ var screencastsController = function (connection) {
     });
   };
 
-  var createScreencast = function (req,res) {
-    if (!req.body.link) {
-      res.status(400).send({message:'Screencast link cannot be blank.'});
-      return;
+  var fetchVideoDetails = function (link, done) {
+    if (youtube.isYouTubeUrl(link)) {
+      youtube.fetchVideoDetails(link, done);
+    } else if (vimeo.isVimeoUrl(link)) {
+      vimeo.fetchVideoDetails(link, done);
+    } else {
+      throw new Error('link must be either a YouTube or Vimeo video link');
+    }
+  };
+
+  var createScreencast = function(req, res) {
+    var link = req.body.link;
+
+    if (!link) {
+      return res.status(400).send({
+        message: 'Screencast link cannot be blank.'
+      });
+    }
+    if (!youtube.isYouTubeUrl(link) && !vimeo.isVimeoUrl(link)) {
+      return res.status(400).send({
+        message: 'Please enter a valid YouTube or Vimeo video url.'
+      });
     }
     if (!req.body.tags) {
-      res.status(400).send({message:'Tags cannot be blank.'});
-      return;
+      return res.status(400).send({
+        message: 'Tags cannot be blank.'
+      });
     }
-    if (!youtube.isYouTubeUrl(req.body.link) && !vimeo.isVimeoUrl(req.body.link)) {
-      res.status(400).send({message:'Please enter a valid YouTube or Vimeo video url.'});
-      return;
-    }
-    var screencast = {
-      link: req.body.link,
-    };
     var tags = commaSplit(req.body.tags, {
       ignoreWhitespace: true,
       ignoreBlank: true
     });
     if (tags.length > 5) {
-      res.status(400).send({message:'You must specify 5 or less tags.'});
-      return;
+      return res.status(400).send({
+        message: 'You must specify 5 or less tags.'
+      });
     }
-    function insert() {
-      connection.query('INSERT INTO screencasts SET ?', screencast, function (error, result) {
-        screencast.id = result.insertId;
 
-        var values = tags.map(function(tag) { return [tag]; });
-        connection.query('INSERT IGNORE INTO tags VALUES ?', [values], function () {
-          var values = tags.map(function(tag) { return [screencast.id, tag]; });
-          connection.query('INSERT IGNORE INTO screencastTags VALUES ?', [values], function () {
-            res.status(201).send({screencastId: screencast.id, message:'Thank you for your submission. Your submission will be reviewed by the moderators and if it meets our guidelines, it\'ll appear on the home page soon!'});
+    fetchVideoDetails(link, function(e, details) {
+      var screencastId;
+      var screencast = {
+        link: link,
+        title: details.title,
+        durationInSeconds: details.durationInSeconds
+      };
+      connection.queryAsync('INSERT INTO screencasts SET ?', screencast).spread(
+        function(result) {
+          screencastId = result.insertId;
+          var values = tags.map(function(tag) {
+            return [tag];
+          });
+          return connection.queryAsync('INSERT IGNORE INTO tags VALUES ?', [
+            values
+          ]);
+        }).then(function() {
+          var values = tags.map(function(tag) {
+            return [screencastId, tag];
+          });
+          return connection.queryAsync(
+            'INSERT IGNORE INTO screencastTags VALUES ?', [values]);
+        }).then(function() {
+          res.status(201).send({
+            screencastId: screencastId,
+            message: 'Thank you for your submission. Your submission will be reviewed by the moderators and if it meets our guidelines, it\'ll appear on the home page soon!'
           });
         });
-      });
-    }
-    if (youtube.isYouTubeUrl(req.body.link)) {
-      youtube.fetchVideoDetails(req.body.link, function(error, details) {
-        screencast.title = details.title;
-        screencast.durationInSeconds = details.durationInSeconds;
-        insert();
-      });
-      return;
-    }
-    vimeo.fetchVideoDetails(req.body.link, function (error, details) {
-      screencast.title = details.title;
-      screencast.durationInSeconds = details.durationInSeconds;
-      insert();
     });
   };
+
+
   var redirectToScreencast = function(req, res) {
     var screencastId = req.params.screencastId;
     var remoteAddress = req.connection.remoteAddress;
