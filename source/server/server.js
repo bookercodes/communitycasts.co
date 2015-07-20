@@ -4,11 +4,12 @@ var express = require('express');
 var mysql = require('mysql');
 var cors = require('cors');
 var bodyParser = require('body-parser');
+var config = require('config');
 
 var connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '',
+  password: config.databasePassword,
   database: 'communityCasts'
 });
 connection.connect();
