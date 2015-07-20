@@ -136,16 +136,23 @@ var screencastsController = function (connection) {
           if (referrals.length > 0) {
             return;
           }
-          /*jshint multistr:true*/
-          var query =
-            'UPDATE screencasts \
-           SET referralCount = referralCount + 1 \
-           WHERE screencastId = ?';
-          connection.queryAsync(query, screencastId).then(function() {
-            connection.queryAsync('INSERT INTO referrals SET ?', {
-              screencastId: screencastId,
-              refereeRemoteAddress: remoteAddress
-            });
+          connection.beginTransactionAsync().then(function() {
+            /*jshint multistr:true*/
+            var query =
+              'UPDATE screencasts \
+                 SET referralCount = referralCount + 1 \
+               WHERE screencastId = ?';
+            return connection.queryAsync(query, screencastId);
+          }).then(function() {
+            return connection.queryAsync(
+              'INSERT INTO referrals SET ?', {
+                screencastId: screencastId,
+                refereeRemoteAddress: remoteAddress
+              });
+          }).then(function() {
+            return connection.commit();
+          }).error(function() {
+            return connection.rollback();
           });
         });
     });
