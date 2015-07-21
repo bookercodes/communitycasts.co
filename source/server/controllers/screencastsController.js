@@ -5,8 +5,8 @@ var youtube = require('../youtube')('AIzaSyAMkYVIPo7ZuX5lWjLvSXCcG0zBuBy799U');
 var vimeo = require('../vimeo')(config.vimeoKey);
 var commaSplit = require('comma-split');
 
-var screencastsController = function (connection) {
-  var appendWherePhase = function (query, period) {
+var screencastsController = function(connection) {
+  var appendWherePhase = function(query, period) {
     switch (period) {
       case 'month':
         query += ' WHERE s.submissionDate > DATE_SUB(NOW(), INTERVAL 1 MONTH)';
@@ -20,8 +20,7 @@ var screencastsController = function (connection) {
     }
     return query;
   };
-
-  var sendScreencasts = function (req, res) {
+  var sendScreencasts = function(req, res) {
     /*jshint multistr:true*/
     var query = 'SELECT COUNT(*) AS count FROM screencasts s';
     query = appendWherePhase(query, req.params.period);
@@ -32,7 +31,7 @@ var screencastsController = function (connection) {
       var start = (page - 1) * perPage;
       var finish = page * perPage;
       var totalPageCount = Math.ceil(total / perPage);
-      var hasNextPage =  page < totalPageCount;
+      var hasNextPage = page < totalPageCount;
       /*jshint multistr:true*/
       var query =
         'SELECT \
@@ -46,9 +45,10 @@ var screencastsController = function (connection) {
         ' GROUP BY s.screencastId \
          ORDER BY referralCount DESC \
          LIMIT ' + start + ', ' + finish;
-      connection.queryAsync(query).spread(function (screencasts) {
-        screencasts = screencasts.map(function (screencast) {
-          screencast.href = 'http://localhost:3000/screencasts/' + screencast.screencastId;
+      connection.queryAsync(query).spread(function(screencasts) {
+        screencasts = screencasts.map(function(screencast) {
+          screencast.href =
+            'http://localhost:3000/screencasts/' + screencast.screencastId;
           screencast.tags = screencast.tags.split(',');
           delete screencast.link;
           return screencast;
@@ -60,8 +60,7 @@ var screencastsController = function (connection) {
       });
     });
   };
-
-  var fetchVideoDetails = function (link, done) {
+  var fetchVideoDetails = function(link, done) {
     if (youtube.isYouTubeUrl(link)) {
       youtube.fetchVideoDetails(link, done);
     } else if (vimeo.isVimeoUrl(link)) {
@@ -70,16 +69,14 @@ var screencastsController = function (connection) {
       throw new Error('link must be either a YouTube or Vimeo video link');
     }
   };
-
-  var send400 = function (res) {
+  var send400 = function(res) {
     // curry the func
-    return function (message) {
+    return function(message) {
       res.status(400).send({
         message: message
       });
     };
   };
-
   var createScreencast = function(req, res) {
     var link = req.body.link;
     var sendErr = send400(res);
@@ -107,16 +104,18 @@ var screencastsController = function (connection) {
         durationInSeconds: details.durationInSeconds
       };
       connection.beginTransactionAsync().then(function() {
-        return connection.queryAsync('INSERT INTO screencasts SET ?',
+        return connection.queryAsync(
+          'INSERT INTO screencasts SET ?',
           screencast);
       }).spread(function(result) {
         screencastId = result.insertId;
         var values = tags.map(function(tag) {
           return [tag];
         });
-        return connection.queryAsync('INSERT IGNORE INTO tags VALUES ?', [
-          values
-        ]);
+        return connection.queryAsync(
+          'INSERT IGNORE INTO tags VALUES ?', [
+            values
+          ]);
       }).then(function() {
         var values = tags.map(function(tag) {
           return [screencastId, tag];
@@ -136,7 +135,6 @@ var screencastsController = function (connection) {
       });
     });
   };
-
   var redirectToScreencast = function(req, res) {
     var screencastId = req.params.screencastId;
     var remoteAddress = req.connection.remoteAddress;
