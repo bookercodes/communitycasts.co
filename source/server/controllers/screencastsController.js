@@ -69,32 +69,28 @@ var screencastsController = function(connection) {
       throw new Error('link must be either a YouTube or Vimeo video link');
     }
   };
-  var send400 = function(res) {
-    // curry the func
-    return function(message) {
-      res.status(400).send({
-        message: message
-      });
-    };
+  var send400 = function(res, message) {
+    res.status(400).send({
+      message: message
+    });
   };
   var createScreencast = function(req, res) {
     var link = req.body.link;
-    var sendErr = send400(res);
     if (!link) {
-      return sendErr('Screencast link cannot be blank.');
+      return send400(res, 'Screencast link cannot be blank.');
     }
     if (!youtube.isYouTubeUrl(link) && !vimeo.isVimeoUrl(link)) {
-      return sendErr('Please enter a valid YouTube or Vimeo video url.');
+      return send400(res, 'Please enter a valid YouTube or Vimeo video url.');
     }
     if (!req.body.tags) {
-      return sendErr('Tags cannot be blank.');
+      return send400(res, 'Tags cannot be blank.');
     }
     var tags = commaSplit(req.body.tags, {
       ignoreWhitespace: true,
       ignoreBlank: true
     });
     if (tags.length > 5) {
-      return sendErr('You must specify 5 or less tags.');
+      return send400(res, 'You must specify 5 or less tags.');
     }
     fetchVideoDetails(link, function(e, details) {
       var screencastId;
