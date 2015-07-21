@@ -2,7 +2,7 @@
 
 var config = require('config');
 var youtube = require('../youtube')(config.youtubeToken);
-var vimeo = require('../vimeo')(config.vimeoKey);
+var vimeo = require('../vimeo')(config.vimeoToken);
 var commaSplit = require('comma-split');
 
 var screencastsController = function(connection) {
