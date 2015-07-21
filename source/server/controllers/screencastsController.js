@@ -6,9 +6,8 @@ var vimeo = require('../vimeo')(config.vimeoKey);
 var commaSplit = require('comma-split');
 
 var screencastsController = function (connection) {
-  var sendScreencasts = function (req, res) {
-    var query = 'SELECT COUNT(*) AS count FROM screencasts s';
-    switch (req.params.period) {
+  var appendWherePhase = function (query, period) {
+    switch (period) {
       case 'month':
         query += ' WHERE s.submissionDate > DATE_SUB(NOW(), INTERVAL 1 MONTH)';
         break;
@@ -19,6 +18,12 @@ var screencastsController = function (connection) {
         query += ' WHERE s.submissionDate > DATE_SUB(NOW(), INTERVAL 1 DAY)';
         break;
     }
+    return query;
+  };
+
+  var sendScreencasts = function (req, res) {
+    var query = 'SELECT COUNT(*) AS count FROM screencasts s';
+    query = appendWherePhase(query, req.params.period);
     connection.query(query, function (error, result) {
       var page = req.query.page;
       var perPage = 5;
@@ -34,17 +39,7 @@ var screencastsController = function (connection) {
         FROM screencasts s \
         JOIN screencastTags \
           ON s.screencastId = screencastTags.screencastId';
-      switch (req.params.period) {
-        case 'month':
-          query += ' WHERE s.submissionDate > DATE_SUB(NOW(), INTERVAL 1 MONTH)';
-          break;
-        case 'week':
-          query += ' WHERE s.submissionDate > DATE_SUB(NOW(), INTERVAL 1 WEEK)';
-          break;
-        default:
-          query += ' WHERE s.submissionDate > DATE_SUB(NOW(), INTERVAL 1 DAY)';
-          break;
-      }
+      query = appendWherePhase(query, req.params.period);
       query += ' GROUP BY s.screencastId ORDER BY referralCount DESC';
       query += ' LIMIT ' + start + ', ' + finish;
       connection.query(query, function (error, screencasts) {
