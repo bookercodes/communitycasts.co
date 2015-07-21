@@ -1,7 +1,7 @@
 'use strict';
 
 var config = require('config');
-var youtube = require('../youtube')('AIzaSyAMkYVIPo7ZuX5lWjLvSXCcG0zBuBy799U');
+var youtube = require('../youtube')(config.youtubeToken);
 var vimeo = require('../vimeo')(config.vimeoKey);
 var commaSplit = require('comma-split');
 
