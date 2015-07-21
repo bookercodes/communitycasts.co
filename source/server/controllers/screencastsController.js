@@ -27,7 +27,7 @@ var screencastsController = function(connection) {
     connection.queryAsync(query).spread(function(result) {
       var total = result.shift().count;
       var page = req.query.page;
-      var perPage = 5; // TODO: Make this a config prop'
+      var perPage = config.screencastsPerPage;
       var start = (page - 1) * perPage;
       var finish = page * perPage;
       var totalPageCount = Math.ceil(total / perPage);

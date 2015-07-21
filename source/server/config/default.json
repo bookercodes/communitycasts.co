@@ -1,3 +1,5 @@
 {
-  "vimeoKey": ""
+  "databasePassword": "",
+  "vimeoKey": "",
+  "screencastsPerPage": 10
 }
