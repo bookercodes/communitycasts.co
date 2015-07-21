@@ -22,27 +22,31 @@ var screencastsController = function (connection) {
   };
 
   var sendScreencasts = function (req, res) {
+    /*jshint multistr:true*/
     var query = 'SELECT COUNT(*) AS count FROM screencasts s';
     query = appendWherePhase(query, req.params.period);
-    connection.query(query, function (error, result) {
+    connection.queryAsync(query).spread(function(result) {
+      var total = result.shift().count;
       var page = req.query.page;
-      var perPage = 5;
+      var perPage = 5; // TODO: Make this a config prop'
       var start = (page - 1) * perPage;
       var finish = page * perPage;
-      var total = result[0].count;
       var totalPageCount = Math.ceil(total / perPage);
       var hasNextPage =  page < totalPageCount;
       /*jshint multistr:true*/
-      var query = 'SELECT \
-          s.*, \
-          GROUP_CONCAT(screencastTags.tagName) AS tags \
-        FROM screencasts s \
-        JOIN screencastTags \
-          ON s.screencastId = screencastTags.screencastId';
+      var query =
+        'SELECT \
+           s.*, \
+           GROUP_CONCAT(screencastTags.tagName) AS tags \
+         FROM screencasts s \
+         JOIN screencastTags \
+           ON s.screencastId = screencastTags.screencastId';
       query = appendWherePhase(query, req.params.period);
-      query += ' GROUP BY s.screencastId ORDER BY referralCount DESC';
-      query += ' LIMIT ' + start + ', ' + finish;
-      connection.query(query, function (error, screencasts) {
+      query +=
+        ' GROUP BY s.screencastId \
+         ORDER BY referralCount DESC \
+         LIMIT ' + start + ', ' + finish;
+      connection.queryAsync(query).spread(function (screencasts) {
         screencasts = screencasts.map(function (screencast) {
           screencast.href = 'http://localhost:3000/screencasts/' + screencast.screencastId;
           screencast.tags = screencast.tags.split(',');
