@@ -123,14 +123,16 @@ var screencastsController = function (connection) {
           return [screencastId, tag];
         });
         return connection.queryAsync(
-          'INSERT IGNORE INTO screencastTagsX VALUES ?', [values]);
+          'INSERT IGNORE INTO screencastTags VALUES ?', [values]);
       }).then(function() {
         res.status(201).send({
           screencastId: screencastId,
           message: 'Thank you for your submission. Your submission will be reviewed by the moderators and if it meets our guidelines, it\'ll appear on the home page soon!'
         });
         return connection.commit();
-      }).error(function() {
+      }).error(function(error) {
+        console.log(error);
+        res.status(500).send('An internal server error occured.');
         return connection.rollback();
       });
     });
