@@ -43,7 +43,7 @@ var screencastsController = function(connection) {
       query = appendWherePhase(query, req.params.period);
       query +=
         ' GROUP BY s.screencastId \
-         ORDER BY referralCount DESC \
+         ORDER BY referralCount DESC, submissionDate \
          LIMIT ' + start + ', ' + finish;
       connection.queryAsync(query).spread(function(screencasts) {
         screencasts = screencasts.map(function(screencast) {
