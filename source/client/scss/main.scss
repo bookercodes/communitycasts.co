@@ -4,6 +4,7 @@
 }
 
 body {
+  font-family: 'Open Sans', sans-serif;
 }
 
 .header {
@@ -14,6 +15,7 @@ body {
 .header__logo {
   color: white;
   float: left;
+  font-weight: normal;
 }
 
 .header__nav {
@@ -36,12 +38,28 @@ body {
   margin-bottom: 50px;
 }
 
+.secondary-header__nav {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
 .secondary-header__nav__item {
-  display: inline;
   list-style: none;
+  display: inline;
 }
 
 .secondary-header__nav__link {
   color: white;
   text-decoration: none;
+  display: inline-block;
+  padding: 10px 20px;
+}
+
+.secondary-header__nav__link:hover {
+  background-color: #3498db;
+}
+
+.fa {
+  color:white;
+  margin-right:10px;
 }

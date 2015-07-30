@@ -4,12 +4,17 @@
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/main.css">
+  <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
 </head>
 
 <body ng-app="communityCasts">
   <header class="header">
-    <h1 class="header__logo">Community Casts</h1>
+    <!-- <h1 class="header__logo">Community Casts</h1> -->
     <nav class="header__nav">
       <ul>
         <li class="header__nav__item"><a class="header__nav__link" ng-href="#/">Home</a></li>
@@ -20,8 +25,14 @@
   <header class="secondary-header">
     <nav class="secondary-header__nav">
       <ul>
-        <li class="secondary-header__nav__item"><a class="secondary-header__nav__link" ng-href="#/">Browse Technologies</a></li>
-        <li class="secondary-header__nav__item"><a class="secondary-header__nav__link" ng-href="#/submit">Submit</a></li>
+        <li class="secondary-header__nav__item">
+
+          <a class="secondary-header__nav__link" ng-href="#/"><span class="secondary-header__nav__icon fa fa-bars"></span>Browse Technologies</a>
+        </li>
+        <li class="secondary-header__nav__item">
+
+          <a class="secondary-header__nav__link" ng-href="#/submit"><span class="secondary-header__nav__icon fa fa-plus"></span>Submit</a>
+        </li>
       </ul>
     </nav>
   </header>
