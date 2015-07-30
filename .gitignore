@@ -1,5 +1,6 @@
 node_modules
 components
 errors.log
-npm-debug.log 
-source/server/config/local.json
+npm-debug.log
+.sass-cache
+local.json
