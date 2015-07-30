@@ -1,3 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  background-color: red;
+}
+
+.header {
+  background-color: #FB4F4F;
+  overflow: hidden;
+}
+
+.header__logo {
+  color: white;
+  float: left;
+}
+
+.nav {
+  float: right;
+  padding: 10px;
+}
+
+.nav__item {
+  display: inline;
+  list-style: none;
+}
+
+.nav__link {
+  color: white;
+  text-decoration: none;
 }
