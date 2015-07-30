@@ -24,7 +24,8 @@ body {
 
 .header__nav__item {
   display: inline;
-  list-style: none; }
+  list-style: none;
+  margin-left: 20px; }
 
 .header__nav__link {
   color: white;
