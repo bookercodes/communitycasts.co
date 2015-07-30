@@ -1,6 +1,7 @@
 .container {
   max-width: 1140px;
-  margin: 0 auto; }
+  margin: 0 auto;
+  padding: 0 20px; }
 
 * {
   margin: 0;
@@ -11,7 +12,8 @@ body {
 
 .header {
   background-color: #3498db;
-  overflow: hidden; }
+  overflow: hidden;
+  padding: 20px 0; }
 
 .header__logo {
   color: white;
@@ -33,7 +35,8 @@ body {
 
 .secondary-header {
   background-color: #2980b9;
-  margin-bottom: 50px; }
+  margin-bottom: 50px;
+  padding: 15px 0; }
 
 .secondary-header__nav__item {
   list-style: none;
@@ -43,8 +46,6 @@ body {
   color: white;
   text-decoration: none;
   display: inline-block;
-  padding-top: 10px;
-  padding-bottom: 10px;
   margin-right: 20px; }
 
 .secondary-header__nav__link:hover {

@@ -1,6 +1,7 @@
 .container {
   max-width: 1140px;
   margin: 0 auto;
+  padding: 0 20px;
 }
 
 * {
@@ -15,6 +16,7 @@ body {
 .header {
   background-color: #3498db;
   overflow: hidden;
+  padding: 20px 0;
 }
 
 .header__logo {
@@ -42,6 +44,7 @@ body {
 .secondary-header {
   background-color: #2980b9;
   margin-bottom: 50px;
+  padding: 15px 0;
 }
 
 
@@ -54,8 +57,7 @@ body {
   color: white;
   text-decoration: none;
   display: inline-block;
-  padding-top: 10px;
-  padding-bottom:10px;
+
   // padding-right: 20px;
   margin-right:20px;
   // padding: 10px 20px;
