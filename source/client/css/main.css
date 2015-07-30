@@ -3,21 +3,33 @@
   padding: 0; }
 
 .header {
-  background-color: #FB4F4F;
+  background-color: #3498db;
   overflow: hidden; }
 
 .header__logo {
   color: white;
   float: left; }
 
-.nav {
+.header__nav {
   float: right;
   padding: 10px; }
 
-.nav__item {
+.header__nav__item {
   display: inline;
   list-style: none; }
 
-.nav__link {
+.header__nav__link {
+  color: white;
+  text-decoration: none; }
+
+.secondary-header {
+  background-color: #2980b9;
+  margin-bottom: 50px; }
+
+.secondary-header__nav__item {
+  display: inline;
+  list-style: none; }
+
+.secondary-header__nav__link {
   color: white;
   text-decoration: none; }
