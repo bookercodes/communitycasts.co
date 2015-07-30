@@ -14,30 +14,38 @@
 
 <body ng-app="communityCasts">
   <header class="header">
-    <!-- <h1 class="header__logo">Community Casts</h1> -->
-    <nav class="header__nav">
-      <ul>
-        <li class="header__nav__item"><a class="header__nav__link" ng-href="#/">Home</a></li>
-        <li class="header__nav__item"><a class="header__nav__link" ng-href="#/about">About</a></li>
-      </ul>
-    </nav>
+    <div class="container">
+      <!-- <h1 class="header__logo">Community Casts</h1> -->
+      <nav class="header__nav">
+        <ul>
+          <li class="header__nav__item"><a class="header__nav__link" ng-href="#/"><span class="fa fa-search"></span</a></li>
+          <li class="header__nav__item"><a class="header__nav__link" ng-href="#/">Home</a></li>
+          <li class="header__nav__item"><a class="header__nav__link" ng-href="#/about">About</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
   <header class="secondary-header">
-    <nav class="secondary-header__nav">
-      <ul>
-        <li class="secondary-header__nav__item">
+    <div class="container">
+      <nav class="secondary-header__nav">
+        <ul>
+          <li class="secondary-header__nav__item">
 
-          <a class="secondary-header__nav__link" ng-href="#/"><span class="secondary-header__nav__icon fa fa-bars"></span>Browse Technologies</a>
-        </li>
-        <li class="secondary-header__nav__item">
+            <a class="secondary-header__nav__link" ng-href="#/"><span class="secondary-header__nav__icon fa fa-bars"></span>Browse Technologies</a>
+          </li>
+          <li class="secondary-header__nav__item">
 
-          <a class="secondary-header__nav__link" ng-href="#/submit"><span class="secondary-header__nav__icon fa fa-plus"></span>Submit</a>
-        </li>
-      </ul>
-    </nav>
+            <a class="secondary-header__nav__link" ng-href="#/submit"><span class="secondary-header__nav__icon fa fa-plus"></span>Submit</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
-  <div ui-view></div>
+  <div class="container">
+    <div ui-view>
+    </div>
+  </div>
 
   <div class="alert"><strong>{{alert.title}}</strong> {{alert.message}}</div>
 
