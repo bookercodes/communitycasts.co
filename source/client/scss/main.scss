@@ -54,7 +54,11 @@ body {
   color: white;
   text-decoration: none;
   display: inline-block;
-  padding: 10px 20px;
+  padding-top: 10px;
+  padding-bottom:10px;
+  // padding-right: 20px;
+  margin-right:20px;
+  // padding: 10px 20px;
 }
 
 .secondary-header__nav__link:hover {
