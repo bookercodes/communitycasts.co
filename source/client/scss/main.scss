@@ -125,3 +125,19 @@ body {
   background-color:white;
   height:100%;
 }
+
+.button {
+  text-transform: uppercase;
+  background: none;
+  border: none;
+  background-color: #4282aa;
+  padding: 10px 20px;
+  color: white;
+  font-family: inherit;
+  width: 100%;
+}
+
+.button:disabled {
+  background-color: #E0E0E0;
+  cursor: not-allowed;
+}
