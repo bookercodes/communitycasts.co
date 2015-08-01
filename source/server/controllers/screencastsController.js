@@ -74,63 +74,6 @@ var screencastsController = function(connection) {
       message: message
     });
   };
-  var createScreencast = function(req, res) {
-    var link = req.body.link;
-    if (!link) {
-      return send400(res, 'Screencast link cannot be blank.');
-    }
-    if (!youtube.isYouTubeUrl(link) && !vimeo.isVimeoUrl(link)) {
-      return send400(res, 'Please enter a valid YouTube or Vimeo video url.');
-    }
-    if (!req.body.tags) {
-      return send400(res, 'Tags cannot be blank.');
-    }
-    var tags = commaSplit(req.body.tags, {
-      ignoreWhitespace: true,
-      ignoreBlank: true
-    });
-    if (tags.length > 5) {
-      return send400(res, 'You must specify 5 or less tags.');
-    }
-    fetchVideoDetails(link, function(e, details) {
-      var screencastId;
-      var screencast = {
-        link: link,
-        title: details.title,
-        durationInSeconds: details.durationInSeconds
-      };
-      connection.beginTransactionAsync().then(function() {
-        return connection.queryAsync(
-          'INSERT INTO screencasts SET ?',
-          screencast);
-      }).spread(function(result) {
-        screencastId = result.insertId;
-        var values = tags.map(function(tag) {
-          return [tag];
-        });
-        return connection.queryAsync(
-          'INSERT IGNORE INTO tags VALUES ?', [
-            values
-          ]);
-      }).then(function() {
-        var values = tags.map(function(tag) {
-          return [screencastId, tag];
-        });
-        return connection.queryAsync(
-          'INSERT IGNORE INTO screencastTags VALUES ?', [values]);
-      }).then(function() {
-        res.status(201).send({
-          screencastId: screencastId,
-          message: 'Thank you for your submission. Your submission will be reviewed by the moderators and if it meets our guidelines, it\'ll appear on the home page soon!'
-        });
-        return connection.commit();
-      }).error(function(error) {
-        console.log(error);
-        res.status(500).send('An internal server error occured.');
-        return connection.rollback();
-      });
-    });
-  };
   var redirectToScreencast = function(req, res) {
     var screencastId = req.params.screencastId;
     var remoteAddress = req.connection.remoteAddress;
@@ -176,7 +119,6 @@ var screencastsController = function(connection) {
     });
   };
   return {
-    createScreencast: createScreencast,
     sendScreencasts: sendScreencasts,
     redirectToScreencast: redirectToScreencast
   };
