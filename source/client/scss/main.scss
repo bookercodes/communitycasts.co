@@ -86,15 +86,28 @@ body {
 }
 
 .main {
-
   background-color: white;
 }
 
-.left {
+.main__nav {
   background-color: #3A3A3A;
   height:100%;
   width: 30%;
   float:left;
+}
+
+.main__nav__item {
+  list-style: none;
+}
+
+.main__nav__link {
+  color: white;
+  text-decoration: none;
+
+}
+
+.main__nav__header {
+    color: white;
 }
 
 .right {
