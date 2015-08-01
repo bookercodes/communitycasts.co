@@ -33,6 +33,11 @@ body {
   color: white;
   text-decoration: none; }
 
+.header__nav__link--submit {
+  background-color: #2980b9;
+  padding: 10px 15px;
+  border-radius: 2px; }
+
 .secondary-header {
   background-color: #2980b9;
   margin-bottom: 50px;
