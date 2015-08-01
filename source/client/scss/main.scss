@@ -135,9 +135,23 @@ body {
   color: white;
   font-family: inherit;
   width: 100%;
+  border-radius:2px;
+  cursor: pointer;
 }
 
 .button:disabled {
   background-color: #E0E0E0;
   cursor: not-allowed;
+}
+
+
+.sort-button {
+  font-family: inherit;
+  border-radius:2px;
+  background: none;
+  border: none;
+  background-color: #E8E8E8;
+  padding: 10px 20px;
+  color: #4282aa;
+  cursor: pointer;
 }
