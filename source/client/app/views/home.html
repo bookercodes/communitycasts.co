@@ -14,7 +14,14 @@
   <tbody>
     <tr ng-repeat="screencast in screencasts">
       <td><img src="https://placeholdit.imgix.net/~text?txtsize=15&txt=Thumb&w=70&h=52" alt="" /></td>
-      <td><a href="{{screencast.href}}" target="_blank">{{screencast.title}}</a></td>
+      <td>
+        <a href="{{screencast.href}}" target="_blank">{{screencast.title}}</a>
+        <ul class="tags">
+          <li class="tags__item" ng-repeat="tag in screencast.tags">
+            {{tag}}
+          </li>
+        </ul>
+      </td>
       <td>{{screencast.durationInSeconds}}</td>
     </tr>
   </tbody>

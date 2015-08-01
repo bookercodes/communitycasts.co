@@ -136,3 +136,15 @@ body {
 .table tr a {
   display: inline-block;
   padding: 10px; }
+
+.tags {
+  list-style: none; }
+
+.tags__item {
+  display: inline-block;
+  background-color: #e4edf4;
+  color: #3e6d8e;
+  border: 1px solid #c0d4db;
+  padding: .4em .5em;
+  font-size: 12px;
+  margin-left: 10px; }
