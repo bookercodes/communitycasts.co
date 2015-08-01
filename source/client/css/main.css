@@ -8,7 +8,8 @@
   padding: 0; }
 
 body {
-  font-family: 'Open Sans', sans-serif; }
+  font-family: 'Open Sans', sans-serif;
+  background-color: #eceef1; }
 
 .header {
   background-color: #3498db;
@@ -59,3 +60,9 @@ body {
 .fa {
   color: white;
   margin-right: 10px; }
+
+.main {
+  max-width: 1140px;
+  padding: 0 20px;
+  margin: 0 auto;
+  background-color: white; }

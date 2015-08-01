@@ -11,6 +11,7 @@
 
 body {
   font-family: 'Open Sans', sans-serif;
+  background-color: #eceef1;
 }
 
 .header {
@@ -76,4 +77,11 @@ body {
 .fa {
   color:white;
   margin-right:10px;
+}
+
+.main {
+  max-width:1140px;
+  padding: 0 20px;
+  margin: 0 auto;
+  background-color: white;
 }
