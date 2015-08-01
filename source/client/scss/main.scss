@@ -144,7 +144,6 @@ body {
   cursor: not-allowed;
 }
 
-
 .sort-button {
   font-family: inherit;
   border-radius:2px;
@@ -154,4 +153,13 @@ body {
   padding: 10px 20px;
   color: #4282aa;
   cursor: pointer;
+}
+
+.table {
+  padding: 20px 0;
+}
+
+.table tr a {
+  display: inline-block;
+  padding: 10px;
 }
