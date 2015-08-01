@@ -155,6 +155,11 @@ body {
   cursor: pointer;
 }
 
+.sort-button--active {
+  color: white;
+  background-color: #4282aa;
+}
+
 .table {
   padding: 20px 0;
 }
