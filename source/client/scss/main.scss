@@ -15,7 +15,7 @@ body {
 }
 
 .header {
-  background-color: #3498db;
+  background-color: #4282aa;
   overflow: hidden;
   padding: 20px 0;
 }
@@ -43,9 +43,15 @@ body {
 }
 
 .header__nav__link--submit {
-  background-color: #2980b9;
+  // background-color: #2980b9;
   padding: 10px 15px;
   border-radius: 2px;
+  border:2px solid white;
+}
+
+.header__nav__link--submit:hover {
+  background-color: white;
+  color:black;
 }
 
 .secondary-header {
@@ -85,7 +91,7 @@ body {
 }
 
 .left {
-  background-color: tomato;
+  background-color: #3A3A3A;
   height:100%;
   width: 30%;
   float:left;
@@ -95,5 +101,5 @@ body {
   float: left;
   width: 50%;
   height:100%;
-  background-color:green;
+  background-color:white;
 }
