@@ -11,20 +11,10 @@
   <p>Loading...</p>
 </div>
 <table ng-show="loaded">
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Duration</th>
-      <th>Submitted</th>
-      <th>Referrals</th>
-    </tr>
-  </thead>
   <tbody>
     <tr ng-repeat="screencast in screencasts">
       <td><a href="{{screencast.href}}" target="_blank">{{screencast.title}}</a></td>
       <td>{{screencast.durationInSeconds}}</td>
-      <td>{{screencast.submissionDate}}</td>
-      <td>{{screencast.referralCount}}</td>
     </tr>
   </tbody>
 </table>
