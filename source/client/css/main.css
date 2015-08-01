@@ -148,3 +148,8 @@ body {
   padding: .4em .5em;
   font-size: 12px;
   margin-left: 10px; }
+
+.screencast-title {
+  text-decoration: none;
+  font-size: 17px;
+  color: #0c65a5; }
