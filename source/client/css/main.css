@@ -62,7 +62,16 @@ body {
   margin-right: 10px; }
 
 .main {
-  max-width: 1140px;
-  padding: 0 20px;
-  margin: 0 auto;
   background-color: white; }
+
+.left {
+  background-color: tomato;
+  height: 100%;
+  width: 30%;
+  float: left; }
+
+.right {
+  float: left;
+  width: 50%;
+  height: 100%;
+  background-color: green; }

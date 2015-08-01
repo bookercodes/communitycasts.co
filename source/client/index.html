@@ -42,8 +42,49 @@
   </header> -->
 
   <main class="main">
-    <div ui-view>
-    </div>
+    <aside class="left">
+      <div class="">
+        <a href="#/">Home</a>
+      </div>
+
+      <div class="">
+        <h3>Browse by technology</h3>
+        <a href="#/">JavaScript</a>
+        <a href="#/">C#</a>
+        <a href="#/">Angular</a>
+        <a href="#/">Node</a>
+        <a href="#/">PHP</a>
+        <a href="#/">Game Development</a>
+        <a href="#/">CSS</a>
+        <a href="#/">C++</a>
+        <a href="#/">MEAN</a>
+        <a href="#/">MEAN</a>
+        <a href="#/">SQL</a>
+        <a href="#/">Load More...</a>
+      </div>
+
+      <div class="">
+        <h3>Pages</h3>
+        <a href="#/">About</a>
+        <a href="#/">Blog</a>
+        <a href="#/">Submit</a>
+        <a href="#/">Guidelines</a>
+        <a href="#/">RSS Feed</a>
+      </div>
+
+      <div class="">
+        <h3>Online</h3>
+        <a href="#/">Twitter</a>
+        <a href="#/">Facebook</a>
+      </div>
+
+
+    </aside>
+    <article class="right">
+      <div ui-view>
+      </div>
+    </article>
+
   </main>
 
   <div class="alert"><strong>{{alert.title}}</strong> {{alert.message}}</div>
