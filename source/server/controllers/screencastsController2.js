@@ -15,11 +15,11 @@ var screencastsController = function(connection) {
       var total = result.shift().count;
       var perPage = config.screencastsPerPage;
       var sort = req.query.sort || 'popular';
-      // if (sort !== 'popular' || sort !== 'latest') {
-      //   return res.status(400).json({
-      //     message: 'You input the sort option "' + sort + '" which is invalid. The sort option must be "latest" or "popular". Thank you.'
-      //   });
-      // }
+      if (sort != 'popular' && sort != 'latest') {
+        return res.status(400).json({
+          message: 'You input the sort option "' + sort + '" which is invalid. The sort option must be "latest" or "popular". Thank you.'
+        });
+      }
       var start = (page - 1) * perPage;
       var finish = perPage;
       var totalPageCount = Math.ceil(total / perPage);
