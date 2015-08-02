@@ -26,7 +26,7 @@ app.get('/screencasts/top/:period', screencastsController.sendScreencasts);
 app.get('/screencasts/:screencastId', screencastsController.redirectToScreencast);
 
 var tagsController = require('./controllers/tagsController')(connection);
-app.get('/tags/top/', tagsController.sendTags);
+app.get('/tags', tagsController.sendTags);
 
 app.listen(3000);
 
