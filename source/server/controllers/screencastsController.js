@@ -21,7 +21,6 @@ var screencastsController = function(connection) {
     return query;
   };
   var sendScreencasts = function(req, res) {
-    /*jshint multistr:true*/
     var query = 'SELECT COUNT(*) AS count FROM screencasts s';
     query = appendWherePhase(query, req.params.period);
     connection.queryAsync(query).spread(function(result) {
