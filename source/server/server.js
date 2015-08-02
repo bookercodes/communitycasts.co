@@ -25,6 +25,10 @@ var screencastsController = require('./controllers/screencastsController')(conne
 app.get('/screencasts/top/:period', screencastsController.sendScreencasts);
 app.get('/screencasts/:screencastId', screencastsController.redirectToScreencast);
 
+var screencastsController2 = require('./controllers/screencastsController2')(connection);
+app.get('/screencasts2', screencastsController2.sendScreencasts);
+
+
 var tagsController = require('./controllers/tagsController')(connection);
 app.get('/tags', tagsController.sendTags);
 
