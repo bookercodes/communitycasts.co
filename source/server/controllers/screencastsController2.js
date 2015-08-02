@@ -4,10 +4,15 @@ var config = require('config');
 
 var screencastsController = function(connection) {
   var sendScreencasts = function(req, res) {
+    var page = req.query.page || 1;
+    if (req.query.page < 1) {
+      return res.status(400).json({
+        message: 'Page number cannot be 0 or negative'
+      });
+    }
     var query = 'SELECT COUNT(*) AS count FROM screencasts s';
     connection.queryAsync(query).spread(function(result) {
       var total = result.shift().count;
-      var page = req.query.page || 1;
       var perPage = config.screencastsPerPage;
       var start = (page - 1) * perPage;
       var finish = page * perPage;
