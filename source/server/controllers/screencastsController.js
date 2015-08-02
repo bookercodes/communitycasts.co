@@ -26,7 +26,7 @@ var screencastsController = function(connection) {
     query = appendWherePhase(query, req.params.period);
     connection.queryAsync(query).spread(function(result) {
       var total = result.shift().count;
-      var page = req.query.page;
+      var page = req.query.page || 1;
       var perPage = config.screencastsPerPage;
       var start = (page - 1) * perPage;
       var finish = page * perPage;
