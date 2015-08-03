@@ -38,6 +38,7 @@ var screencastsController = function(connection) {
       var finish = perPage;
       var totalPageCount = Math.ceil(total / perPage);
       var hasNextPage = page < totalPageCount;
+      /* jshint multistr:true */
       var query =
         'SELECT \
            s.*, \
@@ -46,10 +47,11 @@ var screencastsController = function(connection) {
          JOIN screencastTags \
            ON s.screencastId = screencastTags.screencastId \
          GROUP BY s.screencastId';
-      if(sort === 'popular')
+      if(sort === 'popular') {
         query += ' ORDER BY (s.referralCount)/POW(((UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(s.submissionDate))/3600)+2,1.5) DESC';
-      else
+      } else {
         query += ' ORDER BY submissionDate DESC, referralCount DESC';
+      }
       query += ' LIMIT ' + start + ', ' + finish;
       connection.queryAsync(query).spread(function(screencasts) {
         screencasts = screencasts.map(function(screencast) {
