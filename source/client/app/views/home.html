@@ -4,8 +4,9 @@
   <option value="month">Month</option>
 </select> -->
 
-<button class="sort-button sort-button--active"><span class="fa fa-pencil"></span>Latest</button>
-<button class="sort-button"><span class="fa fa-heart"></span>Popular</button>
+{{sortOption}} <br>
+<button class="sort-button sort-button--active" ng-click="sortOption = 'popular'; changeSortOption();"><span class="fa fa-heart"></span>Popular</button>
+<button class="sort-button" ng-click="sortOption = 'latest'; changeSortOption();"><span class="fa fa-pencil"></span>Latest</button>
 
 <div ng-show="!loaded">
   <p>Loading...</p>

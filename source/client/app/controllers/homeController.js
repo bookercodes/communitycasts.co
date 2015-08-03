@@ -11,7 +11,7 @@ app.controller('homeController', function($scope, $http) {
   $scope.fetchScreencasts = function() {
     $scope.busy = true;
     var base = 'http://localhost:3000/screencasts';
-    var url = base + '?page=' + $scope.page;
+    var url = base + '?page=' + $scope.page + '&sort=' + $scope.sortOption;
     $http.get(url).success(function(response) {
       $scope.busy = false;
       $scope.page += 1;
@@ -27,6 +27,6 @@ app.controller('homeController', function($scope, $http) {
   };
 
   init();
-  $scope.sortOption = 'today';
+  $scope.sortOption = 'popular';
   $scope.fetchScreencasts();
 });
