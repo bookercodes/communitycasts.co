@@ -11,7 +11,7 @@ app.controller('homeController', function($scope, $http) {
   $scope.fetchScreencasts = function() {
     $scope.busy = true;
     var base = 'http://localhost:3000/screencasts';
-    var url = base + '/top/' + $scope.sortOption + '?page=' + $scope.page;
+    var url = base + '?page=' + $scope.page;
     $http.get(url).success(function(response) {
       $scope.busy = false;
       $scope.page += 1;
