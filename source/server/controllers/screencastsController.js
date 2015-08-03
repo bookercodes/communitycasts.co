@@ -2,22 +2,9 @@
 
 var config = require('config');
 
-var screencastsController = function(connection) {
-  var appendWherePhase = function(query, period) {
-    switch (period) {
-      case 'month':
-        query += ' WHERE s.submissionDate > DATE_SUB(NOW(), INTERVAL 1 MONTH)';
-        break;
-      case 'week':
-        query += ' WHERE s.submissionDate > DATE_SUB(NOW(), INTERVAL 1 WEEK)';
-        break;
-      default:
-        query += ' WHERE s.submissionDate > DATE_SUB(NOW(), INTERVAL 1 DAY)';
-        break;
-    }
-    return query;
-  };
-  var sendScreencasts = function(req, res) {
+module.exports = function(connection) {
+
+  function sendScreencasts(req, res) {
     var page = req.query.page || 1;
     if (req.query.page < 1) {
       return res.status(400).json({
@@ -47,7 +34,7 @@ var screencastsController = function(connection) {
          JOIN screencastTags \
            ON s.screencastId = screencastTags.screencastId \
          GROUP BY s.screencastId';
-      if(sort === 'popular') {
+      if (sort === 'popular') {
         query += ' ORDER BY (s.referralCount)/POW(((UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(s.submissionDate))/3600)+2,1.5) DESC';
       } else {
         query += ' ORDER BY submissionDate DESC, referralCount DESC';
@@ -67,8 +54,9 @@ var screencastsController = function(connection) {
         });
       });
     });
-  };
-  var redirectToScreencast = function(req, res) {
+  }
+
+  function redirectToScreencast(req, res) {
     var screencastId = req.params.screencastId;
     var remoteAddress = req.connection.remoteAddress;
     /* jshint multistr:true */
@@ -111,11 +99,10 @@ var screencastsController = function(connection) {
           });
         });
     });
-  };
+  }
+
   return {
     sendScreencasts: sendScreencasts,
     redirectToScreencast: redirectToScreencast
   };
 };
-
-module.exports = screencastsController;

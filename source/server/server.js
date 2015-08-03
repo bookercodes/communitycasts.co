@@ -1,11 +1,12 @@
 'use strict';
 
-var express = require('express');
-var mysql = require('mysql');
 var cors = require('cors');
-var bodyParser = require('body-parser');
+var mysql = require('mysql');
 var config = require('config');
+var express = require('express');
 var promise = require('bluebird');
+var bodyParser = require('body-parser');
+
 promise.promisifyAll(require('mysql/lib/Connection').prototype);
 
 var connection = mysql.createConnection({
@@ -29,5 +30,3 @@ var tagsController = require('./controllers/tagsController')(connection);
 app.get('/tags', tagsController.sendTags);
 
 app.listen(3000);
-
-module.exports = app;

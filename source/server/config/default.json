@@ -1,6 +1,4 @@
 {
   "databasePassword": "",
-  "vimeoToken": "",
-  "screencastsPerPage": 10,
-  "youtubeToken": ""
+  "screencastsPerPage": 10
 }
