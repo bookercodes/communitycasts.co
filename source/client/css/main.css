@@ -17,7 +17,8 @@ li {
   display: inline-block; }
 
 .header {
-  background-color: tomato; }
+  background-color: #8BC34A;
+  color: #212121 !important; }
 
 .header-wrap {
   text-align: justify;
@@ -46,6 +47,10 @@ li {
 .header-nav {
   display: inline-block;
   vertical-align: middle; }
+
+.header-button-search .fa,
+.header-button-submit .fa {
+  color: #CDDC39; }
 
 .header-button-search {
   font-size: 18px;
