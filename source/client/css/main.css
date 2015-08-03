@@ -8,7 +8,7 @@
   box-sizing: border-box; }
 
 body {
-  font-family: 'Lato', sans-serif; }
+  font-family: "Lato", sans-serif; }
 
 ul {
   list-style: none; }
@@ -61,8 +61,3 @@ li {
   font-family: inherit;
   background: none;
   border: none; }
-
-.main-wrap {
-  padding: 2em 20px;
-  max-width: 1060px;
-  margin: 0 auto; }

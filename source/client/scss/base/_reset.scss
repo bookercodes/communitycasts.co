@@ -1,0 +1,21 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $font-family;
+}
+ul {
+  list-style: none;
+}
+
+li {
+  display: inline-block;
+}
