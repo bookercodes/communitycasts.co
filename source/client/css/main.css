@@ -17,8 +17,7 @@ li {
   display: inline-block; }
 
 .header {
-  background-color: #8BC34A;
-  color: #212121 !important; }
+  background-color: #8BC34A; }
 
 .header-wrap {
   text-align: justify;
@@ -50,14 +49,16 @@ li {
 
 .header-button-search .fa,
 .header-button-submit .fa {
-  color: #CDDC39; }
+  color: white; }
 
 .header-button-search {
   font-size: 18px;
   background: none;
   border: none;
-  padding: 0 10px;
-  cursor: pointer; }
+  padding: 10px;
+  cursor: pointer;
+  background-color: #CDDC39;
+  border-radius: 2px; }
 
 .header-button-submit {
   font-size: 18px;
