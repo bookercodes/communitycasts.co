@@ -24,7 +24,8 @@ li {
   height: 130px;
   padding: 32px 20px;
   max-width: 1100px;
-  margin: 0 auto; }
+  margin: 0 auto;
+  background-color: pink; }
 
 .header-wrap::after {
   content: '';
@@ -65,3 +66,17 @@ li {
   font-family: inherit;
   background: none;
   border: none; }
+
+.main {
+  max-width: 1100px;
+  margin: 0 auto; }
+
+.main-aside {
+  width: 30%;
+  background-color: red;
+  float: left; }
+
+.main-content {
+  width: 70%;
+  background-color: orange;
+  float: left; }
