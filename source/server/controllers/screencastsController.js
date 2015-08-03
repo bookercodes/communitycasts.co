@@ -1,9 +1,6 @@
 'use strict';
 
 var config = require('config');
-var youtube = require('../youtube')(config.youtubeToken);
-var vimeo = require('../vimeo')(config.vimeoToken);
-var commaSplit = require('comma-split');
 
 var screencastsController = function(connection) {
   var appendWherePhase = function(query, period) {
@@ -57,20 +54,6 @@ var screencastsController = function(connection) {
           hasMore: hasNextPage
         });
       });
-    });
-  };
-  var fetchVideoDetails = function(link, done) {
-    if (youtube.isYouTubeUrl(link)) {
-      youtube.fetchVideoDetails(link, done);
-    } else if (vimeo.isVimeoUrl(link)) {
-      vimeo.fetchVideoDetails(link, done);
-    } else {
-      throw new Error('link must be either a YouTube or Vimeo video link');
-    }
-  };
-  var send400 = function(res, message) {
-    res.status(400).send({
-      message: message
     });
   };
   var redirectToScreencast = function(req, res) {

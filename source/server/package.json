@@ -2,11 +2,9 @@
   "dependencies": {
     "bluebird": "^2.9.34",
     "body-parser": "^1.13.2",
-    "comma-split": "^1.0.0",
     "config": "^1.14.0",
     "cors": "^2.7.1",
     "express": "^4.13.1",
-    "lodash": "^3.10.0",
     "moment": "^2.10.3",
     "mysql": "^2.7.0",
     "request": "^2.58.0"
