@@ -72,9 +72,9 @@ li {
   margin: 0 auto; }
 
 .main-aside {
-  width: 30%;
-  background-color: red;
-  float: left; }
+  float: left;
+  background-color: purple;
+  width: 30%; }
 
 .main-content {
   width: 70%;
