@@ -1,51 +1,18 @@
-/*
-Error: File to import not found or unreadable: components/header.
-        on line 6 of ./scss/main.scss
+* {
+  margin: 0;
+  padding: 0; }
 
-1: // Base
-2: @import 'base/variables';
-3: @import 'base/reset';
-4: 
-5: // Components
-6: @import 'components/header';
-7: @import 'components/main';
+*,
+*:before,
+*:after {
+  box-sizing: border-box; }
 
-Backtrace:
-./scss/main.scss:6
-C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.16/lib/sass/tree/import_node.rb:67:in `rescue in import'
-C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.16/lib/sass/tree/import_node.rb:45:in `import'
-C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.16/lib/sass/tree/import_node.rb:28:in `imported_file'
-C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.16/lib/sass/tree/import_node.rb:37:in `css_import?'
-C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.16/lib/sass/tree/visitors/perform.rb:311:in `visit_import'
-C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.16/lib/sass/tree/visitors/base.rb:36:in `visit'
-C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.16/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
-C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.16/lib/sass/stack.rb:79:in `block in with_base'
-C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.16/lib/sass/stack.rb:115:in `with_frame'
-C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.16/lib/sass/stack.rb:79:in `with_base'
-C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.16/lib/sass/tree/visitors/perform.rb:158:in `visit'
-C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.16/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
-C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.16/lib/sass/tree/visitors/base.rb:52:in `map'
-C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.16/lib/sass/tree/visitors/base.rb:52:in `visit_children'
-C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.16/lib/sass/tree/visitors/perform.rb:167:in `block in visit_children'
-C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.16/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
-C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.16/lib/sass/tree/visitors/perform.rb:166:in `visit_children'
-C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.16/lib/sass/tree/visitors/base.rb:36:in `block in visit'
-C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.16/lib/sass/tree/visitors/perform.rb:186:in `visit_root'
-C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.16/lib/sass/tree/visitors/base.rb:36:in `visit'
-C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.16/lib/sass/tree/visitors/perform.rb:157:in `visit'
-C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.16/lib/sass/tree/visitors/perform.rb:8:in `visit'
-C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.16/lib/sass/tree/root_node.rb:36:in `css_tree'
-C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.16/lib/sass/tree/root_node.rb:20:in `render'
-C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.16/lib/sass/engine.rb:278:in `render'
-C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.16/lib/sass/exec/sass_scss.rb:418:in `run'
-C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.16/lib/sass/exec/sass_scss.rb:63:in `process_result'
-C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.16/lib/sass/exec/base.rb:52:in `parse'
-C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.16/lib/sass/exec/base.rb:19:in `parse!'
-C:/Ruby22/lib/ruby/gems/2.2.0/gems/sass-3.4.16/bin/sass:13:in `<top (required)>'
-c:/Ruby22/bin/sass:23:in `load'
-c:/Ruby22/bin/sass:23:in `<main>'
-*/
-body:before {
-  white-space: pre;
-  font-family: monospace;
-  content: "Error: File to import not found or unreadable: components/header.\A         on line 6 of ./scss/main.scss\A \A 1: // Base\A 2: @import 'base/variables';\A 3: @import 'base/reset';\A 4: \A 5: // Components\A 6: @import 'components/header';\A 7: @import 'components/main';"; }
+body {
+  font-family: "Lato", sans-serif;
+  background-color: #eceef1; }
+
+ul {
+  list-style: none; }
+
+li {
+  display: inline-block; }
