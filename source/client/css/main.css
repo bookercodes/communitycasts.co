@@ -92,3 +92,26 @@ li {
   padding: 15px;
   float: left;
   border-radius: 2px; }
+
+.sort-button {
+  border: none;
+  background: none;
+  background-color: #F9F9F9;
+  padding: 10px;
+  border-radius: 3px;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  margin-right: 5px;
+  color: #689F38; }
+
+.sort-button .fa {
+  margin-right: 5px;
+  color: #689F38; }
+
+.sort-button--active {
+  background-color: #8BC34A;
+  color: white; }
+
+.sort-button--active .fa {
+  color: white; }
