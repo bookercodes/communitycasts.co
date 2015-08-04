@@ -137,6 +137,10 @@ li {
   width: 100%;
   cursor: pointer; }
 
+.load-more-button:disabled {
+  cursor: not-allowed;
+  background-color: #F2F2F2; }
+
 .screencasts {
   margin: 15px 0; }
 
