@@ -8,7 +8,8 @@
   box-sizing: border-box; }
 
 body {
-  font-family: "Lato", sans-serif; }
+  font-family: "Lato", sans-serif;
+  background-color: #eceef1; }
 
 ul {
   list-style: none; }
@@ -74,14 +75,20 @@ li {
 
 .main {
   max-width: 1100px;
-  margin: 0 auto; }
+  margin: 0 auto;
+  margin-top: 20px; }
 
 .main-nav {
   float: left;
-  background-color: purple;
-  width: 30%; }
+  background-color: white;
+  width: 30%;
+  padding: 15px;
+  border-radius: 2px; }
 
 .main-content {
-  width: 70%;
-  background-color: orange;
-  float: left; }
+  width: 69%;
+  margin-left: 1%;
+  background-color: white;
+  padding: 15px;
+  float: left;
+  border-radius: 2px; }
