@@ -18,7 +18,7 @@
   <div class="screencasts-screencast" ng-repeat="screencast in screencasts">
     <a href="{{screencast.href}}" target="_blank" class="screencast-title">{{screencast.title}}</a>
     <ul class="tags">
-      <li class="tags__item" ng-repeat="tag in screencast.tags">
+      <li class="tag-cloud-tag" ng-repeat="tag in screencast.tags">
         {{tag}}
       </li>
     </ul>
