@@ -73,6 +73,14 @@ li {
   background: none;
   border: none; }
 
+.tag-cloud-tag {
+  background-color: #DCEDC8;
+  color: #212121;
+  border-bottom: 3px solid #689F38;
+  padding: 8px;
+  margin-right: 2px;
+  margin-bottom: 6px; }
+
 .main {
   max-width: 1100px;
   margin: 0 auto;
