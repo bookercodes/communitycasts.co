@@ -3,8 +3,8 @@ app.config(function ($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/');
   $stateProvider.state('home', {
     url: '/',
-    templateUrl: '/app/views/home.html',
-    controller: 'homeController'
+    templateUrl: '/app/views/screencasts.html',
+    controller: 'screencastsController'
   });
   $stateProvider.state('about', {
     url: '/about',

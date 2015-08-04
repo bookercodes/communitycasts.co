@@ -1,4 +1,4 @@
-app.controller('homeController', function($scope, $http) {
+app.controller('screencastsController', function($scope, $http) {
 
   function init() {
     $scope.page = 1;
