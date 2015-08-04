@@ -1,5 +1,5 @@
 node_modules
-components
+bower_components
 errors.log
 npm-debug.log
 .sass-cache
