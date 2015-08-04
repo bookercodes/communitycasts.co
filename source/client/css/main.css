@@ -115,3 +115,16 @@ li {
 
 .sort-button--active .fa {
   color: white; }
+
+.load-more-button {
+  border: none;
+  background: none;
+  padding: 10px;
+  font-size: inherit;
+  font-family: inherit;
+  background-color: #8BC34A;
+  color: white;
+  font-size: 17px;
+  border-radius: 3px;
+  width: 100%;
+  cursor: pointer; }
