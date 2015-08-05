@@ -2,7 +2,6 @@ var app = angular.module('communityCasts', ['ui.router']);
 app.config(function ($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/');
 
-
   $stateProvider.state('home', {
     url: '/',
     views: {
@@ -19,8 +18,17 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 
   $stateProvider.state('about', {
     url: '/about',
-    templateUrl: '/app/views/about.html'
+    views: {
+      'content': {
+        templateUrl: '/app/views/about.html',
+      },
+      'navigation': {
+        templateUrl: '/app/views/navigation.html',
+        controller: 'navigationController'
+      }
+    },
   });
+
   $stateProvider.state('submit', {
     url: '/submit',
     templateUrl: '/app/views/submit.html',
