@@ -79,7 +79,8 @@ module.exports = function(connection) {
         });
         res.json({
           screencasts: screencasts,
-          hasMore: hasNextPage
+          hasMore: hasNextPage,
+          totalCount: total
         });
       });
     });
