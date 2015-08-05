@@ -29,39 +29,9 @@
   </header>
 
   <main class="main">
-      <div class="main-nav">
-        <ul>
-          <li><a href="#">
-            <fa class="fa fa-home"></fa>
-            Home
-          </a></li>
-        </ul>
-        <h4>Browse by tag</h4>
-        <ul class="tag-cloud">
-          <li class="tag-cloud-tag">C#</li>
-          <li class="tag-cloud-tag">Node</li>
-          <li class="tag-cloud-tag">JavaScript</li>
-          <li class="tag-cloud-tag">Git</li>
-          <li class="tag-cloud-tag">Visual Studio</li>
-          <li class="tag-cloud-tag">ASP.NET MVC</li>
-          <li class="tag-cloud-tag">C#</li>
-          <li class="tag-cloud-tag">Node</li>
-          <li class="tag-cloud-tag">JavaScript</li>
-          <li class="tag-cloud-tag">Git</li>
-          <li class="tag-cloud-tag">Visual Studio</li>
-          <li class="tag-cloud-tag">ASP.NET MVC</li>
-        </ul>
-        <!-- Tag cloud -->
-        <h4>Navigation</h4>
-        <ul>
-          <li><a href="">About</a></li>
-          <li><a href="">Submit</a></li>
-        </ul>
-        <h4>Social</h4>
-        <li><a href="">Twitter</a></li>
-        <li><a href="">Facebook</a></li>
+      <div class="main-nav" ui-view="navigation">
       </div>
-        <div class="main-content" ui-view></div>
+        <div class="main-content" ui-view="content"></div>
   </main>
 
 
@@ -146,6 +116,7 @@
   <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
   <script src="app/app.js"></script>
   <script src="app/controllers/screencastsController.js"></script>
+  <script src="app/controllers/navigationController.js"></script>
   <script src="app/controllers/submitController.js"></script>
   <script src="app/services/alertService.js"></script>
 </body>
