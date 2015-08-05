@@ -18,11 +18,11 @@
 
 {{ $scope.sortOption }}
 
-<button class="sort-button" ui-sref="{sort:'popular'}">
+<button class="sort-button" ui-sref-active="sort-button--active" ui-sref="{sort:'popular'}">
   <span class="fa fa-heart"></span>
   Popular
 </button>
-<button class="sort-button" ui-sref="{sort:'latest'}">
+<button class="sort-button" ui-sref-active="sort-button--active" ui-sref="{sort:'latest'}">
   <span class="fa fa-pencil"></span>
   Latest
 </button>
