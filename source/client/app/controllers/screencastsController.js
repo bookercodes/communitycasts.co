@@ -1,4 +1,4 @@
-app.controller('screencastsController', function($scope, $http) {
+app.controller('screencastsController', function($scope, $http, $stateParams) {
 
   function init() {
     $scope.page = 1;
@@ -27,6 +27,14 @@ app.controller('screencastsController', function($scope, $http) {
   };
 
   init();
-  $scope.sortOption = 'popular';
+
+  if ($stateParams.sort === 'latest') {
+    $scope.sortOption = 'latest';
+  } else {
+    $scope.sortOption = 'popular';
+  }
+
+  console.log($scope.sortOption);
+
   $scope.fetchScreencasts();
 });

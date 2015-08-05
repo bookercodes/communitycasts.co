@@ -1,9 +1,9 @@
 var app = angular.module('communityCasts', ['ui.router']);
 app.config(function ($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/screencasts');
 
   $stateProvider.state('home', {
-    url: '/',
+    url: '/screencasts?sort=',
     views: {
       'content': {
         templateUrl: '/app/views/screencasts.html',
@@ -15,6 +15,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       }
     },
   });
+
 
   $stateProvider.state('about', {
     url: '/about',
