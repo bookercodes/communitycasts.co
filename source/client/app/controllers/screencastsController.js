@@ -34,7 +34,5 @@ app.controller('screencastsController', function($scope, $http, $stateParams) {
     $scope.sortOption = 'popular';
   }
 
-  console.log($scope.sortOption);
-
   $scope.fetchScreencasts();
 });
