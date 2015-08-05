@@ -15,7 +15,7 @@ module.exports = function(connection) {
          ORDER BY count DESC \
          LIMIT 20';
         connection.queryAsync(query).spread(function(tags) {
-          res.json(tags);
+          res.json({tags:tags});
         });
     }
   };
