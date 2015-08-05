@@ -51,6 +51,11 @@ module.exports = function(connection) {
              WHERE screencasttags.tagName = ' + connection.escape(req.params.tag) + ' \
          ) \
          GROUP BY screencasts.screencastId';
+       if (sort === 'popular') {
+         query += ' ORDER BY (referralCount)/POW(((UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(submissionDate))/3600)+2,1.5) DESC';
+       } else {
+         query += ' ORDER BY submissionDate DESC, referralCount DESC';
+      }
       query += ' LIMIT ' + start + ', ' + finish;
       connection.queryAsync(query).spread(function (screencasts) {
         screencasts = screencasts.map(function(screencast) {
