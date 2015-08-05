@@ -24,6 +24,7 @@ app.use(bodyParser.json());
 
 var screencastsController = require('./controllers/screencastsController')(connection);
 app.get('/screencasts/', screencastsController.sendScreencasts);
+app.get('/screencasts/tagged/:tag', screencastsController.sendScreencastsWithTag);
 app.get('/screencasts/:screencastId', screencastsController.redirectToScreencast);
 
 var tagsController = require('./controllers/tagsController')(connection);

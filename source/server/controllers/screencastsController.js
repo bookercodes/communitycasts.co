@@ -4,6 +4,35 @@ var config = require('config');
 
 module.exports = function(connection) {
 
+function sendScreencastsWithTag(req, res) {
+  /* jshint multistr:true */
+  var query =
+    'SELECT \
+  	   screencasts.*, \
+       GROUP_CONCAT(screencastTags.tagName) AS tags \
+     FROM screencasts \
+     JOIN screencastTags \
+  	   ON screencasts.screencastId = screencastTags.screencastId \
+     WHERE screencasts.screencastId IN ( \
+  	   SELECT screencastId \
+         FROM screencastTags \
+         WHERE screencasttags.tagName = ' + connection.escape(req.params.tag) + ' \
+     ) \
+     GROUP BY screencasts.screencastId';
+  connection.queryAsync(query).spread(function (screencasts) {
+    screencasts = screencasts.map(function(screencast) {
+      screencast.href =
+        'http://localhost:3000/screencasts/' + screencast.screencastId;
+      screencast.tags = screencast.tags.split(',');
+      delete screencast.link;
+      return screencast;
+    });
+    res.json({
+      screencasts: screencasts
+    });
+  });
+}
+
   function sendScreencasts(req, res) {
     var page = req.query.page || 1;
     if (req.query.page < 1) {
@@ -103,6 +132,7 @@ module.exports = function(connection) {
 
   return {
     sendScreencasts: sendScreencasts,
+    sendScreencastsWithTag: sendScreencastsWithTag,
     redirectToScreencast: redirectToScreencast
   };
 };
