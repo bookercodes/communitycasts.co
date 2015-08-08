@@ -10,7 +10,11 @@ app.controller('screencastsController', function($scope, $http, $stateParams) {
 
   $scope.fetchScreencasts = function() {
     $scope.busy = true;
+
     var base = 'http://localhost:3000/screencasts';
+    if ($stateParams.tagged !== '') {
+      base += '/tagged/' + $stateParams.tagged + '/';
+    }
     var url = base + '?page=' + $scope.page + '&sort=' + $scope.sortOption;
     $http.get(url).success(function(response) {
       $scope.busy = false;
