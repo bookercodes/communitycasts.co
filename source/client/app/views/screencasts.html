@@ -36,7 +36,7 @@
     <a href="{{screencast.href}}" target="_blank" class="screencast-title">{{screencast.title}}</a>
     <ul class="tags">
       <li class="tag-cloud-tag" ng-repeat="tag in screencast.tags">
-        {{tag}}
+        <a href="http://localhost:3000/screencasts/tagged/{{tag}}">{{tag}}</a>
       </li>
     </ul>
   </div>
