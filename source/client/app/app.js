@@ -2,11 +2,24 @@ var app = angular.module('communityCasts', ['ui.router']);
 app.config(function ($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/');
 
+  $stateProvider.state('about', {
+    url: '/about',
+    views: {
+      'content': {
+        templateUrl: '/app/views/about.html',
+      },
+      'navigation': {
+        templateUrl: '/app/views/navigation.html',
+        controller: 'navigationController'
+      }
+    },
+  });
+  
   $stateProvider.state('home', {
-    url: '/?sort=',
+    url: '/:tagged?/?sort=',
     params: {
       'content': {
-          sort: 'popular'
+          sort: 'popular',
       }
     },
     views: {
@@ -22,16 +35,5 @@ app.config(function ($stateProvider, $urlRouterProvider) {
   });
 
 
-  $stateProvider.state('about', {
-    url: '/about',
-    views: {
-      'content': {
-        templateUrl: '/app/views/about.html',
-      },
-      'navigation': {
-        templateUrl: '/app/views/navigation.html',
-        controller: 'navigationController'
-      }
-    },
-  });
+
 });

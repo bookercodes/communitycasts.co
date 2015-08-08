@@ -34,5 +34,7 @@ app.controller('screencastsController', function($scope, $http, $stateParams) {
     $scope.sortOption = 'popular';
   }
 
+  $scope.tagged = $stateParams.tagged;
+
   $scope.fetchScreencasts();
 });

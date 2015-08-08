@@ -16,7 +16,7 @@
   Latest
 </button> -->
 
-{{ $scope.sortOption }}
+
 
 <button class="sort-button" ui-sref-active="sort-button--active" ui-sref="{sort:'popular'}">
   <span class="fa fa-heart"></span>
@@ -27,6 +27,8 @@
   Latest
 </button>
 
+<p ng-show="tagged" class="tag-cloud-tag">{{tagged}}</p>
+
 <div ng-show="!loaded">
   <p>Loading...</p>
 </div>
@@ -36,7 +38,7 @@
     <a href="{{screencast.href}}" target="_blank" class="screencast-title">{{screencast.title}}</a>
     <ul class="tags">
       <li class="tag-cloud-tag" ng-repeat="tag in screencast.tags">
-        <a href="http://localhost:3000/screencasts/tagged/{{tag}}">{{tag}}</a>
+        <a ui-sref="{tagged:tag}">{{tag}}</a>
       </li>
     </ul>
   </div>
