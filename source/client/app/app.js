@@ -15,6 +15,19 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     },
   });
 
+  $stateProvider.state('submit', {
+    url: '/submit',
+    views: {
+      'content': {
+        templateUrl: '/app/views/submit.html',
+      },
+      'navigation': {
+        templateUrl: '/app/views/navigation.html',
+        controller: 'navigationController'
+      }
+    },
+  });
+
   $stateProvider.state('home', {
     url: '/:tagged?/?sort=',
     params: {
