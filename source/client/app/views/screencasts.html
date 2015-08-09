@@ -18,14 +18,16 @@
 
 
 
-<button class="sort-button" ui-sref-active="sort-button--active" ui-sref="{sort:'popular'}">
-  <span class="fa fa-heart"></span>
-  Popular
-</button>
-<button class="sort-button" ui-sref-active="sort-button--active" ui-sref="{sort:'latest'}">
-  <span class="fa fa-pencil"></span>
-  Latest
-</button>
+<div class="sort-buttons">
+  <button class="sort-button" ui-sref-active="sort-button--active" ui-sref="{sort:'popular'}">
+    <span class="fa fa-heart"></span>
+    Popular
+  </button>
+  <button class="sort-button" ui-sref-active="sort-button--active" ui-sref="{sort:'latest'}">
+    <span class="fa fa-pencil"></span>
+    Latest
+  </button>
+</div>
 
 <p ng-show="tagged" class="tag-cloud-tag">Showing {{totalCount}} of {{tagged}}</p>
 
