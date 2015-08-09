@@ -1,19 +1,33 @@
-<ul>
+<ul class="navigation-list">
   <li>
     <fa class="fa fa-home"></fa>
     <a ui-sref="home({tagged:'',sort:'popular'})">Home</a>
   </li>
 </ul>
-<h4>Browse by tag</h4>
+<h4 class="navigation-title">Browse by tag</h4>
 <ul class="tag-cloud">
   <li class="tag" ng-repeat="tag in tags"><a ui-sref="{tagged:tag.tagName}">{{tag.tagName}}<{{tag.count}}></a></li>
 </ul>
 <!-- Tag cloud -->
-<h4>Navigation</h4>
-<ul>
-  <li><a ui-sref="about">About</a></li>
-  <li><a ui-sref="submit">Submit</a></li>
+<h4 class="navigation-title">Navigation</h4>
+<ul class="navigation-list">
+  <li>
+    <fa class="fa fa-info"></fa>
+    <a ui-sref="about">About</a>
+  </li>
+  <li>
+    <fa class="fa fa-plus"></fa>
+    <a ui-sref="submit">Submit</a>
+  </li>
 </ul>
-<h4>Social</h4>
-<li><a href="">Twitter</a></li>
-<li><a href="">Facebook</a></li>
+<h4 class="navigation-title">Social</h4>
+<ul class="navigation-list">
+  <li>
+    <fa class="fa fa-twitter"></fa>
+    <a href="">Twitter</a>
+  </li>
+  <li>
+    <fa class="fa fa-facebook"></fa>
+    <a href="">Facebook</a>
+  </li>
+</ul>
