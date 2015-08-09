@@ -151,11 +151,16 @@ li {
   border-top: 1px solid #eceef1;
   padding: 10px 0; }
 
-.screencasts-screencast a {
+.screencast-title {
   color: #212121;
   font-size: 20px; }
+
+.tags {
+  margin-top: 10px; }
 
 .tag {
   background-color: #F0F0F0;
   border-radius: 2px;
-  padding: 5px 8px; }
+  padding: 5px 8px;
+  display: inline-block;
+  margin-right: 10px; }
