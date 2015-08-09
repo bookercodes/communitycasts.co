@@ -29,7 +29,10 @@
   </button>
 </div>
 
-<p ng-show="tagged" class="tag-cloud-tag">Showing {{totalCount}} of {{tagged}}</p>
+
+<p ng-show="tagged" class="tagged-text">
+  <strong>{{totalCount}}</strong> screencasts for <span class="tag">{{tagged}}</span>
+</p>
 
 <div ng-show="!loaded">
   <p>Loading...</p>
