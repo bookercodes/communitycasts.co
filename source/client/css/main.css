@@ -21,8 +21,8 @@ p {
   margin: 12px 0; }
 
 .header {
-  background-color: #8BC34A;
-  border-top: 5px solid #689F38; }
+  background-color: #2196F3;
+  border-top: 5px solid #1976D2; }
 
 .header-wrap {
   text-align: justify;
@@ -36,9 +36,9 @@ p {
   width: 100%; }
 
 .header-logo {
-  background-color: #689F38;
+  background-color: #1976D2;
   height: 100%;
-  border: 3px solid #DCEDC8;
+  border: 3px solid #BBDEFB;
   font-size: 30px;
   color: white;
   padding: 0 15px;
@@ -65,7 +65,7 @@ p {
   border: none;
   padding: 10px;
   cursor: pointer;
-  background-color: #CDDC39;
+  background-color: #448AFF;
   border-radius: 2px; }
 
 .header-button-submit {
@@ -77,9 +77,9 @@ p {
   border: none; }
 
 .tag-cloud-tag {
-  background-color: #DCEDC8;
+  background-color: #BBDEFB;
   color: #212121;
-  border-bottom: 3px solid #689F38;
+  border-bottom: 3px solid #1976D2;
   padding: 8px;
   margin-right: 2px;
   margin-bottom: 6px; }
@@ -117,14 +117,14 @@ p {
   font-size: inherit;
   cursor: pointer;
   margin-right: 5px;
-  color: #689F38; }
+  color: #1976D2; }
 
 .sort-button .fa {
   margin-right: 5px;
-  color: #689F38; }
+  color: #1976D2; }
 
 .sort-button--active {
-  background-color: #8BC34A;
+  background-color: #2196F3;
   color: white; }
 
 .sort-button--active .fa {
@@ -136,7 +136,7 @@ p {
   padding: 10px;
   font-size: inherit;
   font-family: inherit;
-  background-color: #8BC34A;
+  background-color: #2196F3;
   color: white;
   font-size: 17px;
   border-radius: 3px;
