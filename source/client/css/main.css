@@ -17,6 +17,9 @@ ul {
 li {
   display: inline-block; }
 
+p {
+  margin: 12px 0; }
+
 .header {
   background-color: #8BC34A;
   border-top: 5px solid #689F38; }
