@@ -17,6 +17,11 @@ app.controller('screencastsController', function($scope, $http, $stateParams) {
     }
     var url = base + '?page=' + $scope.page + '&sort=' + $scope.sortOption;
     $http.get(url).success(function(response) {
+      // do not update the totalCount on every request in case a new screencast
+      // is added
+      if ($scope.page === 1) {
+        $scope.totalCount = response.totalCount;
+      }
       $scope.busy = false;
       $scope.page += 1;
       $scope.hasMore = response.hasMore;
