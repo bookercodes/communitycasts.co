@@ -4,49 +4,17 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 
   $stateProvider.state('about', {
     url: '/about',
-    views: {
-      'content': {
-        templateUrl: '/app/views/about.html',
-      },
-      'navigation': {
-        templateUrl: '/app/views/navigation.html',
-        controller: 'navigationController'
-      }
-    },
+    templateUrl: '/app/views/about.html'
   });
 
   $stateProvider.state('submit', {
     url: '/submit',
-    views: {
-      'content': {
-        templateUrl: '/app/views/submit.html',
-      },
-      'navigation': {
-        templateUrl: '/app/views/navigation.html',
-        controller: 'navigationController'
-      }
-    },
+    templateUrl: '/app/views/submit.html'
   });
 
   $stateProvider.state('home', {
     url: '/:tagged?/?sort=',
-    params: {
-      'content': {
-          sort: 'popular',
-      }
-    },
-    views: {
-      'content': {
-        templateUrl: '/app/views/screencasts.html',
-        controller: 'screencastsController'
-      },
-      'navigation': {
-        templateUrl: '/app/views/navigation.html',
-        controller: 'navigationController'
-      }
-    },
+    templateUrl: '/app/views/screencasts.html',
+    controller: 'screencastsController'
   });
-
-
-
 });
