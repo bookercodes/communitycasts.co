@@ -29,9 +29,8 @@
   </header>
 
   <main class="main">
-      <div class="main-nav" ui-view="navigation">
-      </div>
-        <div class="main-content" ui-view="content"></div>
+    <div class="main-nav" ng-controller="navigationController" ng-include src="'app/views/navigation.html'"></div>
+    <div class="main-content" ui-view="content"></div>
   </main>
 
 
