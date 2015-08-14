@@ -37,11 +37,7 @@ app.controller('screencastsController', function($scope, $http, $stateParams) {
 
   init();
 
-  if ($stateParams.sort === 'latest') {
-    $scope.sortOption = 'latest';
-  } else {
-    $scope.sortOption = 'popular';
-  }
+  $scope.sortOption = $stateParams.sort;
 
   $scope.tagged = $stateParams.tagged;
 
