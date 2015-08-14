@@ -15,10 +15,18 @@
 
 .main-nav {
   float: left;
-  background-color: white;
   width: 30%;
+
+}
+
+.main-nav-inner {
+  background-color: white;
   padding: 15px;
   border-radius: 2px;
+}
+
+.main-nav-footer {
+  padding:4px;
 }
 
 .main-content {

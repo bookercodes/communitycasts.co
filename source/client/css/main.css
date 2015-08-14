@@ -91,10 +91,15 @@ p {
 
 .main-nav {
   float: left;
+  width: 30%; }
+
+.main-nav-inner {
   background-color: white;
-  width: 30%;
   padding: 15px;
   border-radius: 2px; }
+
+.main-nav-footer {
+  padding: 4px; }
 
 .main-content {
   width: 69%;
