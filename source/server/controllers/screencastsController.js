@@ -147,7 +147,9 @@ module.exports = function(connection) {
         .where('screencastId = ? AND refereeRemoteAddress = ?', screencastId, remoteAddress)
         .toString();
       connection.queryAsync(query).spread(function(referrals) {
-        if (referrals.length > 0) {
+        var alreadyCounted = referrals.length > 0;
+        if (alreadyCounted) {
+          // this user's view has already been counted - do not count it again!
           return;
         }
         connection.beginTransactionAsync().then(function() {
