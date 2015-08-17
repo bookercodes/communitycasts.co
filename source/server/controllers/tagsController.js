@@ -1,19 +1,18 @@
 'use strict';
+var squel = require('squel');
 
 module.exports = function(connection) {
   return {
     sendTags: function (req, res) {
-      /*jshint multistr:true*/
-      var query =
-        'SELECT \
-           tags.tagName, \
-           COUNT(*) AS count \
-         FROM tags \
-         JOIN screencastTags \
-           ON screencastTags.tagName = tags.tagName \
-         GROUP BY tags.tagName \
-         ORDER BY count DESC \
-         LIMIT 20';
+      var query = squel.select()
+        .from('tags')
+        .field('tags.tagName')
+        .field('count(*) as count')
+        .join('screencastTags', null, 'screencastTags.tagName = tags.tagName')
+        .group('tags.tagName')
+        .order('count', false)
+        .limit(20)
+        .toString();
         connection.queryAsync(query).spread(function(tags) {
           res.json({tags:tags});
         });
