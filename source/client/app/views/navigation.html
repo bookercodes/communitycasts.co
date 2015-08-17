@@ -7,7 +7,7 @@
   </ul>
   <h4 class="navigation-title">Browse by tag</h4>
   <ul class="tag-cloud">
-    <li class="tag" ng-repeat="tag in tags | limitTo: tagLimit as results" ><a ui-sref="home({tagged:tag.tagName,sort:'popular'})">{{tag.tagName}}<{{tag.count}}></a></li>
+    <a ng-repeat="tag in tags | limitTo: tagLimit as results" class="tag-list-link" ui-sref="home({tagged:tag.tagName,sort:'popular'})">{{tag.tagName}}<{{tag.count}}></a>
   </ul>
   <button ng-disabled="results.length === tags.length" ng-click="tagLimit = tagLimit +1">More...</button>
   <!-- Tag cloud -->

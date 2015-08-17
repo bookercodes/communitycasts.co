@@ -16,7 +16,6 @@
 .main-nav {
   float: left;
   width: 30%;
-
 }
 
 .main-nav-inner {
@@ -88,40 +87,6 @@
   background-color: #F2F2F2;
 }
 
-.screencasts {
-  margin: 15px 0;
-}
-
-.screencasts-screencast {
-  border-top: 1px solid #eceef1;
-  padding: 10px 0;
-}
-
-.screencast-title {
-  color: $primary-text-color;
-  font-size: 20px;
-}
-
-.tagged-text {
-}
-
-.tags {margin-top: 10px;}
-
-.tag {
-  background-color: #F0F0F0;
-  border-radius: 2px;
-  padding: 5px 8px;
-  display: inline-block;
-  margin-right: 10px;
-}
-
-.tag-cloud .tag {
-  display: block;
-  margin-top:2px;
-  margin-bottom: 5px;
-  width: 150px;
-}
-
 .navigation-list {
   margin-bottom:10px;
 }
@@ -133,5 +98,9 @@
 }
 
 .navigation-list li {
+  display: block;
+}
+
+.tag-cloud .tag-list-link {
   display: block;
 }

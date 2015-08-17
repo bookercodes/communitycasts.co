@@ -38,14 +38,24 @@
   <p>Loading...</p>
 </div>
 
-<div ng-show="loaded" class="screencasts">
-  <div class="screencasts-screencast" ng-repeat="screencast in screencasts">
-    <a href="{{screencast.href}}" target="_blank" class="screencast-title">{{screencast.title}}</a>
-    <ul class="tags">
-      <li ng-repeat="tag in screencast.tags">
-        <a class="tag" ui-sref="{tagged:tag}">{{tag}}</a>
-      </li>
-    </ul>
+<div ng-show="loaded" class="screencast-summary-list">
+  <div class="screencast-summary" ng-repeat="screencast in screencasts">
+    <h3 class="screencast-summary-header">
+      <a class="screencast-summary-header-link" href="{{screencast.href}}" target="_blank">
+      {{screencast.title}}
+      </a>
+    </h3>
+    <div class="tag-list">
+      <a class="tag-list-link" ui-sref="{tagged:tag}" ng-repeat="tag in screencast.tags">{{tag}}</a>
+    </div>
+    <div class="screencast-meta">
+      <span class="screencast-meta-channel">
+        <span class="fa fa-user"></span> An author
+      </span>
+      <span>
+        <span class="fa fa-clock-o"></span> 00.00
+      </span>
+    </div>
   </div>
 </div>
 
