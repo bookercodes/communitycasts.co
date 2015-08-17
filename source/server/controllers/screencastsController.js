@@ -1,6 +1,7 @@
 'use strict';
 
 var config = require('config');
+var squel = require('squel');
 
 module.exports = function(connection) {
 
@@ -130,45 +131,45 @@ module.exports = function(connection) {
   function redirectToScreencast(req, res) {
     var screencastId = req.params.screencastId;
     var remoteAddress = req.connection.remoteAddress;
-    /* jshint multistr:true */
-    var query =
-      'SELECT link \
-       FROM screencasts \
-       WHERE screencastId = ?';
-    connection.queryAsync(query, screencastId).spread(function(screencasts) {
+    var query = squel.select()
+      .from('screencasts')
+      .where('screencastId = ?', screencastId)
+      .toString();
+    connection.queryAsync(query).spread(function(screencasts) {
       var screencast = screencasts.shift();
       if (!screencast) {
         return res.status(404).send();
       }
       res.redirect(screencast.link);
-      var query =
-        'SELECT screencastId \
-         FROM referrals \
-         WHERE screencastId = ? AND refereeRemoteAddress = ?';
-      connection.queryAsync(query, [screencastId, remoteAddress]).spread(
-        function(referrals) {
-          if (referrals.length > 0) {
-            return;
-          }
-          connection.beginTransactionAsync().then(function() {
-            /*jshint multistr:true*/
-            var query =
-              'UPDATE screencasts \
-                 SET referralCount = referralCount + 1 \
-               WHERE screencastId = ?';
-            return connection.queryAsync(query, screencastId);
-          }).then(function() {
-            return connection.queryAsync(
-              'INSERT INTO referrals SET ?', {
-                screencastId: screencastId,
-                refereeRemoteAddress: remoteAddress
-              });
-          }).then(function() {
-            return connection.commit();
-          }).error(function() {
-            return connection.rollback();
-          });
+      var query = squel.select()
+        .field('screencastId')
+        .from('referrals')
+        .where('screencastId = ? AND refereeRemoteAddress = ?', screencastId, remoteAddress)
+        .toString();
+      connection.queryAsync(query).spread(function(referrals) {
+        if (referrals.length > 0) {
+          return;
+        }
+        connection.beginTransactionAsync().then(function() {
+          var query = squel.update()
+            .table('screencasts')
+            .set('referralCount = referralCount + 1')
+            .where('screencastId = ?', screencastId)
+            .toString();
+          return connection.queryAsync(query);
+        }).then(function() {
+          var query = squel.insert()
+            .into('referrals')
+            .set('screencastId', screencastId)
+            .set('refereeRemoteAddress', remoteAddress)
+            .toString();
+          return connection.queryAsync(query);
+        }).then(function() {
+          return connection.commit();
+        }).error(function() {
+          return connection.rollback();
         });
+      });
     });
   }
 
