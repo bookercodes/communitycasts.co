@@ -82,7 +82,10 @@ module.exports = function(connection) {
         message: 'Page number cannot be 0 or negative'
       });
     }
-    var query = 'SELECT COUNT(*) AS count FROM screencasts s';
+    var query = squel.select()
+      .field('count(*) as count')
+      .from('screencasts')
+      .toString();
     connection.queryAsync(query).spread(function(result) {
       var total = result.shift().count;
       var perPage = config.screencastsPerPage;
@@ -96,21 +99,20 @@ module.exports = function(connection) {
       var finish = perPage;
       var totalPageCount = Math.ceil(total / perPage);
       var hasNextPage = page < totalPageCount;
-      /* jshint multistr:true */
-      var query =
-        'SELECT \
-           s.*, \
-           GROUP_CONCAT(screencastTags.tagName) AS tags \
-         FROM screencasts s \
-         JOIN screencastTags \
-           ON s.screencastId = screencastTags.screencastId \
-         GROUP BY s.screencastId';
+      var query = squel.select()
+        .field('screencasts.*')
+        .field('group_concat(screencastTags.tagName) as tags')
+        .from('screencasts')
+        .join('screencastTags', null, 'screencasts.screencastId = screencastTags.screencastId')
+        .group('screencasts.screencastId');
       if (sort === 'popular') {
-        query += ' ORDER BY (s.referralCount)/POW(((UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(s.submissionDate))/3600)+2,1.5) DESC';
+        // http://amix.dk/blog/post/19574
+        query.order('(screencasts.referralCount)/pow(((unix_timestamp(now())-unix_timestamp(screencasts.submissionDate))/3600)+2,1.5)', false);
       } else {
-        query += ' ORDER BY submissionDate DESC, referralCount DESC';
+        query.order('submissionDate', false);
       }
-      query += ' LIMIT ' + start + ', ' + finish;
+      query = query.limit(start, finish)
+        .toString();
       connection.queryAsync(query).spread(function(screencasts) {
         screencasts = screencasts.map(function(screencast) {
           screencast.href =
