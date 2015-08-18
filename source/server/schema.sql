@@ -2,6 +2,13 @@ DROP DATABASE IF EXISTS communityCasts;
 CREATE DATABASE communityCasts;
 USE communityCasts;
 
+CREATE TABLE hostServices (
+  hostService NVARCHAR(100) NOT NULL,
+  PRIMARY KEY (hostService)
+);
+INSERT INTO hostServices
+  VALUES ('Vimeo'), ('YouTube');
+
 CREATE TABLE screencasts (
   screencastId        INT AUTO_INCREMENT,
   link                NVARCHAR(500) NOT NULL,
@@ -9,7 +16,10 @@ CREATE TABLE screencasts (
   durationInSeconds   INT           NOT NULL,
   submissionDate      TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP,
   referralCount       INT           NOT NULL DEFAULT 0,
-  PRIMARY KEY(screencastId)
+  hostService         NVARCHAR(100) NOT NULL,
+  PRIMARY KEY(screencastId),
+  FOREIGN KEY (hostService)
+    REFERENCES hostServices(hostService)
 );
 
 CREATE TABLE tags (
