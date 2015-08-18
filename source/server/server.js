@@ -28,6 +28,6 @@ app.get('/screencasts/tagged/:tag', screencastsController.sendScreencastsWithTag
 app.get('/screencasts/:screencastId', screencastsController.redirectToScreencast);
 
 var tagsController = require('./controllers/tagsController')(connection);
-app.get('/tags', tagsController.sendTags);
+app.get('/tags', tagsController.send20Tags);
 
 app.listen(3000);

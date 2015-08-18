@@ -7,55 +7,52 @@ module.exports = function(connection) {
 
   function sendScreencastsWithTag(req, res) {
     var page = req.query.page || 1;
-    var query = squel.select()
+    var sort = req.query.sort || 'popular';
+    if (sort !== 'popular' && sort !== 'latest') {
+      return res.status(400).json({
+        message: 'You input the sort option "' + sort + '" which is invalid. The sort option must be "latest" or "popular". Thank you.'
+      });
+    }
+    var sql = squel.select()
       .field('count(*) as total')
       .from(
         squel.select()
-          .field('screencasts.screencastId')
-          .from('screencasts')
-          .join('screencastTags', null, 'screencasts.screencastId = screencastTags.screencastId')
-          .where('screencasts.screencastId IN ?',
-            squel.select()
-              .field('screencastId')
-              .from('screencastTags')
-              .where('screencastTags.tagName = ?', req.params.tag))
-          .group('screencasts.screencastId'),
+        .field('screencasts.screencastId')
+        .from('screencasts')
+        .join('screencastTags', null, 'screencasts.screencastId = screencastTags.screencastId')
+        .where('screencasts.screencastId IN ?',
+          squel.select()
+          .field('screencastId')
+          .from('screencastTags')
+          .where('screencastTags.tagName = ?', req.params.tag))
+        .group('screencasts.screencastId'),
         'alias')
       .toString();
-    connection.queryAsync(query).spread(function(result) {
+    connection.queryAsync(sql).spread(function(result) {
       var total = result.shift().total;
-      var perPage = config.screencastsPerPage;
-      var sort = req.query.sort || 'popular';
-      if (sort !== 'popular' && sort !== 'latest') {
-        return res.status(400).json({
-          message: 'You input the sort option "' + sort + '" which is invalid. The sort option must be "latest" or "popular". Thank you.'
-        });
-      }
-      var start = (page - 1) * perPage;
-      var finish = perPage;
-      var totalPageCount = Math.ceil(total / perPage);
+      var totalPageCount = Math.ceil(total / config.screencastsPerPage);
       var hasNextPage = page < totalPageCount;
-
-      var query = squel.select()
+      var start = (page - 1) * config.screencastsPerPage;
+      var finish = config.screencastsPerPage;
+      var sql = squel.select()
         .field('screencasts.*')
         .field('group_concat(screencastTags.tagName) as tags')
         .from('screencasts')
         .join('screencastTags', null, 'screencasts.screencastId = screencastTags.screencastId')
         .where('screencasts.screencastId in ?',
           squel.select()
-            .field('screencastId')
-            .from('screencastTags')
-            .where('screencastTags.tagName = ?', req.params.tag))
+          .field('screencastId')
+          .from('screencastTags')
+          .where('screencastTags.tagName = ?', req.params.tag))
         .group('screencasts.screencastId');
-        if (sort === 'popular') {
-          // http://amix.dk/blog/post/19574
-          query.order('(screencasts.referralCount)/pow(((unix_timestamp(now())-unix_timestamp(screencasts.submissionDate))/3600)+2,1.5)', false);
-        } else {
-          query.order('submissionDate', false);
-        }
-        query = query.limit(start, finish)
-          .toString();
-      connection.queryAsync(query).spread(function (screencasts) {
+      if (sort === 'popular') {
+        // http://amix.dk/blog/post/19574
+        sql.order('(screencasts.referralCount)/pow(((unix_timestamp(now())-unix_timestamp(screencasts.submissionDate))/3600)+2,1.5)', false);
+      } else {
+        sql.order('submissionDate', false);
+      }
+      sql = sql.limit(start, finish).toString();
+      connection.queryAsync(sql).spread(function(screencasts) {
         screencasts = screencasts.map(function(screencast) {
           screencast.href =
             'http://localhost:3000/screencasts/' + screencast.screencastId;
@@ -74,29 +71,28 @@ module.exports = function(connection) {
 
   function sendScreencasts(req, res) {
     var page = req.query.page || 1;
+    var sort = req.query.sort || 'popular';
+    if (sort !== 'popular' && sort !== 'latest') {
+      return res.status(400).json({
+        message: 'You input the sort option "' + sort + '" which is invalid. The sort option must be "latest" or "popular". Thank you.'
+      });
+    }
     if (req.query.page < 1) {
       return res.status(400).json({
         message: 'Page number cannot be 0 or negative'
       });
     }
-    var query = squel.select()
+    var sql = squel.select()
       .field('count(*) as count')
       .from('screencasts')
       .toString();
-    connection.queryAsync(query).spread(function(result) {
+    connection.queryAsync(sql).spread(function(result) {
       var total = result.shift().count;
-      var perPage = config.screencastsPerPage;
-      var sort = req.query.sort || 'popular';
-      if (sort !== 'popular' && sort !== 'latest') {
-        return res.status(400).json({
-          message: 'You input the sort option "' + sort + '" which is invalid. The sort option must be "latest" or "popular". Thank you.'
-        });
-      }
-      var start = (page - 1) * perPage;
-      var finish = perPage;
-      var totalPageCount = Math.ceil(total / perPage);
+      var totalPageCount = Math.ceil(total / config.screencastsPerPage);
       var hasNextPage = page < totalPageCount;
-      var query = squel.select()
+      var start = (page - 1) * config.screencastsPerPage;
+      var finish = config.screencastsPerPage;
+      var sql = squel.select()
         .field('screencasts.*')
         .field('group_concat(screencastTags.tagName) as tags')
         .from('screencasts')
@@ -104,13 +100,12 @@ module.exports = function(connection) {
         .group('screencasts.screencastId');
       if (sort === 'popular') {
         // http://amix.dk/blog/post/19574
-        query.order('(screencasts.referralCount)/pow(((unix_timestamp(now())-unix_timestamp(screencasts.submissionDate))/3600)+2,1.5)', false);
+        sql.order('(screencasts.referralCount)/pow(((unix_timestamp(now())-unix_timestamp(screencasts.submissionDate))/3600)+2,1.5)', false);
       } else {
-        query.order('submissionDate', false);
+        sql.order('submissionDate', false);
       }
-      query = query.limit(start, finish)
-        .toString();
-      connection.queryAsync(query).spread(function(screencasts) {
+      sql = sql.limit(start, finish).toString();
+      connection.queryAsync(sql).spread(function(screencasts) {
         screencasts = screencasts.map(function(screencast) {
           screencast.href =
             'http://localhost:3000/screencasts/' + screencast.screencastId;
@@ -130,41 +125,41 @@ module.exports = function(connection) {
   function redirectToScreencast(req, res) {
     var screencastId = req.params.screencastId;
     var remoteAddress = req.connection.remoteAddress;
-    var query = squel.select()
+    var sql = squel.select()
       .from('screencasts')
       .where('screencastId = ?', screencastId)
       .toString();
-    connection.queryAsync(query).spread(function(screencasts) {
+    connection.queryAsync(sql).spread(function(screencasts) {
       var screencast = screencasts.shift();
       if (!screencast) {
         return res.status(404).send();
       }
       res.redirect(screencast.link);
-      var query = squel.select()
+      var sql = squel.select()
         .field('screencastId')
         .from('referrals')
         .where('screencastId = ? AND refereeRemoteAddress = ?', screencastId, remoteAddress)
         .toString();
-      connection.queryAsync(query).spread(function(referrals) {
+      connection.queryAsync(sql).spread(function(referrals) {
         var alreadyCounted = referrals.length > 0;
         if (alreadyCounted) {
           // this user's view has already been counted - do not count it again!
           return;
         }
         connection.beginTransactionAsync().then(function() {
-          var query = squel.update()
+          var sql = squel.update()
             .table('screencasts')
             .set('referralCount = referralCount + 1')
             .where('screencastId = ?', screencastId)
             .toString();
-          return connection.queryAsync(query);
+          return connection.queryAsync(sql);
         }).then(function() {
-          var query = squel.insert()
+          var sql = squel.insert()
             .into('referrals')
             .set('screencastId', screencastId)
             .set('refereeRemoteAddress', remoteAddress)
             .toString();
-          return connection.queryAsync(query);
+          return connection.queryAsync(sql);
         }).then(function() {
           return connection.commit();
         }).error(function() {
