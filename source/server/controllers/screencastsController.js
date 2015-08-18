@@ -2,6 +2,7 @@
 
 var config = require('config');
 var squel = require('squel');
+var moment = require('moment');
 
 module.exports = function(connection) {
 
@@ -57,7 +58,9 @@ module.exports = function(connection) {
           screencast.href =
             'http://localhost:3000/screencasts/' + screencast.screencastId;
           screencast.tags = screencast.tags.split(',');
+          screencast.duration = moment.duration(screencast.durationInSeconds, 'seconds').humanize();
           delete screencast.link;
+          delete screencast.durationInSeconds;
           return screencast;
         });
         res.json({
@@ -110,7 +113,9 @@ module.exports = function(connection) {
           screencast.href =
             'http://localhost:3000/screencasts/' + screencast.screencastId;
           screencast.tags = screencast.tags.split(',');
+          screencast.duration = moment.duration(screencast.durationInSeconds, 'seconds').humanize();
           delete screencast.link;
+          delete screencast.durationInSeconds;
           return screencast;
         });
         res.json({
