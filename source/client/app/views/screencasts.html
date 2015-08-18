@@ -42,6 +42,8 @@
   <div class="screencast-summary" ng-repeat="screencast in screencasts">
     <h3 class="screencast-summary-header">
       <a class="screencast-summary-header-link" href="{{screencast.href}}" target="_blank">
+      <span ng-show="screencast.hostService === 'Vimeo'" class="vimeo-icon fa fa-vimeo"></span>
+      <span ng-show="screencast.hostService === 'YouTube'" class="youtube-icon fa fa-youtube-play"></span>
       {{screencast.title}}
       </a>
     </h3>

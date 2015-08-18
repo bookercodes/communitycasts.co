@@ -76,6 +76,14 @@ p {
   background: none;
   border: none; }
 
+.youtube-icon {
+  color: #bb0000;
+  font-style: 17px; }
+
+.vimeo-icon {
+  color: #45bbff;
+  font-style: 17px; }
+
 .tag-cloud-tag {
   background-color: #BBDEFB;
   color: #212121;
