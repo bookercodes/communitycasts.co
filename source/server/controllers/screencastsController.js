@@ -6,25 +6,23 @@ var squel = require('squel');
 module.exports = function(connection) {
 
   function sendScreencastsWithTag(req, res) {
-      var page = req.query.page || 1;
-    /* jshint multistr:true */
-    var totalQuery =
-      'SELECT \
-         COUNT(*) AS total \
-       FROM ( \
-    	   SELECT \
-    		   screencasts.screencastId \
-           FROM screencasts \
-    	   JOIN screencastTags \
-    		   ON screencasts.screencastId = screencastTags.screencastId \
-    	   WHERE screencasts.screencastId IN ( \
-    		   SELECT screencastId \
-    		   FROM screencastTags \
-    		   WHERE screencasttags.tagName = ' + connection.escape(req.params.tag) + ' \
-    	   ) \
-    	   GROUP BY screencasts.screencastId \
-       ) AS result';
-    connection.queryAsync(totalQuery).spread(function(result) {
+    var page = req.query.page || 1;
+    var query = squel.select()
+      .field('count(*) as total')
+      .from(
+        squel.select()
+          .field('screencasts.screencastId')
+          .from('screencasts')
+          .join('screencastTags', null, 'screencasts.screencastId = screencastTags.screencastId')
+          .where('screencasts.screencastId IN ?',
+            squel.select()
+              .field('screencastId')
+              .from('screencastTags')
+              .where('screencastTags.tagName = ?', req.params.tag))
+          .group('screencasts.screencastId'),
+        'alias')
+      .toString();
+    connection.queryAsync(query).spread(function(result) {
       var total = result.shift().total;
       var perPage = config.screencastsPerPage;
       var sort = req.query.sort || 'popular';
@@ -38,26 +36,25 @@ module.exports = function(connection) {
       var totalPageCount = Math.ceil(total / perPage);
       var hasNextPage = page < totalPageCount;
 
-      /* jshint multistr:true */
-      var query =
-        'SELECT \
-      	   screencasts.*, \
-           GROUP_CONCAT(screencastTags.tagName) AS tags \
-         FROM screencasts \
-         JOIN screencastTags \
-      	   ON screencasts.screencastId = screencastTags.screencastId \
-         WHERE screencasts.screencastId IN ( \
-      	   SELECT screencastId \
-             FROM screencastTags \
-             WHERE screencasttags.tagName = ' + connection.escape(req.params.tag) + ' \
-         ) \
-         GROUP BY screencasts.screencastId';
-       if (sort === 'popular') {
-         query += ' ORDER BY (referralCount)/POW(((UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(submissionDate))/3600)+2,1.5) DESC';
-       } else {
-         query += ' ORDER BY submissionDate DESC, referralCount DESC';
-      }
-      query += ' LIMIT ' + start + ', ' + finish;
+      var query = squel.select()
+        .field('screencasts.*')
+        .field('group_concat(screencastTags.tagName) as tags')
+        .from('screencasts')
+        .join('screencastTags', null, 'screencasts.screencastId = screencastTags.screencastId')
+        .where('screencasts.screencastId in ?',
+          squel.select()
+            .field('screencastId')
+            .from('screencastTags')
+            .where('screencastTags.tagName = ?', req.params.tag))
+        .group('screencasts.screencastId');
+        if (sort === 'popular') {
+          // http://amix.dk/blog/post/19574
+          query.order('(screencasts.referralCount)/pow(((unix_timestamp(now())-unix_timestamp(screencasts.submissionDate))/3600)+2,1.5)', false);
+        } else {
+          query.order('submissionDate', false);
+        }
+        query = query.limit(start, finish)
+          .toString();
       connection.queryAsync(query).spread(function (screencasts) {
         screencasts = screencasts.map(function(screencast) {
           screencast.href =
