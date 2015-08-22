@@ -31,7 +31,7 @@ CREATE TABLE tags (
 );
 
 CREATE TABLE channels (
-  channelId INT,
+  channelId INT AUTO_INCREMENT,
   name      NVARCHAR(500) NOT NULL,
   link      NVARCHAR(500) NOT NULL,
 
