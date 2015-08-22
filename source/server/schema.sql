@@ -17,7 +17,10 @@ CREATE TABLE screencasts (
   submissionDate      TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP,
   referralCount       INT           NOT NULL DEFAULT 0,
   hostService         NVARCHAR(100) NOT NULL,
-  PRIMARY KEY(screencastId),
+  channelId           INT           NOT NULL,
+  PRIMARY KEY (screencastId),
+  FOREIGN KEY (channelId)
+    REFERENCES channels(channelId),
   FOREIGN KEY (hostService)
     REFERENCES hostServices(hostService)
 );
@@ -25,6 +28,14 @@ CREATE TABLE screencasts (
 CREATE TABLE tags (
   tagName NVARCHAR(100),
   PRIMARY KEY (tagName)
+);
+
+CREATE TABLE channels (
+  channelId INT,
+  name      NVARCHAR(500) NOT NULL,
+  link      NVARCHAR(500) NOT NULL,
+
+  PRIMARY KEY (channelId)
 );
 
 CREATE TABLE screencastTags (
