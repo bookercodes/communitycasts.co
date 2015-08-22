@@ -1,6 +1,6 @@
 var app = angular.module('communityCasts', ['ui.router']);
 app.config(function ($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/?sort=popular');
+  $urlRouterProvider.otherwise('/');
 
   $stateProvider.state('about', {
     url: '/about',
@@ -13,6 +13,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
   });
 
   $stateProvider.state('home', {
+    params: {
+      sort: 'popular',
+    },
     url: '/:tagged?/?sort=',
     templateUrl: '/app/views/screencasts.html',
     controller: 'screencastsController'
