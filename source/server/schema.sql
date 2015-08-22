@@ -9,6 +9,14 @@ CREATE TABLE hostServices (
 INSERT INTO hostServices
   VALUES ('Vimeo'), ('YouTube');
 
+CREATE TABLE channels (
+  channelId INT AUTO_INCREMENT,
+  name      NVARCHAR(500) NOT NULL,
+  link      NVARCHAR(500) NOT NULL,
+
+  PRIMARY KEY (channelId)
+);
+
 CREATE TABLE screencasts (
   screencastId        INT AUTO_INCREMENT,
   link                NVARCHAR(500) NOT NULL,
@@ -30,13 +38,6 @@ CREATE TABLE tags (
   PRIMARY KEY (tagName)
 );
 
-CREATE TABLE channels (
-  channelId INT AUTO_INCREMENT,
-  name      NVARCHAR(500) NOT NULL,
-  link      NVARCHAR(500) NOT NULL,
-
-  PRIMARY KEY (channelId)
-);
 
 CREATE TABLE screencastTags (
   screencastId INT,
