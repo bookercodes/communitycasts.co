@@ -10,9 +10,9 @@ INSERT INTO hostServices
   VALUES ('Vimeo'), ('YouTube');
 
 CREATE TABLE channels (
-  channelId INT AUTO_INCREMENT,
-  name      NVARCHAR(500) NOT NULL,
-  link      NVARCHAR(500) NOT NULL,
+  channelId   INT AUTO_INCREMENT,
+  channelName NVARCHAR(500) NOT NULL,
+  channelLink NVARCHAR(500) NOT NULL,
 
   PRIMARY KEY (channelId)
 );
