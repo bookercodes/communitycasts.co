@@ -2,7 +2,7 @@
 
 INSERT INTO tags
  VALUES ('JavaScript'), ('Angular'), ('Python');
-INSERT INTO channels (name, link)
+INSERT INTO channels (channelName, channelLink)
   VALUES ('Derek Banas', 'https://www.youtube.com/channel/UCwRXb5dUK4cvsHbx-rGzSgw');
 
 INSERT INTO screencasts(link,title, durationInSeconds, hostService, channelId)

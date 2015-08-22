@@ -37,9 +37,11 @@ module.exports = function(connection) {
       var finish = config.screencastsPerPage;
       var sql = squel.select()
         .field('screencasts.*')
+        .field('channels.*')
         .field('group_concat(screencastTags.tagName) as tags')
         .from('screencasts')
         .join('screencastTags', null, 'screencasts.screencastId = screencastTags.screencastId')
+        .join('channels', null, 'channels.channelId = screencasts.channelId')
         .where('screencasts.screencastId in ?',
           squel.select()
           .field('screencastId')
@@ -59,6 +61,14 @@ module.exports = function(connection) {
             'http://localhost:3000/screencasts/' + screencast.screencastId;
           screencast.tags = screencast.tags.split(',');
           screencast.duration = moment.duration(screencast.durationInSeconds, 'seconds').humanize();
+          screencast.channel = {
+            channelId: screencast.channelId,
+            channelName: screencast.channelName,
+            channelLink: screencast.channelLink
+          };
+          delete screencast.channelId;
+          delete screencast.channelName;
+          delete screencast.channelLink;
           delete screencast.link;
           delete screencast.durationInSeconds;
           return screencast;
@@ -97,9 +107,11 @@ module.exports = function(connection) {
       var finish = config.screencastsPerPage;
       var sql = squel.select()
         .field('screencasts.*')
+        .field('channels.*')
         .field('group_concat(screencastTags.tagName) as tags')
         .from('screencasts')
         .join('screencastTags', null, 'screencasts.screencastId = screencastTags.screencastId')
+        .join('channels', null, 'channels.channelId = screencasts.channelId')
         .group('screencasts.screencastId');
       if (sort === 'popular') {
         // http://amix.dk/blog/post/19574
@@ -114,6 +126,14 @@ module.exports = function(connection) {
             'http://localhost:3000/screencasts/' + screencast.screencastId;
           screencast.tags = screencast.tags.split(',');
           screencast.duration = moment.duration(screencast.durationInSeconds, 'seconds').humanize();
+          screencast.channel = {
+            channelId: screencast.channelId,
+            channelName: screencast.channelName,
+            channelLink: screencast.channelLink
+          };
+          delete screencast.channelId;
+          delete screencast.channelName;
+          delete screencast.channelLink;
           delete screencast.link;
           delete screencast.durationInSeconds;
           return screencast;
