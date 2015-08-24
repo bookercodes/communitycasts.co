@@ -15,11 +15,14 @@ body {
   max-width: 1200px;
   border-top: 4px tomato solid;
   margin: 0 auto;
-  background: url("../img/pattern.png") repeat; }
+  background: url("../img/pattern.png") repeat;
+  padding: 0 30px;
+  padding-top: 15px; }
 
 .header {
   display: flex;
-  align-items: center; }
+  align-items: center;
+  padding-bottom: 30px; }
 
 .header__logo {
   font-size: 1.3em;
@@ -37,7 +40,11 @@ body {
   font-size: 1.9em;
   font-weight: 300;
   text-align: center;
-  color: white; }
+  color: white;
+  padding-bottom: 30px; }
+
+.search-form {
+  padding-bottom: 40px; }
 
 .search-form__input {
   width: 600px;

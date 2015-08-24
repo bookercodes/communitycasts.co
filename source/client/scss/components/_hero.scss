@@ -3,11 +3,14 @@
   border-top: 4px $color-accent solid;
   margin: 0 auto;
   background: url('../img/pattern.png') repeat;
+  padding: 0 30px;
+  padding-top: 15px;
 }
 
 .header {
   display: flex;
   align-items: center;
+  padding-bottom: 30px;
 }
 
 .header__logo {
@@ -29,8 +32,12 @@
   font-weight: 300;
   text-align: center;
   color: $color-white;
+  padding-bottom: 30px;
 }
 
+.search-form {
+  padding-bottom: 40px;
+}
 .search-form__input {
   width: 600px;
   margin: 0 auto;
