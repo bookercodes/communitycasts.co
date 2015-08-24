@@ -20,6 +20,19 @@
       Community Casts is the place to find new technology <br>
       screencasts on YouTube &amp; Vimeo.
     </p>
+    <form class="search-form">
+      <md-autocomplete
+          class="search-form__input"
+          md-items="item in items"
+          placeholder="Search for screencasts...">
+          <md-item-template>
+            <span>{{item}}</span>
+          </md-item-template>
+          <md-not-found>
+            No matches found for "{{ctrl.searchText}}".
+          </md-not-found>
+      </md-autocomplete>
+    </form>
   </div>
   <script src="bower_components/angular/angular.min.js"></script>
   <script src="bower_components/angular-animate/angular-animate.min.js"></script>
