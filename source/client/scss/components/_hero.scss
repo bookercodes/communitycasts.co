@@ -18,7 +18,15 @@
   padding: 10px 15px;
 }
 
-button.md-raised.header__btn {
+.md-raised.header__btn {
   margin-left: auto;
+  border-radius: 0;
   background-color: $color-accent;
+}
+
+.about-text {
+  font-size: 1.9em;
+  font-weight: 300;
+  text-align: center;
+  color: $color-white;
 }
