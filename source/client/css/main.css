@@ -23,31 +23,31 @@ body {
   display: flex;
   align-items: center;
   padding-bottom: 30px; }
-
-.header__logo {
-  font-size: 1.3em;
-  font-style: italic;
-  color: white;
-  border: 3px white solid;
-  padding: 10px 15px; }
-
-.md-raised.header__btn {
-  margin-left: auto;
-  border-radius: 0;
-  background-color: tomato; }
+  .header__logo {
+    font-size: 1.3em;
+    font-weight: 400;
+    color: white;
+    border: 2px white solid;
+    padding: 10px 15px; }
+  .header .md-raised.header__btn {
+    margin-left: auto;
+    border-radius: 0;
+    background-color: tomato; }
 
 .about-text {
-  font-size: 1.9em;
+  font-size: 2em;
   font-weight: 300;
   text-align: center;
   color: white;
-  padding-bottom: 30px; }
+  padding-bottom: 30px;
+  max-width: 600px;
+  margin: 0 auto; }
 
 .search-form {
   padding-bottom: 40px; }
-
-.search-form__input {
-  width: 600px;
-  margin: 0 auto;
-  background-color: #e5e5e5;
-  border-radius: 0; }
+  .search-form__input {
+    outline: 3px solid #a5a5a5;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #e5e5e5;
+    border-radius: 0; }

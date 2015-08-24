@@ -1,5 +1,5 @@
 .hero {
-  max-width: $content-width;
+  max-width: $container-width;
   border-top: 4px $color-accent solid;
   margin: 0 auto;
   background: url('../img/pattern.png') repeat;
@@ -11,36 +11,37 @@
   display: flex;
   align-items: center;
   padding-bottom: 30px;
-}
-
-.header__logo {
-  font-size: 1.3em;
-  font-style: italic;
-  color: $color-white;
-  border: 3px $color-white solid;
-  padding: 10px 15px;
-}
-
-.md-raised.header__btn {
-  margin-left: auto;
-  border-radius: 0;
-  background-color: $color-accent;
+  &__logo {
+    font-size: 1.3em;
+    font-weight: 400;
+    color: $color-white;
+    border: 2px $color-white solid;
+    padding: 10px 15px;
+  }
+  .md-raised.header__btn {
+    margin-left: auto;
+    border-radius: 0;
+    background-color: $color-accent;
+  }
 }
 
 .about-text {
-  font-size: 1.9em;
+  font-size: 2em;
   font-weight: 300;
   text-align: center;
   color: $color-white;
   padding-bottom: 30px;
+  max-width: $medium-container-width;
+  margin: 0 auto;
 }
 
 .search-form {
   padding-bottom: 40px;
-}
-.search-form__input {
-  width: 600px;
-  margin: 0 auto;
-  background-color: #e5e5e5;
-  border-radius: 0;
+  &__input {
+    outline: 3px solid darken($color-gray, 25%);
+    max-width: $medium-container-width;
+    margin: 0 auto;
+    background-color: $color-gray;
+    border-radius: 0;
+  }
 }
