@@ -6,16 +6,23 @@
   <title>Document</title>
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,300,500,700">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/bower_components/angular-material/angular-material.min.css">
   <link rel="stylesheet" href="/css/main.css">
 </head>
 
-<body>
+<body ng-app="communityCasts" ng-controller="mainController">
   <div class="hero">
     <header class="header">
       <h1 class="header__logo">Community Casts</h1>
-      <button class="header__btn">Submit</button>
+      <md-button class="md-raised header__btn">Submit</md-button>
+
     </header>
   </div>
+  <script src="bower_components/angular/angular.min.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+  <script src="bower_components/angular-aria/angular-aria.min.js"></script>
+  <script src="bower_components/angular-material/angular-material.min.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script src="app/app.js"></script>
 </body>
-
 </html>

@@ -18,6 +18,7 @@
   padding: 10px 15px;
 }
 
-.header__btn {
+button.md-raised.header__btn {
   margin-left: auto;
+  background-color: $color-accent;
 }
