@@ -16,3 +16,17 @@ body {
   border-top: 4px pink solid;
   margin: 0 auto;
   background: url("../img/pattern.png") repeat; }
+
+.header {
+  display: flex;
+  align-items: center; }
+
+.header__logo {
+  font-size: 1.3em;
+  font-style: italic;
+  color: white;
+  border: 3px white solid;
+  padding: 10px 15px; }
+
+.header__btn {
+  margin-left: auto; }

@@ -5,6 +5,19 @@
   background: url('../img/pattern.png') repeat;
 }
 
-.hero__logo {
+.header {
+  display: flex;
+  align-items: center;
+}
 
+.header__logo {
+  font-size: 1.3em;
+  font-style: italic;
+  color: $color-white;
+  border: 3px $color-white solid;
+  padding: 10px 15px;
+}
+
+.header__btn {
+  margin-left: auto;
 }
