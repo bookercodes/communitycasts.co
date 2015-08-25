@@ -1,5 +1,17 @@
 .menu {
+  flex-basis: 30%;
+  border: 1px goldenrod solid;
   &__heading {
     color: red;
+  }
+  .tag-list {
+    display: flex;
+    flex-flow: row wrap;
+    &__tag {
+      flex: 1 0 auto;
+      margin: 0;
+      margin-right: 4px;
+      margin-bottom: 4px;
+    }
   }
 }

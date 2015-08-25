@@ -18,4 +18,18 @@ body {
   max-width: $container-width;
   background-color: $color-white;
   margin: 0 auto;
+  display: flex;
+}
+
+.tag {
+  background-color: $tag-bg-color;
+  color: $tag-color;
+  text-transform: none;
+  font-size: $tag-font-size;
+  font-weight: normal;
+  &__badge {
+    color: lighten($tag-color, 20%);
+    font-size: 12px;
+    font-weight: 300;
+  }
 }

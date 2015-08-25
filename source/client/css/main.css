@@ -14,7 +14,19 @@ body {
 .container {
   max-width: 1200px;
   background-color: white;
-  margin: 0 auto; }
+  margin: 0 auto;
+  display: flex; }
+
+.tag {
+  background-color: #F0F0F0;
+  color: #58585B;
+  text-transform: none;
+  font-size: 14px;
+  font-weight: normal; }
+  .tag__badge {
+    color: #8b8b8e;
+    font-size: 12px;
+    font-weight: 300; }
 
 .hero {
   max-width: 1200px;
@@ -54,5 +66,16 @@ body {
       background-color: #e5e5e5;
       border-radius: 0; }
 
-.menu__heading {
-  color: red; }
+.menu {
+  flex-basis: 30%;
+  border: 1px goldenrod solid; }
+  .menu__heading {
+    color: red; }
+  .menu .tag-list {
+    display: flex;
+    flex-flow: row wrap; }
+    .menu .tag-list__tag {
+      flex: 1 0 auto;
+      margin: 0;
+      margin-right: 4px;
+      margin-bottom: 4px; }
