@@ -13,3 +13,9 @@ html {
 body {
   font-family: $font-family;
 }
+
+.container {
+  max-width: $container-width;
+  background-color: $color-white;
+  margin: 0 auto;
+}

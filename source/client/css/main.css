@@ -11,6 +11,11 @@ html {
 body {
   font-family: "Roboto", sans-serif; }
 
+.container {
+  max-width: 1200px;
+  background-color: white;
+  margin: 0 auto; }
+
 .hero {
   max-width: 1200px;
   border-top: 4px tomato solid;
@@ -48,3 +53,6 @@ body {
       margin: 0 auto;
       background-color: #e5e5e5;
       border-radius: 0; }
+
+.menu__heading {
+  color: red; }
