@@ -70,7 +70,9 @@ body {
   flex-basis: 30%;
   border: 1px goldenrod solid; }
   .menu__heading {
-    color: red; }
+    color: black;
+    font-weight: normal;
+    text-decoration: underline; }
   .menu .tag-list {
     display: flex;
     flex-flow: row wrap; }
