@@ -9,7 +9,8 @@ html {
   font: 100%/1.5; }
 
 body {
-  font-family: "Roboto", sans-serif; }
+  font-family: "Roboto", sans-serif;
+  background-color: #eceef1; }
 
 .container {
   max-width: 1200px;
@@ -68,11 +69,12 @@ body {
 
 .menu {
   flex-basis: 30%;
-  border: 1px goldenrod solid; }
+  padding: 16px; }
   .menu__heading {
     color: black;
-    font-weight: normal;
-    text-decoration: underline; }
+    font-weight: 400;
+    padding-bottom: 10px;
+    font-size: 1.1em; }
   .menu .tag-list {
     display: flex;
     flex-flow: row wrap; }
