@@ -5,43 +5,40 @@
   background: url('../img/pattern.png') repeat;
   padding: 0 30px;
   padding-top: 15px;
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  padding-bottom: 30px;
-  &__logo {
-    font-size: 1.3em;
-    font-weight: 400;
+  .header {
+    display: flex;
+    align-items: center;
+    padding-bottom: 30px;
+    &__logo {
+      font-size: 1.3em;
+      font-weight: 400;
+      color: $color-white;
+      border: 2px $color-white solid;
+      padding: 10px 15px;
+    }
+    &__btn {
+      margin-left: auto;
+      border-radius: 0;
+      background-color: $color-accent;
+    }
+  }
+  .about-text {
+    font-size: 2em;
+    font-weight: 300;
+    text-align: center;
     color: $color-white;
-    border: 2px $color-white solid;
-    padding: 10px 15px;
-  }
-  .md-raised.header__btn {
-    margin-left: auto;
-    border-radius: 0;
-    background-color: $color-accent;
-  }
-}
-
-.about-text {
-  font-size: 2em;
-  font-weight: 300;
-  text-align: center;
-  color: $color-white;
-  padding-bottom: 30px;
-  max-width: $medium-container-width;
-  margin: 0 auto;
-}
-
-.search-form {
-  padding-bottom: 40px;
-  &__input {
-    outline: 3px solid darken($color-gray, 25%);
+    padding-bottom: 30px;
     max-width: $medium-container-width;
     margin: 0 auto;
-    background-color: $color-gray;
-    border-radius: 0;
+  }
+  .search-form {
+    padding-bottom: 40px;
+    &__input {
+      outline: 3px solid darken($color-gray, 25%);
+      max-width: $medium-container-width;
+      margin: 0 auto;
+      background-color: $color-gray;
+      border-radius: 0;
+    }
   }
 }
