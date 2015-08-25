@@ -47,6 +47,7 @@ body {
       border: 2px white solid;
       padding: 10px 15px; }
     .hero .header__btn {
+      text-transform: none;
       margin-left: auto;
       border-radius: 0;
       background-color: tomato; }
