@@ -77,9 +77,19 @@ body {
     font-size: 1.1em; }
   .menu .tag-list {
     display: flex;
-    flex-flow: row wrap; }
+    flex-flow: row wrap;
+    padding-bottom: 16px; }
     .menu .tag-list__tag {
       flex: 1 0 auto;
       margin: 0;
       margin-right: 4px;
       margin-bottom: 4px; }
+  .menu .nav__btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: none; }
