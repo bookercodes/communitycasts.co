@@ -90,17 +90,21 @@
       </nav>
     </aside>
     <main class="main">
-
-    <div class="screencasts">
-      <div class="screencast">
-        <a class="screencast__link" href="">C# 6.0: An Introduction</a>
-        <div>
-          <md-button class="screencast__tag tag">C#</md-button>
-          <md-button class="screencast__tag tag">C# 6.0</md-button>
-          <md-button class="screencast__tag tag">Beginner Programming</md-button>
-        </div>
+      <div class="toolbar">
+        <md-button class="toolbar__btn toolbar__btn--active"><md-icon>trending_up</md-icon>Popular</md-button>
+        <md-button class="toolbar__btn"><md-icon>swap_vert</md-icon>Latest</md-button>
       </div>
-    </div>
+      <div class="screencasts">
+        <div class="screencast">
+          <a class="screencast__link" href="">C# 6.0: An Introduction</a>
+          <div>
+            <md-button class="screencast__tag tag">C#</md-button>
+            <md-button class="screencast__tag tag">C# 6.0</md-button>
+            <md-button class="screencast__tag tag">Beginner Programming</md-button>
+          </div>
+        </div>
+        <md-divider ng-if="!$last"></md-divider>
+      </div>
 
     </main>
   </div>

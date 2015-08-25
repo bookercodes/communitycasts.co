@@ -100,6 +100,22 @@ body {
 .main {
   padding: 16px;
   flex-basis: 70%; }
+  .main .toolbar {
+    background-color: #f2f2f2;
+    padding: 10px; }
+    .main .toolbar__btn {
+      text-transform: none;
+      font-weight: normal;
+      border-radius: 0;
+      margin: 0;
+      background-color: #fafafa;
+      margin-right: -4px; }
+      .main .toolbar__btn > md-icon {
+        margin-right: 7px; }
+      .main .toolbar__btn--active {
+        cursor: not-allowed;
+        background-color: tomato;
+        color: white; }
   .main .screencast {
     border-bottom: 1px solid #eceef1;
     padding: 16px 0; }

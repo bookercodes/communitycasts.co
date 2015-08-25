@@ -1,6 +1,26 @@
 .main {
   padding: 16px;
   flex-basis: 70%;
+  .toolbar {
+    background-color: #f2f2f2;
+    padding: 10px;
+    &__btn {
+      text-transform: none;
+      font-weight: normal;
+      border-radius: 0;
+      margin: 0;
+      background-color: darken($color-white, 2%);
+      margin-right: -4px;
+      &>md-icon {
+        margin-right: 7px;;
+      }
+      &--active {
+        cursor: not-allowed;
+        background-color: $color-accent;
+        color: white;
+      }
+    }
+  }
   .screencast {
     border-bottom: 1px solid #eceef1;
     padding: 16px 0;
