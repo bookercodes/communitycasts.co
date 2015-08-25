@@ -1,5 +1,28 @@
 .main {
   padding: 16px;
   flex-basis: 70%;
-  border: 1px goldenrod solid;
+  .screencast {
+    border-bottom: 1px solid #eceef1;
+    padding: 16px 0;
+    &__link {
+      font-size: 1.2em;
+      font-weight: 400;
+      color: #121821;
+      display: block;
+      padding-bottom: 8px;
+      &:visited {
+        color: #828b98;
+      }
+    }
+    &__tag {
+      margin: 0;
+      font-size: 0.7em;
+      padding: 0;
+      min-height: auto;
+      height: auto;
+      height: 30px;
+      line-height: 30px;
+      padding: 0 10px;
+    }
+  }
 }
