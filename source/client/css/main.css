@@ -70,7 +70,7 @@ body {
 .menu {
   flex-basis: 30%;
   padding: 16px;
-  border-right: 1px #ffe5e0 solid; }
+  border-right: 1px #e5e5e5 solid; }
   .menu__heading {
     color: black;
     font-weight: 400;

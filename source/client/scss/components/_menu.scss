@@ -1,7 +1,7 @@
 .menu {
   flex-basis: 30%;
   padding: 16px;
-  border-right: 1px lighten($color-accent, 30%) solid;
+  border-right: 1px $color-gray solid;
   &__heading {
     color: black;
     font-weight:400;
