@@ -100,7 +100,7 @@ body {
   background-color: #eceef1; }
 
 .container {
-  max-width: 1200px;
+  max-width: 1100px;
   background-color: white;
   margin: 0 auto;
   display: flex;
@@ -117,7 +117,7 @@ body {
   background-color: #8BC34A; }
 
 .hero {
-  max-width: 1200px;
+  max-width: 1100px;
   border-top: 4px #8BC34A solid;
   margin: 0 auto;
   background: url("../img/pattern.png") repeat;
