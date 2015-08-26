@@ -1,6 +1,4 @@
-app.controller('menuController', function ($scope, $http) {
+app.controller('screencastsController', function ($scope, $http) {
   'use strict';
-  $http.get('http://localhost:3000/tags').success(function(response) {
-    $scope.tags = response.tags;
-  });
+  
 });

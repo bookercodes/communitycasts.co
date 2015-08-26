@@ -1,6 +1,10 @@
-var app = angular.module('communityCasts', ['ngMaterial']);
+var app = angular.module('communityCasts', ['ngMaterial', 'ui.router']);
 
-app.controller('mainController', function ($scope) {
-  $scope.items =['Foo','Bar'];
-  
+app.config(function ($stateProvider, $urlRouterProvider) {
+  $urlRouterProvider.otherwise('/');
+  $stateProvider.state('home', {
+    url: '/',
+    templateUrl: '/app/views/_screencasts.html',
+    controller: 'screencastsController'
+  });
 });

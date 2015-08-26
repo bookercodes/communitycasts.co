@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="/css/main.css">
 </head>
 
-<body ng-app="communityCasts" ng-controller="mainController">
+<body ng-app="communityCasts">
   <div class="hero">
     <header class="header">
       <h1 class="header__logo">Community Casts</h1>
@@ -30,33 +30,7 @@
   </div>
   <div class="container">
     <aside class="menu" ng-controller="menuController" ng-include src="'app/views/_menu.html'"></aside>
-    <main class="main">
-      <div class="toolbar">
-        <md-button ng-disabled="true" class="toolbar__btn toolbar__btn--active"><md-icon>trending_up</md-icon>Popular</md-button>
-        <md-button class="toolbar__btn"><md-icon>swap_vert</md-icon>Latest</md-button>
-      </div>
-      <div class="screencasts">
-        <div class="screencast">
-          <a class="screencast__link" href="">C# 6.0: An Introduction</a>
-          <div class="screencast__info">
-            <div>
-              <md-button md-no-ink class="screencast__tag tag">C#</md-button>
-              <md-button md-no-ink class="screencast__tag tag">C# 6.0</md-button>
-              <md-button md-no-ink class="screencast__tag tag">Beginner Programming</md-button>
-            </div>
-            <div>
-              <span class="channel">
-                <md-icon>person</md-icon><a class="channel__link">Code Cast</a>
-              </span>
-              <span class="screencast__channel">
-                <md-icon>timer</md-icon>10.12
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <md-button class="load-more-btn">Load More</md-button>
-    </main>
+    <main class="main" ui-view></main>
   </div>
   <footer class="footer">
     <p class="footer__text">Community Casts is <a class="footer__link" href="https://github.com/alexbooker/communitycasts.co">open source</a>. Proudly built and curated by <a class="footer__link" href="https://twitter.com/bookercodes">Alex Booker</a>. Hosting generously sponsored by <a class="footer__link" href="https://github.com/szdc">Jack</a>.</p>
@@ -69,5 +43,6 @@
   <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
   <script src="app/app.js"></script>
   <script src="app/controllers/menuController.js"></script>
+  <script src="app/controllers/screencastsController.js"></script>
 </body>
 </html>
