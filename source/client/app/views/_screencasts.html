@@ -1,6 +1,7 @@
 <div class="toolbar">
-  <md-button ng-disabled="true" class="toolbar__btn toolbar__btn--active"><md-icon>trending_up</md-icon>Popular</md-button>
-  <md-button class="toolbar__btn"><md-icon>swap_vert</md-icon>Latest</md-button>
+  <!--  -->
+  <md-button ui-sref-active="toolbar__btn--active" ui-sref="{sort:'popular'}" class="toolbar__btn"><md-icon>trending_up</md-icon>Popular</md-button>
+  <md-button ui-sref-active="toolbar__btn--active" ui-sref="{sort:'latest'}" class="toolbar__btn"><md-icon>swap_vert</md-icon>Latest</md-button>
 </div>
 <div class="screencasts">
   <div class="screencast" ng-repeat="screencast in screencasts">
