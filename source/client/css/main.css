@@ -105,6 +105,10 @@ body {
   margin: 0 auto;
   display: flex; }
 
+.md-button {
+  border-radius: 0;
+  text-transform: none; }
+
 .hero {
   max-width: 1200px;
   border-top: 4px tomato solid;
@@ -123,9 +127,7 @@ body {
       border: 2px white solid;
       padding: 10px 15px; }
     .hero .header__btn {
-      text-transform: none;
       margin-left: auto;
-      border-radius: 0;
       background-color: tomato; }
   .hero .about-text {
     font-size: 2em;
@@ -160,9 +162,7 @@ body {
     .menu .tag-list__tag {
       background-color: #F0F0F0;
       color: #58585B;
-      text-transform: none;
       font-size: 14px;
-      font-weight: normal;
       flex: 1 0 auto;
       margin: 0;
       margin-right: 4px;
@@ -179,9 +179,7 @@ body {
       text-align: left;
       padding: 0;
       margin: 0;
-      font-size: 14px;
-      font-weight: 400;
-      text-transform: none; }
+      font-size: 14px; }
 
 .main {
   padding: 16px;
@@ -191,9 +189,6 @@ body {
     padding: 10px;
     margin-bottom: 10px; }
     .main .toolbar__btn {
-      text-transform: none;
-      font-weight: normal;
-      border-radius: 0;
       margin: 0;
       background-color: #fafafa;
       margin-right: -4px; }
@@ -219,9 +214,7 @@ body {
     .main .screencast__tag {
       background-color: #F0F0F0;
       color: #58585B;
-      text-transform: none;
       font-size: 14px;
-      font-weight: normal;
       margin: 0;
       font-size: 0.7em;
       padding: 0;
