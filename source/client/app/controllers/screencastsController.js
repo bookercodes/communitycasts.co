@@ -1,5 +1,6 @@
-app.controller('screencastsController', function ($scope, $http, $stateParams) {
+app.controller('screencastsController', function($scope, $http, $stateParams) {
   'use strict';
+
   function init() {
     $scope.page = 1;
     $scope.screencasts = [];
