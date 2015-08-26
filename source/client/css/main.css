@@ -118,6 +118,8 @@ body {
         cursor: not-allowed;
         background-color: tomato;
         color: white; }
+  .main .screencasts {
+    padding-bottom: 15px; }
   .main .screencast {
     border-bottom: 1px solid #eceef1;
     padding: 16px 0; }
@@ -138,3 +140,9 @@ body {
       height: 30px;
       line-height: 30px;
       padding: 0 10px; }
+  .main .load-more-btn {
+    background-color: #e7e7e7;
+    width: 100%;
+    margin: 0;
+    text-transform: none;
+    font-weight: normal; }
