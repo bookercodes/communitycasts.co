@@ -12,9 +12,10 @@ html {
 
 body {
   font-family: $font-family;
+}
+.body {
   background-color: $bg-color;
 }
-
 .container {
   max-width: $container-width;
   background-color: $color-white;

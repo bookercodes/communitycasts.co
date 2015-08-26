@@ -9,7 +9,9 @@ html {
   font: 100%/1.5; }
 
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto", sans-serif; }
+
+.body {
   background-color: #eceef1; }
 
 .container {
