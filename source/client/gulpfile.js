@@ -5,6 +5,8 @@ var reload = browserSync.reload;
 
 function initBrowserSync() {
   browserSync.init({
+    ui: false,
+    port: 3001,
     server: {
       baseDir: "./"
     },
