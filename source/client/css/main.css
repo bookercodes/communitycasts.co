@@ -195,7 +195,8 @@ body {
     align-items: stretch; }
     .main .toolbar__btn {
       margin: 0;
-      background-color: #fafafa; }
+      background-color: #fafafa;
+      padding-right: 10px; }
       .main .toolbar__btn > md-icon {
         margin-right: 7px; }
       .main .toolbar__btn--active {
