@@ -96,9 +96,7 @@ html {
   box-sizing: inherit; }
 
 body {
-  font-family: "Roboto", sans-serif; }
-
-.body {
+  font-family: "Roboto", sans-serif;
   background-color: #eceef1; }
 
 .container {
