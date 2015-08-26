@@ -39,6 +39,7 @@
       }
     }
     &__tag {
+      @include tag;
       margin: 0;
       font-size: 0.7em;
       padding: 0;

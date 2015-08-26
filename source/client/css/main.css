@@ -105,17 +105,6 @@ body {
   margin: 0 auto;
   display: flex; }
 
-.tag {
-  background-color: #F0F0F0;
-  color: #58585B;
-  text-transform: none;
-  font-size: 14px;
-  font-weight: normal; }
-  .tag__badge {
-    color: #8b8b8e;
-    font-size: 12px;
-    font-weight: 300; }
-
 .hero {
   max-width: 1200px;
   border-top: 4px tomato solid;
@@ -169,10 +158,19 @@ body {
     flex-flow: row wrap;
     padding-bottom: 16px; }
     .menu .tag-list__tag {
+      background-color: #F0F0F0;
+      color: #58585B;
+      text-transform: none;
+      font-size: 14px;
+      font-weight: normal;
       flex: 1 0 auto;
       margin: 0;
       margin-right: 4px;
       margin-bottom: 4px; }
+      .menu .tag-list__tag .tag__badge {
+        color: #8b8b8e;
+        font-size: 12px;
+        font-weight: 300; }
   .menu .nav {
     padding-bottom: 16px; }
     .menu .nav__btn {
@@ -219,6 +217,11 @@ body {
       .main .screencast__link:visited {
         color: #828b98; }
     .main .screencast__tag {
+      background-color: #F0F0F0;
+      color: #58585B;
+      text-transform: none;
+      font-size: 14px;
+      font-weight: normal;
       margin: 0;
       font-size: 0.7em;
       padding: 0;
@@ -227,6 +230,10 @@ body {
       height: 30px;
       line-height: 30px;
       padding: 0 10px; }
+      .main .screencast__tag .tag__badge {
+        color: #8b8b8e;
+        font-size: 12px;
+        font-weight: 300; }
   .main .load-more-btn {
     background-color: #e7e7e7;
     width: 100%;

@@ -13,6 +13,7 @@
     flex-flow: row wrap;
     padding-bottom: 16px;
     &__tag {
+      @include tag;
       flex: 1 0 auto;
       margin: 0;
       margin-right: 4px;
