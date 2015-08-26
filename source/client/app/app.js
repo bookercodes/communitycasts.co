@@ -7,4 +7,8 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     templateUrl: '/app/views/_screencasts.html',
     controller: 'screencastsController'
   });
+  $stateProvider.state('about', {
+    url: '/about',
+    templateUrl: '/app/views/_about.html'
+  });
 });
