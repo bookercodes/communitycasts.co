@@ -38,13 +38,27 @@
     &__tag {
       @include tag;
       margin: 0;
-      font-size: 0.7em;
       padding: 0;
       min-height: auto;
       height: auto;
       height: 30px;
       line-height: 30px;
       padding: 0 10px;
+    }
+    &__info {
+      display: flex;
+      font-size: 0.7em;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .channel {
+      margin-right: 10px;
+      &__link {
+        font-weight: 500;
+        &:hover{
+          color:$color-accent;
+        }
+      }
     }
   }
   .load-more-btn {

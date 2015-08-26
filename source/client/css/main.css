@@ -220,7 +220,6 @@ body {
       color: #58585B;
       font-size: 14px;
       margin: 0;
-      font-size: 0.7em;
       padding: 0;
       min-height: auto;
       height: auto;
@@ -231,6 +230,17 @@ body {
         color: #8b8b8e;
         font-size: 12px;
         font-weight: 300; }
+    .main .screencast__info {
+      display: flex;
+      font-size: 0.7em;
+      align-items: center;
+      justify-content: space-between; }
+    .main .screencast .channel {
+      margin-right: 10px; }
+      .main .screencast .channel__link {
+        font-weight: 500; }
+        .main .screencast .channel__link:hover {
+          color: #8BC34A; }
   .main .load-more-btn {
     background-color: #e7e7e7;
     width: 100%;
