@@ -12,6 +12,9 @@ app.controller('screencastsController', function ($scope, $http, $stateParams) {
     $scope.busy = true;
 
     var base = 'http://localhost:3000/screencasts';
+    if ($stateParams.tagged !== '') {
+      base += '/tagged/' + $stateParams.tagged + '/';
+    }
     var url = base + '?page=' + $scope.page + '&sort=' + $scope.sortOption;
     $http.get(url).success(function(response) {
       // do not update the totalCount on every request in case a new screencast

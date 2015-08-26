@@ -1,6 +1,6 @@
 <h3 class="menu__heading">Learn</h3>
 <div class="tag-list">
-  <md-button ng-repeat="tag in tags" class="tag-list__tag tag">
+  <md-button ui-sref="home({tagged:tag.tagName,sort:'popular'})" ng-repeat="tag in tags" class="tag-list__tag tag">
     {{tag.tagName}}
     <span class="tag__badge">({{tag.count}})</span>
   </md-button>

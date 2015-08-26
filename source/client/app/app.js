@@ -8,6 +8,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     controller: 'screencastsController',
     params: {
       sort: 'popular',
+      tagged: '',
     },
   });
   $stateProvider.state('about', {
