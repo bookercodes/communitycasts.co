@@ -109,6 +109,12 @@ body {
   border-radius: 0;
   text-transform: none; }
 
+::-moz-selection {
+  background-color: tomato; }
+
+::selection {
+  background-color: tomato; }
+
 .hero {
   max-width: 1200px;
   border-top: 4px tomato solid;
