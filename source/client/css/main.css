@@ -103,21 +103,22 @@ body {
   max-width: 1200px;
   background-color: white;
   margin: 0 auto;
-  display: flex; }
+  display: flex;
+  flex-direction: row-reverse; }
 
 .md-button {
   border-radius: 0;
   text-transform: none; }
 
 ::-moz-selection {
-  background-color: #CDDC39; }
+  background-color: #8BC34A; }
 
 ::selection {
-  background-color: #CDDC39; }
+  background-color: #8BC34A; }
 
 .hero {
   max-width: 1200px;
-  border-top: 4px #CDDC39 solid;
+  border-top: 4px #8BC34A solid;
   margin: 0 auto;
   background: url("../img/pattern.png") repeat;
   padding: 0 30px;
@@ -135,7 +136,7 @@ body {
     .hero .header__btn {
       margin: 0;
       margin-left: auto;
-      background-color: #CDDC39; }
+      background-color: #8BC34A; }
   .hero .about-text {
     font-size: 2.2em;
     font-weight: 300;
@@ -147,7 +148,7 @@ body {
     .hero .about-text__product-name {
       font-weight: 400; }
     .hero .about-text__amp {
-      color: #CDDC39; }
+      color: #8BC34A; }
 
 .menu {
   flex-basis: 30%;
@@ -199,12 +200,12 @@ body {
         margin-right: 7px; }
       .main .toolbar__btn--active {
         cursor: not-allowed;
-        background-color: #CDDC39;
+        background-color: #8BC34A;
         color: white; }
   .main .screencasts {
     padding-bottom: 15px; }
   .main .screencast {
-    border-bottom: 1px solid #eceef1;
+    border-bottom: 1px solid #B6B6B6;
     padding: 16px 0; }
     .main .screencast__link {
       font-size: 1.2em;
@@ -251,4 +252,4 @@ body {
     font-weight: 500;
     color: inherit; }
     .footer__link:hover {
-      color: #CDDC39; }
+      color: #8BC34A; }
