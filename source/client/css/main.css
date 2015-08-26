@@ -110,14 +110,14 @@ body {
   text-transform: none; }
 
 ::-moz-selection {
-  background-color: tomato; }
+  background-color: #CDDC39; }
 
 ::selection {
-  background-color: tomato; }
+  background-color: #CDDC39; }
 
 .hero {
   max-width: 1200px;
-  border-top: 4px tomato solid;
+  border-top: 4px #CDDC39 solid;
   margin: 0 auto;
   background: url("../img/pattern.png") repeat;
   padding: 0 30px;
@@ -135,23 +135,19 @@ body {
     .hero .header__btn {
       margin: 0;
       margin-left: auto;
-      background-color: tomato; }
+      background-color: #CDDC39; }
   .hero .about-text {
-    font-size: 2em;
+    font-size: 2.2em;
     font-weight: 300;
     text-align: center;
     color: white;
-    padding-bottom: 30px;
+    padding-bottom: 65px;
     max-width: 600px;
     margin: 0 auto; }
-  .hero .search-form {
-    padding-bottom: 40px; }
-    .hero .search-form__input {
-      outline: 3px solid #a5a5a5;
-      max-width: 600px;
-      margin: 0 auto;
-      background-color: #e5e5e5;
-      border-radius: 0; }
+    .hero .about-text__product-name {
+      font-weight: 400; }
+    .hero .about-text__amp {
+      color: #CDDC39; }
 
 .menu {
   flex-basis: 30%;
@@ -203,7 +199,7 @@ body {
         margin-right: 7px; }
       .main .toolbar__btn--active {
         cursor: not-allowed;
-        background-color: tomato;
+        background-color: #CDDC39;
         color: white; }
   .main .screencasts {
     padding-bottom: 15px; }
@@ -255,4 +251,4 @@ body {
     font-weight: 500;
     color: inherit; }
     .footer__link:hover {
-      color: tomato; }
+      color: #CDDC39; }

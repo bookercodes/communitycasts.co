@@ -24,21 +24,8 @@
       </md-button>
     </header>
     <p class="about-text">
-      Community Casts is the place to find new technology screencasts on YouTube &amp; Vimeo.
+      <span class="about-text__product-name">Community Casts</span> is the place to find free, educational tech <span class="about-text__amp">&amp;</span> creative screencasts from the community.
     </p>
-    <form class="search-form">
-      <md-autocomplete
-        class="search-form__input"
-        md-items="item in items"
-        placeholder="Search for screencasts...">
-          <md-item-template>
-            <span>{{item}}</span>
-          </md-item-template>
-          <md-not-found>
-            No matches found for "{{ctrl.searchText}}".
-          </md-not-found>
-      </md-autocomplete>
-    </form>
   </div>
   <div class="container">
     <aside class="menu">
