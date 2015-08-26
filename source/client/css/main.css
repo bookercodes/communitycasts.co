@@ -125,7 +125,7 @@ body {
   .hero .header {
     display: flex;
     align-items: center;
-    padding-bottom: 30px; }
+    margin-bottom: 30px; }
     .hero .header__logo {
       font-size: 1.3em;
       font-weight: 400;
@@ -133,6 +133,7 @@ body {
       border: 2px white solid;
       padding: 10px 15px; }
     .hero .header__btn {
+      margin: 0;
       margin-left: auto;
       background-color: tomato; }
   .hero .about-text {
