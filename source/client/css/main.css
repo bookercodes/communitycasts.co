@@ -227,7 +227,8 @@ body {
       height: auto;
       height: 30px;
       line-height: 30px;
-      padding: 0 10px; }
+      padding: 0 10px;
+      margin-right: 4px; }
       .main .screencast__tag .tag__badge {
         color: #8b8b8e;
         font-size: 12px;

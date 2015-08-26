@@ -5,7 +5,10 @@ app.config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider.state('home', {
     url: '/',
     templateUrl: '/app/views/_screencasts.html',
-    controller: 'screencastsController'
+    controller: 'screencastsController',
+    params: {
+      sort: 'popular',
+    },
   });
   $stateProvider.state('about', {
     url: '/about',

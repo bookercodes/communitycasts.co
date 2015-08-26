@@ -3,20 +3,18 @@
   <md-button class="toolbar__btn"><md-icon>swap_vert</md-icon>Latest</md-button>
 </div>
 <div class="screencasts">
-  <div class="screencast">
-    <a class="screencast__link" href="">C# 6.0: An Introduction</a>
-    <div class="screencast__info">
+  <div class="screencast" ng-repeat="screencast in screencasts">
+    <a class="screencast__link" href="{{screencast.href}}">{{screencast.title}}</a>
+    <div class="screencast__info" >
       <div>
-        <md-button md-no-ink class="screencast__tag tag">C#</md-button>
-        <md-button md-no-ink class="screencast__tag tag">C# 6.0</md-button>
-        <md-button md-no-ink class="screencast__tag tag">Beginner Programming</md-button>
+        <md-button md-no-ink class="screencast__tag tag" ng-repeat="tag in screencast.tags">{{tag}}</md-button>
       </div>
       <div>
         <span class="channel">
-          <md-icon>person</md-icon><a class="channel__link">Code Cast</a>
+          <md-icon>person</md-icon><a href="{{screencast.channel.channelLink}}" class="channel__link">{{screencast.channel.channelName}}</a>
         </span>
         <span class="screencast__channel">
-          <md-icon>timer</md-icon>10.12
+          <md-icon>timer</md-icon>{{screencast.duration}}
         </span>
       </div>
     </div>
