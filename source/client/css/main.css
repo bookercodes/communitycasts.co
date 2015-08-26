@@ -191,15 +191,15 @@ body {
   .main .toolbar {
     background-color: #f2f2f2;
     padding: 10px;
-    margin-bottom: 10px; }
+    margin-bottom: 10px;
+    display: flex;
+    align-items: stretch; }
     .main .toolbar__btn {
       margin: 0;
-      background-color: #fafafa;
-      margin-right: -4px; }
+      background-color: #fafafa; }
       .main .toolbar__btn > md-icon {
         margin-right: 7px; }
       .main .toolbar__btn--active {
-        cursor: not-allowed;
         background-color: #8BC34A;
         color: white; }
   .main .screencasts {

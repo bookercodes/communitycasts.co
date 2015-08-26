@@ -5,15 +5,15 @@
     background-color: #f2f2f2;
     padding: 10px;
     margin-bottom: 10px;
+    display: flex;
+    align-items: stretch;
     &__btn {
       margin: 0;
       background-color: darken($color-white, 2%);
-      margin-right: -4px;
       &>md-icon {
-        margin-right: 7px;;
+        margin-right: 7px;
       }
       &--active {
-        cursor: not-allowed;
         background-color: $color-accent;
         color: white;
       }
