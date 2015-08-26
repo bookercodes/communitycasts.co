@@ -148,3 +148,19 @@ body {
     margin: 0;
     text-transform: none;
     font-weight: normal; }
+
+.footer {
+  padding: 15px 0;
+  width: 650px;
+  margin: 0 auto; }
+  .footer__text {
+    padding-bottom: 10px;
+    color: #3e4551;
+    text-align: center;
+    font-size: 0.9em; }
+  .footer__link {
+    text-decoration: none;
+    font-weight: 500;
+    color: inherit; }
+    .footer__link:hover {
+      color: tomato; }
