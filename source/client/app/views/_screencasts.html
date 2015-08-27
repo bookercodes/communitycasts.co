@@ -3,10 +3,12 @@
   <md-button ui-sref-active="toolbar__btn--active" ui-sref="{sort:'popular'}" class="toolbar__btn"><md-icon>trending_up</md-icon>Popular</md-button>
   <md-button ui-sref-active="toolbar__btn--active" ui-sref="{sort:'latest'}" class="toolbar__btn"><md-icon>swap_vert</md-icon>Latest</md-button>
 </div>
-<p ng-show="tagged" class="toolbar__tagged-label">
+
+
+<p ng-show="loaded && tagged" class="toolbar__tagged-label">
   <strong>{{totalCount}}</strong> screencasts for <span class="tag">{{tagged}}</span>
 </p>
-<div class="screencasts">
+<div class="screencasts" ng-show="loaded">
   <div class="screencast" ng-repeat="screencast in screencasts">
     <a class="screencast__link" href="{{screencast.href}}">{{screencast.title}}</a>
     <div class="screencast__info" >
@@ -24,4 +26,5 @@
     </div>
   </div>
 </div>
+<md-progress-linear ng-show="busy" class="progress-linear" md-mode="indeterminate"></md-progress-linear>
 <md-button class="load-more-btn" ng-click="fetchScreencasts()" ng-disabled="busy || !hasMore">Load More</md-button>

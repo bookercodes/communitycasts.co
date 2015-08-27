@@ -212,6 +212,13 @@ body {
       .main .toolbar__btn--active {
         background-color: white;
         color: white; }
+  .main .progress-linear {
+    margin-top: 10px;
+    margin-bottom: 20px; }
+    .main .progress-linear .md-container {
+      background-color: #DCEDC8; }
+    .main .progress-linear .md-bar {
+      background-color: #4CAF50; }
   .main .screencasts {
     padding-bottom: 15px; }
   .main .screencast {

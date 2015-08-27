@@ -20,6 +20,16 @@
       }
     }
   }
+  .progress-linear {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    .md-container {
+      background-color: #DCEDC8;
+    }
+    .md-bar {
+      background-color: #4CAF50;
+    }
+  }
   .screencasts {
     padding-bottom: 15px;
   }
