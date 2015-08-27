@@ -30,6 +30,21 @@
       background-color: #4CAF50;
     }
   }
+
+  .tagged-label {
+    font-size: 1.1em;
+    margin: 20px 0;
+    margin-bottom: 10px;
+    &__tag {
+      font-size: 1em;
+      @include tag;
+      padding: 7px 10px;
+      font-family: 'Roboto Mono';
+    }
+    &__tag-count {
+      font-weight: 600;
+    }
+  }
   .screencasts {
     padding-bottom: 15px;
   }

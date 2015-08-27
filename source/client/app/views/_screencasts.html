@@ -4,9 +4,8 @@
   <md-button ui-sref-active="toolbar__btn--active" ui-sref="{sort:'latest'}" class="toolbar__btn"><md-icon>swap_vert</md-icon>Latest</md-button>
 </div>
 
-
-<p ng-show="loaded && tagged" class="toolbar__tagged-label">
-  <strong>{{totalCount}}</strong> screencasts for <span class="tag">{{tagged}}</span>
+<p ng-show="loaded && tagged" class="tagged-label">
+  <span class="tagged-label__tag-count">{{totalCount}}</span> screencasts for <span class="tagged-label__tag">{{tagged}}</span>:
 </p>
 <div class="screencasts" ng-show="loaded">
   <div class="screencast" ng-repeat="screencast in screencasts">
