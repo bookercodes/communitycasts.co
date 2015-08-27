@@ -95,6 +95,9 @@ html {
 *, *:before, *:after {
   box-sizing: inherit; }
 
+html {
+  -webkit-text-size-adjust: 100%; }
+
 body {
   font-family: "RobotoDraft";
   background-color: #eceef1; }
@@ -137,17 +140,20 @@ body {
       margin-left: auto;
       background-color: white; }
   .hero .about-text {
-    font-size: 2.2em;
+    font-size: 2.3em;
     font-weight: 300;
+    letter-spacing: .8px;
+    line-height: 1.35em;
     text-align: center;
     color: white;
     padding-bottom: 65px;
-    max-width: 600px;
+    max-width: 650px;
     margin: 0 auto; }
     .hero .about-text__product-name {
       font-weight: 400; }
     .hero .about-text__amp {
-      color: white; }
+      color: white;
+      font-weight: 400; }
 
 .menu {
   flex-basis: 30%;
