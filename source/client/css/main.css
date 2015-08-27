@@ -110,14 +110,14 @@ body {
   text-transform: none; }
 
 ::-moz-selection {
-  background-color: #8BC34A; }
+  background-color: white; }
 
 ::selection {
-  background-color: #8BC34A; }
+  background-color: white; }
 
 .hero {
   max-width: 1100px;
-  border-top: 4px #8BC34A solid;
+  border-top: 4px #2980b9 solid;
   margin: 0 auto;
   background: url("../img/pattern.png") repeat;
   padding: 0 30px;
@@ -135,7 +135,7 @@ body {
     .hero .header__btn {
       margin: 0;
       margin-left: auto;
-      background-color: #8BC34A; }
+      background-color: white; }
   .hero .about-text {
     font-size: 2.2em;
     font-weight: 300;
@@ -147,7 +147,7 @@ body {
     .hero .about-text__product-name {
       font-weight: 400; }
     .hero .about-text__amp {
-      color: #8BC34A; }
+      color: white; }
 
 .menu {
   flex-basis: 30%;
@@ -202,7 +202,7 @@ body {
       .main .toolbar__btn > md-icon {
         margin-right: 7px; }
       .main .toolbar__btn--active {
-        background-color: #8BC34A;
+        background-color: white;
         color: white; }
   .main .screencasts {
     padding-bottom: 15px; }
@@ -243,7 +243,7 @@ body {
       .main .screencast .channel__link {
         font-weight: 500; }
         .main .screencast .channel__link:hover {
-          color: #8BC34A; }
+          color: white; }
   .main .load-more-btn {
     background-color: #e7e7e7;
     width: 100%;
@@ -265,4 +265,4 @@ body {
     font-weight: 500;
     color: inherit; }
     .footer__link:hover {
-      color: #8BC34A; }
+      color: white; }
