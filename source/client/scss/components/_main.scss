@@ -51,8 +51,11 @@
   .screencast {
     border-bottom: 1px solid $color-gray;
     padding: 16px 0;
+    display: flex;
     &__link {
+      font-family: 'Roboto';
       font-size: 1.2em;
+      line-height: 1.8em;
       font-weight: 400;
       color: #121821;
       display: block;
@@ -60,6 +63,11 @@
       &:visited {
         color: #828b98;
       }
+    }
+    &__thumb {
+      margin-right: 16px;
+      padding:4px;
+      border: 1px solid #e1e2e3;
     }
     &__tag {
       @include tag;
@@ -73,8 +81,6 @@
       margin-right: 4px;
     }
     &__info {
-      display: flex;
-      font-size: 0.7em;
       align-items: center;
       justify-content: space-between;
     }

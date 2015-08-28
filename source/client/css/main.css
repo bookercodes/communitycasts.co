@@ -241,15 +241,22 @@ body {
     padding-bottom: 15px; }
   .main .screencast {
     border-bottom: 1px solid #e5e5e5;
-    padding: 16px 0; }
+    padding: 16px 0;
+    display: flex; }
     .main .screencast__link {
+      font-family: 'Roboto';
       font-size: 1.2em;
+      line-height: 1.8em;
       font-weight: 400;
       color: #121821;
       display: block;
       padding-bottom: 8px; }
       .main .screencast__link:visited {
         color: #828b98; }
+    .main .screencast__thumb {
+      margin-right: 16px;
+      padding: 4px;
+      border: 1px solid #e1e2e3; }
     .main .screencast__tag {
       background-color: #F0F0F0;
       color: #58585B;
@@ -267,8 +274,6 @@ body {
         font-size: 12px;
         font-weight: 300; }
     .main .screencast__info {
-      display: flex;
-      font-size: 0.7em;
       align-items: center;
       justify-content: space-between; }
     .main .screencast .channel {

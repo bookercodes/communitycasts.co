@@ -7,23 +7,16 @@
 <p ng-show="loaded && tagged" class="tagged-label">
   <span class="tagged-label__tag-count">{{totalCount}}</span> screencasts for <span class="tagged-label__tag">{{tagged}}</span>:
 </p>
-<div class="screencasts" ng-show="loaded">
-  <div class="screencast" ng-repeat="screencast in screencasts">
-    <a class="screencast__link" href="{{screencast.href}}">{{screencast.title}}</a>
+<md-list class="screencasts" ng-show="loaded">
+  <md-list-item ng-click="navigateTo('data usage', $event)" class="screencast" ng-repeat="screencast in screencasts">
+    <img class="screencast__thumb" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Foo&w=196&h=110" width="196" height="110" alt="" />
     <div class="screencast__info" >
+      <h4 class="screencast__link">{{screencast.title}}</h4>
       <div>
         <md-button md-no-ink class="screencast__tag tag" ng-repeat="tag in screencast.tags">{{tag}}</md-button>
       </div>
-      <div>
-        <span class="channel">
-          <md-icon>person</md-icon><a href="{{screencast.channel.channelLink}}" class="channel__link">{{screencast.channel.channelName}}</a>
-        </span>
-        <span class="screencast__channel">
-          <md-icon>timer</md-icon>{{screencast.duration}}
-        </span>
-      </div>
     </div>
-  </div>
-</div>
+  </md-list-item>
+</md-list>
 <md-progress-linear ng-show="busy" class="progress-linear" md-mode="indeterminate"></md-progress-linear>
 <md-button class="load-more-btn" ng-click="fetchScreencasts()" ng-disabled="busy || !hasMore">Load More</md-button>
