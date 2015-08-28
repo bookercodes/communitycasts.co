@@ -10,13 +10,22 @@
     &__btn {
       margin: 0;
       background-color: darken($color-white, 2%);
-      padding-right: 10px;
+      padding: 7px 11px;
+      font-family: 'Roboto Mono';
+      font-size: 0.8em;
+      transition: background-color 1s;
       &>md-icon {
         margin-right: 7px;
       }
+      &:hover {
+        background-color: darken($color-white, 15);
+      }
       &--active {
-        background-color: $color-accent;
+        background-color: lighten(rgb(80, 179, 97), 5);
         color: white;
+        &:not([disabled]):hover {
+          background-color: lighten(rgb(80, 179, 97), 5);
+        }
       }
     }
   }

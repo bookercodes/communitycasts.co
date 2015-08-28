@@ -207,12 +207,19 @@ body {
     .main .toolbar__btn {
       margin: 0;
       background-color: #fafafa;
-      padding-right: 10px; }
+      padding: 7px 11px;
+      font-family: 'Roboto Mono';
+      font-size: 0.8em;
+      transition: background-color 1s; }
       .main .toolbar__btn > md-icon {
         margin-right: 7px; }
+      .main .toolbar__btn:hover {
+        background-color: #d9d9d9; }
       .main .toolbar__btn--active {
-        background-color: white;
+        background-color: #62bb71;
         color: white; }
+        .main .toolbar__btn--active:not([disabled]):hover {
+          background-color: #62bb71; }
   .main .progress-linear {
     margin-top: 10px;
     margin-bottom: 20px; }
