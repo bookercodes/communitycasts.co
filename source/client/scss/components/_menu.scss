@@ -14,6 +14,7 @@
     padding-bottom: 16px;
     &__tag {
       @include tag;
+      font-weight: bold;
       flex: 1 0 auto;
       margin: 0;
       margin-right: 4px;

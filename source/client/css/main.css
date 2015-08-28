@@ -175,6 +175,7 @@ body {
       background-color: #F0F0F0;
       color: #58585B;
       font-size: 14px;
+      font-weight: bold;
       flex: 1 0 auto;
       margin: 0;
       margin-right: 4px;
@@ -256,10 +257,14 @@ body {
       line-height: 1.8em;
       font-weight: 400;
       color: #121821;
-      display: block;
-      padding-bottom: 8px; }
+      display: block; }
       .main .screencast__link:visited {
         color: #828b98; }
+    .main .screencast__channel {
+      font-family: 'Roboto';
+      font-size: 1em;
+      padding-bottom: 8px;
+      line-height: 1.8em; }
     .main .screencast__thumb {
       margin-right: 16px;
       padding: 4px;

@@ -18,9 +18,10 @@
 </p>
 <md-list class="screencasts" ng-show="loaded">
   <md-list-item ng-click="navigateTo('data usage', $event)" class="screencast" ng-repeat="screencast in screencasts">
-    <img class="screencast__thumb" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Foo&w=196&h=110" width="196" height="110" alt="" />
+    <img class="screencast__thumb" src="https://i.ytimg.com/vi_webp/IDMJIYsWOBY/mqdefault.webp" width="196" height="110" alt="" />
     <div class="screencast__info" >
       <h4 class="screencast__link">{{screencast.title}}</h4>
+      <p class="screencast__channel">by {{screencast.channel.channelName}}</p>
       <div>
         <md-button md-no-ink class="screencast__tag tag" ng-repeat="tag in screencast.tags">{{tag}}</md-button>
       </div>

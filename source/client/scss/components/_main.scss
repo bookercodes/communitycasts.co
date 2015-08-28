@@ -61,6 +61,7 @@
     border-bottom: 1px solid $color-gray;
     padding: 16px 0;
     display: flex;
+
     &__link {
       font-family: 'Roboto';
       font-size: 1.2em;
@@ -68,10 +69,15 @@
       font-weight: 400;
       color: #121821;
       display: block;
-      padding-bottom: 8px;
       &:visited {
         color: #828b98;
       }
+    }
+    &__channel {
+      font-family: 'Roboto';
+      font-size: 1em;
+      padding-bottom: 8px;
+      line-height: 1.8em;
     }
     &__thumb {
       margin-right: 16px;
