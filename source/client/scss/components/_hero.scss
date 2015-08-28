@@ -19,6 +19,9 @@
       margin: 0;
       margin-left: auto;
       background-color: $color-accent;
+      &:hover {
+        background-color: darken($color-white, 15);
+      }
     }
   }
   .about-text {
