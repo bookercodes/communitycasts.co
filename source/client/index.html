@@ -12,21 +12,7 @@
 </head>
 
 <body ng-app="communityCasts">
-  <div class="hero">
-    <header class="header">
-      <h1 class="header__logo">Community Casts</h1>
-      <md-button class="header__btn">
-        <md-icon>playlist_add</md-icon>
-        Submit
-        <md-tooltip>
-          Submit screencast
-        </md-tooltip>
-      </md-button>
-    </header>
-    <p class="about-text">
-      <span class="about-text__product-name">Community Casts</span> is the place to find free, educational tech <span class="about-text__amp">&amp;</span> creative screencasts by the community.
-    </p>
-  </div>
+  <div class="hero" ng-controller="menuController" ng-include src="'app/views/_hero.html'"> </div>
   <div class="container">
     <aside class="menu" ng-controller="menuController" ng-include src="'app/views/_menu.html'"></aside>
     <main class="main" ui-view></main>
@@ -41,7 +27,9 @@
   <script src="bower_components/angular-material/angular-material.min.js"></script>
   <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
   <script src="app/app.js"></script>
+  <script src="app/services/modalService.js"></script>
   <script src="app/controllers/menuController.js"></script>
+  <script src="app/controllers/heroController.js"></script>
   <script src="app/controllers/screencastsController.js"></script>
 </body>
 </html>
