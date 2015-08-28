@@ -104,6 +104,9 @@
       line-height: 30px;
       padding: 0 10px;
       margin-right: 4px;
+      &:hover {
+        background-color: $tag-bg-color !important;
+      }
     }
     &__info {
       align-items: center;

@@ -291,6 +291,8 @@ body {
         color: #8b8b8e;
         font-size: 12px;
         font-weight: 300; }
+      .main .screencast__tag:hover {
+        background-color: #F0F0F0 !important; }
     .main .screencast__info {
       align-items: center;
       justify-content: space-between; }
