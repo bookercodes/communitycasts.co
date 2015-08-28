@@ -123,7 +123,7 @@ module.exports = function(connection) {
       connection.queryAsync(sql).spread(function(screencasts) {
         screencasts = screencasts.map(function(screencast) {
           screencast.href =
-            'http://localhost:3000/screencasts/' + screencast.screencastId;
+            'http://85.159.237.3:34709/screencasts/' + screencast.screencastId;
           screencast.tags = screencast.tags.split(',');
           screencast.duration = moment.duration(screencast.durationInSeconds, 'seconds').humanize();
           screencast.channel = {

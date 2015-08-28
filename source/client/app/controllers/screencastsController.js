@@ -1,4 +1,4 @@
-app.controller('screencastsController', function($scope, $http, $stateParams) {
+app.controller('screencastsController', function($scope, $http, $stateParams, $window) {
   'use strict';
 
   console.log('screencastsController');
@@ -35,6 +35,10 @@ app.controller('screencastsController', function($scope, $http, $stateParams) {
   $scope.changeSortOption = function() {
     init();
     $scope.fetchScreencasts();
+  };
+
+  $scope.navigateTo = function (link) {
+    $window.open(link);
   };
 
   init();
