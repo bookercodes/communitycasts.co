@@ -1,11 +1,10 @@
 .footer {
   padding: 15px 0;
-  width: $medium-container-width + 50px;
   margin: 0 auto;
+  max-width: $container-width;
   &__text {
     padding-bottom: 10px;
     color: #3e4551;
-    text-align: center;
     font-size: 0.9em;
   }
   &__link {
