@@ -9,7 +9,7 @@
     align-items: center;
     margin-bottom: 30px;
     &__logo {
-      font-size: 1.3em;
+      font-size: 1.2em;
       font-weight: 400;
       color: $color-white;
       border: 2px $color-white solid;
@@ -25,7 +25,7 @@
     }
   }
   .about-text {
-    font-size: 2.3em;
+    font-size: 1.8em;
     font-weight: 300;
     letter-spacing: .8px;
     line-height: 1.35em;
@@ -35,11 +35,11 @@
     max-width: $medium-container-width + 50px;
     margin: 0 auto;
     &__product-name {
-      font-weight: 400;
+      font-weight: 700;
     }
     &__amp {
       color: $color-accent;
-      font-weight: 400;
+      font-weight: 700;
     }
   }
 }

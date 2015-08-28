@@ -11,7 +11,6 @@
       margin: 0;
       background-color: darken($color-white, 2%);
       padding: 7px 11px;
-      font-family: 'Roboto Mono';
       font-size: 0.8em;
       transition: background-color 1s;
       &>md-icon {
@@ -55,7 +54,6 @@
     &__tag {
       @include tag;
       padding: 7px 10px;
-      font-family: 'Roboto Mono';
     }
     &__tag-count {
       font-weight: 600;
@@ -73,19 +71,18 @@
     display: flex;
 
     &__link {
-      font-family: 'Roboto';
       font-size: 1.2em;
       line-height: 1.8em;
-      font-weight: 400;
       color: #121821;
-      display: block;
+      font-weight: 700;
+      color: darken(#62bb71, 20);
+      // text-decoration: underline;
       &:visited {
         color: #828b98;
       }
     }
     &__channel {
-      font-family: 'Roboto';
-      font-size: 1em;
+      font-size: 0.9em;
       padding-bottom: 8px;
       line-height: 1.8em;
     }
