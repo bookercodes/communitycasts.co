@@ -13,9 +13,15 @@
   </button>
 </div>
 
-<p ng-show="loaded && tagged" class="tagged-label">
-  <span class="tagged-label__tag-count">{{totalCount}}</span> screencasts for <span class="tagged-label__tag">{{tagged}}</span>:
-</p>
+<div ng-show="loaded && tagged" class="notification">
+  <p class="tagged-label">
+    Showing <span class="tagged-label__tag-count">{{totalCount}}</span> screencasts with the <span class="tagged-label__tag">{{tagged}}</span> tag...
+  </p>
+  <md-button class="tagged-label__btn" ui-sref="home({sort:'popular',tagged:''})">
+    <md-icon>remove</md-icon>All screencasts
+  </md-button>
+</div>
+
 <md-list class="screencasts" ng-show="loaded">
   <md-list-item ng-click="navigateTo('data usage', $event)" class="screencast" ng-repeat="screencast in screencasts">
     <img class="screencast__thumb" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Thumb&w=196&h=110" width="196" height="110" alt="" />

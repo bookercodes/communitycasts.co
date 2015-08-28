@@ -228,23 +228,28 @@ body {
       background-color: #DCEDC8; }
     .main .progress-linear .md-bar {
       background-color: #4CAF50; }
-  .main .tagged-label {
-    font-size: 1.1em;
+  .main .notification {
     margin: 20px 0;
-    margin-bottom: 10px; }
-    .main .tagged-label__tag {
-      font-size: 1em;
-      background-color: #F0F0F0;
-      color: #58585B;
-      font-size: 14px;
-      padding: 7px 10px;
-      font-family: 'Roboto Mono'; }
-      .main .tagged-label__tag .tag__badge {
-        color: #8b8b8e;
-        font-size: 12px;
-        font-weight: 300; }
-    .main .tagged-label__tag-count {
-      font-weight: 600; }
+    margin-bottom: 10px;
+    background-color: #F6F6F6;
+    padding: 10px;
+    align-items: center;
+    display: flex;
+    justify-content: space-between; }
+  .main .tagged-label__tag {
+    background-color: #F0F0F0;
+    color: #58585B;
+    font-size: 14px;
+    padding: 7px 10px;
+    font-family: 'Roboto Mono'; }
+    .main .tagged-label__tag .tag__badge {
+      color: #8b8b8e;
+      font-size: 12px;
+      font-weight: 300; }
+  .main .tagged-label__tag-count {
+    font-weight: 600; }
+  .main .tagged-label__btn {
+    background-color: #FFCDD2; }
   .main .screencasts {
     padding-bottom: 15px; }
   .main .screencast {

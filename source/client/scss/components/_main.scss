@@ -40,18 +40,28 @@
     }
   }
 
-  .tagged-label {
-    font-size: 1.1em;
+  .notification {
     margin: 20px 0;
     margin-bottom: 10px;
+    background-color: #F6F6F6;
+    padding: 10px;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .tagged-label {
+
     &__tag {
-      font-size: 1em;
       @include tag;
       padding: 7px 10px;
       font-family: 'Roboto Mono';
     }
     &__tag-count {
       font-weight: 600;
+    }
+    &__btn {
+      background-color: #FFCDD2;
     }
   }
   .screencasts {
