@@ -37,6 +37,7 @@
   }
 
   &__text {
+    letter-spacing: .05em;
     transition: color 1s ease;
     padding-bottom: 10px;
     color: lighten(#3e4551, 50);

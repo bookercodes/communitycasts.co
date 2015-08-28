@@ -331,6 +331,7 @@ body {
     border-left: 2px #c5cad3 solid;
     padding: 10px 16px; }
   .footer__text {
+    letter-spacing: .05em;
     transition: color 1s ease;
     padding-bottom: 10px;
     color: #c0c5ce;
