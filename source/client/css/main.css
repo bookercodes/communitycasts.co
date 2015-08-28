@@ -227,18 +227,18 @@ body {
     .main .progress-linear .md-bar {
       background-color: #4CAF50; }
   .main .notification {
-    margin: 20px 0;
-    margin-bottom: 10px;
-    background-color: #F6F6F6;
+    background-color: #f2f2f2;
     padding: 10px;
     align-items: center;
     display: flex;
-    justify-content: space-between; }
+    justify-content: space-between;
+    font-size: 0.9em; }
   .main .tagged-label__tag {
     background-color: #F0F0F0;
     color: #58585B;
     font-size: 14px;
-    padding: 7px 10px; }
+    padding: 7px 10px;
+    border: 1px #E6E6E6 solid; }
     .main .tagged-label__tag .tag__badge {
       color: #8b8b8e;
       font-size: 12px;
@@ -246,7 +246,11 @@ body {
   .main .tagged-label__tag-count {
     font-weight: 600; }
   .main .tagged-label__btn {
-    background-color: #FFCDD2; }
+    background-color: #EF5350;
+    background-color: #fcfcfc; }
+    .main .tagged-label__btn > md-icon {
+      margin-right: 5px;
+      background-color: #fcfcfc; }
   .main .screencasts {
     padding-bottom: 15px; }
   .main .screencast {
