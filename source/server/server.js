@@ -6,6 +6,7 @@ var config = require('config');
 var express = require('express');
 var promise = require('bluebird');
 var bodyParser = require('body-parser');
+var path = require('path');
 
 promise.promisifyAll(require('mysql/lib/Connection').prototype);
 
@@ -21,8 +22,10 @@ var app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, '../client/')));
 
 var screencastsController = require('./controllers/screencastsController')(connection);
+
 app.get('/screencasts/', screencastsController.sendScreencasts);
 app.get('/screencasts/tagged/:tag', screencastsController.sendScreencastsWithTag);
 app.get('/screencasts/:screencastId', screencastsController.redirectToScreencast);
@@ -30,4 +33,4 @@ app.get('/screencasts/:screencastId', screencastsController.redirectToScreencast
 var tagsController = require('./controllers/tagsController')(connection);
 app.get('/tags', tagsController.send20Tags);
 
-app.listen(3000);
+app.listen(34709);

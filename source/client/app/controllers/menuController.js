@@ -1,6 +1,6 @@
 app.controller('menuController', function($scope, $http, $mdDialog) {
   'use strict';
-  $http.get('http://localhost:3000/tags').success(function(response) {
+  $http.get('http://46.166.186.247:34709/tags').success(function(response) {
     $scope.tags = response.tags;
   });
   $scope.showAddAlert = function(ev) {

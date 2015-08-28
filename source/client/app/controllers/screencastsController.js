@@ -12,7 +12,7 @@ app.controller('screencastsController', function($scope, $http, $stateParams) {
   $scope.fetchScreencasts = function() {
     $scope.busy = true;
 
-    var base = 'http://localhost:3000/screencasts';
+    var base = 'http://46.166.186.247:34709/screencasts';
     if ($stateParams.tagged !== '') {
       base += '/tagged/' + $stateParams.tagged + '/';
     }
