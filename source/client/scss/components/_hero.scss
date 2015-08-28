@@ -14,6 +14,9 @@
       color: $color-white;
       border: 2px $color-white solid;
       padding: 10px 15px;
+      &:hover {
+        opacity: .5;
+      }
     }
     &__btn {
       margin: 0;

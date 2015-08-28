@@ -136,6 +136,8 @@ body {
       color: white;
       border: 2px white solid;
       padding: 10px 15px; }
+      .hero .header__logo:hover {
+        opacity: .5; }
     .hero .header__btn {
       margin: 0;
       margin-left: auto;
