@@ -7,10 +7,9 @@
     display: flex;
     align-items: center;
     &__logo {
-      font-size: 1.2em;
+      @include logo;
+      border-color: $hero-foreground-color;
       color: $hero-foreground-color;
-      border: 2px $hero-foreground-color solid;
-      padding: 10px 15px;
       &:hover {
         opacity: .5;
       }

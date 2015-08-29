@@ -1,0 +1,7 @@
+@mixin logo () {
+  $default-color: black;
+  font-size: 1.2em;
+  color: $default-color;
+  border: 2px $default-color solid;
+  padding: 10px 15px;
+}

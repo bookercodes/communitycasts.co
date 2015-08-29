@@ -131,9 +131,11 @@ body {
     align-items: center; }
     .hero .header__logo {
       font-size: 1.2em;
-      color: white;
-      border: 2px white solid;
-      padding: 10px 15px; }
+      color: black;
+      border: 2px black solid;
+      padding: 10px 15px;
+      border-color: white;
+      color: white; }
       .hero .header__logo:hover {
         opacity: .5; }
     .hero .header__btn {
@@ -319,13 +321,13 @@ body {
   .footer:hover .footer__colophon {
     border-color: #3e4551; }
   .footer__logo {
-    transition: border-color 1s ease, color 1s ease;
-    font-size: 1.3em;
-    font-weight: 400;
-    color: #c5cad3;
-    border: 2px #c5cad3 solid;
+    font-size: 1.2em;
+    color: black;
+    border: 2px black solid;
     padding: 10px 15px;
-    display: inline;
+    transition: border-color 1s ease, color 1s ease;
+    color: #c5cad3;
+    border-color: #c5cad3;
     height: 100%; }
   .footer__colophon {
     transition: border-color 1s ease;
