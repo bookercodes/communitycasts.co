@@ -33,4 +33,4 @@ app.get('/screencasts/:screencastId', screencastsController.redirectToScreencast
 var tagsController = require('./controllers/tagsController')(connection);
 app.get('/tags', tagsController.send20Tags);
 
-app.listen(34709);
+app.listen(3000);
