@@ -112,7 +112,8 @@ body {
   border-radius: 0;
   text-transform: none;
   font-family: 'Roboto Mono';
-  font-size: .8em !important; }
+  font-size: .8em !important;
+  margin: 0; }
 
 ::-moz-selection {
   background-color: white; }
@@ -122,42 +123,36 @@ body {
 
 .hero {
   max-width: 1100px;
-  margin: 0 auto;
   background: url("../img/pattern.png") repeat;
-  padding: 0 30px;
-  padding-top: 15px; }
+  margin: 0 auto;
+  padding: 20px 30px 0 30px; }
   .hero .header {
     display: flex;
-    align-items: center;
-    margin-bottom: 30px; }
+    align-items: center; }
     .hero .header__logo {
       font-size: 1.2em;
-      font-weight: 400;
       color: white;
       border: 2px white solid;
       padding: 10px 15px; }
       .hero .header__logo:hover {
         opacity: .5; }
     .hero .header__btn {
-      margin: 0;
       margin-left: auto;
-      background-color: white; }
+      background: white; }
       .hero .header__btn:hover {
-        background-color: #d9d9d9; }
+        background-color: #cfcfcf; }
   .hero .about-text {
+    padding-top: 25px;
+    padding-bottom: 65px;
     font-size: 1.8em;
     font-weight: 300;
     letter-spacing: .8px;
     line-height: 1.35em;
     text-align: center;
     color: white;
-    padding-bottom: 65px;
     max-width: 650px;
     margin: 0 auto; }
-    .hero .about-text__product-name {
-      font-weight: 700; }
-    .hero .about-text__amp {
-      color: white;
+    .hero .about-text__product-name, .hero .about-text__amp {
       font-weight: 700; }
 
 .menu {
