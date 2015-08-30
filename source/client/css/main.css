@@ -163,20 +163,18 @@ body {
   border-right: 1px #E0E0E0 solid; }
   .menu__heading {
     color: black;
-    font-weight: 400;
-    padding-bottom: 10px;
+    margin-bottom: 10px;
     font-size: 1.1em; }
   .menu .tag-list {
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: wrap;
     padding-bottom: 16px; }
     .menu .tag-list__tag {
       background-color: #F0F0F0;
       color: #58585B;
       font-size: 14px;
-      font-weight: bold;
-      flex: 1 0 auto;
-      margin: 0;
+      font-weight: 700;
+      flex-grow: 1;
       margin-right: 4px;
       margin-bottom: 4px; }
       .menu .tag-list__tag .tag__badge {
@@ -184,16 +182,15 @@ body {
         font-size: 12px;
         font-weight: 300; }
   .menu .nav {
-    padding-bottom: 16px; }
+    padding-bottom: 16px;
+    display: flex;
+    flex-direction: column; }
     .menu .nav__btn {
-      display: block;
-      width: 100%;
       text-align: left;
-      padding: 0;
-      margin: 0;
-      font-size: 14px; }
-      .menu .nav__btn:not(:last-child) {
-        border-bottom: 1px solid #E0E0E0; }
+      font-size: 14px;
+      border-bottom: 1px solid #E0E0E0; }
+      .menu .nav__btn:last-child {
+        border: none; }
 
 .main {
   padding: 16px;

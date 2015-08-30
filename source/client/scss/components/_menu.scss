@@ -3,35 +3,32 @@
   padding: $container-padding;
   border-right: 1px $divider-color solid;
   &__heading {
-    color: black;
-    font-weight:400;
-    padding-bottom: 10px;
-    font-size: 1.1em;
+    color: $menu-heading-color;
+    margin-bottom: 10px;
+    font-size: $menu-heading-font-size;
   }
   .tag-list {
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: wrap;
     padding-bottom: 16px;
     &__tag {
       @include tag;
-      font-weight: bold;
-      flex: 1 0 auto;
-      margin: 0;
+      font-weight: 700;
+      flex-grow: 1;
       margin-right: 4px;
       margin-bottom: 4px;
     }
   }
   .nav {
     padding-bottom: 16px;
+    display: flex;
+    flex-direction: column;
     &__btn {
-      display: block;
-      width: 100%;
       text-align: left;
-      padding: 0;
-      margin: 0;
       font-size: 14px;
-      &:not(:last-child) {
-        border-bottom: 1px solid $divider-color;
+      border-bottom: 1px solid $divider-color;
+      &:last-child {
+        border: none;
       }
     }
   }
