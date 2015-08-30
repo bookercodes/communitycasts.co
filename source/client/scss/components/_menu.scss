@@ -1,6 +1,6 @@
 .menu {
   flex-basis: 30%;
-  padding: 16px;
+  padding: $container-padding;
   border-right: 1px $color-gray solid;
   &__heading {
     color: black;
