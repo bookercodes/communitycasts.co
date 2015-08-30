@@ -13,7 +13,6 @@
     padding-bottom: 16px;
     &__tag {
       @include tag;
-      font-weight: 700;
       flex-grow: 1;
       margin-right: 4px;
       margin-bottom: 4px;

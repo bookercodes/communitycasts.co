@@ -4,49 +4,40 @@
   max-width: $container-width;
   display: flex;
   justify-content: space-between;
-  flex-flow: row-reverse;
-  &:hover {
-    .footer__text {
-      color: #3e4551;
-    }
-    .footer__logo {
-      color: #3e4551;
-      border-color: #3e4551;
-    }
-    .footer__colophon {
-      border-color: #3e4551;
-    }
-  }
-
   &__logo {
     @include logo;
-    transition: border-color 1s ease, color 1s ease;
-    color: lighten(#3e4551, 52);
-    border-color: lighten(#3e4551, 52);
+    transition: color 1s ease, border-color 1s ease;
+    color: $footer-color-light;
+    border-color: $footer-color-light;
     height: 100%;
   }
-
-  &__colophon {
+  .colophon {
     transition: border-color 1s ease;
     width: $container-width / 2;
-    border-left: 2px lighten(#3e4551, 52) solid;
+    border-left: 2px $footer-color-light solid;
     padding: 10px 16px;
+    &__paragraph {
+      transition: color 1s ease;
+      letter-spacing: .05em;
+      padding-bottom: 10px;
+      color: lighten(#3e4551, 50);
+      font-size: 0.9em;
+      margin: 0;
+    }
+    &__link {
+      text-decoration: none;
+      font-weight: 700;
+      &:hover {
+        color: $accent-color;
+      }
+    }
   }
-
-  &__text {
-    letter-spacing: .05em;
-    transition: color 1s ease;
-    padding-bottom: 10px;
-    color: lighten(#3e4551, 50);
-    font-size: 0.9em;
-    margin: 0;
-  }
-  &__link {
-    text-decoration: none;
-    font-weight: 700;
-    color: inherit;
-    &:hover {
-      color: green;
+  &:hover {
+    .colophon,
+    .colophon__paragraph,
+    .footer__logo {
+      color: $footer-color;
+      border-color: $footer-color;
     }
   }
 }
