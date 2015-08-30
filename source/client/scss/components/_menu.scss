@@ -1,7 +1,7 @@
 .menu {
   flex-basis: 30%;
   padding: $container-padding;
-  border-right: 1px $color-gray solid;
+  border-right: 1px $divider-color solid;
   &__heading {
     color: black;
     font-weight:400;
@@ -31,7 +31,7 @@
       margin: 0;
       font-size: 14px;
       &:not(:last-child) {
-        border-bottom: 1px solid $color-gray;
+        border-bottom: 1px solid $divider-color;
       }
     }
   }

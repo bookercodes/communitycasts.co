@@ -160,7 +160,7 @@ body {
 .menu {
   flex-basis: 30%;
   padding: 16px;
-  border-right: 1px #e5e5e5 solid; }
+  border-right: 1px #E0E0E0 solid; }
   .menu__heading {
     color: black;
     font-weight: 400;
@@ -193,7 +193,7 @@ body {
       margin: 0;
       font-size: 14px; }
       .menu .nav__btn:not(:last-child) {
-        border-bottom: 1px solid #e5e5e5; }
+        border-bottom: 1px solid #E0E0E0; }
 
 .main {
   padding: 16px;
@@ -253,7 +253,7 @@ body {
   .main .screencasts {
     padding-bottom: 15px; }
   .main .screencast {
-    border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #E0E0E0;
     padding: 16px 0;
     display: flex; }
     .main .screencast__link {
