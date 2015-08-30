@@ -18,7 +18,7 @@
       margin-left: auto;
       background: $button-background;
       &:hover {
-        background-color: darken(#F5F5F5, 15);
+        background-color: darken($button-background, 15);
       }
     }
   }

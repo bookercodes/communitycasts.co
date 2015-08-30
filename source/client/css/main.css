@@ -142,7 +142,7 @@ body {
       margin-left: auto;
       background: white; }
       .hero .header__btn:hover {
-        background-color: #cfcfcf; }
+        background-color: #d9d9d9; }
   .hero .about-text {
     padding-top: 25px;
     padding-bottom: 65px;
@@ -195,25 +195,23 @@ body {
   padding: 16px;
   flex-basis: 70%; }
   .main .toolbar {
-    background-color: #f2f2f2;
-    padding: 10px;
-    margin-bottom: 10px;
     display: flex;
-    align-items: stretch; }
+    background-color: #f2f2f2;
+    padding: 8px;
+    margin-bottom: 8px; }
     .main .toolbar__btn {
-      margin: 0;
-      background-color: #fafafa;
-      padding: 7px 11px;
+      background-color: white;
+      padding: 7px 14px;
       font-size: 0.8em; }
       .main .toolbar__btn > md-icon {
         margin-right: 7px; }
       .main .toolbar__btn:hover {
         background-color: #d9d9d9; }
       .main .toolbar__btn--active {
-        background-color: #62bb71;
+        background-color: #50B361;
         color: white; }
         .main .toolbar__btn--active:not([disabled]):hover {
-          background-color: #62bb71; }
+          background-color: #50B361; }
   .main .progress-linear {
     margin-top: 10px;
     margin-bottom: 20px; }
@@ -333,7 +331,7 @@ body {
       text-decoration: none;
       font-weight: 700; }
       .footer .colophon__link:hover {
-        color: green; }
+        color: #50B361; }
   .footer:hover .colophon,
   .footer:hover .colophon__paragraph,
   .footer:hover .footer__logo {
