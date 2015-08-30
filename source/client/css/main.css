@@ -187,7 +187,7 @@ body {
     flex-direction: column; }
     .menu .nav__btn {
       text-align: left;
-      font-size: 14px;
+      font-size: 0.875em;
       border-bottom: 1px solid #E0E0E0; }
       .menu .nav__btn:last-child {
         border: none; }
