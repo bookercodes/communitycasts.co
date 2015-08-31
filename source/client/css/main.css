@@ -209,19 +209,19 @@ body {
       padding: 7px 14px;
       font-size: 0.8em; }
       .main .toolbar__btn--active {
-        background-color: #50B361;
+        background-color: #4EB15F;
         color: white; }
         .main .toolbar__btn--active:not([disabled]):hover {
-          background-color: #50B361; }
+          background-color: #4EB15F; }
       .main .toolbar__btn:hover {
         background-color: #d9d9d9; }
   .main .progress-bar {
     margin-top: 10px;
     margin-bottom: 20px; }
     .main .progress-bar .md-container {
-      background-color: #def1e1; }
+      background-color: #dcefdf; }
     .main .progress-bar .md-bar {
-      background-color: #50B361; }
+      background-color: #4EB15F; }
   .main .notification {
     background-color: #f2f2f2;
     padding: 8px;
@@ -258,7 +258,7 @@ body {
     .main .screencast__link {
       font-size: 1.2em;
       line-height: 1.8em;
-      color: #50B361;
+      color: #349851;
       font-weight: 700; }
     .main .screencast__channel {
       font-size: 0.9em;
@@ -333,7 +333,7 @@ body {
       text-decoration: none;
       font-weight: 700; }
       .footer .colophon__link:hover {
-        color: #50B361; }
+        color: #4EB15F; }
   .footer:hover .colophon,
   .footer:hover .colophon__paragraph,
   .footer:hover .footer__logo {
@@ -360,6 +360,6 @@ body {
   .about__link {
     font-weight: 700; }
     .about__link:hover {
-      color: #50B361; }
+      color: #4EB15F; }
   .about__foo {
-    color: #50B361; }
+    color: #4EB15F; }
