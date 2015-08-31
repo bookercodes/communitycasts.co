@@ -24,7 +24,13 @@
 
 <div class="screencasts" ng-show="loaded">
   <a href="{{screencast.href}}" class="screencast" ng-repeat="screencast in screencasts">
-    <img class="screencast__thumb" src="{{screencast.thumbUrl}}" alt="" />
+
+
+    <div class="screencast__thumb-wrap">
+      <img class="screencast__thumb" src="{{screencast.thumbUrl}}" alt="" />
+      <span class="screencast__duration">10:00</span>
+    </div>
+
     <div class="screencast__info" >
       <h4 class="screencast__link">{{screencast.title}}</h4>
       <p class="screencast__channel">by {{screencast.channel.channelName}}</p>

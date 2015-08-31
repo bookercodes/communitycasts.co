@@ -261,8 +261,18 @@ body {
       font-size: 0.9em;
       padding-bottom: 8px;
       line-height: 1.8em; }
-    .main .screencast__thumb {
+    .main .screencast__thumb-wrap {
       margin-right: 16px;
+      position: relative; }
+    .main .screencast__duration {
+      background-color: goldenrod;
+      position: absolute;
+      right: 5px;
+      bottom: 8.5px;
+      color: white;
+      font-size: 0.9em;
+      background-color: rgba(0, 0, 0, 0.6); }
+    .main .screencast__thumb {
       padding: 4px;
       border: 1px solid #E0E0E0;
       width: 196px;

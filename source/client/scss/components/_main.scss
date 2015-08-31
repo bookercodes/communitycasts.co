@@ -85,12 +85,25 @@
       padding-bottom: 8px;
       line-height: 1.8em;
     }
-    &__thumb {
+    &__thumb-wrap {
       margin-right: 16px;
+      position: relative;
+    }
+    &__duration {
+      background-color: goldenrod;
+      position: absolute;
+      right: 5px;
+      bottom: 8.5px;
+      color: white;
+      font-size: 0.9em;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+    &__thumb {
       padding: 4px;
       border: 1px solid $divider-color;
       width: 196px;
       height: 110px;
+
     }
     &__tag {
       @include tag;
