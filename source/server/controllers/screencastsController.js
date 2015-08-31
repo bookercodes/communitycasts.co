@@ -4,6 +4,8 @@ var config = require('config');
 var squel = require('squel');
 var moment = require('moment');
 
+require('moment-duration-format');
+
 module.exports = function(connection) {
 
   function sendScreencastsWithTag(req, res) {
@@ -60,7 +62,7 @@ module.exports = function(connection) {
           screencast.href =
             'http://localhost:3000/screencasts/' + screencast.screencastId;
           screencast.tags = screencast.tags.split(',');
-          screencast.duration = moment.duration(screencast.durationInSeconds, 'seconds').humanize();
+          screencast.duration = moment.duration(screencast.durationInSeconds, 'seconds').format('s');
           screencast.channel = {
             channelId: screencast.channelId,
             channelName: screencast.channelName,
@@ -125,7 +127,7 @@ module.exports = function(connection) {
           screencast.href =
             'http://localhost:3000/screencasts/' + screencast.screencastId;
           screencast.tags = screencast.tags.split(',');
-          screencast.duration = moment.duration(screencast.durationInSeconds, 'seconds').humanize();
+          screencast.duration = moment.duration(screencast.durationInSeconds, 'seconds').format('hh:mm:ss', { trim: false });
           screencast.channel = {
             channelId: screencast.channelId,
             channelName: screencast.channelName,
