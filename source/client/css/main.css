@@ -271,7 +271,8 @@ body {
       bottom: 8.5px;
       color: white;
       font-size: 0.9em;
-      background-color: rgba(0, 0, 0, 0.6); }
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 2px 8px; }
     .main .screencast__thumb {
       padding: 4px;
       border: 1px solid #E0E0E0;
