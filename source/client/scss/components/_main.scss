@@ -84,6 +84,8 @@
       margin-right: 16px;
       padding: 4px;
       border: 1px solid $divider-color;
+      width: 196px;
+      height: 110px;
     }
     &__tag {
       @include tag;

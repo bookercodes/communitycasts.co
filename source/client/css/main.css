@@ -260,7 +260,9 @@ body {
     .main .screencast__thumb {
       margin-right: 16px;
       padding: 4px;
-      border: 1px solid #E0E0E0; }
+      border: 1px solid #E0E0E0;
+      width: 196px;
+      height: 110px; }
     .main .screencast__tag {
       background-color: #F0F0F0;
       color: #58585B;
