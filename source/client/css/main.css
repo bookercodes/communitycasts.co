@@ -225,7 +225,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 0.85em; }
+    font-size: 0.85em;
+    margin: 16px 0; }
   .main .tagged-label__tag {
     background-color: #F0F0F0;
     color: #58585B;
