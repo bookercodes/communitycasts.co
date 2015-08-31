@@ -221,29 +221,27 @@ body {
       background-color: #50B361; }
   .main .notification {
     background-color: #f2f2f2;
-    padding: 10px;
-    align-items: center;
+    padding: 8px;
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    font-size: 0.9em; }
+    font-size: 0.85em; }
   .main .tagged-label__tag {
     background-color: #F0F0F0;
     color: #58585B;
     font-size: 14px;
     padding: 7px 10px;
-    border: 1px #E6E6E6 solid; }
+    border: 1px #e1e1e1 solid; }
     .main .tagged-label__tag .tag__badge {
       color: #8b8b8e;
       font-size: 12px;
       font-weight: 300; }
   .main .tagged-label__tag-count {
-    font-weight: 600; }
+    font-weight: 700; }
+  .main .tagged-label__icon {
+    margin-right: 5px; }
   .main .tagged-label__btn {
-    background-color: #EF5350;
-    background-color: #fcfcfc; }
-    .main .tagged-label__btn > md-icon {
-      margin-right: 5px;
-      background-color: #fcfcfc; }
+    background-color: white; }
   .main .screencasts {
     padding-bottom: 15px; }
   .main .screencast {
@@ -253,11 +251,8 @@ body {
     .main .screencast__link {
       font-size: 1.2em;
       line-height: 1.8em;
-      color: #121821;
-      font-weight: 700;
-      color: #378044; }
-      .main .screencast__link:visited {
-        color: #828b98; }
+      color: #50B361;
+      font-weight: 700; }
     .main .screencast__channel {
       font-size: 0.9em;
       padding-bottom: 8px;
@@ -265,16 +260,11 @@ body {
     .main .screencast__thumb {
       margin-right: 16px;
       padding: 4px;
-      border: 1px solid #e1e2e3; }
+      border: 1px solid #E0E0E0; }
     .main .screencast__tag {
       background-color: #F0F0F0;
       color: #58585B;
       font-size: 14px;
-      margin: 0;
-      padding: 0;
-      min-height: auto;
-      height: auto;
-      height: 30px;
       line-height: 30px;
       padding: 0 10px;
       margin-right: 4px; }
@@ -284,17 +274,8 @@ body {
         font-weight: 300; }
       .main .screencast__tag:hover {
         background-color: #F0F0F0 !important; }
-    .main .screencast__info {
-      align-items: center;
-      justify-content: space-between; }
-    .main .screencast .channel {
-      margin-right: 10px; }
-      .main .screencast .channel__link {
-        font-weight: 500; }
-        .main .screencast .channel__link:hover {
-          color: white; }
   .main .load-more-btn {
-    background-color: #e7e7e7;
+    background-color: #f0f0f0;
     width: 100%;
     margin: 0;
     text-transform: none;

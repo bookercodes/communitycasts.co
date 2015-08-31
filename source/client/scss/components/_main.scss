@@ -39,29 +39,27 @@
 
   .notification {
     background-color: $darker-background-color;
-    padding: 10px;
-    align-items: center;
+    padding: 8px;
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    font-size: 0.9em;
+    font-size: 0.85em;
   }
 
   .tagged-label {
     &__tag {
       @include tag;
       padding: 7px 10px;
-      border: 1px #E6E6E6 solid;
+      border: 1px darken($tag-bg-color, 6) solid;
     }
     &__tag-count {
-      font-weight: 600;
+      font-weight: 700;
+    }
+    &__icon {
+      margin-right: 5px;
     }
     &__btn {
-      background-color: #EF5350;
-      background-color: darken($color-white, 1%);
-      &>md-icon {
-        margin-right: 5px;
-        background-color: darken($color-white, 1%);
-      }
+      background-color: $button-background;
     }
   }
   .screencasts {
@@ -71,17 +69,11 @@
     border-bottom: 1px solid $divider-color;
     padding: 16px 0;
     display: flex;
-
     &__link {
       font-size: 1.2em;
       line-height: 1.8em;
-      color: #121821;
+      color: $accent-color;
       font-weight: 700;
-      color: darken(#62bb71, 20);
-      // text-decoration: underline;
-      &:visited {
-        color: #828b98;
-      }
     }
     &__channel {
       font-size: 0.9em;
@@ -90,39 +82,22 @@
     }
     &__thumb {
       margin-right: 16px;
-      padding:4px;
-      border: 1px solid #e1e2e3;
+      padding: 4px;
+      border: 1px solid $divider-color;
     }
     &__tag {
       @include tag;
-      margin: 0;
-      padding: 0;
-      min-height: auto;
-      height: auto;
-      height: 30px;
       line-height: 30px;
       padding: 0 10px;
       margin-right: 4px;
       &:hover {
+        // override hover effect from @include tag.
         background-color: $tag-bg-color !important;
-      }
-    }
-    &__info {
-      align-items: center;
-      justify-content: space-between;
-    }
-    .channel {
-      margin-right: 10px;
-      &__link {
-        font-weight: 500;
-        &:hover{
-          color:$color-accent;
-        }
       }
     }
   }
   .load-more-btn {
-    background-color: #e7e7e7;
+    background-color: darken($button-background, 6);
     width: 100%;
     margin: 0;
     text-transform: none;
