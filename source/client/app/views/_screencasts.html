@@ -24,7 +24,7 @@
 
 <md-list class="screencasts" ng-show="loaded">
   <md-list-item ng-click="navigateTo(screencast.href)" class="screencast" ng-repeat="screencast in screencasts">
-    <img class="screencast__thumb" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Thumb&w=196&h=110" width="196" height="110" alt="" />
+    <img class="screencast__thumb" src="{{screencast.thumbUrl}}" width="196" height="110" alt="" />
     <div class="screencast__info" >
       <h4 class="screencast__link">{{screencast.title}}</h4>
       <p class="screencast__channel">by {{screencast.channel.channelName}}</p>
