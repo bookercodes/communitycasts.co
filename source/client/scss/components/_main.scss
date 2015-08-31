@@ -69,6 +69,11 @@
     border-bottom: 1px solid $divider-color;
     padding: 16px;
     display: flex;
+    font-size: .8em;
+    align-items: center;
+    &:hover {
+      background-color: #F9F9F9;
+    }
     &__link {
       font-size: 1.2em;
       line-height: 1.8em;
@@ -90,7 +95,6 @@
     &__tag {
       @include tag;
       line-height: 30px;
-      padding: 0 10px;
       margin-right: 4px;
       &:hover {
         // override hover effect from @include tag.
