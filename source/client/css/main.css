@@ -246,7 +246,7 @@ body {
     padding-bottom: 15px; }
   .main .screencast {
     border-bottom: 1px solid #E0E0E0;
-    padding: 16px 0;
+    padding: 16px;
     display: flex; }
     .main .screencast__link {
       font-size: 1.2em;
