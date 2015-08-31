@@ -214,6 +214,7 @@ body {
         .main .toolbar__btn--active:not([disabled]):hover {
           background-color: #4EB15F; }
       .main .toolbar__btn:hover {
+        transition: background-color 0.4s ease;
         background-color: #d9d9d9; }
   .main .progress-bar {
     margin-top: 10px;
@@ -252,7 +253,8 @@ body {
     padding: 16px;
     display: flex;
     font-size: .8em;
-    align-items: center; }
+    align-items: center;
+    transition: background-color 0.4s; }
     .main .screencast:hover {
       background-color: #F9F9F9; }
     .main .screencast__link {
@@ -313,17 +315,17 @@ body {
     color: black;
     border: 2px black solid;
     padding: 10px 15px;
-    transition: color 1s ease, border-color 1s ease;
+    transition: color 0.4s ease, border-color 0.4s ease;
     color: #c5cad3;
     border-color: #c5cad3;
     height: 100%; }
   .footer .colophon {
-    transition: border-color 1s ease;
+    transition: border-color 0.4s ease;
     width: 550px;
     border-left: 2px #c5cad3 solid;
     padding: 10px 16px; }
     .footer .colophon__paragraph {
-      transition: color 1s ease;
+      transition: color 0.4s ease;
       letter-spacing: .05em;
       padding-bottom: 10px;
       color: #c0c5ce;
@@ -333,6 +335,7 @@ body {
       text-decoration: none;
       font-weight: 700; }
       .footer .colophon__link:hover {
+        transition: color 0.4s ease;
         color: #4EB15F; }
   .footer:hover .colophon,
   .footer:hover .colophon__paragraph,

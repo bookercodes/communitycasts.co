@@ -20,7 +20,9 @@
           background-color: $accent-color;
         }
       }
+
       &:hover {
+        transition: background-color $transition-duration ease;
         background-color: darken($button-background, 15);
       }
     }
@@ -73,6 +75,7 @@
     display: flex;
     font-size: .8em;
     align-items: center;
+    transition: background-color $transition-duration;
     &:hover {
       background-color: #F9F9F9;
     }
