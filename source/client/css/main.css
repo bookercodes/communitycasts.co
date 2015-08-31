@@ -199,12 +199,12 @@ body {
     background-color: #f2f2f2;
     padding: 8px;
     margin-bottom: 8px; }
+    .main .toolbar__icon {
+      margin-right: 7px; }
     .main .toolbar__btn {
       background-color: white;
       padding: 7px 14px;
       font-size: 0.8em; }
-      .main .toolbar__btn > md-icon {
-        margin-right: 7px; }
       .main .toolbar__btn:hover {
         background-color: #d9d9d9; }
       .main .toolbar__btn--active {

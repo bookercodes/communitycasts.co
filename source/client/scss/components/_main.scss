@@ -6,13 +6,14 @@
     background-color: $darker-background-color;
     padding: 8px;
     margin-bottom: 8px;
+    &__icon {
+      margin-right: 7px;
+    }
     &__btn {
       background-color: $button-background;
       padding: 7px 14px;
       font-size: 0.8em;
-      &>md-icon {
-        margin-right: 7px;
-      }
+
       &:hover {
         background-color: darken($button-background, 15);
       }
