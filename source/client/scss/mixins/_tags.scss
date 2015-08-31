@@ -1,8 +1,7 @@
 @mixin tag () {
   background-color: $tag-bg-color;
-  color: $tag-color;
   font-size: $tag-font-size;
-  
+
   .tag__badge {
     color: lighten($tag-color, 20%);
     font-size: 12px;

@@ -4,6 +4,7 @@ html {
 body {
   font-family: $font-family;
   background-color: $bg-color;
+  color: $text-color;
 }
 
 .container {
@@ -19,6 +20,10 @@ body {
   font-family: 'Roboto Mono';
   font-size: .8em !important;
   margin: 0;
+}
+
+.material-icons {
+  color: #212121;
 }
 
 ::-moz-selection {
