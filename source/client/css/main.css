@@ -283,7 +283,10 @@ body {
       color: #58585B;
       font-size: 14px;
       line-height: 30px;
-      margin-right: 4px; }
+      margin-right: 4px;
+      padding: 0;
+      font-size: 0.9em;
+      padding: 2px 9px; }
       .main .screencast__tag .tag__badge {
         color: #8b8b8e;
         font-size: 12px;
