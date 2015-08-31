@@ -56,7 +56,7 @@ module.exports = function(connection) {
       } else {
         sql.order('submissionDate', false);
       }
-      sql = sql.limit(start, finish).toString();
+      sql = sql.offset(start).limit(finish).toString();
       connection.queryAsync(sql).spread(function(screencasts) {
         screencasts = screencasts.map(function(screencast) {
           screencast.href =
@@ -117,11 +117,12 @@ module.exports = function(connection) {
         .group('screencasts.screencastId');
       if (sort === 'popular') {
         // http://amix.dk/blog/post/19574
-        sql.order('(screencasts.referralCount)/pow(((unix_timestamp(now())-unix_timestamp(screencasts.submissionDate))/3600)+2,1.5)', false);
+        sql = sql.order('(screencasts.referralCount)/pow(((unix_timestamp(now())-unix_timestamp(screencasts.submissionDate))/3600)+2,1.5)', false);
       } else {
-        sql.order('submissionDate', false);
+        sql = sql.order('submissionDate', false);
       }
-      sql = sql.limit(start, finish).toString();
+      sql = sql.offset(start).limit(finish).toString();
+
       connection.queryAsync(sql).spread(function(screencasts) {
         screencasts = screencasts.map(function(screencast) {
           screencast.href =
