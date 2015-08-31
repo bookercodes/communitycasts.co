@@ -6,7 +6,7 @@ app.factory('modal', function ($mdDialog) {
         $mdDialog.alert()
         .title('Sorry')
         .content('Community Casts is not currently accepting submissions. ')
-        .ok('OK :(')
+        .ok('Ok :(')
         .targetEvent(ev));
     }
   };
