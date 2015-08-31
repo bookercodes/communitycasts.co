@@ -13,10 +13,6 @@
       background-color: $button-background;
       padding: 7px 14px;
       font-size: 0.8em;
-
-      &:hover {
-        background-color: darken($button-background, 15);
-      }
       &--active {
         background-color: $accent-color;
         color: white;
@@ -24,21 +20,25 @@
           background-color: $accent-color;
         }
       }
+      &:hover {
+        background-color: darken($button-background, 15);
+      }
     }
   }
-  .progress-linear {
+
+  .progress-bar {
     margin-top: 10px;
     margin-bottom: 20px;
     .md-container {
-      background-color: #DCEDC8;
+      background-color: lighten($accent-color, 40);
     }
     .md-bar {
-      background-color: #4CAF50;
+      background-color: $accent-color;
     }
   }
 
   .notification {
-    background-color: #f2f2f2;
+    background-color: $darker-background-color;
     padding: 10px;
     align-items: center;
     display: flex;

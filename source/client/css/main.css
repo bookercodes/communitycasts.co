@@ -205,20 +205,20 @@ body {
       background-color: white;
       padding: 7px 14px;
       font-size: 0.8em; }
-      .main .toolbar__btn:hover {
-        background-color: #d9d9d9; }
       .main .toolbar__btn--active {
         background-color: #50B361;
         color: white; }
         .main .toolbar__btn--active:not([disabled]):hover {
           background-color: #50B361; }
-  .main .progress-linear {
+      .main .toolbar__btn:hover {
+        background-color: #d9d9d9; }
+  .main .progress-bar {
     margin-top: 10px;
     margin-bottom: 20px; }
-    .main .progress-linear .md-container {
-      background-color: #DCEDC8; }
-    .main .progress-linear .md-bar {
-      background-color: #4CAF50; }
+    .main .progress-bar .md-container {
+      background-color: #def1e1; }
+    .main .progress-bar .md-bar {
+      background-color: #50B361; }
   .main .notification {
     background-color: #f2f2f2;
     padding: 10px;
