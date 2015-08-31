@@ -26,6 +26,7 @@ CREATE TABLE screencasts (
   referralCount       INT           NOT NULL DEFAULT 0,
   hostService         NVARCHAR(100) NOT NULL,
   channelId           INT           NOT NULL,
+  thumbUrl            NVARCHAR(500) NOT NULL,
   PRIMARY KEY (screencastId),
   FOREIGN KEY (channelId)
     REFERENCES channels(channelId),
