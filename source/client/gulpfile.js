@@ -18,7 +18,9 @@ function initBrowserSync() {
 }
 
 gulp.task('sass', function() {
-  return sass('./scss/main.scss')
+  return sass('./scss/main.scss',{
+    style:'compressed'
+  })
   .on('error', function (err) {
     console.error('Error!', err.message);
   })
