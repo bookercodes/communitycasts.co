@@ -103,6 +103,9 @@ body {
   background-color: #eceef1;
   color: #212121; }
 
+strong {
+  font-weight: 700; }
+
 .container {
   max-width: 1100px;
   background-color: white;
@@ -366,3 +369,13 @@ body {
       color: #4EB15F; }
   .about__foo {
     color: #4EB15F; }
+
+.browser-warning {
+  padding: 16px;
+  max-width: 1100px;
+  margin: 16px auto;
+  background-color: #E57373; }
+  .browser-warning__link {
+    font-weight: 700; }
+    .browser-warning__link:hover {
+      color: #4EB15F; }

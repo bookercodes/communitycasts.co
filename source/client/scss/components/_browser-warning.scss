@@ -1,0 +1,15 @@
+.browser-warning {
+  padding: 16px;
+  max-width: $container-width;
+  margin: 16px auto;
+  background-color: #E57373;
+  &__paragraph {
+
+  }
+  &__link {
+    font-weight: 700;
+    &:hover {
+      color: $accent-color;
+    }
+  }
+}

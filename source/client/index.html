@@ -13,6 +13,13 @@
 </head>
 
 <body>
+
+  <!--[if lte IE 9]>
+    <div class="browser-warning">
+      <p class="browser-warning__paragraph">You are using an outdated browser. Please <a class="browser-warning__link" href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    </div>
+  <![endif]-->
+
   <div class="hero" ng-controller="heroController" ng-include src="'app/views/_hero.html'"> </div>
   <div class="container">
     <aside class="menu" ng-controller="menuController" ng-include src="'app/views/_menu.html'"></aside>

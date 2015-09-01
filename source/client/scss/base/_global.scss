@@ -7,6 +7,10 @@ body {
   color: $text-color;
 }
 
+strong {
+  font-weight: 700;
+}
+
 .container {
   max-width: $container-width;
   background-color: $color-white;
