@@ -1,5 +1,6 @@
 var app = angular.module('communityCasts', ['ngMaterial', 'ui.router', 'config'])
-  .config(function($stateProvider, $urlRouterProvider) {
+  .config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+    $locationProvider.html5Mode(true);
     $urlRouterProvider.otherwise('/');
     $stateProvider.state('home', {
       url: '/',
