@@ -33,4 +33,11 @@ app.get('/screencasts/:screencastId', screencastsController.redirectToScreencast
 var tagsController = require('./controllers/tagsController')(connection);
 app.get('/tags', tagsController.send20Tags);
 
+// https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions#how-to-configure-your-server-to-work-with-html5mode
+app.all('/*', function(req, res) {
+  res.sendFile('index.html', {
+    root: path.join(__dirname, '../client/')
+  });
+});
+
 app.listen(config.port);
