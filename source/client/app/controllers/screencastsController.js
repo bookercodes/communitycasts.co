@@ -1,5 +1,6 @@
 app.controller('screencastsController', function($scope, $http, $stateParams, $window, $location, config) {
   'use strict';
+
   function init() {
     $scope.page = 1;
     $scope.screencasts = [];
@@ -13,7 +14,7 @@ app.controller('screencastsController', function($scope, $http, $stateParams, $w
 
     var base = config.serverHost + 'screencasts';
     if ($stateParams.tagged !== '') {
-      base += '/tagged/' + $stateParams.tagged + '/';
+      base += '/tagged/' + encodeURIComponent($stateParams.tagged) + '/';
     }
     var url = base + '?page=' + $scope.page + '&sort=' + $scope.sortOption;
     $http.get(url).success(function(response) {
