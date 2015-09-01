@@ -10,9 +10,16 @@ app.config(function($stateProvider, $urlRouterProvider) {
       sort: 'popular',
       tagged: '',
     },
+    data : { pageTitle: 'Community Casts' }
   });
   $stateProvider.state('about', {
     url: '/about',
-    templateUrl: '/app/views/_about.html'
+    templateUrl: '/app/views/_about.html',
+    data : { pageTitle: 'About Community Casts' }
   });
-});
+})
+.run([ '$rootScope', '$state', '$stateParams',
+function ($rootScope, $state, $stateParams) {
+  $rootScope.$state = $state;
+  $rootScope.$stateParams = $stateParams;
+}]);

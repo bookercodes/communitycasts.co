@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="communityCasts">
 
 <head>
   <meta charset="UTF-8">
-  <title>Document</title>
+  <title ng-bind="$state.current.data.pageTitle">Community Casts</title>
   <link href='https://fonts.googleapis.com/css?family=Roboto+Mono:400,100,300,700,500,100italic,300italic,400italic,500italic,700italic' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" >
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="/css/main.css">
 </head>
 
-<body ng-app="communityCasts">
+<body>
   <div class="hero" ng-controller="heroController" ng-include src="'app/views/_hero.html'"> </div>
   <div class="container">
     <aside class="menu" ng-controller="menuController" ng-include src="'app/views/_menu.html'"></aside>
