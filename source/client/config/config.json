@@ -1,8 +1,0 @@
-{
-  "dev": {
-    "serverHost": "http://localhost:3000/"
-  },
-  "production": {
-    "serverHost": "http://communitycasts.co/"
-  }
-}

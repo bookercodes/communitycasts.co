@@ -1,2 +1,4 @@
-angular.module('config', [])
-.constant('serverHost', "http://localhost:3000/");
+angular.module('config',[])
+  .constant('config', {
+    serverHost: 'http://localhost:8080/'
+  });

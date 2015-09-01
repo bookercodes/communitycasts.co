@@ -60,7 +60,7 @@ module.exports = function(connection) {
       connection.queryAsync(sql).spread(function(screencasts) {
         screencasts = screencasts.map(function(screencast) {
           screencast.href =
-            'http://localhost:3000/screencasts/' + screencast.screencastId;
+            config.host + 'screencasts/' + screencast.screencastId;
           screencast.tags = screencast.tags.split(',');
           screencast.duration = moment.duration(screencast.durationInSeconds, 'seconds').format('s');
           screencast.channel = {
@@ -126,7 +126,7 @@ module.exports = function(connection) {
       connection.queryAsync(sql).spread(function(screencasts) {
         screencasts = screencasts.map(function(screencast) {
           screencast.href =
-            'http://localhost:3000/screencasts/' + screencast.screencastId;
+            config.host + 'screencasts/' + screencast.screencastId;
           screencast.tags = screencast.tags.split(',');
           screencast.duration = moment.duration(screencast.durationInSeconds, 'seconds').format('hh:mm:ss', { trim: false });
           screencast.channel = {

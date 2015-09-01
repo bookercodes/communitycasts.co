@@ -1,4 +1,6 @@
 {
-  "databasePassword": "dba.",
-  "screencastsPerPage": 10
+  "databasePassword": "",
+  "screencastsPerPage": 10,
+  "host": "http://localhost:8080/",
+  "port": 8080
 }
