@@ -384,16 +384,18 @@ strong {
 
 .about {
   padding: 20px;
-  text-align: justify; }
+  text-align: left;
+  max-width: 450px;
+  font-size: 0.9em; }
   .about__logo {
     font-size: 1.2em;
     color: black;
     border: 2px black solid;
     padding: 10px 15px;
-    font-size: 2em;
-    width: 323px;
-    margin: 0 auto;
-    margin-bottom: 24px; }
+    font-size: 1.8em;
+    margin-bottom: 24px;
+    text-align: center;
+    color: #4EB15F; }
   .about__heading {
     margin-bottom: 16px;
     font-size: 1.6em; }
