@@ -3,7 +3,7 @@ var app = angular.module('communityCasts', ['ngMaterial', 'ui.router', 'config']
     $locationProvider.html5Mode(true);
     $urlRouterProvider.otherwise('/');
     $stateProvider.state('home', {
-      url: '/',
+      url: '/:tagged?',
       templateUrl: '/app/views/_screencasts.html',
       controller: 'screencastsController',
       params: {
