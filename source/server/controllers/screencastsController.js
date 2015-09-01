@@ -8,6 +8,24 @@ require('moment-duration-format');
 
 module.exports = function(connection) {
 
+  function _formatScreencast(screencast) {
+    screencast.href =
+      config.host + 'screencasts/' + screencast.screencastId;
+    screencast.tags = screencast.tags.split(',');
+    screencast.duration = moment.duration(screencast.durationInSeconds, 'seconds').format('hh:mm:ss', { trim: false });
+    screencast.channel = {
+      channelId: screencast.channelId,
+      channelName: screencast.channelName,
+      channelLink: screencast.channelLink
+    };
+    delete screencast.channelId;
+    delete screencast.channelName;
+    delete screencast.channelLink;
+    delete screencast.link;
+    delete screencast.durationInSeconds;
+    return screencast;
+  }
+
   function sendScreencastsWithTag(req, res) {
     var page = req.query.page || 1;
     var sort = req.query.sort || 'popular';
@@ -58,23 +76,7 @@ module.exports = function(connection) {
       }
       sql = sql.offset(start).limit(finish).toString();
       connection.queryAsync(sql).spread(function(screencasts) {
-        screencasts = screencasts.map(function(screencast) {
-          screencast.href =
-            config.host + 'screencasts/' + screencast.screencastId;
-          screencast.tags = screencast.tags.split(',');
-          screencast.duration = moment.duration(screencast.durationInSeconds, 'seconds').format('s');
-          screencast.channel = {
-            channelId: screencast.channelId,
-            channelName: screencast.channelName,
-            channelLink: screencast.channelLink
-          };
-          delete screencast.channelId;
-          delete screencast.channelName;
-          delete screencast.channelLink;
-          delete screencast.link;
-          delete screencast.durationInSeconds;
-          return screencast;
-        });
+        screencasts = screencasts.map(_formatScreencast);
         res.json({
           screencasts: screencasts,
           hasMore: hasNextPage,
@@ -124,23 +126,7 @@ module.exports = function(connection) {
       sql = sql.offset(start).limit(finish).toString();
 
       connection.queryAsync(sql).spread(function(screencasts) {
-        screencasts = screencasts.map(function(screencast) {
-          screencast.href =
-            config.host + 'screencasts/' + screencast.screencastId;
-          screencast.tags = screencast.tags.split(',');
-          screencast.duration = moment.duration(screencast.durationInSeconds, 'seconds').format('hh:mm:ss', { trim: false });
-          screencast.channel = {
-            channelId: screencast.channelId,
-            channelName: screencast.channelName,
-            channelLink: screencast.channelLink
-          };
-          delete screencast.channelId;
-          delete screencast.channelName;
-          delete screencast.channelLink;
-          delete screencast.link;
-          delete screencast.durationInSeconds;
-          return screencast;
-        });
+        screencasts = screencasts.map(_formatScreencast);
         res.json({
           screencasts: screencasts,
           hasMore: hasNextPage,
