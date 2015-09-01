@@ -1,7 +1,5 @@
-app.controller('screencastsController', function($scope, $http, $stateParams, $window) {
+app.controller('screencastsController', function($scope, $http, $stateParams, $window, serverHost) {
   'use strict';
-
-  console.log('screencastsController');
   function init() {
     $scope.page = 1;
     $scope.screencasts = [];
@@ -13,7 +11,7 @@ app.controller('screencastsController', function($scope, $http, $stateParams, $w
   $scope.fetchScreencasts = function() {
     $scope.busy = true;
 
-    var base = 'http://localhost:3000/screencasts';
+    var base = serverHost + 'screencasts';
     if ($stateParams.tagged !== '') {
       base += '/tagged/' + $stateParams.tagged + '/';
     }

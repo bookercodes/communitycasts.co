@@ -1,6 +1,9 @@
+'use strict';
+
 var gulp = require('gulp');
 var sass = require('gulp-ruby-sass');
 var browserSync = require('browser-sync');
+var gulpNgConfig = require('gulp-ng-config');
 var reload = browserSync.reload;
 
 function initBrowserSync() {
@@ -8,7 +11,7 @@ function initBrowserSync() {
     ui: false,
     port: 3001,
     server: {
-      baseDir: "./"
+      baseDir: './'
     },
     notify: false
   });
@@ -29,4 +32,10 @@ gulp.task('default', ['sass'], function () {
     '*.html'
   ]).on('change', reload);
   initBrowserSync();
+});
+
+gulp.task('test', function () {
+  gulp.src('config/config.json')
+  .pipe(gulpNgConfig('config', { environment:'dev' }))
+  .pipe(gulp.dest('app'))
 });

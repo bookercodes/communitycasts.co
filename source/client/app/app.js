@@ -1,4 +1,4 @@
-var app = angular.module('communityCasts', ['ngMaterial', 'ui.router']);
+var app = angular.module('communityCasts', ['ngMaterial', 'ui.router', 'config']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/');

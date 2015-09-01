@@ -4,6 +4,7 @@
     "gulp": "^3.9.0"
   },
   "dependencies": {
+    "gulp-ng-config": "^1.2.1",
     "gulp-ruby-sass": "^1.0.5"
   }
 }

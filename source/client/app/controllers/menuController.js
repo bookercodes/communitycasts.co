@@ -1,6 +1,6 @@
-app.controller('menuController', function($scope, $http, modal) {
+app.controller('menuController', function($scope, $http, modal, serverHost) {
   'use strict';
-  $http.get('http://localhost:3000/tags').success(function(response) {
+  $http.get(serverHost + 'tags').success(function(response) {
     $scope.tags = response.tags;
   });
   $scope.showAddAlert = function(ev) {
