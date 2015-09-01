@@ -2,6 +2,13 @@ var app = angular.module('communityCasts', ['ngMaterial', 'ui.router', 'config']
   .config(function($stateProvider, $urlRouterProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
     $urlRouterProvider.otherwise('/');
+    $stateProvider.state('about', {
+      url: '/about',
+      templateUrl: '/app/views/_about.html',
+      data : {
+        pageTitle: 'About Community Casts'
+      }
+    });
     $stateProvider.state('home', {
       url: '/:tagged?',
       templateUrl: '/app/views/_screencasts.html',
@@ -12,13 +19,6 @@ var app = angular.module('communityCasts', ['ngMaterial', 'ui.router', 'config']
       },
       data : {
         pageTitle: 'Community Casts'
-      }
-    });
-    $stateProvider.state('about', {
-      url: '/about',
-      templateUrl: '/app/views/_about.html',
-      data : {
-        pageTitle: 'About Community Casts'
       }
     });
   })
