@@ -110,6 +110,8 @@ strong {
   max-width: 1100px;
   background-color: white;
   margin: 0 auto;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex; }
 
 .md-button {
@@ -134,7 +136,11 @@ strong {
   margin: 0 auto;
   padding: 20px 30px 0 30px; }
   .hero .header {
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
     align-items: center; }
     .hero .header__logo {
       font-size: 1.2em;
@@ -165,6 +171,8 @@ strong {
       font-weight: 700; }
 
 .menu {
+  -webkit-flex-basis: 30%;
+  -ms-flex-preferred-size: 30%;
   flex-basis: 30%;
   padding: 16px;
   border-right: 1px #E0E0E0 solid; }
@@ -173,12 +181,18 @@ strong {
     margin-bottom: 10px;
     font-size: 1.1em; }
   .menu .tag-list {
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-flex-flow: wrap;
+    -ms-flex-flow: wrap;
     flex-flow: wrap;
     padding-bottom: 16px; }
     .menu .tag-list__tag {
       background-color: #F0F0F0;
       font-size: 14px;
+      -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
       flex-grow: 1;
       margin-right: 4px;
       margin-bottom: 4px; }
@@ -188,7 +202,11 @@ strong {
         font-weight: 300; }
   .menu .nav {
     padding-bottom: 16px;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
     flex-direction: column; }
     .menu .nav__btn {
       text-align: left;
@@ -199,8 +217,12 @@ strong {
 
 .main {
   padding: 16px;
+  -webkit-flex-basis: 70%;
+  -ms-flex-preferred-size: 70%;
   flex-basis: 70%; }
   .main .toolbar {
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
     background-color: #f2f2f2;
     padding: 8px;
@@ -229,8 +251,14 @@ strong {
   .main .notification {
     background-color: #f2f2f2;
     padding: 8px;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
     align-items: center;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
     justify-content: space-between;
     font-size: 0.85em;
     margin: 16px 0; }
@@ -254,8 +282,12 @@ strong {
   .main .screencast {
     border-bottom: 1px solid #E0E0E0;
     padding: 16px;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
     font-size: .8em;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
     align-items: center;
     transition: background-color 0.4s; }
     .main .screencast:hover {
@@ -311,7 +343,11 @@ strong {
   padding: 40px 0;
   margin: 0 auto;
   max-width: 1100px;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
   justify-content: space-between; }
   .footer__logo {
     font-size: 1.2em;
