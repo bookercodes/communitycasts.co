@@ -1,6 +1,6 @@
 app.controller('screencastsController', function($scope, $http, $stateParams, $window, $location, config) {
   'use strict';
-
+  $scope.loadBtnText = "Load More";
   function init() {
     $scope.page = 1;
     $scope.screencasts = [];
@@ -28,6 +28,9 @@ app.controller('screencastsController', function($scope, $http, $stateParams, $w
       $scope.hasMore = response.hasMore;
       $scope.screencasts = $scope.screencasts.concat(response.screencasts);
       $scope.loaded = true;
+      if (!$scope.hasMore) {
+        $scope.loadBtnText = 'Showing ' + $scope.screencasts.length + ' of ' + $scope.screencasts.length + ' screncasts. There are no more to load.';
+      }
     });
   };
 
