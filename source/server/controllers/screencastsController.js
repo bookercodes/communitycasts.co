@@ -3,13 +3,21 @@
 var config = require('config');
 var squel = require('squel');
 var moment = require('moment');
+var youtubeUrl = require('youtube-url');
 
 require('moment-duration-format');
 
 module.exports = function(connection) {
 
   function saveScreencast(req, res) {
-    res.send('Route is set up correctly!');
+
+    // validation
+    if (!youtubeUrl.valid(req.body.url)) {
+      return res.status(400).send('YouTube url is invalid.');
+    }
+
+    var id = youtubeUrl.extractId(req.body.url);
+    res.send(id);
   }
 
   function _formatScreencast(screencast) {
