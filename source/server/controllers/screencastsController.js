@@ -3,16 +3,23 @@
 var config = require('config');
 var squel = require('squel');
 var moment = require('moment');
-var commaSplit = require('comma-split');
+// var commaSplit = require('comma-split');
+var youtube = require('../youtube')(config.youtubeApiKey);
+var youtubeUrl = require('youtube-url');
 
 require('moment-duration-format');
 
 module.exports = function(connection) {
 
   function saveScreencast(req, res) {
-    var tags = commaSplit(req.body.tags, {
-      ignoreDuplicate: true
+
+    var youtubeId = youtubeUrl.extractId(req.body.url);
+    youtube.getDetails(youtubeId).then(function (details) {
+      res.send(details);
     });
+    // var tags = commaSplit(req.body.tags, {
+    //   ignoreDuplicate: true
+    // });
   }
 
   function _formatScreencast(screencast) {

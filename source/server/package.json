@@ -11,7 +11,7 @@
     "moment-duration-format": "^1.3.0",
     "mysql": "^2.7.0",
     "paperwork": "^2.1.1",
-    "request": "^2.58.0",
+    "request": "^2.61.0",
     "squel": "^4.0.0",
     "youtube-url": "^0.2.1"
   }
