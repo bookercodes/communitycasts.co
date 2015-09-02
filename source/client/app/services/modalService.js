@@ -1,4 +1,4 @@
-app.factory('modal', function ($mdDialog) {
+app.factory('modal', ['$mdDialog', function ($mdDialog) {
   'use strict';
   return {
     show: function (ev) {
@@ -10,4 +10,4 @@ app.factory('modal', function ($mdDialog) {
         .targetEvent(ev));
     }
   };
-});
+}]);

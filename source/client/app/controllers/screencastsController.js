@@ -1,4 +1,4 @@
-app.controller('screencastsController', function($scope, $http, $stateParams, $window, $location, config) {
+app.controller('screencastsController', ['$scope', '$http', '$stateParams', '$window', '$location', 'config', function($scope, $http, $stateParams, $window, $location, config) {
   'use strict';
   $scope.loadBtnText = "Load More";
   function init() {
@@ -50,4 +50,4 @@ app.controller('screencastsController', function($scope, $http, $stateParams, $w
   $scope.tagged = $stateParams.tagged;
 
   $scope.fetchScreencasts();
-});
+}]);

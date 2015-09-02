@@ -4,7 +4,7 @@ angular.module('config',[])
   });
 
 var app = angular.module('communityCasts', ['ngMaterial', 'ui.router', 'config'])
-  .config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+  .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
     $urlRouterProvider.otherwise('/');
     $stateProvider.state('about', {
@@ -26,20 +26,20 @@ var app = angular.module('communityCasts', ['ngMaterial', 'ui.router', 'config']
         pageTitle: 'Community Casts'
       }
     });
-  })
-  .run(function ($rootScope, $state, $stateParams) {
+  }])
+  .run(['$rootScope', '$state', '$stateParams', function ($rootScope, $state, $stateParams) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
-  });
+  }]);
 
-app.controller('heroController', function($scope, modal) {
+app.controller('heroController', ['$scope', 'modal', function($scope, modal) {
   'use strict';
   $scope.submitScreencast = function(ev) {
     modal.show(ev);
   };
-});
+}]);
 
-app.controller('menuController', function($scope, $http, modal, $location, config) {
+app.controller('menuController', ['$scope', '$http', 'modal', '$location', 'config', function($scope, $http, modal, $location, config) {
   'use strict';
   $http.get(config.serverHost + 'tags').success(function(response) {
     $scope.tags = response.tags;
@@ -47,9 +47,9 @@ app.controller('menuController', function($scope, $http, modal, $location, confi
   $scope.showAddAlert = function(ev) {
     modal.show(ev);
   };
-});
+}]);
 
-app.controller('screencastsController', function($scope, $http, $stateParams, $window, $location, config) {
+app.controller('screencastsController', ['$scope', '$http', '$stateParams', '$window', '$location', 'config', function($scope, $http, $stateParams, $window, $location, config) {
   'use strict';
   $scope.loadBtnText = "Load More";
   function init() {
@@ -101,9 +101,9 @@ app.controller('screencastsController', function($scope, $http, $stateParams, $w
   $scope.tagged = $stateParams.tagged;
 
   $scope.fetchScreencasts();
-});
+}]);
 
-app.factory('modal', function ($mdDialog) {
+app.factory('modal', ['$mdDialog', function ($mdDialog) {
   'use strict';
   return {
     show: function (ev) {
@@ -115,4 +115,4 @@ app.factory('modal', function ($mdDialog) {
         .targetEvent(ev));
     }
   };
-});
+}]);

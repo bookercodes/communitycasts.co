@@ -1,5 +1,5 @@
 var app = angular.module('communityCasts', ['ngMaterial', 'ui.router', 'config'])
-  .config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+  .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
     $urlRouterProvider.otherwise('/');
     $stateProvider.state('about', {
@@ -21,8 +21,8 @@ var app = angular.module('communityCasts', ['ngMaterial', 'ui.router', 'config']
         pageTitle: 'Community Casts'
       }
     });
-  })
-  .run(function ($rootScope, $state, $stateParams) {
+  }])
+  .run(['$rootScope', '$state', '$stateParams', function ($rootScope, $state, $stateParams) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
-  });
+  }]);
