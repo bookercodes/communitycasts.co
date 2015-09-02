@@ -7,6 +7,7 @@ var express = require('express');
 var promise = require('bluebird');
 var bodyParser = require('body-parser');
 var path = require('path');
+var compression = require('compression');
 
 promise.promisifyAll(require('mysql/lib/Connection').prototype);
 
@@ -20,6 +21,7 @@ connection.connect();
 
 var app = express();
 
+app.use(compression());
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../client/')));
