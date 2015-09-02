@@ -3,14 +3,16 @@
 var config = require('config');
 var squel = require('squel');
 var moment = require('moment');
-var youtubeUrl = require('youtube-url');
+var commaSplit = require('comma-split');
 
 require('moment-duration-format');
 
 module.exports = function(connection) {
 
   function saveScreencast(req, res) {
-    res.send('trace:saveScreencast');
+    var tags = commaSplit(req.body.tags, {
+      ignoreDuplicate: true
+    });
   }
 
   function _formatScreencast(screencast) {

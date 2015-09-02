@@ -2,6 +2,7 @@
   "dependencies": {
     "bluebird": "^2.9.34",
     "body-parser": "^1.13.2",
+    "comma-split": "^1.0.0",
     "compression": "^1.5.2",
     "config": "^1.14.0",
     "cors": "^2.7.1",
