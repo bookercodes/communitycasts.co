@@ -29,7 +29,7 @@ gulp.task('sass', function() {
     browsers: ['last 2 versions'],
     cascade: false
   }))
-  .pipe(gulp.dest('./css'));
+  .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('combine', function () {
@@ -40,7 +40,7 @@ gulp.task('combine', function () {
   ];
   return gulp.src(sources)
     .pipe(concat('main.js'))
-    .pipe(gulp.dest('./css/'));
+    .pipe(gulp.dest('./dist/'));
 });
 
 gulp.task('default', ['sass', 'combine'], function () {
