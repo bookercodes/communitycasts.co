@@ -6,6 +6,7 @@ var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 var autoprefixer = require('gulp-autoprefixer');
 var concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
 
 function initBrowserSync() {
   browserSync.init({
@@ -40,6 +41,7 @@ gulp.task('combine', function () {
   ];
   return gulp.src(sources)
     .pipe(concat('main.js'))
+    .pipe(uglify())
     .pipe(gulp.dest('./dist/'));
 });
 
