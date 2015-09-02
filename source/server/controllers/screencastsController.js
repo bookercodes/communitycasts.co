@@ -12,32 +12,24 @@ require('moment-duration-format');
 module.exports = function(connection) {
 
   function saveScreencast(req, res) {
-    var screencastId = 0;
     var youtubeId = youtubeUrl.extractId(req.body.url);
     var tags = commaSplit(req.body.tags, {
       ignoreDuplicate: true
     });
     youtube.getDetails(youtubeId).then(function (details) {
-      var channel = {
-        channelYoutubeId: details.channel.channelId,
-        channelName: details.channel.channelName
-      };
-      connection.queryAsync('INSERT IGNORE INTO channels SET ?', channel).spread(function (result) {
+      connection.queryAsync('INSERT IGNORE INTO channels SET ?', details.channel).then(function () {
         var screencast = details;
-        screencast.youtubeId = youtubeId;
-        screencast.channelId = result.insertId;
-        delete screencast.screencastId;
+        screencast.channelId = details.channel.channelId;
         delete screencast.channel;
         return connection.queryAsync('INSERT INTO screencasts SET ?', screencast);
-      }).then(function (result) {
-        screencastId = result[0].insertId;
+      }).then(function () {
         var values = [tags.map(function (tag) {
           return [tag];
         })];
         return connection.queryAsync('INSERT IGNORE INTO tags VALUES ?', values);
       }).then(function () {
         var values = [tags.map(function (tag) {
-          return [screencastId, tag];
+          return [youtubeId, tag];
         })];
         return connection.queryAsync('INSERT INTO screencastTags VALUES ?', values);
       }).then(function () {
@@ -186,7 +178,7 @@ module.exports = function(connection) {
       if (!screencast) {
         return res.status(404).send();
       }
-      res.redirect('https://www.youtube.com/watch?v=' + screencast.youtubeId);
+      res.redirect('https://www.youtube.com/watch?v=' + screencast.screencastId);
       var sql = squel.select()
         .field('screencastId')
         .from('referrals')
