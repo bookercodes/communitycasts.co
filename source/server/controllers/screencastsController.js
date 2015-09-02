@@ -8,6 +8,10 @@ require('moment-duration-format');
 
 module.exports = function(connection) {
 
+  function saveScreencast(req, res) {
+    res.send('Route is set up correctly!');
+  }
+
   function _formatScreencast(screencast) {
     screencast.href =
       config.host + 'screencasts/' + screencast.screencastId;
@@ -186,6 +190,7 @@ module.exports = function(connection) {
   return {
     sendScreencasts: sendScreencasts,
     sendScreencastsWithTag: sendScreencastsWithTag,
-    redirectToScreencast: redirectToScreencast
+    redirectToScreencast: redirectToScreencast,
+    saveScreencast: saveScreencast
   };
 };
