@@ -8,7 +8,7 @@ var promise = require('bluebird');
 var bodyParser = require('body-parser');
 var path = require('path');
 var compression = require('compression');
-var validator = require('./validator');
+var validatorFactory = require('./validatorFactory');
 
 promise.promisifyAll(require('mysql/lib/Connection').prototype);
 
@@ -27,12 +27,16 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../client/')));
 
-var screencastsController = require('./controllers/screencastsController')(connection);
+var screencastsController = require('./controllers/screencastsController')(
+  connection);
 
-app.get('/screencasts/', screencastsController.sendScreencasts);
-app.get('/screencasts/tagged/:tag', screencastsController.sendScreencastsWithTag);
+app.get('/screencasts/', validatorFactory.createSubmissionValidator(),
+  screencastsController.sendScreencasts);
+app.get('/screencasts/tagged/:tag', validatorFactory.createPaginationValidator(),
+  screencastsController.sendScreencastsWithTag);
+app.post('/screencasts/', validatorFactory.createPaginationValidator(),
+  screencastsController.saveScreencast);
 app.get('/screencasts/:screencastId', screencastsController.redirectToScreencast);
-app.post('/screencasts/', validator.validateSubmission(), screencastsController.saveScreencast);
 
 var tagsController = require('./controllers/tagsController')(connection);
 app.get('/tags', tagsController.send20Tags);

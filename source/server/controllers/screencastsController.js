@@ -59,11 +59,6 @@ module.exports = function(connection) {
   function sendScreencastsWithTag(req, res) {
     var page = req.query.page || 1;
     var sort = req.query.sort || 'popular';
-    if (sort !== 'popular' && sort !== 'newest') {
-      return res.status(400).json({
-        message: 'You input the sort option "' + sort + '" which is invalid. The sort option must be "newest" or "popular". Thank you.'
-      });
-    }
     var sql = squel.select()
       .field('count(*) as total')
       .from(
@@ -119,16 +114,7 @@ module.exports = function(connection) {
   function sendScreencasts(req, res) {
     var page = req.query.page || 1;
     var sort = req.query.sort || 'popular';
-    if (sort !== 'popular' && sort !== 'newest') {
-      return res.status(400).json({
-        message: 'You input the sort option "' + sort + '" which is invalid. The sort option must be "newest" or "popular". Thank you.'
-      });
-    }
-    if (req.query.page < 1) {
-      return res.status(400).json({
-        message: 'Page number cannot be 0 or negative'
-      });
-    }
+
     var sql = squel.select()
       .field('count(*) as count')
       .from('screencasts')
