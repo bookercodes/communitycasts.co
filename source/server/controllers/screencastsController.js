@@ -153,7 +153,7 @@ module.exports = function(connection) {
       if (!screencast) {
         return res.status(404).send();
       }
-      res.redirect(screencast.link);
+      res.redirect('https://www.youtube.com/watch?v=' + screencast.youtubeId);
       var sql = squel.select()
         .field('screencastId')
         .from('referrals')
