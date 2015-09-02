@@ -5,6 +5,7 @@
     "gulp-autoprefixer": "^2.3.1"
   },
   "dependencies": {
+    "gulp-concat": "^2.6.0",
     "gulp-ng-config": "^1.2.1",
     "gulp-ruby-sass": "^1.0.5"
   }

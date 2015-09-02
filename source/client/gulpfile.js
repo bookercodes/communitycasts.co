@@ -5,6 +5,7 @@ var sass = require('gulp-ruby-sass');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 var autoprefixer = require('gulp-autoprefixer');
+var concat = require('gulp-concat');
 
 function initBrowserSync() {
   browserSync.init({
@@ -31,8 +32,20 @@ gulp.task('sass', function() {
   .pipe(gulp.dest('./css'));
 });
 
-gulp.task('default', ['sass'], function () {
+gulp.task('combine', function () {
+  var sources = [
+    './app/config.js',
+    './app/app.js',
+    './app/**/*.js',
+  ];
+  return gulp.src(sources)
+    .pipe(concat('main.js'))
+    .pipe(gulp.dest('./css/'));
+});
+
+gulp.task('default', ['sass', 'combine'], function () {
   gulp.watch('./scss/**/*.scss', ['sass']);
+  gulp.watch('./app/**/*.js', ['combine']);
   gulp.watch([
     './scss/**/*.scss',
     '*.html'
