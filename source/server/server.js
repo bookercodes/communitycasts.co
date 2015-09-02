@@ -8,6 +8,7 @@ var promise = require('bluebird');
 var bodyParser = require('body-parser');
 var path = require('path');
 var compression = require('compression');
+var validator = require('./validator');
 
 promise.promisifyAll(require('mysql/lib/Connection').prototype);
 
@@ -31,7 +32,7 @@ var screencastsController = require('./controllers/screencastsController')(conne
 app.get('/screencasts/', screencastsController.sendScreencasts);
 app.get('/screencasts/tagged/:tag', screencastsController.sendScreencastsWithTag);
 app.get('/screencasts/:screencastId', screencastsController.redirectToScreencast);
-app.post('/screencasts/', screencastsController.saveScreencast);
+app.post('/screencasts/', validator.validateSubmission(), screencastsController.saveScreencast);
 
 var tagsController = require('./controllers/tagsController')(connection);
 app.get('/tags', tagsController.send20Tags);

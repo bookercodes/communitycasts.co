@@ -10,14 +10,7 @@ require('moment-duration-format');
 module.exports = function(connection) {
 
   function saveScreencast(req, res) {
-
-    // validation
-    if (!youtubeUrl.valid(req.body.url)) {
-      return res.status(400).send('YouTube url is invalid.');
-    }
-
-    var id = youtubeUrl.extractId(req.body.url);
-    res.send(id);
+    res.send('trace:saveScreencast');
   }
 
   function _formatScreencast(screencast) {
