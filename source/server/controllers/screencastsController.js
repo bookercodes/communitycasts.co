@@ -3,7 +3,7 @@
 var config = require('config');
 var squel = require('squel');
 var moment = require('moment');
-// var commaSplit = require('comma-split');
+var commaSplit = require('comma-split');
 var youtube = require('../youtube')(config.youtubeApiKey);
 var youtubeUrl = require('youtube-url');
 
@@ -12,14 +12,38 @@ require('moment-duration-format');
 module.exports = function(connection) {
 
   function saveScreencast(req, res) {
-
+    var screencastId = 0;
     var youtubeId = youtubeUrl.extractId(req.body.url);
-    youtube.getDetails(youtubeId).then(function (details) {
-      res.send(details);
+    var tags = commaSplit(req.body.tags, {
+      ignoreDuplicate: true
     });
-    // var tags = commaSplit(req.body.tags, {
-    //   ignoreDuplicate: true
-    // });
+    youtube.getDetails(youtubeId).then(function (details) {
+      var channel = {
+        channelYoutubeId: details.channel.channelId,
+        channelName: details.channel.channelName
+      };
+      connection.queryAsync('INSERT IGNORE INTO channels SET ?', channel).spread(function (result) {
+        var screencast = details;
+        screencast.youtubeId = youtubeId;
+        screencast.channelId = result.insertId;
+        delete screencast.screencastId;
+        delete screencast.channel;
+        return connection.queryAsync('INSERT INTO screencasts SET ?', screencast);
+      }).then(function (result) {
+        screencastId = result[0].insertId;
+        var values = [tags.map(function (tag) {
+          return [tag];
+        })];
+        return connection.queryAsync('INSERT IGNORE INTO tags VALUES ?', values);
+      }).then(function () {
+        var values = [tags.map(function (tag) {
+          return [screencastId, tag];
+        })];
+        return connection.queryAsync('INSERT INTO screencastTags VALUES ?', values);
+      }).then(function () {
+        res.send('Screencast added');
+      });
+    });
   }
 
   function _formatScreencast(screencast) {
