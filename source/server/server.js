@@ -30,11 +30,11 @@ app.use(express.static(path.join(__dirname, '../client/')));
 var screencastsController = require('./controllers/screencastsController')(
   connection);
 
-app.get('/screencasts/', validatorFactory.createSubmissionValidator(),
+app.get('/screencasts/', validatorFactory.createPaginationValidator(),
   screencastsController.sendScreencasts);
 app.get('/screencasts/tagged/:tag', validatorFactory.createPaginationValidator(),
   screencastsController.sendScreencastsWithTag);
-app.post('/screencasts/', validatorFactory.createPaginationValidator(),
+app.post('/screencasts/', validatorFactory.createSubmissionValidator(),
   screencastsController.saveScreencast);
 app.get('/screencasts/:screencastId', screencastsController.redirectToScreencast);
 
