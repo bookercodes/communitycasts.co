@@ -1,12 +1,22 @@
 <div class="toolbar">
   <button ui-sref-active="toolbar__btn--active" ui-sref="{sort:'popular'}" class="toolbar__btn">
-    <md-icon class="toolbar__icon material-icons">trending_up</md-icon>Popular
+    <md-icon class="toolbar__icon material-icons">
+      <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/>
+        <path d="M0 0h24v24H0z" fill="none"/>
+      </svg>
+    </md-icon>Popular
     <md-tooltip>
       Find what screencasts the community is most excited about today.
     </md-tooltip>
   </button>
   <button ui-sref-active="toolbar__btn--active" ui-sref="{sort:'newest'}" class="toolbar__btn">
-    <md-icon class="toolbar__icon material-icons">swap_vert</md-icon>Newest
+    <md-icon class="toolbar__icon material-icons">
+      <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/>
+        <path d="M0 0h24v24H0z" fill="none"/>
+      </svg>
+    </md-icon>Newest
     <md-tooltip>
       Find the most recently submitted screencasts.
     </md-tooltip>
@@ -43,4 +53,12 @@
   </a>
 </div>
 <md-progress-linear ng-show="busy" class="progress-bar" md-mode="indeterminate"></md-progress-linear>
-<md-button class="load-more-btn" ng-click="fetchScreencasts()" ng-disabled="busy || !hasMore"><md-icon>keyboard_arrow_down</md-icon> {{loadBtnText}}</md-button>
+<md-button class="load-more-btn" ng-click="fetchScreencasts()" ng-disabled="busy || !hasMore">
+  <md-icon>
+    <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M7.41 7.84L12 12.42l4.59-4.58L18 9.25l-6 6-6-6z"/>
+      <path d="M0-.75h24v24H0z" fill="none"/>
+    </svg>
+  </md-icon>
+  {{loadBtnText}}
+</md-button>
