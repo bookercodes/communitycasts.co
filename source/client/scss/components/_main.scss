@@ -105,19 +105,16 @@
     &__duration {
       background-color: goldenrod;
       position: absolute;
-      right: 5px;
-      bottom: 8.5px;
+      right: 0px;
+      bottom: 3px;
       color: #F8F8F8;
       font-size: 0.9em;
       background-color: rgba(0, 0, 0, 0.4);
       padding: 2px 8px;
     }
     &__thumb {
-      padding: 4px;
-      border: 1px solid $divider-color;
       width: 196px;
       height: 110px;
-
     }
     &__tag {
       @include tag;
