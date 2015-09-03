@@ -12,6 +12,7 @@ var app = angular.module('communityCasts', ['ngMaterial', 'ui.router', 'config']
     $stateProvider.state('submit', {
       url: '/submit',
       templateUrl: '/app/views/_submit.html',
+      controller: 'submitController',
       data : {
         pageTitle: 'Submit a screencast'
       }
