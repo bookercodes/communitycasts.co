@@ -85,8 +85,11 @@
     }
     &__channel {
       font-size: 0.9em;
-      padding-bottom: 8px;
       line-height: 1.8em;
+      padding-bottom: 2px;
+    }
+    &__description {
+      padding-bottom: 8px;
     }
     &__thumb-wrap {
       margin-right: 16px;
