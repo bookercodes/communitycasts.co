@@ -1,10 +1,15 @@
-app.controller('submitController', ['$scope', function($scope) {
+app.controller('submitController', ['$scope', '$http', function($scope, $http) {
   'use strict';
+
   $scope.screencast = {};
-  $scope.screencast.tags = ['Angular'];
+  $scope.screencast.tags = [];
 
   $scope.submit = function () {
-    alert(JSON.stringify($scope.screencast));
+    var copy = $scope.screencast;
+    copy.tags = copy.tags.join();
+    $http.post('/screencasts', copy).then(function () {
+      alert('yay');
+    });
   };
 
 }]);
