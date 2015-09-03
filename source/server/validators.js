@@ -3,7 +3,7 @@
 var paperwork = require('paperwork');
 var youtubeUrl = require('youtube-url');
 
-module.exports.createSubmissionValidator = paperwork.accept({
+module.exports.submissionValidator = paperwork.accept({
   tags: String,
   url: paperwork.all(String,
     function(url) {
@@ -11,7 +11,7 @@ module.exports.createSubmissionValidator = paperwork.accept({
     })
 });
 
-module.exports.createPaginationValidator = function(req, res, next) {
+module.exports.paginationValidator = function(req, res, next) {
   var page = req.query.page || 1;
   var sort = req.query.sort || 'popular';
   if (sort !== 'popular' && sort !== 'newest') {
