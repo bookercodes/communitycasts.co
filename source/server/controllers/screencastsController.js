@@ -17,11 +17,13 @@ module.exports = function(connection) {
       ignoreDuplicate: true
     });
     youtube.getDetails(youtubeId).then(function (details) {
-      connection.queryAsync('INSERT IGNORE INTO channels SET ?', details.channel).then(function () {
+      connection.beginTransactionAsync().then(function () {
+        return connection.queryAsync('INSERT IGNORE INTO channels SET ?', details.channel);
+      }).then(function () {
         var screencast = details;
         screencast.channelId = details.channel.channelId;
         delete screencast.channel;
-        return connection.queryAsync('INSERT INTO screencasts SET ?', screencast);
+        return connection.queryAsync('INSERT INTO screencastXs SET ?', screencast);
       }).then(function () {
         var values = [tags.map(function (tag) {
           return [tag];
@@ -33,7 +35,12 @@ module.exports = function(connection) {
         })];
         return connection.queryAsync('INSERT INTO screencastTags VALUES ?', values);
       }).then(function () {
-        res.send('Screencast added');
+        res.status(201).send();
+        return connection.commit();
+      }).error(function () {
+        res.status(500).send({
+          error: 'Something went horribly wrong.'
+        });
       });
     });
   }
