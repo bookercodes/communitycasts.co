@@ -16,30 +16,42 @@ module.exports = function(connection) {
     var tags = commaSplit(req.body.tags, {
       ignoreDuplicate: true
     });
-    youtube.getDetails(youtubeId).then(function (screencastDetails) {
-      connection.beginTransactionAsync().then(function () {
-        return connection.queryAsync('INSERT IGNORE INTO channels SET ?', screencastDetails.channel);
-      }).then(function () {
-        var screencast = screencastDetails;
-        screencast.channelId = screencastDetails.channel.channelId;
-        delete screencast.channel;
-        return connection.queryAsync('INSERT INTO screencastXs SET ?', screencast);
-      }).then(function () {
-        var values = [tags.map(function (tag) {
-          return [tag];
-        })];
-        return connection.queryAsync('INSERT IGNORE INTO tags VALUES ?', values);
-      }).then(function () {
-        var values = [tags.map(function (tag) {
-          return [youtubeId, tag];
-        })];
-        return connection.queryAsync('INSERT INTO screencastTags VALUES ?', values);
-      }).then(function () {
-        res.status(201).send();
-        return connection.commit();
-      }).error(function () {
-        res.status(500).send({
-          error: 'Something went horribly wrong.'
+    var sql = squel.select()
+      .from('screencasts')
+      .field('screencastId')
+      .where('screencastId = ?', youtubeId)
+      .toString();
+    connection.queryAsync(sql).spread(function (screencasts) {
+      if (screencasts.length === 1) {
+        return res.status(400).send({
+          message: 'Screencast already exists'
+        });
+      }
+      youtube.getDetails(youtubeId).then(function (screencastDetails) {
+        connection.beginTransactionAsync().then(function () {
+          return connection.queryAsync('INSERT IGNORE INTO channels SET ?', screencastDetails.channel);
+        }).then(function () {
+          var screencast = screencastDetails;
+          screencast.channelId = screencastDetails.channel.channelId;
+          delete screencast.channel;
+          return connection.queryAsync('INSERT INTO screencasts SET ?', screencast);
+        }).then(function () {
+          var values = [tags.map(function (tag) {
+            return [tag];
+          })];
+          return connection.queryAsync('INSERT IGNORE INTO tags VALUES ?', values);
+        }).then(function () {
+          var values = [tags.map(function (tag) {
+            return [youtubeId, tag];
+          })];
+          return connection.queryAsync('INSERT INTO screencastTags VALUES ?', values);
+        }).then(function () {
+          res.status(201).send();
+          return connection.commit();
+        }).error(function () {
+          res.status(500).send({
+            error: 'Something went horribly wrong.'
+          });
         });
       });
     });
