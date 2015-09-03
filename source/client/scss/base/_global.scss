@@ -13,7 +13,7 @@ strong {
 
 .container {
   max-width: $container-width;
-  background-color: $color-white;
+  background-color: white;
   margin: 0 auto;
   display: flex;
   flex-direction: row-reverse;
@@ -32,9 +32,9 @@ strong {
 }
 
 ::-moz-selection {
-  background-color: $color-accent;
+  background-color: $accent-color;
 }
 
 ::selection {
-  background-color: $color-accent;
+  background-color: $accent-color;
 }
