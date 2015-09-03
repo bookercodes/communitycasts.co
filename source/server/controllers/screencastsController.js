@@ -63,7 +63,7 @@ module.exports = function(connection) {
     screencast.href =
       config.host + 'screencasts/' + screencast.screencastId;
     screencast.tags = screencast.tags.split(',');
-    screencast.duration = moment.duration(screencast.durationInSeconds, 'seconds').format('hh:mm:ss', { trim: false });
+    screencast.duration = moment.duration(screencast.durationInSeconds, 'seconds').format('mm:ss', { trim: false });
     screencast.description = truncate(screencast.description, config.descriptionLength);
     screencast.channel = {
       channelId: screencast.channelId,
