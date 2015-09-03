@@ -1,5 +1,8 @@
+$accent-color: #4EB15F;
+$dark-accent-color: #349851;
+
 $container-width: 1100px;
-$hero-background: url('../img/pattern.png') repeat;
+$hero-background: linear-gradient(180deg,$dark-accent-color,$accent-color);
 $button-background: white;
 $hero-foreground-color: white;
 $container-padding: 16px;
@@ -20,8 +23,7 @@ $menu-heading-font-size: 1.1em;
 $footer-color: #3e4551;
 $footer-color-light: lighten($footer-color, 52);
 
-$accent-color: #4EB15F;
-$dark-accent-color: #349851;
+
 
 $medium-container-width: 600px;
 $color-accent: white;
