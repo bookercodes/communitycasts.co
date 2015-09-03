@@ -9,6 +9,13 @@ var app = angular.module('communityCasts', ['ngMaterial', 'ui.router', 'config']
         pageTitle: 'About Community Casts'
       }
     });
+    $stateProvider.state('submit', {
+      url: '/submit',
+      templateUrl: '/app/views/_submit.html',
+      data : {
+        pageTitle: 'Submit a screencast'
+      }
+    });
     $stateProvider.state('home', {
       url: '/:tagged?',
       templateUrl: '/app/views/_screencasts.html',
