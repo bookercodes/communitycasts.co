@@ -49,7 +49,8 @@ gulp.task('default', ['sass', 'combine'], function () {
   gulp.watch('./scss/**/*.scss', ['sass']);
   gulp.watch('./app/**/*.js', ['combine']);
   gulp.watch([
-    './scss/**/*.scss',
+    './dist/main.css',
+    './dist/main.js',
     '*.html'
   ]).on('change', reload);
   // gulp.watch('css/main.css').on('change', ['autoprefix']);
