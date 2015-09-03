@@ -16,12 +16,12 @@ module.exports = function(connection) {
     var tags = commaSplit(req.body.tags, {
       ignoreDuplicate: true
     });
-    youtube.getDetails(youtubeId).then(function (details) {
+    youtube.getDetails(youtubeId).then(function (screencastDetails) {
       connection.beginTransactionAsync().then(function () {
-        return connection.queryAsync('INSERT IGNORE INTO channels SET ?', details.channel);
+        return connection.queryAsync('INSERT IGNORE INTO channels SET ?', screencastDetails.channel);
       }).then(function () {
-        var screencast = details;
-        screencast.channelId = details.channel.channelId;
+        var screencast = screencastDetails;
+        screencast.channelId = screencastDetails.channel.channelId;
         delete screencast.channel;
         return connection.queryAsync('INSERT INTO screencastXs SET ?', screencast);
       }).then(function () {
