@@ -39,7 +39,7 @@
 </div>
 
 <div class="screencasts" ng-show="loaded">
-  <a href="{{screencast.href}}" class="screencast" ng-repeat="screencast in screencasts">
+  <div href="{{screencast.href}}" class="screencast" ng-repeat="screencast in screencasts">
 
 
     <div class="screencast__thumb-wrap">
@@ -50,14 +50,14 @@
     </div>
 
     <div class="screencast__info" >
-      <h4 class="screencast__link">{{screencast.title}}</h4>
-      <p class="screencast__channel">by {{screencast.channel.channelName}}</p>
+      <a href="{{screencast.href}}" class="screencast__link">{{screencast.title}}</a>
+      <p class="screencast__channel">by <a class="screencast__channel-link" href="https://youtube.com/channel/{{screencast.channel.channelId}}">{{screencast.channel.channelName}}</a></p>
       <p class="screencast__description">{{screencast.description}}</p>
       <div>
         <button class="screencast__tag tag" ng-repeat="tag in screencast.tags">{{tag}}</button>
       </div>
     </div>
-  </a>
+  </div>
 </div>
 <md-progress-linear ng-show="busy" class="progress-bar" md-mode="indeterminate"></md-progress-linear>
 <md-button class="load-more-btn" ng-click="fetchScreencasts()" ng-disabled="busy || !hasMore">

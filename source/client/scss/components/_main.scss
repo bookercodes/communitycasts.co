@@ -71,22 +71,29 @@
   }
   .screencast {
     border-bottom: 1px solid $divider-color;
-    padding: 16px;
+    padding: 20px 10px;
     display: flex;
     font-size: .8em;
     align-items: center;
     transition: background-color $transition-duration;
-    &:hover {
-      background-color: #F7F7F7;
-    }
     &__link {
       font-size: 1.2em;
       line-height: 1.8em;
+      color: darken($dark-accent-color, 7%);
+      &:hover {
+        text-decoration: underline;
+      }
     }
     &__channel {
       font-size: 0.9em;
       line-height: 1.8em;
       padding-bottom: 2px;
+    }
+    &__channel-link {
+      font-weight: bold;
+      &:hover {
+        text-decoration: underline;
+      }
     }
     &__description {
       padding-bottom: 8px;
