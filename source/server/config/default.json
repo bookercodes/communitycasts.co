@@ -3,5 +3,6 @@
   "screencastsPerPage": 10,
   "host": "http://localhost:8080/",
   "port": 8080,
-  "youtubeApiKey": ""
+  "youtubeApiKey": "",
+  "descriptionLength": 150
 }

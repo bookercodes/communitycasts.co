@@ -18,6 +18,7 @@ module.exports = function(apiKey) {
       var screencast = parsed.items[0];
       return {
         screencastId: videoId,
+        description: screencast.snippet.description,
         title: screencast.snippet.title,
         durationInSeconds: moment.duration(screencast.contentDetails.duration).asSeconds(),
         channel: {

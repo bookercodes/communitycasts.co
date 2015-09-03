@@ -6,6 +6,7 @@ var moment = require('moment');
 var commaSplit = require('comma-split');
 var youtube = require('../youtube')(config.youtubeApiKey);
 var youtubeUrl = require('youtube-url');
+var truncate = require('truncate');
 
 require('moment-duration-format');
 
@@ -48,7 +49,8 @@ module.exports = function(connection) {
         }).then(function () {
           res.status(201).send();
           return connection.commit();
-        }).error(function () {
+        }).error(function (error) {
+          console.log(error);
           res.status(500).send({
             error: 'Something went horribly wrong.'
           });
@@ -62,6 +64,7 @@ module.exports = function(connection) {
       config.host + 'screencasts/' + screencast.screencastId;
     screencast.tags = screencast.tags.split(',');
     screencast.duration = moment.duration(screencast.durationInSeconds, 'seconds').format('hh:mm:ss', { trim: false });
+    screencast.description = truncate(screencast.description, config.descriptionLength);
     screencast.channel = {
       channelId: screencast.channelId,
       channelName: screencast.channelName,
