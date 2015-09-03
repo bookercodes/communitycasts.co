@@ -1,12 +1,30 @@
+@-webkit-keyframes move {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
 .hero {
   max-width: $container-width;
   background: $hero-background;
+  position: relative;
+  overflow: hidden;
   margin: 0 auto;
-  padding: 20px 30px 0 30px;
+  animation: move 10s ease infinite;
+  background-size: 200% 100% !important;
+
+  // padding: 20px 30px 0 30px;
   border-top: 5px solid $accent-color;
   .header {
     display: flex;
     align-items: center;
+    padding: 16px;
     &__logo {
       @include logo;
       border-color: $hero-foreground-color;
@@ -24,8 +42,8 @@
     }
   }
   .about-text {
-    padding-top: 20px;
-    padding-bottom: 89px;
+    padding-top: 10px;
+    padding-bottom: 50px;
     font-family: 'Open Sans';
     font-size: 2em;
     font-weight: 300;

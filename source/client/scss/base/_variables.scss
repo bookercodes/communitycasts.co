@@ -2,7 +2,7 @@ $accent-color: #4EB15F;
 $dark-accent-color: #349851;
 
 $container-width: 1100px;
-$hero-background: linear-gradient(180deg,$dark-accent-color,$accent-color);
+$hero-background: linear-gradient(45deg, darken($dark-accent-color,10%) 10%, $accent-color 90%);;
 $button-background: white;
 $hero-foreground-color: white;
 $container-padding: 16px;
