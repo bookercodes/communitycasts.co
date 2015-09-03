@@ -4,4 +4,25 @@
     font-size: 2em;
   }
 
+  .submit-form {
+    &__submit-btn {
+      background-color: $accent-color;
+      width: 100%;
+    }
+    &__control {
+      margin: 15px 0;
+    }
+  }
+
+
+}
+
+.md-chips .md-chip {
+  background-color: $tag-bg-color;
+  border-radius: 0;
+}
+
+.md-chips .md-chip.md-focused
+{
+  background-color: darken($tag-bg-color, 10%);
 }

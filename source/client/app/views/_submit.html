@@ -1,32 +1,21 @@
-
 <div class="submit">
   <h1 class="submit__heading">Submit</h1>
-<form>
-  <md-input-container>
-    <label>Screencast Url:</label>
-    <input ng-model="screencast.url">
-  </md-input-container>
-  <md-input-container>
-    <label>Screencast Title:</label>
-    <input ng-model="screencast.url"disabled>
-  </md-input-container>
-  <md-input-container>
-    <label>Screencast Description:</label>
-    <input ng-model="screencast.url" disabled>
-  </md-input-container>
-  <md-input-container>
-    <label>Channel Name:</label>
-    <input ng-model="screencast.url" disabled>
-  </md-input-container>
-  <md-chips
+  <form class="submit-form">
+    <md-input-container>
+      <label>Screencast Url:</label>
+      <input ng-model="screencast.url">
+    </md-input-container>
+    <div class="submit-form__control">
+      <md-chips
         ng-model="screencast.tags"
         placeholder="Enter a tag"
         delete-button-label="Remove Tag"
         delete-hint="Press delete to remove tag"
         secondary-placeholder="+Tag">
-  </md-chips>
-  <md-button class="md-raised md-primary">
-    Submit
-  </md-button>
-</form>
+      </md-chips>
+    </div>
+    <md-button class="submit-form__submit-btn" ng-click="submit()">
+      Submit
+    </md-button>
+  </form>
 </div>
