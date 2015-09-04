@@ -3,14 +3,14 @@
 
   <form name="screencastForm">
 
-    <div>
+    <md-input-container>
       <label>YouTube Url:</label>
       <input type="text" name="url" required youtube-url ng-model="screencast.url">
       <div ng-messages="screencastForm.url.$error" ng-if="screencastForm.url.$touched">
         <p ng-message="required">This field is required, bro.</p>
         <p ng-message="youtubeUrl">Please enter a valid YouTube url.</p>
       </div>
-    </div>
+    </md-input-container>
   </form>
 
 
