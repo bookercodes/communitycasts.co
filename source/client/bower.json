@@ -3,6 +3,7 @@
   "dependencies": {
     "angular": "~1.4.2",
     "angular-ui-router": "~0.2.15",
-    "angular-material": "~0.10.1"
+    "angular-material": "~0.10.1",
+    "ngSmoothScroll": "~1.7.1"
   }
 }

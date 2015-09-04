@@ -1,4 +1,4 @@
-var app = angular.module('communityCasts', ['ngMaterial', 'ui.router', 'config'])
+var app = angular.module('communityCasts', ['ngMaterial', 'ui.router', 'config', 'smoothScroll'])
   .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
     $urlRouterProvider.otherwise('/');
