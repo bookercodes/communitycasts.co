@@ -39,7 +39,7 @@
 </div>
 
 <div class="screencasts" ng-show="loaded">
-  <div href="{{screencast.href}}" class="screencast" ng-repeat="screencast in screencasts">
+  <div class="screencast" ng-repeat="screencast in screencasts">
 
 
     <div class="screencast__thumb-wrap">
@@ -50,7 +50,7 @@
     </div>
 
     <div class="screencast__info" >
-      <a href="{{screencast.href}}" class="screencast__link">{{screencast.title}}</a>
+      <a href="{{screencast.href}}" ng-click="navigateTo(screencast.href)" class="screencast__link">{{screencast.title}}</a>
       <p class="screencast__channel">by <a class="screencast__channel-link" href="https://youtube.com/channel/{{screencast.channel.channelId}}">{{screencast.channel.channelName}}</a></p>
       <p class="screencast__description">{{screencast.description}}</p>
       <div>
