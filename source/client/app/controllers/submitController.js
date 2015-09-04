@@ -4,7 +4,7 @@ app.controller('submitController', ['$scope', '$mdToast', '$http', '$state', fun
   $scope.screencast = {};
 
   $scope.submit = function () {
-    $http.post('/screencasts', $scope.screencast).then(function () {
+    $http.post('/screencasts', $scope.screencast).success(function () {
       $mdToast.show(
         $mdToast.simple()
           .content('Thank you for your submission. Your submission will be reviewed by the moderators and if it meets our guidelines, it\'ll appear on the home page soon!')
@@ -12,6 +12,9 @@ app.controller('submitController', ['$scope', '$mdToast', '$http', '$state', fun
           .hideDelay(3000)
       );
       $state.go('home');
+    })
+    .error(function (error) {
+      $scope.error = error.message;
     });
   };
 

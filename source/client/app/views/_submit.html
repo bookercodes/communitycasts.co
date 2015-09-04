@@ -3,6 +3,10 @@
 
   <form name="screencastForm" novalidate ng-submit="submit()" id="submit-form">
 
+    <div class="error" ng-show="error">
+      <p class="error__text">{{error}}</p>
+    </div>
+
     <md-input-container>
       <label>YouTube Url:</label>
       <input type="text" name="url" required youtube-url ng-model="screencast.url">
