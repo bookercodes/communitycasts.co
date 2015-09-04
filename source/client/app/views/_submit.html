@@ -6,7 +6,7 @@
     <md-input-container>
       <label>YouTube Url:</label>
       <input type="text" name="url" required youtube-url ng-model="screencast.url">
-      <div ng-messages="screencastForm.url.$error" ng-if="screencastForm.url.$touched">
+      <div ng-messages="screencastForm.url.$error" ng-if="screencastForm.$submitted || screencastForm.url.$touched">
         <p ng-message="required">This field is required, bro.</p>
         <p ng-message="youtubeUrl">Please enter a valid YouTube url.</p>
       </div>
@@ -15,7 +15,7 @@
     <md-input-container>
       <label>Tags:</label>
       <input type="text" name="tags" required ng-model="screencast.tags">
-      <div ng-messages="screencastForm.tags.$error" ng-if="screencastForm.tags.$touched">
+      <div ng-messages="screencastForm.tags.$error" ng-if="screencastForm.$submitted || screencastForm.tags.$touched">
         <p ng-message="required">This field is required, bro.</p>
       </div>
     </md-input-container>
