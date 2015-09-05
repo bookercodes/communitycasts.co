@@ -1,28 +1,29 @@
-<header class="header" id="header">
-  <a ui-sref="home({sort:'popular',tagged:''})" class="header__logo">Community Casts</a>
-  <md-button class="header__btn" ui-sref="submit">
+<div class="hero">
+  <header class="header">
+    <a ui-sref="home({ sort: 'popular', tagged: '' })" class="header__logo">Community Casts</a>
+    <md-button class="header__submit-btn" ui-sref="submit">
+      <md-icon>
+        <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M14 10H2v2h12v-2zm0-4H2v2h12V6zm4 8v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM2 16h8v-2H2v2z"/>
+        </svg>
+      </md-icon>
+      Submit
+      <md-tooltip>
+        Submit screencast
+      </md-tooltip>
+    </md-button>
+  </header>
+  <p class="hero__tagline">
+    A community-driven free archive of educational, tech and creative screencasts
+  </p>
+  <md-button class="hero__discover-btn" ng-click="scrollToScreencasts()">
     <md-icon>
       <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0 0h24v24H0z" fill="none"/>
-        <path d="M14 10H2v2h12v-2zm0-4H2v2h12V6zm4 8v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM2 16h8v-2H2v2z"/>
+        <path d="M7.41 7.84L12 12.42l4.59-4.58L18 9.25l-6 6-6-6z"/>
+        <path d="M0-.75h24v24H0z" fill="none"/>
       </svg>
     </md-icon>
-    Submit
-    <md-tooltip>
-      Submit screencast
-    </md-tooltip>
+    Discover screencasts
   </md-button>
-</header>
-<p class="about-text">
-  A community-driven free archive of educational, tech and creative screencasts
-</p>
-
-<md-button class="hero__btn" ng-click="scrollToScreencasts()">
-  <md-icon>
-    <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-      <path d="M7.41 7.84L12 12.42l4.59-4.58L18 9.25l-6 6-6-6z"/>
-      <path d="M0-.75h24v24H0z" fill="none"/>
-    </svg>
-  </md-icon>
-  Discover screencasts
-</md-button>
+</div>

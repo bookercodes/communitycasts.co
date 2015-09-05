@@ -1,26 +1,24 @@
 html {
-  -webkit-text-size-adjust: 100%;
+  box-sizing: border-box;
 }
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 body {
   font-family: $font-family;
-  background-color: $bg-color;
+  background-color: $background-color;
   color: $text-color;
 }
 
-strong {
-  font-weight: 700;
-}
-
 .container {
-  max-width: $container-width;
+  @include container;
   background-color: white;
-  margin: 0 auto;
   display: flex;
-  flex-direction: row-reverse;
 }
 
-a.md-button, .md-button,
-.md-button {
+a.md-button, .md-button, .md-button {
   border-radius: 0;
   text-transform: none;
   font-family: inherit;
@@ -38,4 +36,16 @@ a.md-button, .md-button,
 
 ::selection {
   background-color: $accent-color;
+}
+
+@-webkit-keyframes move {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
 }

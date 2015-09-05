@@ -1,38 +1,10 @@
-@-webkit-keyframes move {
-  0% {
-    background-position: 0 0;
-  }
-  50% {
-    background-position: 100% 0;
-  }
-  100% {
-    background-position: 0 0;
-  }
-}
-
 .hero {
-  max-width: $container-width;
-  background: $hero-background;
-  position: relative;
+  @include container;
   overflow: hidden;
-  margin: 0 auto;
-  animation: move 10s ease infinite;
-  background-size: 200% 100% !important;
-
-  &__btn {
-    background-color: $hero-foreground-color;
-    width: 390px;
-    margin: 0 auto;
-    display: block;
-    margin-bottom: 50px;
-    font-size: 1.7em;
-      &:hover {
-        background-color: darken($button-background, 15) !important;
-      }
-  }
-
-  // padding: 20px 30px 0 30px;
   border-top: 5px solid $accent-color;
+  animation: move 10s ease infinite;
+  background-size: 200% 100%;
+  background: linear-gradient(45deg, $very-dark-accent-color 10%, $accent-color 90%);
   .header {
     display: flex;
     align-items: center;
@@ -45,29 +17,34 @@
         opacity: .5;
       }
     }
-    &__btn {
+    &__submit-btn {
       margin-left: auto;
       background: $button-background;
       &:hover {
-        background-color: darken($button-background, 15) !important;
+        background-color: $button-hover-background !important;
       }
     }
   }
-  .about-text {
+  &__tagline {
     padding-top: 10px;
     padding-bottom: 40px;
-    font-family: 'Open Sans';
-    font-size: 2em;
-    font-weight: 300;
+    font: $tagline-font;
     letter-spacing: .8px;
     line-height: 1.35em;
     text-align: center;
     color: $hero-foreground-color;
-    max-width: $medium-container-width + 50px;
+    max-width: 650px;
     margin: 0 auto;
-    &__product-name,
-    &__amp {
-      font-weight: 700;
+  }
+  &__discover-btn {
+    background-color: $hero-foreground-color;
+    width: 390px;
+    margin: 0 auto;
+    display: block;
+    margin-bottom: 50px;
+    font-size: 1.7em;
+    &:hover {
+      background-color: $button-hover-background !important;
     }
   }
 }

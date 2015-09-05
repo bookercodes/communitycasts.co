@@ -4,7 +4,6 @@ app.directive('tags', function() {
     require: 'ngModel',
     link: function(scope, element, attrs, ngModel) {
       ngModel.$parsers.push(function(value) {
-
         var tags = value.split(',');
         tags = tags.filter(function (tag) {
             return /\S/.test(tag);

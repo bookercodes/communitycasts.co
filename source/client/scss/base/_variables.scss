@@ -1,10 +1,10 @@
 $accent-color: #4EB15F;
 $dark-accent-color: #349851;
-
+$very-dark-accent-color: darken($dark-accent-color,10%);
 $container-width: 1100px;
-$hero-background: linear-gradient(45deg, darken($dark-accent-color,10%) 10%, $accent-color 90%);;
 $button-background: white;
 $hero-foreground-color: white;
+$button-hover-background: darken($button-background, 15);
 $container-padding: 16px;
 
 $transition-duration: 0.4s;
@@ -31,7 +31,8 @@ $color-white: white;
 $color-gray: #e5e5e5;
 $font-family: 'Roboto Condensed';
 $logo-font: 'Roboto Mono';
+$tagline-font: 300 2em 'Open Sans';
 $tag-font-size: 14px;
 $tag-color: #58585B;
 $tag-bg-color: #F0F0F0;
-$bg-color: #eceef1;
+$background-color: #eceef1;

@@ -23,10 +23,10 @@
     </div>j
   <![endif]-->
 
-  <div class="hero" ng-include src="'app/views/_hero.html'" ng-controller="headerController"> </div>
+  <div ng-include src="'app/views/_hero.html'" ng-controller="heroController"> </div>
   <div class="container" id="container">
-    <aside class="menu" ng-controller="menuController" ng-include src="'app/views/_menu.html'"></aside>
     <main class="main" ui-view></main>
+    <aside class="menu" ng-controller="menuController" ng-include src="'app/views/_menu.html'"></aside>
   </div>
   <footer class="footer">
     <div class="colophon">
