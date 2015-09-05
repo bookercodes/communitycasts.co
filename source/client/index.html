@@ -23,7 +23,7 @@
     </div>j
   <![endif]-->
 
-  <div class="hero" ng-include src="'app/views/_hero.html'"> </div>
+  <div class="hero" ng-include src="'app/views/_hero.html'" ng-controller="headerController"> </div>
   <div class="container" id="container">
     <aside class="menu" ng-controller="menuController" ng-include src="'app/views/_menu.html'"></aside>
     <main class="main" ui-view></main>
