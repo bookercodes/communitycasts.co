@@ -77,8 +77,8 @@
     align-items: center;
     transition: background-color $transition-duration;
     &__link {
-      font-size: 1.2em;
-      line-height: 1.8em;
+      font-size: 1.3em;
+      line-height: 1.5em;
       color: darken($dark-accent-color, 7%);
       &:hover {
         text-decoration: underline;
