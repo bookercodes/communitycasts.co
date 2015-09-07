@@ -7,12 +7,14 @@ var commaSplit = require('comma-split');
 var youtube = require('../youtube')(config.youtubeApiKey);
 var youtubeUrl = require('youtube-url');
 var truncate = require('truncate');
+var winston = require('winston');
 
 require('moment-duration-format');
 
 module.exports = function(connection) {
 
   function saveScreencast(req, res) {
+    winston.info('User submitted screencast with body %s. Attempting to save screencast...', JSON.stringify(req.body));
     var youtubeId = youtubeUrl.extractId(req.body.url);
     var tags = commaSplit(req.body.tags, {
       ignoreDuplicate: true
@@ -24,6 +26,7 @@ module.exports = function(connection) {
       .toString();
     connection.queryAsync(sql).spread(function (screencasts) {
       if (screencasts.length === 1) {
+        winston.info('Could not save screencast because screencast %s already exists in the db. Sending 400 instead.', youtubeId);
         return res.status(400).send({
           message: 'Screencast already exists'
         });
@@ -47,10 +50,12 @@ module.exports = function(connection) {
           })];
           return connection.queryAsync('INSERT INTO screencastTags VALUES ?', values);
         }).then(function () {
+          winston.info('Successfully saved screencast %s.', youtubeId);
           res.status(201).send();
           return connection.commit();
         }).error(function (error) {
-          console.log(error);
+          connection.rollback();
+          winston.error(error);
           res.status(500).send({
             error: 'Something went horribly wrong.'
           });
@@ -81,6 +86,7 @@ module.exports = function(connection) {
   function sendScreencastsWithTag(req, res) {
     var page = req.query.page || 1;
     var sort = req.query.sort || 'popular';
+    winston.info('Sending screencasts with tag %s (page: %s, sort: %s).', req.params.tag, page, sort);
     var sql = squel.select()
       .field('count(*) as total')
       .from(
@@ -136,7 +142,7 @@ module.exports = function(connection) {
   function sendScreencasts(req, res) {
     var page = req.query.page || 1;
     var sort = req.query.sort || 'popular';
-
+    winston.info('Sending all screencasts (page: %s, sort: %s).', page, sort);
     var sql = squel.select()
       .field('count(*) as count')
       .from('screencasts')
@@ -177,6 +183,7 @@ module.exports = function(connection) {
   function redirectToScreencast(req, res) {
     var screencastId = req.params.screencastId;
     var remoteAddress = req.connection.remoteAddress;
+    winston.info('Attempting to redirect user %s to screencast %s...', remoteAddress, screencastId);
     var sql = squel.select()
       .from('screencasts')
       .where('screencastId = ?', screencastId)
@@ -184,9 +191,11 @@ module.exports = function(connection) {
     connection.queryAsync(sql).spread(function(screencasts) {
       var screencast = screencasts.shift();
       if (!screencast) {
+        winston.info('Could not redirect user %s to screencast %s because screencast %s does not exist. Sending 404 instead.', remoteAddress, screencastId, screencastId);
         return res.status(404).send();
       }
       res.redirect('https://www.youtube.com/watch?v=' + screencast.screencastId);
+      winston.info('Successfully redirected user %s to screencast %s. Attempting to count redirect...', remoteAddress, screencastId);
       var sql = squel.select()
         .field('screencastId')
         .from('referrals')
@@ -195,7 +204,7 @@ module.exports = function(connection) {
       connection.queryAsync(sql).spread(function(referrals) {
         var alreadyCounted = referrals.length > 0;
         if (alreadyCounted) {
-          // this user's view has already been counted - do not count it again!
+          winston.info('User %s has already been redirected to screencast %s. Deliberately *not* counting redirect again.', remoteAddress, screencastId);
           return;
         }
         connection.beginTransactionAsync().then(function() {
@@ -213,8 +222,10 @@ module.exports = function(connection) {
             .toString();
           return connection.queryAsync(sql);
         }).then(function() {
+          winston.info('Successfully counted redirect to %s for user %s', screencastId, remoteAddress);
           return connection.commit();
-        }).error(function() {
+        }).error(function(error) {
+          winston.error(error);
           return connection.rollback();
         });
       });

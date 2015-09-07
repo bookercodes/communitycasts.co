@@ -9,6 +9,8 @@ var bodyParser = require('body-parser');
 var path = require('path');
 var compression = require('compression');
 var validators = require('./validators');
+var winston = require('winston');
+require('winston-loggly');
 
 promise.promisifyAll(require('mysql/lib/Connection').prototype);
 
@@ -19,6 +21,8 @@ var connection = mysql.createConnection({
   database: 'communityCasts'
 });
 connection.connect();
+
+winston.add(winston.transports.Loggly, config.logglyOptions);
 
 var app = express();
 
@@ -48,4 +52,11 @@ app.all('/*', function(req, res) {
   });
 });
 
-app.listen(config.port);
+app.listen(config.port, function () {
+  winston.info('Server was started on port %s.', config.port);
+});
+
+process.on('uncaughtException', function (err) {
+  winston.error(err.stack);
+  process.exit(1);
+});

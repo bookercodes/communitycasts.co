@@ -1,9 +1,11 @@
 'use strict';
 var squel = require('squel');
+var winston = require('winston');
 
 module.exports = function(connection) {
   return {
     send20Tags: function (req, res) {
+      winston.info('Sending tags.');
       var sql = squel.select()
         .from('tags')
         .field('tags.tagName')
