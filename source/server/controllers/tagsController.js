@@ -11,6 +11,8 @@ module.exports = function(connection) {
         .field('tags.tagName')
         .field('count(*) as count')
         .join('screencastTags', null, 'screencastTags.tagName = tags.tagName')
+        .join('screencasts', null, 'screencasts.screencastId = screencastTags.screencastId')
+        .where('screencasts.approved = 1')
         .group('tags.tagName')
         .order('count', false)
         .limit(20)

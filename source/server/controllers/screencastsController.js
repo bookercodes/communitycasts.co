@@ -93,6 +93,7 @@ module.exports = function(connection) {
         squel.select()
         .field('screencasts.screencastId')
         .from('screencasts')
+        .where('screencasts.approved = 1')
         .join('screencastTags', null, 'screencasts.screencastId = screencastTags.screencastId')
         .where('screencasts.screencastId IN ?',
           squel.select()
@@ -113,6 +114,7 @@ module.exports = function(connection) {
         .field('channels.*')
         .field('group_concat(screencastTags.tagName) as tags')
         .from('screencasts')
+        .where('screencasts.approved = 1')
         .join('screencastTags', null, 'screencasts.screencastId = screencastTags.screencastId')
         .join('channels', null, 'channels.channelId = screencasts.channelId')
         .where('screencasts.screencastId in ?',
@@ -146,6 +148,7 @@ module.exports = function(connection) {
     var sql = squel.select()
       .field('count(*) as count')
       .from('screencasts')
+      .where('approved = 1')
       .toString();
     connection.queryAsync(sql).spread(function(result) {
       var total = result.shift().count;
@@ -158,6 +161,7 @@ module.exports = function(connection) {
         .field('channels.*')
         .field('group_concat(screencastTags.tagName) as tags')
         .from('screencasts')
+        .where('screencasts.approved = 1')
         .join('screencastTags', null, 'screencasts.screencastId = screencastTags.screencastId')
         .join('channels', null, 'channels.channelId = screencasts.channelId')
         .group('screencasts.screencastId');
