@@ -76,8 +76,11 @@
     font-size: .8em;
     align-items: center;
     transition: background-color $transition-duration;
-    &__featured-info-icon {
+    &__featured-info-icon-container {
       align-self: flex-start;
+    }
+    &__featured-info-icon {
+      color: lighten($icon-color, 20%);
     }
     &--featured {
       background-color: lighten($accent-color, 44%);
