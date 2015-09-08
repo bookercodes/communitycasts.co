@@ -18,6 +18,7 @@ CREATE TABLE screencasts (
   referralCount       INT            NOT NULL DEFAULT 0,
   channelId           NVARCHAR(200)  NOT NULL,
   approved            BOOL           NOT NULL DEFAULT 0,
+  featured            BOOL           NOT NULL DEFAULT 0,
   PRIMARY KEY (screencastId),
   FOREIGN KEY (channelId)
     REFERENCES channels(channelId)

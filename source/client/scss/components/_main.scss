@@ -76,6 +76,9 @@
     font-size: .8em;
     align-items: center;
     transition: background-color $transition-duration;
+    &--featured {
+      background-color: lighten($accent-color, 44%);
+    }
     &__link {
       font-size: 1.3em;
       line-height: 1.5em;

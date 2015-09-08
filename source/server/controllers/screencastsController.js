@@ -122,6 +122,7 @@ module.exports = function(connection) {
           .field('screencastId')
           .from('screencastTags')
           .where('screencastTags.tagName = ?', req.params.tag))
+        .order('featured', false)
         .group('screencasts.screencastId');
       if (sort === 'popular') {
         // http://amix.dk/blog/post/19574
@@ -164,6 +165,7 @@ module.exports = function(connection) {
         .where('screencasts.approved = 1')
         .join('screencastTags', null, 'screencasts.screencastId = screencastTags.screencastId')
         .join('channels', null, 'channels.channelId = screencasts.channelId')
+        .order('featured', false)
         .group('screencasts.screencastId');
       if (sort === 'popular') {
         // http://amix.dk/blog/post/19574

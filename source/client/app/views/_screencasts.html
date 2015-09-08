@@ -39,9 +39,7 @@
 </div>
 
 <div class="screencasts" ng-show="loaded">
-  <div class="screencast" ng-repeat="screencast in screencasts">
-
-
+  <div class="screencast" ng-repeat="screencast in screencasts" ng-class="{'screencast--featured': screencast.featured}">
     <div class="screencast__thumb-wrap">
       <img class="screencast__thumb" src="https://i.ytimg.com/vi/{{screencast.screencastId}}/mqdefault.jpg" alt="" />
       <span class="screencast__duration">
