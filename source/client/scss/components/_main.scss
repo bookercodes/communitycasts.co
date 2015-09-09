@@ -52,9 +52,8 @@
 
   .tagged-label {
     &__tag {
-      @include tag;
-      padding: 7px 10px;
-      border: 1px darken($tag-bg-color, 6) solid;
+      background-color: $button-background;
+      padding: 3px 5px;
     }
     &__tag-count {
       font-weight: 700;
@@ -86,7 +85,7 @@
       background-color: lighten($accent-color, 44%);
     }
     &__link {
-      font-size: 1.3em;
+      font-size: 1.21em;
       line-height: 1.5em;
       color: darken($dark-accent-color, 7%);
       &:hover {
