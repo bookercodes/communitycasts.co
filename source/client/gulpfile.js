@@ -1,25 +1,33 @@
-'use strict';
+/* globals require, console*/
+'use strict'; /* jshint ignore:line*/
 
 var gulp = require('gulp');
 var sass = require('gulp-ruby-sass');
-var browserSync = require('browser-sync');
-var reload = browserSync.reload;
 var autoprefixer = require('gulp-autoprefixer');
 var concat = require('gulp-concat');
+var plumber = require('gulp-plumber');
 var uglify = require('gulp-uglify');
+var browserSync = require('browser-sync');
+var reload = browserSync.reload;
 
-function initBrowserSync() {
-  browserSync.init({
-    ui: false,
-    port: 3001,
-    server: {
-      baseDir: './'
-    },
-    notify: false
-  });
-}
+gulp.task('processDependencies', function () {
+  var sources = [
+    './bower_components/angular/angular.min.js',
+    './bower_components/angulartics/dist/angulartics.min.js',
+    './bower_components/angulartics-google-analytics/dist/angulartics-google-analytics.min.js',
+    './bower_components/angular-animate/angular-animate.min.js',
+    './bower_components/angular-aria/angular-aria.min.js',
+    './bower_components/angular-material/angular-material.min.js',
+    './bower_components/angular-ui-router/release/angular-ui-router.min.js',
+    './bower_components/angular-messages/angular-messages.min.js',
+    './bower_components/ngSmoothScroll/angular-smooth-scroll.min.js',
+  ];
+  return gulp.src(sources)
+    .pipe(concat('vendor.js'))
+    .pipe(gulp.dest('./dist/'));
+});
 
-gulp.task('sass', function() {
+gulp.task('processSass', function() {
   return sass('./scss/main.scss',{
     style:'compressed'
   })
@@ -33,35 +41,36 @@ gulp.task('sass', function() {
   .pipe(gulp.dest('./dist'));
 });
 
-gulp.task('combine', function () {
+gulp.task('processJs', function () {
   var sources = [
-    './bower_components/angular/angular.min.js',
-    './bower_components/angulartics/dist/angulartics.min.js',
-    './bower_components/angulartics-google-analytics/dist/angulartics-google-analytics.min.js',
-    './bower_components/angular-animate/angular-animate.min.js',
-    './bower_components/angular-aria/angular-aria.min.js',
-    './bower_components/angular-material/angular-material.min.js',
-    './bower_components/angular-ui-router/release/angular-ui-router.min.js',
-    './bower_components/angular-messages/angular-messages.min.js',
-    './bower_components/ngSmoothScroll/angular-smooth-scroll.min.js',
     './app/config.js',
     './app/app.js',
     './app/**/*.js',
   ];
   return gulp.src(sources)
+    .pipe(plumber())
     .pipe(concat('main.js'))
     .pipe(uglify())
     .pipe(gulp.dest('./dist/'));
 });
 
-gulp.task('default', ['sass', 'combine'], function () {
-  gulp.watch('./scss/**/*.scss', ['sass']);
-  gulp.watch('./app/**/*.js', ['combine']);
+gulp.task('build', ['processSass', 'processJs', 'processDependencies']);
+
+gulp.task('run', ['build'], function () {
+  gulp.watch('./scss/**/*.scss', ['processSass']);
+  gulp.watch('./app/**/*.js', ['processJs']);
   gulp.watch([
     './dist/main.css',
     './dist/main.js',
     '*.html'
   ]).on('change', reload);
-  // gulp.watch('css/main.css').on('change', ['autoprefix']);
-  initBrowserSync();
+  browserSync.init({
+    ui: false,
+    port: 3001,
+    server: {
+      baseDir: './'
+    },
+    notify: false,
+    online: true
+  });
 });
