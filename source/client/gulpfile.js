@@ -35,6 +35,15 @@ gulp.task('sass', function() {
 
 gulp.task('combine', function () {
   var sources = [
+    './bower_components/angular/angular.min.js',
+    './bower_components/angulartics/dist/angulartics.min.js',
+    './bower_components/angulartics-google-analytics/dist/angulartics-google-analytics.min.js',
+    './bower_components/angular-animate/angular-animate.min.js',
+    './bower_components/angular-aria/angular-aria.min.js',
+    './bower_components/angular-material/angular-material.min.js',
+    './bower_components/angular-ui-router/release/angular-ui-router.min.js',
+    './bower_components/angular-messages/angular-messages.min.js',
+    './bower_components/ngSmoothScroll/angular-smooth-scroll.min.js',
     './app/config.js',
     './app/app.js',
     './app/**/*.js',
