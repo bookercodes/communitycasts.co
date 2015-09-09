@@ -48,7 +48,7 @@ module.exports = function(connection) {
           var values = [tags.map(function (tag) {
             return [youtubeId, tag];
           })];
-          return connection.queryAsync('INSERT INTO screencastTags VALUES ?', values);
+          return connection.queryAsync('INTO screencastTags VALUES ?', values);
         }).then(function () {
           winston.info('Successfully saved screencast %s.', youtubeId);
           res.status(201).send();
@@ -57,7 +57,7 @@ module.exports = function(connection) {
           connection.rollback();
           winston.error(error);
           res.status(500).send({
-            error: 'Something went horribly wrong.'
+            message: 'An unexpected error occured. It\'s not you, it\'s us. Detailed information about the error has automatically been recorded and we have been notified. Please try again in a couple of minutes.'
           });
         });
       });
