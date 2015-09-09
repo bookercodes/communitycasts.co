@@ -37,16 +37,16 @@ app.use(express.static(path.join(__dirname, '../client/')));
 var screencastsController = require('./controllers/screencastsController')(
   connection);
 
-app.get('/screencasts/', validators.paginationValidator,
+app.get('/api/screencasts/', validators.paginationValidator,
   screencastsController.sendScreencasts);
-app.get('/screencasts/tagged/:tag', validators.paginationValidator,
+app.get('/api/screencasts/tagged/:tag', validators.paginationValidator,
   screencastsController.sendScreencastsWithTag);
-app.post('/screencasts/', validators.submissionValidator,
+app.post('/api/screencasts/', validators.submissionValidator,
   screencastsController.saveScreencast);
 app.get('/screencasts/:screencastId', screencastsController.redirectToScreencast);
 
 var tagsController = require('./controllers/tagsController')(connection);
-app.get('/tags', tagsController.send20Tags);
+app.get('/api/tags', tagsController.send20Tags);
 
 app.all('/*', function(req, res) {
   res.sendFile('index.html', {

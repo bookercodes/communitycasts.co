@@ -12,7 +12,7 @@ app.controller('screencastsController', ['$scope', '$http', '$stateParams', '$wi
   $scope.fetchScreencasts = function() {
     $scope.busy = true;
 
-    var base = config.serverHost + 'screencasts';
+    var base = config.serverHost + 'api/screencasts';
     if ($stateParams.tagged !== '') {
       $state.current.data.pageTitle = 'Free ' + $stateParams.tagged + ' screencasts.';
       base += '/tagged/' + encodeURIComponent($stateParams.tagged) + '/';
