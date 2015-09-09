@@ -17,7 +17,7 @@
     </md-input-container>
 
     <md-input-container>
-      <label>Tags:</label>
+      <label>Tags (comma seperated, max of 5)</label>
       <input type="text" name="tags" required tags ng-model="screencast.tags">
       <div ng-messages="screencastForm.tags.$error" ng-if="screencastForm.$submitted || screencastForm.tags.$touched">
         <p ng-message="required">This field is required, bro.</p>
