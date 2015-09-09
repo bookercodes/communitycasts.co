@@ -1,12 +1,14 @@
-/* globals require, console*/
+/* globals require, console, process*/
 'use strict'; /* jshint ignore:line*/
 
 var gulp = require('gulp');
+var runSequence = require('run-sequence');
 var sass = require('gulp-ruby-sass');
 var autoprefixer = require('gulp-autoprefixer');
 var concat = require('gulp-concat');
 var plumber = require('gulp-plumber');
 var uglify = require('gulp-uglify');
+var gulpNgConfig = require('gulp-ng-config');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 
@@ -25,6 +27,14 @@ gulp.task('processDependencies', function () {
   return gulp.src(sources)
     .pipe(concat('vendor.js'))
     .pipe(gulp.dest('./dist/'));
+});
+
+gulp.task('processConfig', function () {
+  return gulp.src('config.json')
+    .pipe(gulpNgConfig('config', {
+      environment: process.env.NODE_ENV || 'local'
+    }))
+    .pipe(gulp.dest('./app/'));
 });
 
 gulp.task('processSass', function() {
@@ -54,23 +64,35 @@ gulp.task('processJs', function () {
     .pipe(gulp.dest('./dist/'));
 });
 
-gulp.task('build', ['processSass', 'processJs', 'processDependencies']);
-
-gulp.task('run', ['build'], function () {
-  gulp.watch('./scss/**/*.scss', ['processSass']);
-  gulp.watch('./app/**/*.js', ['processJs']);
-  gulp.watch([
-    './dist/main.css',
-    './dist/main.js',
-    '*.html'
-  ]).on('change', reload);
-  browserSync.init({
-    ui: false,
-    port: 3001,
-    server: {
-      baseDir: './'
-    },
-    notify: false,
-    online: true
-  });
+gulp.task('production', function () {
+  runSequence(
+    'processConfig',
+    ['processSass', 'processJs', 'processDependencies']
+  );
 });
+
+gulp.task('local', function () {
+  runSequence(
+    'processConfig',
+    ['processSass', 'processJs', 'processDependencies'],
+    function () {
+      gulp.watch('./scss/**/*.scss', ['processSass']);
+      gulp.watch('./app/**/*.js', ['processJs']);
+      gulp.watch([
+        './dist/main.css',
+        './dist/main.js',
+        '*.html'
+      ]).on('change', reload);
+      browserSync.init({
+        ui: false,
+        port: 3001,
+        server: {
+          baseDir: './'
+        },
+        notify: false,
+        online: true
+      });
+    });
+});
+
+gulp.task('default', ['local']);

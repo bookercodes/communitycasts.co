@@ -1,0 +1,12 @@
+{
+  "local": {
+    "config": {
+      "serverHost": "http://localhost:8080/"
+    }
+  },
+  "production": {
+    "config": {
+      "serverHost": "http://communitycasts.co/"
+    }
+  }
+}

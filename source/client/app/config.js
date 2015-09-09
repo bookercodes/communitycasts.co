@@ -1,4 +1,2 @@
-angular.module('config',[])
-  .constant('config', {
-    serverHost: 'http://localhost:8080/'
-  });
+angular.module('config', [])
+.constant('config', {"serverHost":"http://communitycasts.co/"});
