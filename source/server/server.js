@@ -10,9 +10,11 @@ var path = require('path');
 var compression = require('compression');
 var validators = require('./validators');
 var winston = require('winston');
-require('winston-loggly');
 
 promise.promisifyAll(require('mysql/lib/Connection').prototype);
+
+require('winston-loggly');
+winston.add(winston.transports.Loggly, config.logglyOptions);
 
 var connection = mysql.createConnection({
   host: 'localhost',
@@ -21,8 +23,9 @@ var connection = mysql.createConnection({
   database: 'communityCasts'
 });
 connection.connect();
-
-winston.add(winston.transports.Loggly, config.logglyOptions);
+connection.on('error', function(error) {
+  winston.error(error);
+});
 
 var app = express();
 
@@ -45,7 +48,6 @@ app.get('/screencasts/:screencastId', screencastsController.redirectToScreencast
 var tagsController = require('./controllers/tagsController')(connection);
 app.get('/tags', tagsController.send20Tags);
 
-// https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions#how-to-configure-your-server-to-work-with-html5mode
 app.all('/*', function(req, res) {
   res.sendFile('index.html', {
     root: path.join(__dirname, '../client/')
