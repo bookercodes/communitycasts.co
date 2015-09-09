@@ -4,3 +4,4 @@ errors.log
 npm-debug.log
 .sass-cache
 local.json
+dist
