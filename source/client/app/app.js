@@ -5,7 +5,9 @@ var app = angular.module('communityCasts', [
 	'ui.router',
 	'smoothScroll',
 	'ngMaterial',
-	'ngMessages'
+	'ngMessages',
+	'angulartics',
+	'angulartics.google.analytics'
 ]);
 
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',

@@ -5,6 +5,7 @@
     "angular-material": "~0.10.1",
     "angular-messages": "~1.4.5",
     "angular-ui-router": "~0.2.15",
+    "angulartics-google-analytics": "~0.1.1",
     "ngSmoothScroll": "~1.7.1"
   }
 }
