@@ -5,10 +5,14 @@
   animation: move 10s ease infinite;
   background-size: 200% 100%;
   background: linear-gradient(45deg, $very-dark-accent-color 10%, $accent-color 90%);
+  padding: 0 25px;
   .header {
     display: flex;
     align-items: center;
-    padding: 20px 25px;
+    padding: 20px 0;
+    @media only screen and (max-width: 370px) {
+      flex-direction: column;
+    }
     &__logo {
       @include logo;
       border-color: $hero-foreground-color;
@@ -20,6 +24,10 @@
     &__submit-btn {
       margin-left: auto;
       background: $button-background;
+      @media only screen and (max-width: 370px) {
+        margin-left: 0;
+        margin-top: 15px;
+      }
       &:hover {
         background-color: $button-hover-background !important;
       }
@@ -35,10 +43,14 @@
     color: $hero-foreground-color;
     max-width: 650px;
     margin: 0 auto;
+    @media only screen and (max-width: 715px) {
+      font-size: 1.5em;
+    }
   }
   &__discover-btn {
     background-color: $hero-foreground-color;
-    width: 390px;
+    min-width: 210px;
+    width: 40%;
     margin: 0 auto;
     display: block;
     margin-bottom: 50px;
