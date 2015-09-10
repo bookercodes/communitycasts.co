@@ -40,5 +40,8 @@
   &__scroll-top-btn {
     background-color: darken($button-background, 6);
     margin-left: auto;
+    @media only screen and (max-width: 670px) {
+      display: none;
+    }
   }
 }

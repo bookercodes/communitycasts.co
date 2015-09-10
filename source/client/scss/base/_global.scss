@@ -16,6 +16,12 @@ body {
   @include container;
   background-color: white;
   display: flex;
+
+  @media only screen and (max-width: 670px) {
+    flex-direction: column-reverse;
+  }
+
+
 }
 
 a.md-button, .md-button, .md-button {
