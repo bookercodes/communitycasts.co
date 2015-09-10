@@ -77,14 +77,19 @@
     @media only screen and (max-width: 850px) {
       flex-direction: column;
     }
+    &--featured {
+      background-color: #F8F8F8;
+    }
     &__featured-annotation {
       font-size: 0.9em;
       display: block;
+      font-style: italic;
     }
     &__featured-icon {
-      width: 16px;
-      height: 16px;
-      background-color: $accent-color;
+      width: 14px;
+      height: 14px;
+      background-color: lighten($accent-color, 10%);
+      color: white;
     }
     &__link {
       font-size: 1.21em;
