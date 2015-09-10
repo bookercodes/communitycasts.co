@@ -74,6 +74,9 @@
     font-size: .8em;
     align-items: center;
     transition: background-color $transition-duration;
+    @media only screen and (max-width: 850px) {
+      flex-direction: column;
+    }
     &__featured-annotation {
       font-size: 0.9em;
       display: block;
@@ -104,11 +107,18 @@
     }
     &__description {
       padding-bottom: 8px;
+      @media only screen and (max-width: 850px) {
+        display: none;
+      }
     }
     &__thumb-wrap {
       margin-right: 16px;
       position: relative;
       min-width: 196px;
+      align-self: flex-start;
+      @media only screen and (max-width: 850px) {
+        margin-bottom: 15px;
+      }
     }
     &__info {
       width: 100%;
