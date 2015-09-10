@@ -39,31 +39,29 @@
 </div>
 
 <div class="screencasts" ng-show="loaded">
-  <div class="screencast" ng-repeat="screencast in screencasts" ng-class="{'screencast--featured': screencast.featured}">
+  <div class="screencast" ng-repeat="screencast in screencasts">
     <div class="screencast__thumb-wrap">
       <a href="{{screencast.href}}"><img class="screencast__thumb" src="https://i.ytimg.com/vi/{{screencast.screencastId}}/mqdefault.jpg" alt="" /></a>
       <span class="screencast__duration">
         {{screencast.duration}}
       </span>
     </div>
-
     <div class="screencast__info" >
+      <span class="screencast__featured-annotation" ng-show="screencast.featured">
+        <md-icon class="screencast__featured-icon">
+          <svg height="18" viewBox="0 0 18 18" width="18" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 11.3l3.71 2.7-1.42-4.36L15 7h-4.55L9 2.5 7.55 7H3l3.71 2.64L5.29 14z"/>
+            <path d="M0 0h18v18H0z" fill="none"/>
+          </svg>
+        </md-icon>
+        Featured screencast
+      </span>
       <a href="{{screencast.href}}" target="_blank" class="screencast__link">{{screencast.title}}</a>
       <p class="screencast__channel">by <a class="screencast__channel-link" href="https://youtube.com/channel/{{screencast.channel.channelId}}">{{screencast.channel.channelName}}</a></p>
       <p class="screencast__description">{{screencast.description}}</p>
       <div>
         <button class="screencast__tag tag" ui-sref="home({tagged:tag,sort:'popular'})" ng-repeat="tag in screencast.tags">{{tag}}</button>
       </div>
-    </div>
-    <div class="screencast__featured-info-icon-container">
-      <md-icon  class="screencast__featured-info-icon" ng-show="screencast.featured">
-        <svg class="screencast__featured-info-icon" height="24" width="24" viewBox="0 0 24 24">
-          <path d="M15.07,11.25L14.17,12.17C13.45,12.89 13,13.5 13,15H11V14.5C11,13.39 11.45,12.39 12.17,11.67L13.41,10.41C13.78,10.05 14,9.55 14,9C14,7.89 13.1,7 12,7A2,2 0 0,0 10,9H8A4,4 0 0,1 12,5A4,4 0 0,1 16,9C16,9.88 15.64,10.67 15.07,11.25M13,19H11V17H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,6.47 17.5,2 12,2Z" />
-        </svg>
-        <md-tooltip md-direction="right">
-          Community Casts staff pick.
-        </md-tooltip>
-      </md-icon>
     </div>
   </div>
 </div>

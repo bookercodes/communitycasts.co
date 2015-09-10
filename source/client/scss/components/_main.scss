@@ -47,7 +47,6 @@
     justify-content: space-between;
     font-size: 0.85em;
     margin: 16px 0;
-
   }
 
   .tagged-label {
@@ -70,19 +69,19 @@
   }
   .screencast {
     border-bottom: 1px solid $divider-color;
-    padding: 20px 10px;
     display: flex;
+    padding: 20px 10px;
     font-size: .8em;
     align-items: center;
     transition: background-color $transition-duration;
-    &__featured-info-icon-container {
-      align-self: flex-start;
+    &__featured-annotation {
+      font-size: 0.9em;
+      display: block;
     }
-    &__featured-info-icon {
-      color: lighten($icon-color, 20%);
-    }
-    &--featured {
-      background-color: lighten($accent-color, 44%);
+    &__featured-icon {
+      width: 16px;
+      height: 16px;
+      background-color: $accent-color;
     }
     &__link {
       font-size: 1.21em;
