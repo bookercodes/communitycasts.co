@@ -30,14 +30,28 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
       $title: function() { return 'Submit'; }
     }
 		});
-		$stateProvider.state('home', {
-			url: '/:tagged?',
+		$stateProvider.state('tagged', {
+			url: '/tagged/:tagged',
 			templateUrl: '/app/views/_screencasts.html',
 			controller: 'screencastsController',
 			params: {
 				sort: 'popular',
 				tagged: '',
 			},
+			resolve: {
+				$title: ['$stateParams', function ($stateParams) {
+					return $stateParams.tagged;
+				}]
+			}
+		});
+		$stateProvider.state('home', {
+			url: '/',
+			templateUrl: '/app/views/_screencasts.html',
+			controller: 'screencastsController',
+			params: {
+				sort: 'popular',
+				tagged: '',
+			}
 		});
 	}
 ]);

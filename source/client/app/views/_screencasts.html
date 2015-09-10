@@ -60,7 +60,7 @@
       <p class="screencast__channel">by <a class="screencast__channel-link" href="https://youtube.com/channel/{{screencast.channel.channelId}}">{{screencast.channel.channelName}}</a></p>
       <p class="screencast__description">{{screencast.description}}</p>
       <div>
-        <button class="screencast__tag tag" ui-sref="home({tagged:tag,sort:'popular'})" ng-repeat="tag in screencast.tags">{{tag}}</button>
+        <button class="screencast__tag tag" ui-sref="tagged({tagged:tag,sort:'popular'})" ng-repeat="tag in screencast.tags">{{tag}}</button>
       </div>
     </div>
   </div>
