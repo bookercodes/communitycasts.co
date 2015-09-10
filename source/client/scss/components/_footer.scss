@@ -1,21 +1,30 @@
 .footer {
-  padding: 40px 0;
+  padding: 40px 25px;
   margin: 0 auto;
   max-width: $container-width;
   display: flex;
   justify-content: space-between;
+  @media only screen and (max-width: 850px) {
+    flex-direction: column-reverse;
+  }
   &__logo {
     @include logo;
     transition: color $transition-duration ease, border-color $transition-duration ease;
     color: $footer-color-light;
     border-color: $footer-color-light;
     height: 100%;
+    @media only screen and (max-width: 850px) {
+      margin-bottom: 15px;
+    }
   }
   .colophon {
     transition: border-color $transition-duration ease;
     width: $container-width / 2;
     border-left: 2px $footer-color-light solid;
     padding: 10px 16px;
+    @media only screen and (max-width: 850px) {
+      width: 100%;
+    }
     &__paragraph {
       transition: color $transition-duration ease;
       letter-spacing: .05em;
