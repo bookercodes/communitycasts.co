@@ -23,6 +23,7 @@ gulp.task('processDependencies', function () {
     './bower_components/angular-ui-router/release/angular-ui-router.min.js',
     './bower_components/angular-messages/angular-messages.min.js',
     './bower_components/ngSmoothScroll/angular-smooth-scroll.min.js',
+    './bower_components/angular-ui-router-title/angular-ui-router-title.js'
   ];
   return gulp.src(sources)
     .pipe(concat('vendor.js'))

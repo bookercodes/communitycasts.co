@@ -7,7 +7,8 @@ var app = angular.module('communityCasts', [
 	'ngMaterial',
 	'ngMessages',
 	'angulartics',
-	'angulartics.google.analytics'
+	'angulartics.google.analytics',
+	'ui.router.title'
 ]);
 
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
@@ -17,17 +18,17 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
 		$stateProvider.state('about', {
 			url: '/about',
 			templateUrl: '/app/views/_about.html',
-			data: {
-				pageTitle: 'About Community Casts'
-			}
+			resolve: {
+      $title: function() { return 'About'; }
+    }
 		});
 		$stateProvider.state('submit', {
 			url: '/submit',
 			templateUrl: '/app/views/_submit.html',
 			controller: 'submitController',
-			data: {
-				pageTitle: 'Submit a screencast'
-			}
+			resolve: {
+      $title: function() { return 'Submit'; }
+    }
 		});
 		$stateProvider.state('home', {
 			url: '/:tagged?',
@@ -37,16 +38,6 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
 				sort: 'popular',
 				tagged: '',
 			},
-			data: {
-				pageTitle: 'Community Casts'
-			}
 		});
-	}
-]);
-
-app.run(['$rootScope', '$state', '$stateParams',
-	function($rootScope, $state, $stateParams) {
-		$rootScope.$state = $state;
-		$rootScope.$stateParams = $stateParams;
 	}
 ]);

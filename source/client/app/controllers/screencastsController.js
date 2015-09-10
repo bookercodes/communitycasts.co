@@ -14,10 +14,7 @@ app.controller('screencastsController', ['$scope', '$http', '$stateParams', '$wi
 
     var base = config.serverHost + 'api/screencasts';
     if ($stateParams.tagged !== '') {
-      $state.current.data.pageTitle = 'Free ' + $stateParams.tagged + ' screencasts.';
       base += '/tagged/' + encodeURIComponent($stateParams.tagged) + '/';
-    } else {
-      $state.current.data.pageTitle = 'Community Casts';
     }
     var url = base + '?page=' + $scope.page + '&sort=' + $scope.sortOption;
     $http.get(url).success(function(response) {
