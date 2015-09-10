@@ -48,7 +48,7 @@ module.exports = function(connection) {
           var values = [tags.map(function (tag) {
             return [youtubeId, tag];
           })];
-          return connection.queryAsync('INTO screencastTags VALUES ?', values);
+          return connection.queryAsync('INSERT INTO screencastTags VALUES ?', values);
         }).then(function () {
           winston.info('Successfully saved screencast %s.', youtubeId);
           res.status(201).send();
