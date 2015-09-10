@@ -40,7 +40,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
 			},
 			resolve: {
 				$title: ['$stateParams', function ($stateParams) {
-					return $stateParams.tagged;
+					return $stateParams.tagged  + ' Screencasts';
 				}]
 			}
 		});
