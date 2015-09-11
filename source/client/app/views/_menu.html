@@ -1,67 +1,78 @@
-<div class="menu-content">
-  <h3 class="menu__heading">Learn</h3>
-  <div class="tag-list">
-    <md-button ui-sref="tagged({tagged:tag.tagName,sort:'popular'})" ng-repeat="tag in tags" class="tag-list__tag tag">
-      {{tag.tagName}}
-      <span class="tag__badge">({{tag.count}})</span>
-    </md-button>
-  </div>
-  <h3 class="menu__heading">Navigate</h3>
-  <nav class="nav">
-    <md-button ui-sref="home({sort:'popular',tagged:''})" class="nav__btn">
-      <md-icon>
-        <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-            <path d="M0 0h24v24H0z" fill="none"/>
-        </svg>
-      </md-icon>
-      Home
-    </md-button>
-    <md-button ui-sref="submit" class="nav__btn">
-      <md-icon>
-        <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0 0h24v24H0z" fill="none"/>
-          <path d="M14 10H2v2h12v-2zm0-4H2v2h12V6zm4 8v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM2 16h8v-2H2v2z"/>
-        </svg>
-      </md-icon>
-      Submit
-    </md-button>
-    <md-button ui-sref="about" class="nav__btn">
-      <md-icon>
-        <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0 0h24v24H0z" fill="none"/>
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-        </svg>
-      </md-icon>
-      About
-    </md-button>
-  </nav>
-  <h3 class="menu__heading">Connect</h3>
-  <nav class="nav">
-      <md-button href="http://twitter.com/communitycasts_" class="nav__btn" analytics-on="click" analytics-event="Twitter">
-      <md-icon>
-        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-          <path fill="#00aced" d="M22.46,6C21.69,6.35 20.86,6.58 20,6.69C20.88,6.16 21.56,5.32 21.88,4.31C21.05,4.81 20.13,5.16 19.16,5.36C18.37,4.5 17.26,4 16,4C13.65,4 11.73,5.92 11.73,8.29C11.73,8.63 11.77,8.96 11.84,9.27C8.28,9.09 5.11,7.38 3,4.79C2.63,5.42 2.42,6.16 2.42,6.94C2.42,8.43 3.17,9.75 4.33,10.5C3.62,10.5 2.96,10.3 2.38,10C2.38,10 2.38,10 2.38,10.03C2.38,12.11 3.86,13.85 5.82,14.24C5.46,14.34 5.08,14.39 4.69,14.39C4.42,14.39 4.15,14.36 3.89,14.31C4.43,16 6,17.26 7.89,17.29C6.43,18.45 4.58,19.13 2.56,19.13C2.22,19.13 1.88,19.11 1.54,19.07C3.44,20.29 5.7,21 8.12,21C16,21 20.33,14.46 20.33,8.79C20.33,8.6 20.33,8.42 20.32,8.23C21.16,7.63 21.88,6.87 22.46,6Z" />
-        </svg>
-      </md-icon>
-      Twitter
-    </md-button>
-    <md-button href="https://www.facebook.com/ccommunitycasts" class="nav__btn" analytics-on="click" analytics-event="Facebook">
-      <md-icon>
-        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-          <path fill="#3b5998" d="M17,2V2H17V6H15C14.31,6 14,6.81 14,7.5V10H14L17,10V14H14V22H10V14H7V10H10V6A4,4 0 0,1 14,2H17Z" />
-        </svg>
-      </md-icon>
-      Facebook
-    </md-button>
-  </nav>
+<div class="menu__burger-wrap">
+  <button class="menu__burger" ng-click="toggleCustom()">
+    <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="none"/>
+      <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+    </svg>
+  </button>
 </div>
 
-<md-button class="menu__scroll-top-btn" scroll-to="hero">
-  <md-icon>
-    <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-      <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
-      <path d="M0 0h24v24H0z" fill="none"/>
-    </svg>
-  </md-icon>
-</md-button>
+<div class="menu-inner" ng-class="{visible: !custom}">
+  <div class="menu-content">
+    <h3 class="menu__heading">Learn</h3>
+    <div class="tag-list">
+      <md-button ui-sref="tagged({tagged:tag.tagName,sort:'popular'})" ng-repeat="tag in tags" class="tag-list__tag tag">
+        {{tag.tagName}}
+        <span class="tag__badge">({{tag.count}})</span>
+      </md-button>
+    </div>
+    <h3 class="menu__heading">Navigate</h3>
+    <nav class="nav">
+      <md-button ui-sref="home({sort:'popular',tagged:''})" class="nav__btn">
+        <md-icon>
+          <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+              <path d="M0 0h24v24H0z" fill="none"/>
+          </svg>
+        </md-icon>
+        Home
+      </md-button>
+      <md-button ui-sref="submit" class="nav__btn">
+        <md-icon>
+          <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M14 10H2v2h12v-2zm0-4H2v2h12V6zm4 8v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM2 16h8v-2H2v2z"/>
+          </svg>
+        </md-icon>
+        Submit
+      </md-button>
+      <md-button ui-sref="about" class="nav__btn">
+        <md-icon>
+          <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+          </svg>
+        </md-icon>
+        About
+      </md-button>
+    </nav>
+    <h3 class="menu__heading">Connect</h3>
+    <nav class="nav">
+        <md-button href="http://twitter.com/communitycasts_" class="nav__btn" analytics-on="click" analytics-event="Twitter">
+        <md-icon>
+          <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+            <path fill="#00aced" d="M22.46,6C21.69,6.35 20.86,6.58 20,6.69C20.88,6.16 21.56,5.32 21.88,4.31C21.05,4.81 20.13,5.16 19.16,5.36C18.37,4.5 17.26,4 16,4C13.65,4 11.73,5.92 11.73,8.29C11.73,8.63 11.77,8.96 11.84,9.27C8.28,9.09 5.11,7.38 3,4.79C2.63,5.42 2.42,6.16 2.42,6.94C2.42,8.43 3.17,9.75 4.33,10.5C3.62,10.5 2.96,10.3 2.38,10C2.38,10 2.38,10 2.38,10.03C2.38,12.11 3.86,13.85 5.82,14.24C5.46,14.34 5.08,14.39 4.69,14.39C4.42,14.39 4.15,14.36 3.89,14.31C4.43,16 6,17.26 7.89,17.29C6.43,18.45 4.58,19.13 2.56,19.13C2.22,19.13 1.88,19.11 1.54,19.07C3.44,20.29 5.7,21 8.12,21C16,21 20.33,14.46 20.33,8.79C20.33,8.6 20.33,8.42 20.32,8.23C21.16,7.63 21.88,6.87 22.46,6Z" />
+          </svg>
+        </md-icon>
+        Twitter
+      </md-button>
+      <md-button href="https://www.facebook.com/ccommunitycasts" class="nav__btn" analytics-on="click" analytics-event="Facebook">
+        <md-icon>
+          <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+            <path fill="#3b5998" d="M17,2V2H17V6H15C14.31,6 14,6.81 14,7.5V10H14L17,10V14H14V22H10V14H7V10H10V6A4,4 0 0,1 14,2H17Z" />
+          </svg>
+        </md-icon>
+        Facebook
+      </md-button>
+    </nav>
+  </div>
+
+  <md-button class="menu__scroll-top-btn" scroll-to="hero">
+    <md-icon>
+      <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+        <path d="M0 0h24v24H0z" fill="none"/>
+      </svg>
+    </md-icon>
+  </md-button>
+<div>
