@@ -27,4 +27,17 @@
   &__foo {
     color: $accent-color;
   }
+  &__list {
+    margin-bottom: 16px;
+  }
+  &__list-item {
+    list-style: circle;
+    margin-left: 20px;
+    &--bad {
+      color: #EF5350 ;
+    }
+    &--good {
+      color: #4CAF50;
+    }
+  }
 }
