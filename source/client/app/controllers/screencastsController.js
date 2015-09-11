@@ -29,7 +29,7 @@ app.controller('screencastsController', ['$scope', '$http', '$stateParams', '$wi
       $scope.screencasts = $scope.screencasts.concat(response.screencasts);
       $scope.loaded = true;
       if (!$scope.hasMore) {
-        $scope.loadBtnText = 'Showing ' + $scope.screencasts.length + ' of ' + $scope.screencasts.length + ' screencasts. There are no more to load.';
+        $scope.loadBtnText = 'There are no more screencasts to load.';
       }
     });
   };
