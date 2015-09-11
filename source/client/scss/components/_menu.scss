@@ -25,6 +25,7 @@
     padding: $container-padding;
     @media only screen and (max-width: 670px) {
       display: none;
+      background-color: lighten($accent-color, 20%);
     }
   }
 
