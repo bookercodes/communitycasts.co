@@ -12,7 +12,10 @@ var winston = require('winston');
 require('moment-duration-format');
 
 module.exports = function(connection) {
-
+  function searchScreencasts(req, res) {
+    var query = req.params.query;
+    res.send(query);
+  }
   function saveScreencast(req, res) {
     winston.info('User submitted screencast with body %s. Attempting to save screencast...', JSON.stringify(req.body));
     var youtubeId = youtubeUrl.extractId(req.body.url);
@@ -242,6 +245,7 @@ module.exports = function(connection) {
     sendScreencasts: sendScreencasts,
     sendScreencastsWithTag: sendScreencastsWithTag,
     redirectToScreencast: redirectToScreencast,
-    saveScreencast: saveScreencast
+    saveScreencast: saveScreencast,
+    searchScreencasts: searchScreencasts
   };
 };
