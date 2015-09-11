@@ -6,6 +6,9 @@
     background-color: $darker-background-color;
     padding: 8px;
     margin-bottom: 8px;
+    @media only screen and (max-width: 450px) {
+      justify-content: center;
+    }
     &__icon {
       margin-right: 7px;
     }
