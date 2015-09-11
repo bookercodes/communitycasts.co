@@ -3,7 +3,7 @@
 var heroController = function($scope, smoothScroll, $state) {
 	$scope.scrollToScreencasts = function() {
 		$state.go('home');
-		smoothScroll(document.getElementById('container'));
+		smoothScroll(document.getElementById('main'));
 	};
 };
 heroController.$inject = ['$scope', 'smoothScroll', '$state'];
