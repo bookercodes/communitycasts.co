@@ -34,6 +34,8 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../client/')));
 
+app.enable('trust proxy');
+
 var screencastsController = require('./controllers/screencastsController')(
   connection);
 

@@ -188,7 +188,7 @@ module.exports = function(connection) {
 
   function redirectToScreencast(req, res) {
     var screencastId = req.params.screencastId;
-    var remoteAddress = req.connection.remoteAddress;
+    var remoteAddress = req.ip;
     winston.info('Attempting to redirect user %s to screencast %s...', remoteAddress, screencastId);
     var sql = squel.select()
       .from('screencasts')
