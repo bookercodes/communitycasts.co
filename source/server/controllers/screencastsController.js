@@ -55,7 +55,7 @@ module.exports = function(connection) {
           return connection.commit();
         }).error(function (error) {
           connection.rollback();
-          winston.error(error);
+          winston.error('Something went wrong while saving screencast:', error);
           res.status(500).send({
             message: 'An unexpected error occured. It\'s not you, it\'s us. Detailed information about the error has automatically been recorded and we have been notified. Please try again in a couple of minutes.'
           });
@@ -231,7 +231,7 @@ module.exports = function(connection) {
           winston.info('Successfully counted redirect to %s for user %s', screencastId, remoteAddress);
           return connection.commit();
         }).error(function(error) {
-          winston.error(error);
+          winston.error('Something went wrong while counting referral:', error);
           return connection.rollback();
         });
       });
