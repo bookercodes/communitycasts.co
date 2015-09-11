@@ -27,7 +27,6 @@ gulp.task('processDependencies', function () {
   ];
   return gulp.src(sources)
     .pipe(concat('vendor.js'))
-    .pipe(uglify())
     .pipe(gulp.dest('./dist/'));
 });
 
