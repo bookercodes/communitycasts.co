@@ -2,9 +2,9 @@
   @include container;
   overflow: hidden;
   border-top: 5px solid $accent-color;
+  background: linear-gradient(45deg, $very-dark-accent-color 10%, $accent-color 90%);
   animation: move 10s ease infinite;
   background-size: 200% 100%;
-  background: linear-gradient(45deg, $very-dark-accent-color 10%, $accent-color 90%);
   padding: 0 25px;
   .header {
     display: flex;
