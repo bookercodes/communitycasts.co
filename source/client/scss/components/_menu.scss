@@ -1,41 +1,29 @@
 .menu {
   flex-basis: 30%;
   border-left: 1px $divider-color solid;
-
+  display: flex;
+  flex-direction: column;
   &__burger {
     fill: white;
-  }
-
-  &__burger-wrap {
-    padding: 10px 0;
-    text-align: center;
     background-color: $accent-color;
+    width: 100%;
+    padding: 10px 0;
     display: none;
     @media only screen and (max-width: 670px) {
       display: block;
     }
   }
 
-  .menu-inner {
-    display: flex;
+  &__inner {
+    flex: 1;
+    padding: $container-padding;
     &.visible {
       display: block;
     }
-    flex-direction: column;
-    padding: $container-padding;
     @media only screen and (max-width: 670px) {
       display: none;
       background-color: lighten($accent-color, 20%);
     }
-  }
-
-  .menu-content {
-    flex: 1;
-  }
-  &__heading {
-    color: $menu-heading-color;
-    margin-bottom: 10px;
-    font-size: $menu-heading-font-size;
   }
   .tag-list {
     display: flex;
@@ -63,6 +51,7 @@
   }
   &__scroll-top-btn {
     background-color: darken($button-background, 6);
+    margin: $container-padding;
     margin-left: auto;
     @media only screen and (max-width: 670px) {
       display: none;

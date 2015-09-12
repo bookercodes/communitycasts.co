@@ -5,7 +5,7 @@
       $scope.tags = response.tags;
     });
     $scope.menuVisible = false;
-    $scope.toggleCustom = function() {
+    $scope.toggleMenu = function() {
       $scope.menuVisible = !$scope.menuVisible;
     };
   };

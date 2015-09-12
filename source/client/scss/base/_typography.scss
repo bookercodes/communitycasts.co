@@ -1,16 +1,5 @@
-// h1 {
-//   color: red;
-//   font-family: 'Roboto';
-//   font-size: 22px;
-//   margin-bottom: 10px;
-//   color: #4CAF50;
-// }
-//
-// p {
-//   font-family: 'Roboto';
-//   font-size: 16px;
-//   line-height: 22px;
-//   margin-top:2px;
-//   margin-bottom:30px;
-//   max-width: 960px;
-// }
+h2 {
+  color: $menu-heading-color;
+  margin-bottom: 10px;
+  font-size: $menu-heading-font-size;
+}
