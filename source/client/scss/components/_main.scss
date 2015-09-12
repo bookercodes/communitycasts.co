@@ -115,6 +115,8 @@
     }
     &__description {
       padding-bottom: 8px;
+      overflow: hidden;
+      text-overflow: ellipsis;
       @media only screen and (max-width: 200px) {
         display: none;
       }
@@ -130,6 +132,7 @@
     }
     &__info {
       width: 100%;
+      overflow: hidden;
     }
     &__duration {
       background-color: goldenrod;
