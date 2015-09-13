@@ -17,14 +17,14 @@
 			$urlRouterProvider.otherwise('/');
 			$stateProvider.state('about', {
 				url: '/about',
-				templateUrl: '/app/views/_about.html',
+				templateUrl: '/app/components/about/_about.html',
 				resolve: {
 	      $title: function() { return 'About'; }
 	    }
 			});
 			$stateProvider.state('submit', {
 				url: '/submit',
-				templateUrl: '/app/views/_submit.html',
+				templateUrl: '/app/components/submit/_submit.html',
 				controller: 'submitController',
 				resolve: {
 	      $title: function() { return 'Submit'; }
@@ -32,7 +32,7 @@
 			});
 			$stateProvider.state('tagged', {
 				url: '/tagged/:tagged',
-				templateUrl: '/app/views/_screencasts.html',
+				templateUrl: '/app/components/screencasts/_screencasts.html',
 				controller: 'screencastsController',
 				params: {
 					sort: 'popular',
@@ -46,7 +46,7 @@
 			});
 			$stateProvider.state('home', {
 				url: '/',
-				templateUrl: '/app/views/_screencasts.html',
+				templateUrl: '/app/components/screencasts/_screencasts.html',
 				controller: 'screencastsController',
 				params: {
 					sort: 'popular',

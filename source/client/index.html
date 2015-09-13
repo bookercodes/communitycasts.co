@@ -24,10 +24,10 @@
     </div>j
   <![endif]-->
 
-  <div ng-include src="'app/views/_hero.html'" ng-controller="heroController"></div>
+  <div ng-include src="'app/components/hero/_hero.html'" ng-controller="heroController"></div>
   <div class="container">
     <main class="main" id="main" ui-view></main>
-    <aside class="menu" ng-controller="menuController" ng-include src="'app/views/_menu.html'"></aside>
+    <aside class="menu" ng-controller="menuController" ng-include src="'app/components/menu/_menu.html'"></aside>
   </div>
   <footer class="footer">
     <div class="colophon">
