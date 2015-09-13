@@ -1,27 +1,28 @@
 $accent-color: #4EB15F;
 $dark-accent-color: #349851;
 $very-dark-accent-color: darken($dark-accent-color,10%);
-$container-width: 1100px;
-$button-background: white;
 $hero-foreground-color: white;
+$button-background: white;
 $button-hover-background: darken($button-background, 15);
+$text-color: #212121;
+$icon-color: $text-color;
+$divider-color: #E0E0E0;
+$darker-background-color: #f2f2f2;
+$menu-heading-color: black;
+$footer-color: #3e4551;
+$footer-color-light: lighten($footer-color, 52);
+
+$container-width: 1100px;
 $container-padding: 16px;
 
 $transition-duration: 0.4s;
 
-$text-color: #212121;
-$icon-color: $text-color;
 
-$divider-color: #E0E0E0;
 
-$darker-background-color: #f2f2f2;
 
-$menu-heading-color: black;
 $menu-heading-font-size: 1.1em;
 
 
-$footer-color: #3e4551;
-$footer-color-light: lighten($footer-color, 52);
 
 
 

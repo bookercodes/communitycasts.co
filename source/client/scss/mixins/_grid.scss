@@ -1,0 +1,16 @@
+@mixin container1 {
+  max-width: $container-width;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+@mixin tablet {
+  @media only screen and (max-width: 715px) {
+    @content;
+  }
+}
+@mixin mobile {
+  @media only screen and (max-width: 370px) {
+    @content;
+  }
+}
