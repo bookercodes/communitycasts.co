@@ -1,39 +1,15 @@
-html {
-  box-sizing: border-box;
-}
-
 *, *:before, *:after {
   box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
 }
 
 body {
   font-family: $font-family;
   background-color: $background-color;
   color: $text-color;
-}
-
-.container {
-  @include container;
-  background-color: white;
-  display: flex;
-
-  @media only screen and (max-width: 670px) {
-    flex-direction: column-reverse;
-  }
-
-
-}
-
-a.md-button, .md-button, .md-button {
-  border-radius: 0;
-  text-transform: none;
-  font-family: inherit;
-  font-size: .8em !important;
-  margin: 0;
-}
-
-.material-icons {
-  color: $icon-color;
 }
 
 ::-moz-selection {
@@ -44,14 +20,11 @@ a.md-button, .md-button, .md-button {
   background-color: $accent-color;
 }
 
-@-webkit-keyframes move {
-  0% {
-    background-position: 0 0;
-  }
-  50% {
-    background-position: 100% 0;
-  }
-  100% {
-    background-position: 0 0;
+.container {
+  @include container;
+  background-color: white;
+  display: flex;
+  @media only screen and (max-width: 670px) {
+    flex-direction: column-reverse;
   }
 }

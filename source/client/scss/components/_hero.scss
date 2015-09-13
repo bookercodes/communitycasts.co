@@ -3,7 +3,7 @@
   overflow: hidden;
   border-top: 5px solid $accent-color;
   background: linear-gradient(45deg, $very-dark-accent-color 10%, $accent-color 90%);
-  animation: move 10s ease infinite;
+  animation: move-around 10s ease infinite;
   background-size: 200% 100%;
   padding: 0 25px;
   .header {
