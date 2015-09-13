@@ -1,0 +1,70 @@
+.screencasts1 {
+  &__filter-caption {
+    background-color: $darker-background-color;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.85em;
+    margin: 16px 0;
+  }
+  .screencast {
+    border-bottom: 1px solid $divider-color;
+    display: flex;
+    padding: 20px 10px;
+    font-size: .8em;
+    align-items: center;
+    @include tablet {
+      flex-direction: column;
+    }
+    &__featured-annotation {
+      font-size: 0.9em;
+      display: block;
+      font-style: italic;
+    }
+    &__featured-icon {
+      width: 14px;
+      height: 14px;
+      background-color: lighten($accent-color, 10%);
+      color: white;
+    }
+    &__link {
+      font-size: 1.21em;
+      line-height: 1.5em;
+      color: darken($dark-accent-color, 7%);
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    &__channel {
+      font-size: 0.9em;
+      line-height: 1.8em;
+      padding-bottom: 2px;
+    }
+    &__channel-link {
+      font-weight: bold;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    &__description {
+      word-break: break-word;
+      padding-bottom: 8px;
+      @media only screen and (max-width: 200px) {
+        display: none;
+      }
+    }
+    &__tag {
+      @include tag;
+      line-height: 30px;
+      margin-right: 4px;
+      padding: 0;
+      font-size: 0.9em;
+      padding: 2px 9px;
+      &:hover {
+        // override hover effect from @include tag.
+        background-color: $tag-bg-color !important;
+      }
+    }
+  }
+}

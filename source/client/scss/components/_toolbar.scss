@@ -1,0 +1,25 @@
+.toolbar {
+  display: flex;
+  background-color: $darker-background-color;
+  padding: 8px;
+  margin-bottom: 8px;
+  @include mobile {
+    justify-content: center;
+  }
+  &__btn {
+    background-color: $button-background;
+    padding: 7px 14px;
+    font-size: 0.8em;
+    &--active {
+      background-color: $accent-color;
+      color: white;
+      &:not([disabled]):hover {
+        background-color: $accent-color;
+      }
+    }
+    &:hover {
+      transition: background-color $transition-duration ease;
+      background-color: darken($button-background, 15);
+    }
+  }
+}

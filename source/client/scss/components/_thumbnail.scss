@@ -1,0 +1,22 @@
+.thumbnail {
+  margin-right: 16px;
+  position: relative;
+  min-width: 196px;
+  @media only screen and (max-width: 850px) {
+    margin-bottom: 15px;
+  }
+  &__img {
+    width: 196px;
+    height: 110px;
+  }
+  &__caption {
+    background-color: goldenrod;
+    position: absolute;
+    right: 0px;
+    bottom: 4px;
+    color: #F8F8F8;
+    font-size: 0.9em;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 2px 8px;
+  }
+}

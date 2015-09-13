@@ -1,5 +1,6 @@
 .material-icons {
   color: $icon-color;
+  margin-right: 7px;
 }
 
 a.md-button,
@@ -10,4 +11,16 @@ a.md-button,
   font-family: inherit;
   font-size: .8em !important;
   margin: 0;
+  background-color: $button-background;
+}
+
+.progress-bar {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  .md-container {
+    background-color: lighten($accent-color, 40);
+  }
+  .md-bar {
+    background-color: $accent-color;
+  }
 }
