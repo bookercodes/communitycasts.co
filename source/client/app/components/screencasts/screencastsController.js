@@ -49,7 +49,7 @@
         return;
       } else {
         $scope.tagged = '';
-        $http.get(config.serverHost + 'screencasts/search/' + $scope.searchQuery)
+        $http.get(config.serverHost + 'screencasts/search/' + encodeURIComponent($scope.searchQuery))
           .success(function (response) {
             $scope.screencasts = response;
           });
