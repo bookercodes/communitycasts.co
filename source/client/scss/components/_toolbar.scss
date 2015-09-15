@@ -23,6 +23,15 @@
     }
   }
   &__input {
+    transition: width 0.2s ease;
     margin-left: auto;
+    font-size: 0.8em;
+    background-color: $button-background;
+    border: none;
+    padding: 8px;
+    width: 190px;
+    &:focus {
+      width: 250px;
+    }
   }
 }

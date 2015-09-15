@@ -92,3 +92,10 @@ button {
   font-family: inherit;
   background: none;
 }
+
+input {
+  font-family: inherit;
+  &:focus {
+    outline: none;
+  }
+}
