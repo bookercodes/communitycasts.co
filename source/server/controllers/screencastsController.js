@@ -14,6 +14,7 @@ require('moment-duration-format');
 module.exports = function(connection) {
   function searchScreencasts(req, res) {
     var query = req.params.query;
+    winston.info('User searched for ', query);
       var sql = squel.select()
         .field('screencasts.*')
         .field('channels.*')
