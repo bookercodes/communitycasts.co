@@ -43,10 +43,16 @@
     };
 
     $scope.search = function () {
-      $http.get(config.serverHost + 'screencasts/search/' + $scope.searchQuery)
-        .success(function (response) {
-          $scope.screencasts = response;
-        });
+      if ($scope.searchQuery === '') {
+        init();
+        $scope.fetchScreencasts();
+        return;
+      } else {
+        $http.get(config.serverHost + 'screencasts/search/' + $scope.searchQuery)
+          .success(function (response) {
+            $scope.screencasts = response;
+          });
+      }
     };
 
     init();
