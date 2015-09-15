@@ -41,6 +41,14 @@
     $scope.navigateTo = function(link) {
       $window.open(link);
     };
+
+    $scope.search = function () {
+      $http.get(config.serverHost + 'screencasts/search/' + $scope.searchQuery)
+        .success(function (response) {
+          $scope.screencasts = response;
+        });
+    };
+
     init();
     $scope.sortOption = $stateParams.sort;
     $scope.tagged = $stateParams.tagged;

@@ -25,12 +25,12 @@
         </md-tooltip>
       </button>
     </div>
-    <input class="toolbar__input" type="text" placeholder="Search Community Casts" ng-model="search">
+    <input class="toolbar__input" type="text" placeholder="Search Community Casts" ng-model="searchQuery" ng-change="search()">
   </div>
 
   <div class="screencasts1__filter-caption" ng-show="loaded && search">
     <p>
-      Showing results for the search <strong>{{search}}</strong> ...
+      Showing results for the search <strong>{{searchQuery}}</strong> ...
     </p>
   </div>
 
