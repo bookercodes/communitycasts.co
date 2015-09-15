@@ -25,7 +25,13 @@
         </md-tooltip>
       </button>
     </div>
-    <input class="toolbar__input" type="text" placeholder="Search Community Casts" ng-model="searchQuery" ng-change="search()">
+    <input
+      class="toolbar__input"
+      type="text"
+      placeholder="Search Community Casts"
+      ng-model="searchQuery"
+      ng-change="search()"
+      ng-model-options="{ debounce: 600 }">
   </div>
 
   <div class="screencasts1__filter-caption" ng-show="loaded && search">
