@@ -14,7 +14,13 @@ require('moment-duration-format');
 module.exports = function(connection) {
   function searchScreencasts(req, res) {
     var query = req.params.query;
-    res.send(query);
+    var sql = squel.select()
+      .from('screencasts')
+      .where('title LIKE ?', '%' + query + '%')
+      .toString();
+    connection.queryAsync(sql).spread(function (screencasts) {
+      res.json(screencasts);
+    });
   }
   function saveScreencast(req, res) {
     winston.info('User submitted screencast with body %s. Attempting to save screencast...', JSON.stringify(req.body));

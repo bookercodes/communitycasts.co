@@ -22,4 +22,7 @@
       background-color: darken($button-background, 15);
     }
   }
+  &__input {
+    margin-left: auto;
+  }
 }
