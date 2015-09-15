@@ -48,6 +48,7 @@
         $scope.fetchScreencasts();
         return;
       } else {
+        $scope.tagged = '';
         $http.get(config.serverHost + 'screencasts/search/' + $scope.searchQuery)
           .success(function (response) {
             $scope.screencasts = response;
