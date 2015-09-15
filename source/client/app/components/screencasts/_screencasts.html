@@ -35,8 +35,11 @@
   </div>
 
   <div class="screencasts1__filter-caption" ng-show="loaded && searchQuery">
-    <p>
+    <p ng-show="screencasts.length > 0">
       Showing <strong>{{screencasts.length}}</strong> screencasts whose titles contain <strong>{{searchQuery}}</strong>...
+    </p>
+    <p ng-show="screencasts.length === 0">
+      No screencasts with the text <strong>{{searchQuery}}</strong> in their titles...
     </p>
   </div>
 
