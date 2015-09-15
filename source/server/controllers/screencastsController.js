@@ -14,11 +14,20 @@ require('moment-duration-format');
 module.exports = function(connection) {
   function searchScreencasts(req, res) {
     var query = req.params.query;
-    var sql = squel.select()
-      .from('screencasts')
-      .where('title LIKE ?', '%' + query + '%')
-      .toString();
+      var sql = squel.select()
+        .field('screencasts.*')
+        .field('channels.*')
+        .field('group_concat(screencastTags.tagName) as tags')
+        .from('screencasts')
+        .where('screencasts.approved = 1')
+        .where('title LIKE ?', '%' + query + '%')
+        .join('screencastTags', null, 'screencasts.screencastId = screencastTags.screencastId')
+        .join('channels', null, 'channels.channelId = screencasts.channelId')
+        .order('featured', false)
+        .group('screencasts.screencastId')
+        .toString();
     connection.queryAsync(sql).spread(function (screencasts) {
+      screencasts = screencasts.map(_formatScreencast);
       res.json(screencasts);
     });
   }
