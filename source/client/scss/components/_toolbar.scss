@@ -32,6 +32,7 @@
     width: 190px;
     &:focus {
       width: 250px;
+      border: 2px solid $accent-color;
     }
   }
 }
