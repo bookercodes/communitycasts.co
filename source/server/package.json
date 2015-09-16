@@ -12,6 +12,7 @@
     "mysql": "^2.7.0",
     "paperwork": "^2.1.1",
     "request": "^2.61.0",
+    "sequelize": "^3.8.0",
     "squel": "^4.0.0",
     "truncate": "^1.0.5",
     "winston": "^1.0.1",
