@@ -9,7 +9,6 @@ var youtubeUrl = require('youtube-url');
 var truncate = require('truncate');
 var winston = require('winston');
 var models = require('../models');
-var Sequelize = require('Sequelize');
 
 require('moment-duration-format');
 
@@ -17,22 +16,53 @@ module.exports = function(connection) {
   function searchScreencasts(req, res) {
     var query = req.params.query;
     winston.info('User searched for ', query);
-      var sql = squel.select()
-        .field('screencasts.*')
-        .field('channels.*')
-        .field('group_concat(screencastTags.tagName) as tags')
-        .from('screencasts')
-        .where('screencasts.approved = 1')
-        .where('title LIKE ?', '%' + query + '%')
-        .join('screencastTags', null, 'screencasts.screencastId = screencastTags.screencastId')
-        .join('channels', null, 'channels.channelId = screencasts.channelId')
-        .order('featured', false)
-        .group('screencasts.screencastId')
-        .toString();
-    connection.queryAsync(sql).spread(function (screencasts) {
-      screencasts = screencasts.map(_formatScreencast);
-      res.json(screencasts);
+    models.Screencasts.findAll({
+      where: {
+        approved: true,
+        title: {
+          $like: '%' + query + '%'
+        }
+      },
+      include: [{
+        model: models.Channels
+      }, {
+        model: models.Tags,
+        through: {
+          attributes: []
+        }
+      }]
+    }).then(function (screencasts) {
+      var o = screencasts.map(function (screencast) {
+        delete screencast.dataValues.channelId;
+        delete screencast.dataValues.approved;
+        delete screencast.dataValues.referralCount;
+        delete screencast.dataValues.durationInSeconds;
+        screencast.dataValues.duration = moment.duration(screencast.durationInSeconds, 'seconds').format('hh:mm:ss');
+        screencast.dataValues.description = truncate(screencast.description, config.descriptionLength);
+        screencast.dataValues.tags = screencast.dataValues.tags.map(function (tag) {
+          return tag.tagName;
+        });
+        return screencast.dataValues;
+      });
+      res.send(o);
     });
+
+    //   var sql = squel.select()
+    //     .field('screencasts.*')
+    //     .field('channels.*')
+    //     .field('group_concat(screencastTags.tagName) as tags')
+    //     .from('screencasts')
+    //     .where('screencasts.approved = 1')
+    //     .where('title LIKE ?', '%' + query + '%')
+    //     .join('screencastTags', null, 'screencasts.screencastId = screencastTags.screencastId')
+    //     .join('channels', null, 'channels.channelId = screencasts.channelId')
+    //     .order('featured', false)
+    //     .group('screencasts.screencastId')
+    //     .toString();
+    // connection.queryAsync(sql).spread(function (screencasts) {
+    //   screencasts = screencasts.map(_formatScreencast);
+    //   res.json(screencasts);
+    // });
   }
   function saveScreencast(req, res) {
     winston.info('User submitted screencast with body %s. Attempting to save screencast...', JSON.stringify(req.body));
@@ -301,7 +331,7 @@ module.exports = function(connection) {
       });
     });
   }
-  
+
   return {
     sendScreencasts: sendScreencasts,
     sendScreencastsWithTag: sendScreencastsWithTag,
