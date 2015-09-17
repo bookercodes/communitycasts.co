@@ -9,6 +9,7 @@ var youtubeUrl = require('youtube-url');
 var truncate = require('truncate');
 var winston = require('winston');
 var models = require('../models');
+var Sequelize = require('Sequelize');
 
 require('moment-duration-format');
 
@@ -248,55 +249,59 @@ module.exports = function(connection) {
   function redirectToScreencast(req, res) {
     var screencastId = req.params.screencastId;
     var remoteAddress = req.ip;
-    winston.info('Attempting to redirect user %s to screencast %s...', remoteAddress, screencastId);
-    var sql = squel.select()
-      .from('screencasts')
-      .where('screencastId = ?', screencastId)
-      .toString();
-    connection.queryAsync(sql).spread(function(screencasts) {
-      var screencast = screencasts.shift();
-      if (!screencast) {
-        winston.info('Could not redirect user %s to screencast %s because screencast %s does not exist. Sending 404 instead.', remoteAddress, screencastId, screencastId);
+    models.Screencasts.findById(screencastId).then(function(screencast) {
+      if (screencast === null) {
+        winston.info(
+          'Could not redirect user %s to screencast %s because screencast %s does not exist. Sending 404 instead.',
+          remoteAddress, screencastId, screencastId);
         return res.status(404).send();
       }
       res.redirect('https://www.youtube.com/watch?v=' + screencast.screencastId);
-      winston.info('Successfully redirected user %s to screencast %s. Attempting to count redirect...', remoteAddress, screencastId);
-      var sql = squel.select()
-        .field('screencastId')
-        .from('referrals')
-        .where('screencastId = ? AND refereeRemoteAddress = ?', screencastId, remoteAddress)
-        .toString();
-      connection.queryAsync(sql).spread(function(referrals) {
-        var alreadyCounted = referrals.length > 0;
-        if (alreadyCounted) {
-          winston.info('User %s has already been redirected to screencast %s. Deliberately *not* counting redirect again.', remoteAddress, screencastId);
+      winston.info(
+        'Successfully redirected user %s to screencast %s. Attempting to count redirect...',
+        remoteAddress, screencastId);
+      models.Referrals.find({
+        where: {
+          screencastId: screencastId,
+          refereeRemoteAddress: remoteAddress
+        }
+      }).then(function(referrals) {
+        if (referrals !== null) {
+          winston.info(
+            'User %s has already been redirected to screencast %s. Deliberately *not* counting redirect again.',
+            remoteAddress, screencastId);
           return;
         }
-        connection.beginTransactionAsync().then(function() {
-          var sql = squel.update()
-            .table('screencasts')
-            .set('referralCount = referralCount + 1')
-            .where('screencastId = ?', screencastId)
-            .toString();
-          return connection.queryAsync(sql);
-        }).then(function() {
-          var sql = squel.insert()
-            .into('referrals')
-            .set('screencastId', screencastId)
-            .set('refereeRemoteAddress', remoteAddress)
-            .toString();
-          return connection.queryAsync(sql);
-        }).then(function() {
-          winston.info('Successfully counted redirect to %s for user %s', screencastId, remoteAddress);
-          return connection.commit();
-        }).error(function(error) {
-          winston.error('Something went wrong while counting referral:', error);
-          return connection.rollback();
+        models.Screencasts.findById(screencastId).then(function(screencast) {
+          models.sequelize.transaction(function(transaction) {
+            return screencast.increment({
+              referralCount: 1
+            }, {
+              transaction: transaction
+            }).then(function() {
+              models.Referrals
+                .create({
+                  screencastId: screencastId,
+                  refereeRemoteAddress: remoteAddress
+                }, {
+                  transaction: transaction
+                });
+            });
+          }).then(function() {
+            winston.info(
+              'Successfully counted redirect to %s for user %s',
+              screencastId,
+              remoteAddress);
+          }).catch(function(error) {
+            winston.error(
+              'Something went wrong while counting referral:',
+              error);
+          });
         });
       });
     });
   }
-
+  
   return {
     sendScreencasts: sendScreencasts,
     sendScreencastsWithTag: sendScreencastsWithTag,
