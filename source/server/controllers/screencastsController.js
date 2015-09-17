@@ -8,6 +8,7 @@ var youtube = require('../youtube')(config.youtubeApiKey);
 var youtubeUrl = require('youtube-url');
 var truncate = require('truncate');
 var winston = require('winston');
+var models = require('../models');
 
 require('moment-duration-format');
 
@@ -164,45 +165,84 @@ module.exports = function(connection) {
   function sendScreencasts(req, res) {
     var page = req.query.page || 1;
     var sort = req.query.sort || 'popular';
+    var limit = config.screencastsPerPage;
+    var offset =  (page - 1) * limit;
     winston.info('Sending all screencasts (page: %s, sort: %s).', page, sort);
-    var sql = squel.select()
-      .field('count(*) as count')
-      .from('screencasts')
-      .where('approved = 1')
-      .toString();
-    connection.queryAsync(sql).spread(function(result) {
-      var total = result.shift().count;
-      var totalPageCount = Math.ceil(total / config.screencastsPerPage);
-      var hasNextPage = page < totalPageCount;
-      var start = (page - 1) * config.screencastsPerPage;
-      var finish = config.screencastsPerPage;
-      var sql = squel.select()
-        .field('screencasts.*')
-        .field('channels.*')
-        .field('group_concat(screencastTags.tagName) as tags')
-        .from('screencasts')
-        .where('screencasts.approved = 1')
-        .join('screencastTags', null, 'screencasts.screencastId = screencastTags.screencastId')
-        .join('channels', null, 'channels.channelId = screencasts.channelId')
-        .order('featured', false)
-        .group('screencasts.screencastId');
-      if (sort === 'popular') {
-        // http://amix.dk/blog/post/19574
-        sql = sql.order('(screencasts.referralCount)/pow(((unix_timestamp(now())-unix_timestamp(screencasts.submissionDate))/3600)+2,1.5)', false);
-      } else {
-        sql = sql.order('submissionDate', false);
-      }
-      sql = sql.offset(start).limit(finish).toString();
-
-      connection.queryAsync(sql).spread(function(screencasts) {
-        screencasts = screencasts.map(_formatScreencast);
-        res.json({
-          screencasts: screencasts,
-          hasMore: hasNextPage,
-          totalCount: total
+    var options = {
+      limit: limit,
+      offset: offset,
+      where: {
+        approved: true
+      },
+      include: [{
+        model: models.Channels
+      }, {
+        model: models.Tags,
+        through: {
+          attributes: []
+        }
+      }]
+    };
+    if (sort === 'popular') {
+      options.order = '(`screencasts`.`referralCount`) / pow(((unix_timestamp(now()) - unix_timestamp(`screencasts`.`submissionDate`)) / 3600) + 2, 1.5)';
+    } else {
+      options.order = [['submissionDate', 'DESC']];
+    }
+    models.Screencasts.findAndCountAll(options).then(function (screencasts) {
+      var o = {};
+      o.totalCount = screencasts.count.toString();
+      o.screencasts = screencasts.rows.map(function (screencast) {
+        delete screencast.dataValues.channelId;
+        delete screencast.dataValues.approved;
+        delete screencast.dataValues.referralCount;
+        delete screencast.dataValues.durationInSeconds;
+        screencast.dataValues.duration = moment.duration(screencast.durationInSeconds, 'seconds').format('hh:mm:ss');
+        screencast.dataValues.description = truncate(screencast.description, config.descriptionLength);
+        screencast.dataValues.tags = screencast.dataValues.tags.map(function (tag) {
+          return tag.tagName;
         });
+        return screencast.dataValues;
       });
+      res.send(o);
     });
+    // var sql = squel.select()
+    //   .field('count(*) as count')
+    //   .from('screencasts')
+    //   .where('approved = 1')
+    //   .toString();
+    // connection.queryAsync(sql).spread(function(result) {
+    //   var total = result.shift().count;
+    //   var totalPageCount = Math.ceil(total / config.screencastsPerPage);
+    //   var hasNextPage = page < totalPageCount;
+    //   var start = (page - 1) * config.screencastsPerPage;
+    //   var finish = config.screencastsPerPage;
+    //   var sql = squel.select()
+    //     .field('screencasts.*')
+    //     .field('channels.*')
+    //     .field('group_concat(screencastTags.tagName) as tags')
+    //     .from('screencasts')
+    //     .where('screencasts.approved = 1')
+    //     .join('screencastTags', null, 'screencasts.screencastId = screencastTags.screencastId')
+    //     .join('channels', null, 'channels.channelId = screencasts.channelId')
+    //     .order('featured', false)
+    //     .group('screencasts.screencastId');
+    //   if (sort === 'popular') {
+    //     // http://amix.dk/blog/post/19574
+    //     sql = sql.order('(screencasts.referralCount)/pow(((unix_timestamp(now())-unix_timestamp(screencasts.submissionDate))/3600)+2,1.5)', false);
+    //   } else {
+    //     sql = sql.order('submissionDate', false);
+    //   }
+    //   sql = sql.offset(start).limit(finish).toString();
+    //
+    //   connection.queryAsync(sql).spread(function(screencasts) {
+    //     screencasts = screencasts.map(_formatScreencast);
+    //     res.json({
+    //       screencasts: screencasts,
+    //       hasMore: hasNextPage,
+    //       totalCount: total
+    //     });
+    //   });
+    // });
   }
 
   function redirectToScreencast(req, res) {
