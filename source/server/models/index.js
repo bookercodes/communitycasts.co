@@ -3,6 +3,9 @@ var config = require('config');
 
 var sequelize = new Sequelize('communityCasts', 'root', config.databasePassword, {
   host: 'localhost',
+  define: {
+    timestamps: false
+  }
 });
 
 var Channels = sequelize.define('channels', {
@@ -13,8 +16,6 @@ var Channels = sequelize.define('channels', {
   channelName: {
     type: Sequelize.STRING,
   }
-}, {
-  timestamps: false
 });
 
 var Screencasts =  sequelize.define('screencasts', {
@@ -47,8 +48,6 @@ var Screencasts =  sequelize.define('screencasts', {
   featured: {
     type: Sequelize.BOOLEAN,
   }
-}, {
-  timestamps: false
 });
 
 var Tags = sequelize.define('tags', {
@@ -56,8 +55,6 @@ var Tags = sequelize.define('tags', {
     type: Sequelize.STRING,
     primaryKey: true
   }
-}, {
-  timestamps: false
 });
 
 var ScreencastTags = sequelize.define('screencasttags', {
@@ -69,8 +66,6 @@ var ScreencastTags = sequelize.define('screencasttags', {
     type: Sequelize.STRING,
     primaryKey: true
   }
-}, {
-  timestamps: false
 });
 
 Screencasts.belongsToMany(Tags, { through:ScreencastTags, foreignKey: 'screencastId' });
