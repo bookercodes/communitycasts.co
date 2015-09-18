@@ -8,7 +8,7 @@ var sequelize = new Sequelize('communityCasts', 'root', config.databasePassword,
   }
 });
 
-var Channels = sequelize.define('channels', {
+var Channel = sequelize.define('Channel', {
   channelId: {
     type: Sequelize.STRING,
     primaryKey: true
@@ -16,6 +16,8 @@ var Channels = sequelize.define('channels', {
   channelName: {
     type: Sequelize.STRING,
   }
+}, {
+  tableName: 'channels'
 });
 
 var Screencast = sequelize.define('Screencast', {
@@ -84,14 +86,14 @@ var Referrals = sequelize.define('referrals', {
 Screencast.belongsToMany(Tags, { through:ScreencastTags, foreignKey: 'screencastId' });
 Tags.belongsToMany(Screencast, { through:ScreencastTags, foreignKey:'tagName' });
 ScreencastTags.belongsTo(Screencast, { foreignKey: 'screencastId' });
-Screencast.belongsTo(Channels, { foreignKey:'channelId' });
+Screencast.belongsTo(Channel, { foreignKey:'channelId' });
 Referrals.belongsTo(Screencast, { foreignKey: 'screencastId' });
 
 module.exports = {
   Screencast: Screencast,
   Tags: Tags,
   ScreencastTags: ScreencastTags,
-  Channels: Channels,
+  Channel: Channel,
   Referrals: Referrals,
   sequelize: sequelize
 };

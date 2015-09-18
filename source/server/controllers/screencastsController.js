@@ -25,7 +25,7 @@ module.exports = function(connection) {
         }
       },
       include: [{
-        model: models.Channels
+        model: models.Channel
       }, {
         model: models.Tags,
         through: {
@@ -154,7 +154,7 @@ module.exports = function(connection) {
         tagName: req.params.tag
       },
       include: [{
-        model: models.Channels
+        model: models.Channel
       }, {
         model: models.Tags,
         through: {
@@ -257,7 +257,7 @@ module.exports = function(connection) {
         approved: true
       },
       include: [{
-        model: models.Channels
+        model: models.Channel
       }, {
         model: models.Tags,
         through: {
