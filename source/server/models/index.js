@@ -76,7 +76,7 @@ var ScreencastTag = sequelize.define('screencastTag', {
   tableName: 'screencastTags'
 });
 
-var Referrals = sequelize.define('referrals', {
+var Referral = sequelize.define('referrals', {
   screencastId: {
     type: Sequelize.STRING,
     primaryKey: true
@@ -91,13 +91,13 @@ Screencast.belongsToMany(Tag, { through:ScreencastTag, foreignKey: 'screencastId
 Tag.belongsToMany(Screencast, { through:ScreencastTag, foreignKey:'tagName' });
 ScreencastTag.belongsTo(Screencast, { foreignKey: 'screencastId' });
 Screencast.belongsTo(Channel, { foreignKey:'channelId' });
-Referrals.belongsTo(Screencast, { foreignKey: 'screencastId' });
+Referral.belongsTo(Screencast, { foreignKey: 'screencastId' });
 
 module.exports = {
   Screencast: Screencast,
   Tag: Tag,
   ScreencastTag: ScreencastTag,
   Channel: Channel,
-  Referrals: Referrals,
+  Referral: Referral,
   sequelize: sequelize
 };
