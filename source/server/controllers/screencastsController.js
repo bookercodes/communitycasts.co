@@ -9,6 +9,7 @@ var youtubeUrl = require('youtube-url');
 var truncate = require('truncate');
 var winston = require('winston');
 var models = require('../models');
+var Sequelize = require('Sequelize');
 
 require('moment-duration-format');
 
@@ -137,60 +138,108 @@ module.exports = function(connection) {
   function sendScreencastsWithTag(req, res) {
     var page = req.query.page || 1;
     var sort = req.query.sort || 'popular';
-    winston.info('Sending screencasts with tag %s (page: %s, sort: %s).', req.params.tag, page, sort);
-    var sql = squel.select()
-      .field('count(*) as total')
-      .from(
-        squel.select()
-        .field('screencasts.screencastId')
-        .from('screencasts')
-        .where('screencasts.approved = 1')
-        .join('screencastTags', null, 'screencasts.screencastId = screencastTags.screencastId')
-        .where('screencasts.screencastId IN ?',
-          squel.select()
-          .field('screencastId')
-          .from('screencastTags')
-          .where('screencastTags.tagName = ?', req.params.tag))
-        .group('screencasts.screencastId'),
-        'alias')
-      .toString();
-    connection.queryAsync(sql).spread(function(result) {
-      var total = result.shift().total;
-      var totalPageCount = Math.ceil(total / config.screencastsPerPage);
-      var hasNextPage = page < totalPageCount;
-      var start = (page - 1) * config.screencastsPerPage;
-      var finish = config.screencastsPerPage;
-      var sql = squel.select()
-        .field('screencasts.*')
-        .field('channels.*')
-        .field('group_concat(screencastTags.tagName) as tags')
-        .from('screencasts')
-        .where('screencasts.approved = 1')
-        .join('screencastTags', null, 'screencasts.screencastId = screencastTags.screencastId')
-        .join('channels', null, 'channels.channelId = screencasts.channelId')
-        .where('screencasts.screencastId in ?',
-          squel.select()
-          .field('screencastId')
-          .from('screencastTags')
-          .where('screencastTags.tagName = ?', req.params.tag))
-        .order('featured', false)
-        .group('screencasts.screencastId');
-      if (sort === 'popular') {
-        // http://amix.dk/blog/post/19574
-        sql.order('(screencasts.referralCount)/pow(((unix_timestamp(now())-unix_timestamp(screencasts.submissionDate))/3600)+2,1.5)', false);
-      } else {
-        sql.order('submissionDate', false);
-      }
-      sql = sql.offset(start).limit(finish).toString();
-      connection.queryAsync(sql).spread(function(screencasts) {
-        screencasts = screencasts.map(_formatScreencast);
-        res.json({
-          screencasts: screencasts,
-          hasMore: hasNextPage,
-          totalCount: total
+    var limit = config.screencastsPerPage;
+    var offset =  (page - 1) * limit;
+    var options = {
+      limit: limit,
+      offset: offset,
+      where: {
+        approved: true,
+        screencastId: {
+          $in: Sequelize.literal(
+            '(SELECT DISTINCT screencastId FROM screencastTags WHERE tagName = :tagName)')
+        }
+      },
+      replacements: {
+        tagName: req.params.tag
+      },
+      include: [{
+        model: models.Channels
+      }, {
+        model: models.Tags,
+        through: {
+          attributes: []
+        }
+      }]
+    };
+    if (sort === 'popular') {
+      options.order = '(`screencasts`.`referralCount`) / pow(((unix_timestamp(now()) - unix_timestamp(`screencasts`.`submissionDate`)) / 3600) + 2, 1.5)';
+    } else {
+      options.order = [['submissionDate', 'DESC']];
+    }
+    models.Screencasts.findAndCountAll(options).then(function (screencasts) {
+      var o = {};
+      o.totalCount = screencasts.count.toString();
+      o.screencasts = screencasts.rows.map(function (screencast) {
+        delete screencast.dataValues.channelId;
+        delete screencast.dataValues.approved;
+        delete screencast.dataValues.referralCount;
+        delete screencast.dataValues.durationInSeconds;
+        screencast.dataValues.duration = moment.duration(screencast.durationInSeconds, 'seconds').format('hh:mm:ss');
+        screencast.dataValues.description = truncate(screencast.description, config.descriptionLength);
+        screencast.dataValues.tags = screencast.dataValues.tags.map(function (tag) {
+          return tag.tagName;
         });
+        return screencast.dataValues;
       });
+      res.send(o);
     });
+    // var page = req.query.page || 1;
+    // var sort = req.query.sort || 'popular';
+    // winston.info('Sending screencasts with tag %s (page: %s, sort: %s).', req.params.tag, page, sort);
+    // var sql = squel.select()
+    //   .field('count(*) as total')
+    //   .from(
+    //     squel.select()
+    //     .field('screencasts.screencastId')
+    //     .from('screencasts')
+    //     .where('screencasts.approved = 1')
+    //     .join('screencastTags', null, 'screencasts.screencastId = screencastTags.screencastId')
+    //     .where('screencasts.screencastId IN ?',
+    //       squel.select()
+    //       .field('screencastId')
+    //       .from('screencastTags')
+    //       .where('screencastTags.tagName = ?', req.params.tag))
+    //     .group('screencasts.screencastId'),
+    //     'alias')
+    //   .toString();
+    // connection.queryAsync(sql).spread(function(result) {
+    //   var total = result.shift().total;
+    //   var totalPageCount = Math.ceil(total / config.screencastsPerPage);
+    //   var hasNextPage = page < totalPageCount;
+    //   var start = (page - 1) * config.screencastsPerPage;
+    //   var finish = config.screencastsPerPage;
+    //   var sql = squel.select()
+    //     .field('screencasts.*')
+    //     .field('channels.*')
+    //     .field('group_concat(screencastTags.tagName) as tags')
+    //     .from('screencasts')
+    //     .where('screencasts.approved = 1')
+    //     .join('screencastTags', null, 'screencasts.screencastId = screencastTags.screencastId')
+    //     .join('channels', null, 'channels.channelId = screencasts.channelId')
+    //     .where('screencasts.screencastId in ?',
+    //       squel.select()
+    //       .field('screencastId')
+    //       .from('screencastTags')
+    //       .where('screencastTags.tagName = ?', req.params.tag))
+    //     .order('featured', false)
+    //     .group('screencasts.screencastId');
+    //   if (sort === 'popular') {
+    //     // http://amix.dk/blog/post/19574
+    //     sql.order('(screencasts.referralCount)/pow(((unix_timestamp(now())-unix_timestamp(screencasts.submissionDate))/3600)+2,1.5)', false);
+    //   } else {
+    //     sql.order('submissionDate', false);
+    //   }
+    //   sql = sql.offset(start).limit(finish).toString();
+    //   connection.queryAsync(sql).spread(function(screencasts) {
+    //     screencasts = screencasts.map(_formatScreencast);
+    //     res.json({
+    //       screencasts: screencasts,
+    //       hasMore: hasNextPage,
+    //       totalCount: total
+    //     });
+    //   });
+    // });
   }
 
   function sendScreencasts(req, res) {
