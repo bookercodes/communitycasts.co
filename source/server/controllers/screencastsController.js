@@ -37,8 +37,8 @@ module.exports = function(connection) {
         delete screencast.dataValues.channelId;
         delete screencast.dataValues.approved;
         delete screencast.dataValues.referralCount;
+        screencast.dataValues.duration = moment.duration(screencast.dataValues.durationInSeconds, 'seconds').format('hh:mm:ss');
         delete screencast.dataValues.durationInSeconds;
-        screencast.dataValues.duration = moment.duration(screencast.durationInSeconds, 'seconds').format('hh:mm:ss');
         screencast.dataValues.description = truncate(screencast.description, config.descriptionLength);
         screencast.dataValues.tags = screencast.dataValues.tags.map(function (tag) {
           return tag.tagName;
@@ -174,8 +174,8 @@ module.exports = function(connection) {
         delete screencast.dataValues.channelId;
         delete screencast.dataValues.approved;
         delete screencast.dataValues.referralCount;
+        screencast.dataValues.duration = moment.duration(screencast.dataValues.durationInSeconds, 'seconds').format('hh:mm:ss');
         delete screencast.dataValues.durationInSeconds;
-        screencast.dataValues.duration = moment.duration(screencast.durationInSeconds, 'seconds').format('hh:mm:ss');
         screencast.dataValues.description = truncate(screencast.description, config.descriptionLength);
         screencast.dataValues.tags = screencast.dataValues.tags.map(function (tag) {
           return tag.tagName;
@@ -275,8 +275,8 @@ module.exports = function(connection) {
         delete screencast.dataValues.channelId;
         delete screencast.dataValues.approved;
         delete screencast.dataValues.referralCount;
+        screencast.dataValues.duration = moment.duration(screencast.dataValues.durationInSeconds, 'seconds').format('hh:mm:ss');
         delete screencast.dataValues.durationInSeconds;
-        screencast.dataValues.duration = moment.duration(screencast.durationInSeconds, 'seconds').format('hh:mm:ss');
         screencast.dataValues.description = truncate(screencast.description, config.descriptionLength);
         screencast.dataValues.tags = screencast.dataValues.tags.map(function (tag) {
           return tag.tagName;
