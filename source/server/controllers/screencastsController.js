@@ -40,9 +40,10 @@ module.exports = function(connection) {
         screencast.dataValues.duration = moment.duration(screencast.dataValues.durationInSeconds, 'seconds').format('hh:mm:ss');
         delete screencast.dataValues.durationInSeconds;
         screencast.dataValues.description = truncate(screencast.description, config.descriptionLength);
-        screencast.dataValues.tags = screencast.dataValues.tags.map(function (tag) {
+        screencast.dataValues.tags = screencast.dataValues.Tags.map(function (tag) {
           return tag.tagName;
         });
+        delete screencast.dataValues.Tags;
         screencast.dataValues.href =
           config.host + 'screencasts/' + screencast.dataValues.screencastId;
         return screencast.dataValues;
@@ -183,9 +184,10 @@ module.exports = function(connection) {
         screencast.dataValues.description = truncate(screencast.description, config.descriptionLength);
         screencast.dataValues.href =
           config.host + 'screencasts/' + screencast.dataValues.screencastId;
-        screencast.dataValues.tags = screencast.dataValues.tags.map(function (tag) {
+        screencast.dataValues.tags = screencast.dataValues.Tags.map(function (tag) {
           return tag.tagName;
         });
+        delete screencast.dataValues.Tags;
         return screencast.dataValues;
       });
       res.send(o);
@@ -286,9 +288,10 @@ module.exports = function(connection) {
         screencast.dataValues.duration = moment.duration(screencast.dataValues.durationInSeconds, 'seconds').format('hh:mm:ss');
         delete screencast.dataValues.durationInSeconds;
         screencast.dataValues.description = truncate(screencast.description, config.descriptionLength);
-        screencast.dataValues.tags = screencast.dataValues.tags.map(function (tag) {
+        screencast.dataValues.tags = screencast.dataValues.Tags.map(function (tag) {
           return tag.tagName;
         });
+        delete screencast.dataValues.Tags;
         screencast.dataValues.href =
           config.host + 'screencasts/' + screencast.dataValues.screencastId;
         return screencast.dataValues;

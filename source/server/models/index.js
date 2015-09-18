@@ -1,5 +1,10 @@
+'use strict';
+
 var Sequelize = require('Sequelize');
 var config = require('config');
+var fs        = require('fs');
+var path      = require('path');
+var db        = {};
 
 var sequelize = new Sequelize('communityCasts', 'root', config.databasePassword, {
   host: 'localhost',
@@ -8,23 +13,38 @@ var sequelize = new Sequelize('communityCasts', 'root', config.databasePassword,
   }
 });
 
-var Screencast = require('./Screencast')(sequelize, Sequelize);
-var Tag = require('./Tag')(sequelize, Sequelize);
-var Referral = require('./Referral')(sequelize, Sequelize);
-var ScreencastTag = require('./ScreencastTag')(sequelize, Sequelize);
-var Channel = require('./Channel')(sequelize, Sequelize);
+fs
+  .readdirSync(__dirname)
+  .filter(function(file) {
+    return (file.indexOf('.') !== 0) && (file !== 'index.js');
+  })
+  .forEach(function(file) {
+    var model = sequelize.import(path.join(__dirname, file));
+    db[model.name] = model;
+  });
 
-Screencast.belongsToMany(Tag, { through:ScreencastTag, foreignKey: 'screencastId' });
-Tag.belongsToMany(Screencast, { through:ScreencastTag, foreignKey:'tagName' });
-ScreencastTag.belongsTo(Screencast, { foreignKey: 'screencastId' });
-Screencast.belongsTo(Channel, { foreignKey:'channelId' });
-Referral.belongsTo(Screencast, { foreignKey: 'screencastId' });
+Object.keys(db).forEach(function(modelName) {
+  if ('associate' in db[modelName]) {
+    db[modelName].associate(db);
+  }
+});
 
-module.exports = {
-  Screencast: Screencast,
-  Tag: Tag,
-  ScreencastTag: ScreencastTag,
-  Channel: Channel,
-  Referral: Referral,
-  sequelize: sequelize
-};
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
+
+module.exports = db;
+// var Screencast = require('./Screencast')(sequelize, Sequelize);
+// var Tag = require('./Tag')(sequelize, Sequelize);
+// var Referral = require('./Referral')(sequelize, Sequelize);
+// var ScreencastTag = require('./ScreencastTag')(sequelize, Sequelize);
+// var Channel = require('./Channel')(sequelize, Sequelize);
+//
+
+// module.exports = {
+//   Screencast: Screencast,
+//   Tag: Tag,
+//   ScreencastTag: ScreencastTag,
+//   Channel: Channel,
+//   Referral: Referral,
+//   sequelize: sequelize
+// };
