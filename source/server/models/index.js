@@ -8,84 +8,11 @@ var sequelize = new Sequelize('communityCasts', 'root', config.databasePassword,
   }
 });
 
-var Channel = sequelize.define('channel', {
-  channelId: {
-    type: Sequelize.STRING,
-    primaryKey: true
-  },
-  channelName: {
-    type: Sequelize.STRING,
-  }
-}, {
-  tableName: 'channels'
-});
-
-var Screencast = sequelize.define('screencast', {
-  screencastId: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    primaryKey: true
-  },
-  title: {
-    type: Sequelize.STRING,
-  },
-  durationInSeconds: {
-    type: Sequelize.INTEGER(11),
-  },
-  description: {
-    type: Sequelize.STRING,
-  },
-  submissionDate: {
-    type: Sequelize.DATE,
-  },
-  referralCount: {
-    type: Sequelize.INTEGER(11),
-  },
-  channelId: {
-    type: Sequelize.STRING,
-  },
-  approved: {
-    type: Sequelize.BOOLEAN,
-  },
-  featured: {
-    type: Sequelize.BOOLEAN,
-  }
-}, {
-  tableName:'screencasts'
-});
-
-var Tag = sequelize.define('tag', {
-  tagName: {
-    type: Sequelize.STRING,
-    primaryKey: true
-  }
-}, {
-  tableName: 'tags'
-});
-
-var ScreencastTag = sequelize.define('screencastTag', {
-  screencastId: {
-    type: Sequelize.STRING,
-    primaryKey: true
-  },
-  tagName: {
-    type: Sequelize.STRING,
-    primaryKey: true
-  }
-}, {
-  tableName: 'screencastTags'
-});
-
-var Referral = sequelize.define('referrals', {
-  screencastId: {
-    type: Sequelize.STRING,
-    primaryKey: true
-  },
-  refereeRemoteAddress: {
-    type: Sequelize.STRING,
-    primaryKey: true
-  }
-});
+var Screencast = require('./Screencast')(sequelize, Sequelize);
+var Tag = require('./Tag')(sequelize, Sequelize);
+var Referral = require('./Referral')(sequelize, Sequelize);
+var ScreencastTag = require('./ScreencastTag')(sequelize, Sequelize);
+var Channel = require('./Channel')(sequelize, Sequelize);
 
 Screencast.belongsToMany(Tag, { through:ScreencastTag, foreignKey: 'screencastId' });
 Tag.belongsToMany(Screencast, { through:ScreencastTag, foreignKey:'tagName' });
