@@ -102,25 +102,6 @@ module.exports = function(connection) {
     });
   }
 
-  function _formatScreencast(screencast) {
-    screencast.href =
-      config.host + 'screencasts/' + screencast.screencastId;
-    screencast.tags = screencast.tags.split(',');
-    screencast.duration = moment.duration(screencast.durationInSeconds, 'seconds').format('hh:mm:ss');
-    screencast.description = truncate(screencast.description, config.descriptionLength);
-    screencast.channel = {
-      channelId: screencast.channelId,
-      channelName: screencast.channelName,
-      channelLink: screencast.channelLink
-    };
-    delete screencast.channelId;
-    delete screencast.channelName;
-    delete screencast.channelLink;
-    delete screencast.link;
-    delete screencast.durationInSeconds;
-    return screencast;
-  }
-
   function sendScreencastsWithTag(req, res) {
     var page = req.query.page || 1;
     var sort = req.query.sort || 'popular';
