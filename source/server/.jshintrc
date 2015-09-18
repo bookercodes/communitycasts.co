@@ -11,6 +11,7 @@
   "undef": true,
   "unused": true,
   "strict": true,
+  "esnext": true,
   "globals"   : {
     "describe"   : false,
     "it"         : false,

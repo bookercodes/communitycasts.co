@@ -16,94 +16,23 @@ require('moment-duration-format');
 module.exports = function(connection) {
 
   function _formatScreencasts(screencasts) {
-    return screencasts.map(function (screencast) {
-      delete screencast.dataValues.channelId;
-      delete screencast.dataValues.approved;
-      delete screencast.dataValues.referralCount;
-      screencast.dataValues.duration = moment.duration(screencast.dataValues.durationInSeconds, 'seconds').format('hh:mm:ss');
-      delete screencast.dataValues.durationInSeconds;
-      screencast.dataValues.description = truncate(screencast.description, config.descriptionLength);
-      screencast.dataValues.tags = screencast.dataValues.Tags.map(function (tag) {
-        return tag.tagName;
-      });
-      delete screencast.dataValues.Tags;
-      screencast.dataValues.href =
-        config.host + 'screencasts/' + screencast.dataValues.screencastId;
-      return screencast.dataValues;
-    });
-  }
-
-  function searchScreencasts(req, res) {
-    var query = req.params.query;
-    winston.info('User searched for ', query);
-    models.Screencast.findAll({
-      where: {
-        approved: true,
-        title: {
-          $like: '%' + query + '%'
+    return screencasts.map(function(screencast) {
+      screencast = screencast.dataValues;
+      return {
+        screencastId: screencast.screencastId,
+        title: screencast.title,
+        description: truncate(screencast.description, config.descriptionLength),
+        href: config.host + 'screencasts/' + screencast.screencastId,
+        duration: moment
+          .duration(screencast.durationInSeconds, 'seconds')
+          .format('hh:mm:ss'),
+        tags: screencast.Tags.map(tag => tag.tagName),
+        submissionDate: screencast.submissionDate,
+        channel: {
+          channelId: screencast.Channel.channelId,
+          channelName: screencast.Channel.channelName
         }
-      },
-      include: [{
-        model: models.Channel
-      }, {
-        model: models.Tag,
-        through: {
-          attributes: []
-        }
-      }]
-    }).then(function (screencasts) {
-      screencasts = _formatScreencasts(screencasts);
-      res.json(screencasts);
-    });
-  }
-  function saveScreencast(req, res) {
-    winston.info('User submitted screencast with body %s. Attempting to save screencast...', JSON.stringify(req.body));
-    var youtubeId = youtubeUrl.extractId(req.body.url);
-    var tags = commaSplit(req.body.tags, {
-      ignoreDuplicate: true
-    });
-    var sql = squel.select()
-      .from('screencasts')
-      .field('screencastId')
-      .where('screencastId = ?', youtubeId)
-      .toString();
-    connection.queryAsync(sql).spread(function (screencasts) {
-      if (screencasts.length === 1) {
-        winston.info('Could not save screencast because screencast %s already exists in the db. Sending 400 instead.', youtubeId);
-        return res.status(400).send({
-          message: 'Screencast already exists'
-        });
-      }
-      youtube.getDetails(youtubeId).then(function (screencastDetails) {
-        connection.beginTransactionAsync().then(function () {
-          return connection.queryAsync('INSERT IGNORE INTO channels SET ?', screencastDetails.channel);
-        }).then(function () {
-          var screencast = screencastDetails;
-          screencast.channelId = screencastDetails.channel.channelId;
-          delete screencast.channel;
-          return connection.queryAsync('INSERT INTO screencasts SET ?', screencast);
-        }).then(function () {
-          var values = [tags.map(function (tag) {
-            return [tag];
-          })];
-          return connection.queryAsync('INSERT IGNORE INTO tags VALUES ?', values);
-        }).then(function () {
-          var values = [tags.map(function (tag) {
-            return [youtubeId, tag];
-          })];
-          return connection.queryAsync('INSERT INTO screencastTags VALUES ?', values);
-        }).then(function () {
-          winston.info('Successfully saved screencast %s.', youtubeId);
-          res.status(201).send();
-          return connection.commit();
-        }).error(function (error) {
-          connection.rollback();
-          winston.error('Something went wrong while saving screencast:', error);
-          res.status(500).send({
-            message: 'An unexpected error occured. It\'s not you, it\'s us. Detailed information about the error has automatically been recorded and we have been notified. Please try again in a couple of minutes.'
-          });
-        });
-      });
+      };
     });
   }
 
@@ -111,7 +40,7 @@ module.exports = function(connection) {
     var page = req.query.page || 1;
     var sort = req.query.sort || 'popular';
     var limit = config.screencastsPerPage;
-    var offset =  (page - 1) * limit;
+    var offset = (page - 1) * limit;
     var options = {
       limit: limit,
       offset: offset,
@@ -137,12 +66,14 @@ module.exports = function(connection) {
     if (sort === 'popular') {
       options.order = '(`Screencast`.`referralCount`) / pow(((unix_timestamp(now()) - unix_timestamp(`Screencast`.`submissionDate`)) / 3600) + 2, 1.5)';
     } else {
-      options.order = [['submissionDate', 'DESC']];
+      options.order = [
+        ['submissionDate', 'DESC']
+      ];
     }
-    models.Screencast.findAndCountAll(options).then(function (screencasts) {
+    models.Screencast.findAndCountAll(options).then(function(screencasts) {
       var o = {};
       o.totalCount = screencasts.count.toString();
-      var totalPageCount = Math.ceil(o.totalCount / config.screencastsPerPage) ;
+      var totalPageCount = Math.ceil(o.totalCount / config.screencastsPerPage);
       o.hasMore = page < totalPageCount;
       o.screencasts = _formatScreencasts(screencasts.rows);
       res.send(o);
@@ -153,7 +84,7 @@ module.exports = function(connection) {
     var page = req.query.page || 1;
     var sort = req.query.sort || 'popular';
     var limit = config.screencastsPerPage;
-    var offset =  (page - 1) * limit;
+    var offset = (page - 1) * limit;
     winston.info('Sending all screencasts (page: %s, sort: %s).', page, sort);
     var options = {
       limit: limit,
@@ -173,12 +104,14 @@ module.exports = function(connection) {
     if (sort === 'popular') {
       options.order = '(`Screencast`.`referralCount`) / pow(((unix_timestamp(now()) - unix_timestamp(`Screencast`.`submissionDate`)) / 3600) + 2, 1.5)';
     } else {
-      options.order = [['submissionDate', 'DESC']];
+      options.order = [
+        ['submissionDate', 'DESC']
+      ];
     }
-    models.Screencast.findAndCountAll(options).then(function (screencasts) {
+    models.Screencast.findAndCountAll(options).then(function(screencasts) {
       var o = {};
       o.totalCount = screencasts.count.toString();
-      var totalPageCount = Math.ceil(o.totalCount / config.screencastsPerPage) ;
+      var totalPageCount = Math.ceil(o.totalCount / config.screencastsPerPage);
       o.hasMore = page < totalPageCount;
       o.screencasts = _formatScreencasts(screencasts.rows);
       res.send(o);
@@ -241,6 +174,75 @@ module.exports = function(connection) {
     });
   }
 
+  function searchScreencasts(req, res) {
+    winston.info('User searched for', req.params.query);
+    var query = {
+      where: {
+        approved: true,
+        title: { $like: '%' + req.params.query + '%' }
+      },
+      include: [{
+        model: models.Channel
+      }, {
+        model: models.Tag,
+        through: { attributes: [] }
+      }]
+    };
+    models.Screencast
+      .findAll(query)
+      .then(screencasts => res.json(_formatScreencasts(screencasts)));
+  }
+
+  function saveScreencast(req, res) {
+    winston.info('User submitted screencast with body %s. Attempting to save screencast...', JSON.stringify(req.body));
+    var youtubeId = youtubeUrl.extractId(req.body.url);
+    var tags = commaSplit(req.body.tags, {
+      ignoreDuplicate: true
+    });
+    var sql = squel.select()
+      .from('screencasts')
+      .field('screencastId')
+      .where('screencastId = ?', youtubeId)
+      .toString();
+    connection.queryAsync(sql).spread(function(screencasts) {
+      if (screencasts.length === 1) {
+        winston.info('Could not save screencast because screencast %s already exists in the db. Sending 400 instead.', youtubeId);
+        return res.status(400).send({
+          message: 'Screencast already exists'
+        });
+      }
+      youtube.getDetails(youtubeId).then(function(screencastDetails) {
+        connection.beginTransactionAsync().then(function() {
+          return connection.queryAsync('INSERT IGNORE INTO channels SET ?', screencastDetails.channel);
+        }).then(function() {
+          var screencast = screencastDetails;
+          screencast.channelId = screencastDetails.channel.channelId;
+          delete screencast.channel;
+          return connection.queryAsync('INSERT INTO screencasts SET ?', screencast);
+        }).then(function() {
+          var values = [tags.map(function(tag) {
+            return [tag];
+          })];
+          return connection.queryAsync('INSERT IGNORE INTO tags VALUES ?', values);
+        }).then(function() {
+          var values = [tags.map(function(tag) {
+            return [youtubeId, tag];
+          })];
+          return connection.queryAsync('INSERT INTO screencastTags VALUES ?', values);
+        }).then(function() {
+          winston.info('Successfully saved screencast %s.', youtubeId);
+          res.status(201).send();
+          return connection.commit();
+        }).error(function(error) {
+          connection.rollback();
+          winston.error('Something went wrong while saving screencast:', error);
+          res.status(500).send({
+            message: 'An unexpected error occured. It\'s not you, it\'s us. Detailed information about the error has automatically been recorded and we have been notified. Please try again in a couple of minutes.'
+          });
+        });
+      });
+    });
+  }
   return {
     sendScreencasts: sendScreencasts,
     sendScreencastsWithTag: sendScreencastsWithTag,
