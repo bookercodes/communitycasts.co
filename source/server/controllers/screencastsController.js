@@ -338,7 +338,7 @@ module.exports = function(connection) {
   function redirectToScreencast(req, res) {
     var screencastId = req.params.screencastId;
     var remoteAddress = req.ip;
-    models.Screencasts.findById(screencastId).then(function(screencast) {
+    models.Screencast.findById(screencastId).then(function(screencast) {
       if (screencast === null) {
         winston.info(
           'Could not redirect user %s to screencast %s because screencast %s does not exist. Sending 404 instead.',
@@ -349,7 +349,7 @@ module.exports = function(connection) {
       winston.info(
         'Successfully redirected user %s to screencast %s. Attempting to count redirect...',
         remoteAddress, screencastId);
-      models.Referrals.find({
+      models.Referral.find({
         where: {
           screencastId: screencastId,
           refereeRemoteAddress: remoteAddress
@@ -361,14 +361,14 @@ module.exports = function(connection) {
             remoteAddress, screencastId);
           return;
         }
-        models.Screencasts.findById(screencastId).then(function(screencast) {
+        models.Screencast.findById(screencastId).then(function(screencast) {
           models.sequelize.transaction(function(transaction) {
             return screencast.increment({
               referralCount: 1
             }, {
               transaction: transaction
             }).then(function() {
-              models.Referrals
+              models.Referral
                 .create({
                   screencastId: screencastId,
                   refereeRemoteAddress: remoteAddress
