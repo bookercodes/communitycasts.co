@@ -50,23 +50,6 @@ module.exports = function(connection) {
       });
       res.send(o);
     });
-
-    //   var sql = squel.select()
-    //     .field('screencasts.*')
-    //     .field('channels.*')
-    //     .field('group_concat(screencastTags.tagName) as tags')
-    //     .from('screencasts')
-    //     .where('screencasts.approved = 1')
-    //     .where('title LIKE ?', '%' + query + '%')
-    //     .join('screencastTags', null, 'screencasts.screencastId = screencastTags.screencastId')
-    //     .join('channels', null, 'channels.channelId = screencasts.channelId')
-    //     .order('featured', false)
-    //     .group('screencasts.screencastId')
-    //     .toString();
-    // connection.queryAsync(sql).spread(function (screencasts) {
-    //   screencasts = screencasts.map(_formatScreencast);
-    //   res.json(screencasts);
-    // });
   }
   function saveScreencast(req, res) {
     winston.info('User submitted screencast with body %s. Attempting to save screencast...', JSON.stringify(req.body));
@@ -192,62 +175,6 @@ module.exports = function(connection) {
       });
       res.send(o);
     });
-    // var page = req.query.page || 1;
-    // var sort = req.query.sort || 'popular';
-    // winston.info('Sending screencasts with tag %s (page: %s, sort: %s).', req.params.tag, page, sort);
-    // var sql = squel.select()
-    //   .field('count(*) as total')
-    //   .from(
-    //     squel.select()
-    //     .field('screencasts.screencastId')
-    //     .from('screencasts')
-    //     .where('screencasts.approved = 1')
-    //     .join('screencastTags', null, 'screencasts.screencastId = screencastTags.screencastId')
-    //     .where('screencasts.screencastId IN ?',
-    //       squel.select()
-    //       .field('screencastId')
-    //       .from('screencastTags')
-    //       .where('screencastTags.tagName = ?', req.params.tag))
-    //     .group('screencasts.screencastId'),
-    //     'alias')
-    //   .toString();
-    // connection.queryAsync(sql).spread(function(result) {
-    //   var total = result.shift().total;
-    //   var totalPageCount = Math.ceil(total / config.screencastsPerPage);
-    //   var hasNextPage = page < totalPageCount;
-    //   var start = (page - 1) * config.screencastsPerPage;
-    //   var finish = config.screencastsPerPage;
-    //   var sql = squel.select()
-    //     .field('screencasts.*')
-    //     .field('channels.*')
-    //     .field('group_concat(screencastTags.tagName) as tags')
-    //     .from('screencasts')
-    //     .where('screencasts.approved = 1')
-    //     .join('screencastTags', null, 'screencasts.screencastId = screencastTags.screencastId')
-    //     .join('channels', null, 'channels.channelId = screencasts.channelId')
-    //     .where('screencasts.screencastId in ?',
-    //       squel.select()
-    //       .field('screencastId')
-    //       .from('screencastTags')
-    //       .where('screencastTags.tagName = ?', req.params.tag))
-    //     .order('featured', false)
-    //     .group('screencasts.screencastId');
-    //   if (sort === 'popular') {
-    //     // http://amix.dk/blog/post/19574
-    //     sql.order('(screencasts.referralCount)/pow(((unix_timestamp(now())-unix_timestamp(screencasts.submissionDate))/3600)+2,1.5)', false);
-    //   } else {
-    //     sql.order('submissionDate', false);
-    //   }
-    //   sql = sql.offset(start).limit(finish).toString();
-    //   connection.queryAsync(sql).spread(function(screencasts) {
-    //     screencasts = screencasts.map(_formatScreencast);
-    //     res.json({
-    //       screencasts: screencasts,
-    //       hasMore: hasNextPage,
-    //       totalCount: total
-    //     });
-    //   });
-    // });
   }
 
   function sendScreencasts(req, res) {
@@ -298,44 +225,6 @@ module.exports = function(connection) {
       });
       res.send(o);
     });
-    // var sql = squel.select()
-    //   .field('count(*) as count')
-    //   .from('screencasts')
-    //   .where('approved = 1')
-    //   .toString();
-    // connection.queryAsync(sql).spread(function(result) {
-    //   var total = result.shift().count;
-    //   var totalPageCount = Math.ceil(total / config.screencastsPerPage);
-    //   var hasNextPage = page < totalPageCount;
-    //   var start = (page - 1) * config.screencastsPerPage;
-    //   var finish = config.screencastsPerPage;
-    //   var sql = squel.select()
-    //     .field('screencasts.*')
-    //     .field('channels.*')
-    //     .field('group_concat(screencastTags.tagName) as tags')
-    //     .from('screencasts')
-    //     .where('screencasts.approved = 1')
-    //     .join('screencastTags', null, 'screencasts.screencastId = screencastTags.screencastId')
-    //     .join('channels', null, 'channels.channelId = screencasts.channelId')
-    //     .order('featured', false)
-    //     .group('screencasts.screencastId');
-    //   if (sort === 'popular') {
-    //     // http://amix.dk/blog/post/19574
-    //     sql = sql.order('(screencasts.referralCount)/pow(((unix_timestamp(now())-unix_timestamp(screencasts.submissionDate))/3600)+2,1.5)', false);
-    //   } else {
-    //     sql = sql.order('submissionDate', false);
-    //   }
-    //   sql = sql.offset(start).limit(finish).toString();
-    //
-    //   connection.queryAsync(sql).spread(function(screencasts) {
-    //     screencasts = screencasts.map(_formatScreencast);
-    //     res.json({
-    //       screencasts: screencasts,
-    //       hasMore: hasNextPage,
-    //       totalCount: total
-    //     });
-    //   });
-    // });
   }
 
   function redirectToScreencast(req, res) {
