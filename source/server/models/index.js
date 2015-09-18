@@ -20,7 +20,7 @@ var Channel = sequelize.define('channel', {
   tableName: 'channels'
 });
 
-var Screencast = sequelize.define('Screencast', {
+var Screencast = sequelize.define('screencast', {
   screencastId: {
     type: Sequelize.STRING,
     allowNull: false,
