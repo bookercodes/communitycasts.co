@@ -170,6 +170,8 @@ module.exports = function(connection) {
     models.Screencasts.findAndCountAll(options).then(function (screencasts) {
       var o = {};
       o.totalCount = screencasts.count.toString();
+      var totalPageCount = Math.ceil(o.totalCount / config.screencastsPerPage) ;
+      o.hasMore = page < totalPageCount;
       o.screencasts = screencasts.rows.map(function (screencast) {
         delete screencast.dataValues.channelId;
         delete screencast.dataValues.approved;
@@ -271,6 +273,8 @@ module.exports = function(connection) {
     models.Screencasts.findAndCountAll(options).then(function (screencasts) {
       var o = {};
       o.totalCount = screencasts.count.toString();
+      var totalPageCount = Math.ceil(o.totalCount / config.screencastsPerPage) ;
+      o.hasMore = page < totalPageCount;
       o.screencasts = screencasts.rows.map(function (screencast) {
         delete screencast.dataValues.channelId;
         delete screencast.dataValues.approved;
