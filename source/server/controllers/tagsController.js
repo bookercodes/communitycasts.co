@@ -8,7 +8,7 @@ module.exports = function() {
   return {
     send20Tags: function (req, res) {
       winston.info('Sending tags.');
-      models.ScreencastTags.findAll({
+      models.ScreencastTag.findAll({
         group: ['tagName'],
         limit: 20,
         attributes: [
