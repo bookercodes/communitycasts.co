@@ -14,6 +14,25 @@ var Sequelize = require('Sequelize');
 require('moment-duration-format');
 
 module.exports = function(connection) {
+
+  function _formatScreencasts(screencasts) {
+    return screencasts.map(function (screencast) {
+      delete screencast.dataValues.channelId;
+      delete screencast.dataValues.approved;
+      delete screencast.dataValues.referralCount;
+      screencast.dataValues.duration = moment.duration(screencast.dataValues.durationInSeconds, 'seconds').format('hh:mm:ss');
+      delete screencast.dataValues.durationInSeconds;
+      screencast.dataValues.description = truncate(screencast.description, config.descriptionLength);
+      screencast.dataValues.tags = screencast.dataValues.Tags.map(function (tag) {
+        return tag.tagName;
+      });
+      delete screencast.dataValues.Tags;
+      screencast.dataValues.href =
+        config.host + 'screencasts/' + screencast.dataValues.screencastId;
+      return screencast.dataValues;
+    });
+  }
+
   function searchScreencasts(req, res) {
     var query = req.params.query;
     winston.info('User searched for ', query);
@@ -33,22 +52,8 @@ module.exports = function(connection) {
         }
       }]
     }).then(function (screencasts) {
-      var o = screencasts.map(function (screencast) {
-        delete screencast.dataValues.channelId;
-        delete screencast.dataValues.approved;
-        delete screencast.dataValues.referralCount;
-        screencast.dataValues.duration = moment.duration(screencast.dataValues.durationInSeconds, 'seconds').format('hh:mm:ss');
-        delete screencast.dataValues.durationInSeconds;
-        screencast.dataValues.description = truncate(screencast.description, config.descriptionLength);
-        screencast.dataValues.tags = screencast.dataValues.Tags.map(function (tag) {
-          return tag.tagName;
-        });
-        delete screencast.dataValues.Tags;
-        screencast.dataValues.href =
-          config.host + 'screencasts/' + screencast.dataValues.screencastId;
-        return screencast.dataValues;
-      });
-      res.send(o);
+      screencasts = _formatScreencasts(screencasts);
+      res.json(screencasts);
     });
   }
   function saveScreencast(req, res) {
@@ -139,21 +144,7 @@ module.exports = function(connection) {
       o.totalCount = screencasts.count.toString();
       var totalPageCount = Math.ceil(o.totalCount / config.screencastsPerPage) ;
       o.hasMore = page < totalPageCount;
-      o.screencasts = screencasts.rows.map(function (screencast) {
-        delete screencast.dataValues.channelId;
-        delete screencast.dataValues.approved;
-        delete screencast.dataValues.referralCount;
-        screencast.dataValues.duration = moment.duration(screencast.dataValues.durationInSeconds, 'seconds').format('hh:mm:ss');
-        delete screencast.dataValues.durationInSeconds;
-        screencast.dataValues.description = truncate(screencast.description, config.descriptionLength);
-        screencast.dataValues.href =
-          config.host + 'screencasts/' + screencast.dataValues.screencastId;
-        screencast.dataValues.tags = screencast.dataValues.Tags.map(function (tag) {
-          return tag.tagName;
-        });
-        delete screencast.dataValues.Tags;
-        return screencast.dataValues;
-      });
+      o.screencasts = _formatScreencasts(screencasts.rows);
       res.send(o);
     });
   }
@@ -189,21 +180,7 @@ module.exports = function(connection) {
       o.totalCount = screencasts.count.toString();
       var totalPageCount = Math.ceil(o.totalCount / config.screencastsPerPage) ;
       o.hasMore = page < totalPageCount;
-      o.screencasts = screencasts.rows.map(function (screencast) {
-        delete screencast.dataValues.channelId;
-        delete screencast.dataValues.approved;
-        delete screencast.dataValues.referralCount;
-        screencast.dataValues.duration = moment.duration(screencast.dataValues.durationInSeconds, 'seconds').format('hh:mm:ss');
-        delete screencast.dataValues.durationInSeconds;
-        screencast.dataValues.description = truncate(screencast.description, config.descriptionLength);
-        screencast.dataValues.tags = screencast.dataValues.Tags.map(function (tag) {
-          return tag.tagName;
-        });
-        delete screencast.dataValues.Tags;
-        screencast.dataValues.href =
-          config.host + 'screencasts/' + screencast.dataValues.screencastId;
-        return screencast.dataValues;
-      });
+      o.screencasts = _formatScreencasts(screencasts.rows);
       res.send(o);
     });
   }
