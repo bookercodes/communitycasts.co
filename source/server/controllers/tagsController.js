@@ -17,7 +17,7 @@ module.exports = function() {
         ],
         order: 'count DESC',
         include: [{
-          model: models.Screencasts,
+          model: models.Screencast,
           where: { approved: true },
           attributes: []
         }]

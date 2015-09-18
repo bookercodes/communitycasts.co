@@ -17,7 +17,7 @@ module.exports = function(connection) {
   function searchScreencasts(req, res) {
     var query = req.params.query;
     winston.info('User searched for ', query);
-    models.Screencasts.findAll({
+    models.Screencast.findAll({
       where: {
         approved: true,
         title: {
@@ -163,11 +163,11 @@ module.exports = function(connection) {
       }]
     };
     if (sort === 'popular') {
-      options.order = '(`screencasts`.`referralCount`) / pow(((unix_timestamp(now()) - unix_timestamp(`screencasts`.`submissionDate`)) / 3600) + 2, 1.5)';
+      options.order = '(`Screencast`.`referralCount`) / pow(((unix_timestamp(now()) - unix_timestamp(`Screencast`.`submissionDate`)) / 3600) + 2, 1.5)';
     } else {
       options.order = [['submissionDate', 'DESC']];
     }
-    models.Screencasts.findAndCountAll(options).then(function (screencasts) {
+    models.Screencast.findAndCountAll(options).then(function (screencasts) {
       var o = {};
       o.totalCount = screencasts.count.toString();
       var totalPageCount = Math.ceil(o.totalCount / config.screencastsPerPage) ;
@@ -266,11 +266,11 @@ module.exports = function(connection) {
       }]
     };
     if (sort === 'popular') {
-      options.order = '(`screencasts`.`referralCount`) / pow(((unix_timestamp(now()) - unix_timestamp(`screencasts`.`submissionDate`)) / 3600) + 2, 1.5)';
+      options.order = '(`Screencast`.`referralCount`) / pow(((unix_timestamp(now()) - unix_timestamp(`Screencast`.`submissionDate`)) / 3600) + 2, 1.5)';
     } else {
       options.order = [['submissionDate', 'DESC']];
     }
-    models.Screencasts.findAndCountAll(options).then(function (screencasts) {
+    models.Screencast.findAndCountAll(options).then(function (screencasts) {
       var o = {};
       o.totalCount = screencasts.count.toString();
       var totalPageCount = Math.ceil(o.totalCount / config.screencastsPerPage) ;
