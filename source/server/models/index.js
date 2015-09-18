@@ -8,7 +8,7 @@ var sequelize = new Sequelize('communityCasts', 'root', config.databasePassword,
   }
 });
 
-var Channel = sequelize.define('Channel', {
+var Channel = sequelize.define('channel', {
   channelId: {
     type: Sequelize.STRING,
     primaryKey: true
