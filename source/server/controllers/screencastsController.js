@@ -27,7 +27,7 @@ module.exports = function(connection) {
       include: [{
         model: models.Channel
       }, {
-        model: models.Tags,
+        model: models.Tag,
         through: {
           attributes: []
         }
@@ -156,7 +156,7 @@ module.exports = function(connection) {
       include: [{
         model: models.Channel
       }, {
-        model: models.Tags,
+        model: models.Tag,
         through: {
           attributes: []
         }
@@ -259,7 +259,7 @@ module.exports = function(connection) {
       include: [{
         model: models.Channel
       }, {
-        model: models.Tags,
+        model: models.Tag,
         through: {
           attributes: []
         }

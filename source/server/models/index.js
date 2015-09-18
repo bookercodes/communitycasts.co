@@ -54,11 +54,13 @@ var Screencast = sequelize.define('Screencast', {
   tableName:'screencasts'
 });
 
-var Tags = sequelize.define('tags', {
+var Tag = sequelize.define('tag', {
   tagName: {
     type: Sequelize.STRING,
     primaryKey: true
   }
+}, {
+  tableName: 'tags'
 });
 
 var ScreencastTags = sequelize.define('screencasttags', {
@@ -83,15 +85,15 @@ var Referrals = sequelize.define('referrals', {
   }
 });
 
-Screencast.belongsToMany(Tags, { through:ScreencastTags, foreignKey: 'screencastId' });
-Tags.belongsToMany(Screencast, { through:ScreencastTags, foreignKey:'tagName' });
+Screencast.belongsToMany(Tag, { through:ScreencastTags, foreignKey: 'screencastId' });
+Tag.belongsToMany(Screencast, { through:ScreencastTags, foreignKey:'tagName' });
 ScreencastTags.belongsTo(Screencast, { foreignKey: 'screencastId' });
 Screencast.belongsTo(Channel, { foreignKey:'channelId' });
 Referrals.belongsTo(Screencast, { foreignKey: 'screencastId' });
 
 module.exports = {
   Screencast: Screencast,
-  Tags: Tags,
+  Tag: Tag,
   ScreencastTags: ScreencastTags,
   Channel: Channel,
   Referrals: Referrals,
