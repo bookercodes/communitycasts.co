@@ -43,6 +43,8 @@ module.exports = function(connection) {
         screencast.dataValues.tags = screencast.dataValues.tags.map(function (tag) {
           return tag.tagName;
         });
+        screencast.dataValues.href =
+          config.host + 'screencasts/' + screencast.dataValues.screencastId;
         return screencast.dataValues;
       });
       res.send(o);
@@ -179,6 +181,8 @@ module.exports = function(connection) {
         screencast.dataValues.duration = moment.duration(screencast.dataValues.durationInSeconds, 'seconds').format('hh:mm:ss');
         delete screencast.dataValues.durationInSeconds;
         screencast.dataValues.description = truncate(screencast.description, config.descriptionLength);
+        screencast.dataValues.href =
+          config.host + 'screencasts/' + screencast.dataValues.screencastId;
         screencast.dataValues.tags = screencast.dataValues.tags.map(function (tag) {
           return tag.tagName;
         });
@@ -285,6 +289,8 @@ module.exports = function(connection) {
         screencast.dataValues.tags = screencast.dataValues.tags.map(function (tag) {
           return tag.tagName;
         });
+        screencast.dataValues.href =
+          config.host + 'screencasts/' + screencast.dataValues.screencastId;
         return screencast.dataValues;
       });
       res.send(o);
