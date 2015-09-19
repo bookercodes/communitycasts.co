@@ -68,12 +68,13 @@ module.exports = function(connection) {
 
   function _executeScreencastsQuery(query, req, res) {
     models.Screencast.findAndCountAll(query).then(function(screencasts) {
-      var o = {};
-      o.totalCount = screencasts.count.toString();
-      var totalPageCount = Math.ceil(o.totalCount / config.screencastsPerPage);
-      o.hasMore = (req.query.page || 1) < totalPageCount;
-      o.screencasts = _formatScreencasts(screencasts.rows);
-      res.send(o);
+      var model = {
+        totalCount: screencasts.count.toString(),
+        screencasts: _formatScreencasts(screencasts.rows)
+      };
+      var totalPageCount = Math.ceil(model.totalCount / config.screencastsPerPage);
+      model.hasMore = (req.query.page || 1) < totalPageCount;
+      res.send(model);
     });
   }
 
