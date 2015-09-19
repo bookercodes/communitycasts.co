@@ -1,5 +1,5 @@
 'use strict';
-module.exports = function (sequelize, DataTypes) {
+module.exports = function(sequelize, DataTypes) {
   var ScreencastTag = sequelize.define('ScreencastTag', {
     screencastId: {
       type: DataTypes.STRING,
@@ -12,8 +12,10 @@ module.exports = function (sequelize, DataTypes) {
   }, {
     tableName: 'screencastTags',
     classMethods: {
-      associate: function (models) {
-        ScreencastTag.belongsTo(models.Screencast, { foreignKey: 'screencastId' });
+      associate: function(models) {
+        ScreencastTag.belongsTo(models.Screencast, {
+          foreignKey: 'screencastId'
+        });
       }
     }
   });

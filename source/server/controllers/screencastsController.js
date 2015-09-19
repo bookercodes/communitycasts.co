@@ -1,15 +1,15 @@
 'use strict';
 
 var config = require('config');
+var Sequelize = require('Sequelize');
 var squel = require('squel');
 var moment = require('moment');
 var commaSplit = require('comma-split');
-var youtube = require('../youtube')(config.youtubeApiKey);
-var youtubeUrl = require('youtube-url');
 var truncate = require('truncate');
 var winston = require('winston');
+var youtubeUrl = require('youtube-url');
+var youtube = require('../youtube')(config.youtubeApiKey);
 var models = require('../models');
-var Sequelize = require('Sequelize');
 
 require('moment-duration-format');
 
@@ -81,7 +81,7 @@ module.exports = function(connection) {
   function sendScreencastsWithTag(req, res) {
     var query = _buildScreencastsQuery(req, res);
     query.where.screencastId = {
-      $in: Sequelize.literal( '(SELECT DISTINCT screencastId FROM screencastTags WHERE tagName = :tagName)')
+      $in: Sequelize.literal('(SELECT DISTINCT screencastId FROM screencastTags WHERE tagName = :tagName)')
     };
     query.replacements = {
       tagName: req.params.tag
@@ -154,13 +154,17 @@ module.exports = function(connection) {
     var query = {
       where: {
         approved: true,
-        title: { $like: '%' + req.params.query + '%' }
+        title: {
+          $like: '%' + req.params.query + '%'
+        }
       },
       include: [{
         model: models.Channel
       }, {
         model: models.Tag,
-        through: { attributes: [] }
+        through: {
+          attributes: []
+        }
       }]
     };
     models.Screencast

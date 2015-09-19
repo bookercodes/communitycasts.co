@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function (sequelize, DataTypes) {
+module.exports = function(sequelize, DataTypes) {
   var Screencast = sequelize.define('Screencast', {
     screencastId: {
       type: DataTypes.STRING,
@@ -32,11 +32,16 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.BOOLEAN,
     }
   }, {
-    tableName:'screencasts',
+    tableName: 'screencasts',
     classMethods: {
-      associate: function (models) {
-        Screencast.belongsTo(models.Channel, { foreignKey:'channelId' });
-        Screencast.belongsToMany(models.Tag, { through:models.ScreencastTag, foreignKey: 'screencastId' });
+      associate: function(models) {
+        Screencast.belongsTo(models.Channel, {
+          foreignKey: 'channelId'
+        });
+        Screencast.belongsToMany(models.Tag, {
+          through: models.ScreencastTag,
+          foreignKey: 'screencastId'
+        });
       }
     }
   });

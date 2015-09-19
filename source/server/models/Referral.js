@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function (sequelize, DataTypes) {
+module.exports = function(sequelize, DataTypes) {
   var Referral = sequelize.define('Referral', {
     screencastId: {
       type: DataTypes.STRING,
@@ -12,8 +12,10 @@ module.exports = function (sequelize, DataTypes) {
     }
   }, {
     classMethods: {
-      assocaite: function (models) {
-        Referral.belongsTo(models.Screencast, { foreignKey: 'screencastId' });
+      assocaite: function(models) {
+        Referral.belongsTo(models.Screencast, {
+          foreignKey: 'screencastId'
+        });
       }
     }
   });

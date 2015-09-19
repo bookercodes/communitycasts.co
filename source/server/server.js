@@ -50,15 +50,12 @@ app.get('/screencasts/search/:query', screencastsController.searchScreencasts);
 var tagsController = require('./controllers/tagsController')(connection);
 app.get('/api/tags', tagsController.send20Tags);
 
-app.all('/*', function(req, res) {
+app.all('/*', (req, res) =>
   res.sendFile('index.html', {
     root: path.join(__dirname, '../client/')
-  });
-});
+  }));
 
-app.listen(config.port, function () {
-  winston.info('Server was started on port %s.', config.port);
-});
+app.listen(config.port, () => winston.info('Server was started on port %s.', config.port));
 
 process.on('uncaughtException', function (err) {
   winston.error(err.stack);

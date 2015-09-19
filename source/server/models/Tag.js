@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function (sequelize, DataTypes) {
+module.exports = function(sequelize, DataTypes) {
   var Tag = sequelize.define('Tag', {
     tagName: {
       type: DataTypes.STRING,
@@ -9,8 +9,11 @@ module.exports = function (sequelize, DataTypes) {
   }, {
     tableName: 'tags',
     classMethods: {
-      associate: function (models) {
-        Tag.belongsToMany(models.Screencast, { through:models.ScreencastTag, foreignKey:'tagName' });
+      associate: function(models) {
+        Tag.belongsToMany(models.Screencast, {
+          through: models.ScreencastTag,
+          foreignKey: 'tagName'
+        });
       }
     }
   });
