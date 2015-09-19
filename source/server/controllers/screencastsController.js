@@ -36,7 +36,7 @@ module.exports = function(connection) {
     });
   }
 
-  function sendScreencastsWithTag(req, res) {
+  function _buildScreencastsQuery(req) {
     var page = req.query.page || 1;
     var sort = req.query.sort || 'popular';
     var limit = config.screencastsPerPage;
@@ -46,13 +46,6 @@ module.exports = function(connection) {
       offset: offset,
       where: {
         approved: true,
-        screencastId: {
-          $in: Sequelize.literal(
-            '(SELECT DISTINCT screencastId FROM screencastTags WHERE tagName = :tagName)')
-        }
-      },
-      replacements: {
-        tagName: req.params.tag
       },
       include: [{
         model: models.Channel
@@ -70,52 +63,33 @@ module.exports = function(connection) {
         ['submissionDate', 'DESC']
       ];
     }
-    models.Screencast.findAndCountAll(options).then(function(screencasts) {
+    return options;
+  }
+
+  function _executeScreencastsQuery(query, req, res) {
+    models.Screencast.findAndCountAll(query).then(function(screencasts) {
       var o = {};
       o.totalCount = screencasts.count.toString();
       var totalPageCount = Math.ceil(o.totalCount / config.screencastsPerPage);
-      o.hasMore = page < totalPageCount;
+      o.hasMore = (req.query.page || 1) < totalPageCount;
       o.screencasts = _formatScreencasts(screencasts.rows);
       res.send(o);
     });
   }
 
-  function sendScreencasts(req, res) {
-    var page = req.query.page || 1;
-    var sort = req.query.sort || 'popular';
-    var limit = config.screencastsPerPage;
-    var offset = (page - 1) * limit;
-    winston.info('Sending all screencasts (page: %s, sort: %s).', page, sort);
-    var options = {
-      limit: limit,
-      offset: offset,
-      where: {
-        approved: true
-      },
-      include: [{
-        model: models.Channel
-      }, {
-        model: models.Tag,
-        through: {
-          attributes: []
-        }
-      }]
+  function sendScreencastsWithTag(req, res) {
+    var query = _buildScreencastsQuery(req, res);
+    query.where.screencastId = {
+      $in: Sequelize.literal( '(SELECT DISTINCT screencastId FROM screencastTags WHERE tagName = :tagName)')
     };
-    if (sort === 'popular') {
-      options.order = '(`Screencast`.`referralCount`) / pow(((unix_timestamp(now()) - unix_timestamp(`Screencast`.`submissionDate`)) / 3600) + 2, 1.5)';
-    } else {
-      options.order = [
-        ['submissionDate', 'DESC']
-      ];
-    }
-    models.Screencast.findAndCountAll(options).then(function(screencasts) {
-      var o = {};
-      o.totalCount = screencasts.count.toString();
-      var totalPageCount = Math.ceil(o.totalCount / config.screencastsPerPage);
-      o.hasMore = page < totalPageCount;
-      o.screencasts = _formatScreencasts(screencasts.rows);
-      res.send(o);
-    });
+    query.replacements = {
+      tagName: req.params.tag
+    };
+    _executeScreencastsQuery(query, req, res);
+  }
+
+  function sendScreencasts(req, res) {
+    _executeScreencastsQuery(_buildScreencastsQuery(req), req, res);
   }
 
   function redirectToScreencast(req, res) {
