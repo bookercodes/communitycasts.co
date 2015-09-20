@@ -151,25 +151,11 @@ module.exports = function(connection) {
 
   function searchScreencasts(req, res) {
     winston.info('User searched for', req.params.query);
-    var query = {
-      where: {
-        approved: true,
-        title: {
-          $like: '%' + req.params.query + '%'
-        }
-      },
-      include: [{
-        model: models.Channel
-      }, {
-        model: models.Tag,
-        through: {
-          attributes: []
-        }
-      }]
+    var query = _buildScreencastsQuery(req);
+    query.where.title = {
+      $like: '%' + req.params.query + '%'
     };
-    models.Screencast
-      .findAll(query)
-      .then(screencasts => res.json(_formatScreencasts(screencasts)));
+    _executeScreencastsQuery(query, req, res);
   }
 
   function saveScreencast(req, res) {

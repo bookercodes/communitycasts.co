@@ -15,8 +15,10 @@
       $scope.busy = true;
       var base = config.serverHost + 'api/screencasts';
       if ($stateParams.tagged !== '') {
-        base += '/tagged/' + encodeURIComponent($stateParams.tagged) +
-          '/';
+        base += '/tagged/' + encodeURIComponent($stateParams.tagged) + '/';
+      }
+      if ($scope.searchQuery !== undefined) {
+        base += '/search/' + encodeURIComponent($scope.searchQuery) + '/';
       }
       var url = base + '?page=' + $scope.page + '&sort=' + $scope.sortOption;
       $http.get(url).success(function(response) {
@@ -41,28 +43,24 @@
     $scope.navigateTo = function(link) {
       $window.open(link);
     };
-
     $scope.search = function () {
-      if ($scope.searchQuery === '') {
-        init();
-        $scope.fetchScreencasts();
-        return;
-      } else {
-        $scope.tagged = '';
-        $http.get(config.serverHost + 'api/screencasts/search/' + encodeURIComponent($scope.searchQuery))
-          .success(function (response) {
-            $scope.screencasts = response;
-          });
-      }
+      init();
+      $scope.fetchScreencasts();
+      $scope.tagged = '';
     };
-
     init();
     $scope.sortOption = $stateParams.sort;
     $scope.tagged = $stateParams.tagged;
     $scope.fetchScreencasts();
   };
-  screencastsController.$inject = ['$scope', '$http', '$stateParams',
-    '$window', '$location', 'config', '$state'
+  screencastsController.$inject = [
+    '$scope',
+    '$http',
+    '$stateParams',
+    '$window',
+    '$location',
+    'config',
+    '$state'
   ];
   angular
     .module('communityCasts')
