@@ -15,7 +15,7 @@ require('moment-duration-format');
 
 module.exports = function(connection) {
 
-  function _formatScreencasts(screencasts) {
+  function _mapScreencasts(screencasts) {
     return screencasts.map(function(screencast) {
       screencast = screencast.dataValues;
       return {
@@ -70,7 +70,7 @@ module.exports = function(connection) {
     models.Screencast.findAndCountAll(query).then(function(screencasts) {
       var model = {
         totalCount: screencasts.count.toString(),
-        screencasts: _formatScreencasts(screencasts.rows)
+        screencasts: _mapScreencasts(screencasts.rows)
       };
       var totalPageCount = Math.ceil(model.totalCount / config.screencastsPerPage);
       model.hasMore = (req.query.page || 1) < totalPageCount;
