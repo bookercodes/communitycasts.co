@@ -22,7 +22,7 @@ module.exports = function(connection) {
         screencastId: screencast.screencastId,
         title: screencast.title,
         description: truncate(screencast.description, config.descriptionLength),
-        href: config.host + 'screencasts/' + screencast.screencastId,
+        href: config.host + 'api/screencasts/' + screencast.screencastId,
         duration: moment
           .duration(screencast.durationInSeconds, 'seconds')
           .format('hh:mm:ss'),
