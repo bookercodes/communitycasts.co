@@ -46,7 +46,8 @@ app.get('/api/screencasts/tagged/:tag', validators.paginationValidator,
 app.post('/api/screencasts/', validators.submissionValidator,
   screencastsController.saveScreencast);
 app.get('/api/screencasts/:screencastId', screencastsController.redirectToScreencast);
-app.get('/api/screencasts/search/:query', screencastsController.searchScreencasts);
+app.get('/api/screencasts/search/:query', validators.paginationValidator,
+  screencastsController.searchScreencasts);
 var tagsController = require('./controllers/tagsController')(connection);
 app.get('/api/tags', tagsController.send20Tags);
 
