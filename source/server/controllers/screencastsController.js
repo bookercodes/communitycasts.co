@@ -66,15 +66,15 @@ module.exports = function(connection) {
     return options;
   }
 
-  function _executeScreencastsQuery(query, req, res) {
-    models.Screencast.findAndCountAll(query).then(function(screencasts) {
+  function _executeScreencastsQuery(query, req) {
+    return models.Screencast.findAndCountAll(query).then(function(screencasts) {
       var model = {
         totalCount: screencasts.count.toString(),
         screencasts: _mapScreencasts(screencasts.rows)
       };
       var totalPageCount = Math.ceil(model.totalCount / config.screencastsPerPage);
       model.hasMore = (req.query.page || 1) < totalPageCount;
-      res.send(model);
+      return model;
     });
   }
 
@@ -86,11 +86,20 @@ module.exports = function(connection) {
     query.replacements = {
       tagName: req.params.tag
     };
-    _executeScreencastsQuery(query, req, res);
+    _executeScreencastsQuery(query, req).then(model => res.json(model));
   }
 
   function sendScreencasts(req, res) {
-    _executeScreencastsQuery(_buildScreencastsQuery(req), req, res);
+    _executeScreencastsQuery(_buildScreencastsQuery(req), req).then(model => res.json(model));
+  }
+
+  function searchScreencasts(req, res) {
+    winston.info('User searched for', req.params.query);
+    var query = _buildScreencastsQuery(req);
+    query.where.title = {
+      $like: '%' + req.params.query + '%'
+    };
+    _executeScreencastsQuery(query, req).then(model => res.json(model));
   }
 
   function redirectToScreencast(req, res) {
@@ -149,14 +158,6 @@ module.exports = function(connection) {
     });
   }
 
-  function searchScreencasts(req, res) {
-    winston.info('User searched for', req.params.query);
-    var query = _buildScreencastsQuery(req);
-    query.where.title = {
-      $like: '%' + req.params.query + '%'
-    };
-    _executeScreencastsQuery(query, req, res);
-  }
 
   function saveScreencast(req, res) {
     winston.info('User submitted screencast with body %s. Attempting to save screencast...', JSON.stringify(req.body));
