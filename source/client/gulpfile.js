@@ -12,7 +12,7 @@ var gulpNgConfig = require('gulp-ng-config');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 
-gulp.task('processDependencies', function () {
+gulp.task('processDependencies', function() {
   var sources = [
     './bower_components/angular/angular.min.js',
     './bower_components/angulartics/dist/angulartics.min.js',
@@ -30,7 +30,7 @@ gulp.task('processDependencies', function () {
     .pipe(gulp.dest('./dist/'));
 });
 
-gulp.task('processConfig', function () {
+gulp.task('processConfig', function() {
   return gulp.src('config.json')
     .pipe(gulpNgConfig('config', {
       environment: process.env.NODE_ENV || 'local'
@@ -39,20 +39,20 @@ gulp.task('processConfig', function () {
 });
 
 gulp.task('processSass', function() {
-  return sass('./scss/main.scss',{
-    style:'compressed'
-  })
-  .on('error', function (err) {
-    console.error('Error!', err.message);
-  })
-  .pipe(autoprefixer({
-    browsers: ['last 2 versions'],
-    cascade: false
-  }))
-  .pipe(gulp.dest('./dist'));
+  return sass('./scss/main.scss', {
+      style: 'compressed'
+    })
+    .on('error', function(err) {
+      console.error('Error!', err.message);
+    })
+    .pipe(autoprefixer({
+      browsers: ['last 2 versions'],
+      cascade: false
+    }))
+    .pipe(gulp.dest('./dist'));
 });
 
-gulp.task('processJs', function () {
+gulp.task('processJs', function() {
   var sources = [
     './app/config.js',
     './app/app.js',
@@ -65,18 +65,16 @@ gulp.task('processJs', function () {
     .pipe(gulp.dest('./dist/'));
 });
 
-gulp.task('production', function () {
+gulp.task('production', function() {
   runSequence(
-    'processConfig',
-    ['processSass', 'processJs', 'processDependencies']
+    'processConfig', ['processSass', 'processJs', 'processDependencies']
   );
 });
 
-gulp.task('local', function () {
+gulp.task('local', function() {
   runSequence(
-    'processConfig',
-    ['processSass', 'processJs', 'processDependencies'],
-    function () {
+    'processConfig', ['processSass', 'processJs', 'processDependencies'],
+    function() {
       gulp.watch('./scss/**/*.scss', ['processSass']);
       gulp.watch('./app/**/*.js', ['processJs']);
       gulp.watch([
