@@ -6,6 +6,11 @@
   @include mobile {
     justify-content: center;
   }
+
+  &__btn-group {
+    display: flex;
+  }
+
   &__btn {
     background-color: $button-background;
     padding: 7px 14px;
