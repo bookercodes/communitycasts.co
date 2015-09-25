@@ -1,7 +1,7 @@
 'use strict';
 
 var config = require('config');
-var Sequelize = require('Sequelize');
+var Sequelize = require('sequelize');
 var squel = require('squel');
 var moment = require('moment');
 var commaSplit = require('comma-split');

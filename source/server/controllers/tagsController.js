@@ -2,7 +2,7 @@
 // var squel = require('squel');
 var winston = require('winston');
 var models = require('../models');
-var Sequelize = require('Sequelize');
+var Sequelize = require('sequelize');
 
 module.exports = function() {
   return {

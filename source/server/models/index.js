@@ -1,6 +1,6 @@
 'use strict';
 
-var Sequelize = require('Sequelize');
+var Sequelize = require('sequelize');
 var config = require('config');
 var fs = require('fs');
 var path = require('path');
