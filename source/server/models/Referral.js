@@ -11,6 +11,7 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     }
   }, {
+    tableName: 'referrals',
     classMethods: {
       assocaite: function(models) {
         Referral.belongsTo(models.Screencast, {
