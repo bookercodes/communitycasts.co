@@ -2,7 +2,6 @@
 
 var config = require('config');
 var Sequelize = require('sequelize');
-var squel = require('squel');
 var moment = require('moment');
 var commaSplit = require('comma-split');
 var truncate = require('truncate');
@@ -13,7 +12,7 @@ var models = require('../models');
 
 require('moment-duration-format');
 
-module.exports = function(connection) {
+module.exports = function() {
 
   function _mapScreencasts(screencasts) {
     return screencasts.map(function(screencast) {
@@ -158,20 +157,16 @@ module.exports = function(connection) {
     });
   }
 
-
   function saveScreencast(req, res) {
-
     winston.info('User submitted screencast with body %s. Attempting to save screencast...', JSON.stringify(req.body));
     var youtubeId = youtubeUrl.extractId(req.body.url);
     var tags = commaSplit(req.body.tags, {
       ignoreDuplicate: true
+    }).map(function(tag) {
+      return {
+        tagName: tag
+      };
     });
-          var tagsToInsert = tags.map(function(tag) {
-            return {
-              tagName: tag
-            };
-          });
-
     models.Screencast.findById(youtubeId).then(function(screencast) {
       if (screencast !== null) {
         winston.info('Could not save screencast because screencast %s already exists in the db. Sending 400 instead.', youtubeId);
@@ -181,25 +176,25 @@ module.exports = function(connection) {
       }
       youtube.getDetails(youtubeId).then(function(screencastDetails) {
         models.sequelize.transaction(function(t) {
-          return models.Tag.bulkCreate(tagsToInsert, {
+          return models.Tag.bulkCreate(tags, {
             transaction: t,
             ignoreDuplicates: true
           }).then(function() {
             return models.Channel.create(screencastDetails.channel, {
               transaction: t
-            });
-          }).then(function(channel) {
+            }).catch(Sequelize.UniqueConstraintError, function() {});
+          }).then(function() {
             return models.Screencast.create({
               screencastId: youtubeId,
               title: screencastDetails.title,
               durationInSeconds: screencastDetails.durationInSeconds,
               description: screencastDetails.description,
-              channelId: channel.dataValues.channelId
+              channelId: screencastDetails.channel.channelId
             }, {
               transaction: t
             });
           }).then(function() {
-            var screencastTags = tagsToInsert.map(function(tag) {
+            var screencastTags = tags.map(function(tag) {
               return {
                 screencastId: youtubeId,
                 tagName: tag.tagName
@@ -216,11 +211,11 @@ module.exports = function(connection) {
     });
   }
 
-return {
-  sendScreencasts: sendScreencasts,
-  sendScreencastsWithTag: sendScreencastsWithTag,
-  redirectToScreencast: redirectToScreencast,
-  saveScreencast: saveScreencast,
-  searchScreencasts: searchScreencasts
-};
+  return {
+    sendScreencasts: sendScreencasts,
+    sendScreencastsWithTag: sendScreencastsWithTag,
+    redirectToScreencast: redirectToScreencast,
+    saveScreencast: saveScreencast,
+    searchScreencasts: searchScreencasts
+  };
 };
