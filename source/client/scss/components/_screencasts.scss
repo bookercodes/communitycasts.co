@@ -9,7 +9,9 @@
     margin: 16px 0;
   }
   .screencast {
-    border-bottom: 1px solid $divider-color;
+    &:not(:last-child) {
+      border-bottom: 1px solid $divider-color;
+    }
     display: flex;
     padding: 20px 10px;
     font-size: .8em;
