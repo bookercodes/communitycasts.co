@@ -160,60 +160,67 @@ module.exports = function(connection) {
 
 
   function saveScreencast(req, res) {
+
     winston.info('User submitted screencast with body %s. Attempting to save screencast...', JSON.stringify(req.body));
     var youtubeId = youtubeUrl.extractId(req.body.url);
     var tags = commaSplit(req.body.tags, {
       ignoreDuplicate: true
     });
-    var sql = squel.select()
-      .from('screencasts')
-      .field('screencastId')
-      .where('screencastId = ?', youtubeId)
-      .toString();
-    connection.queryAsync(sql).spread(function(screencasts) {
-      if (screencasts.length === 1) {
+          var tagsToInsert = tags.map(function(tag) {
+            return {
+              tagName: tag
+            };
+          });
+
+    models.Screencast.findById(youtubeId).then(function(screencast) {
+      if (screencast !== null) {
         winston.info('Could not save screencast because screencast %s already exists in the db. Sending 400 instead.', youtubeId);
         return res.status(400).send({
           message: 'Screencast already exists'
         });
       }
       youtube.getDetails(youtubeId).then(function(screencastDetails) {
-        connection.beginTransactionAsync().then(function() {
-          return connection.queryAsync('INSERT IGNORE INTO channels SET ?', screencastDetails.channel);
-        }).then(function() {
-          var screencast = screencastDetails;
-          screencast.channelId = screencastDetails.channel.channelId;
-          delete screencast.channel;
-          return connection.queryAsync('INSERT INTO screencasts SET ?', screencast);
-        }).then(function() {
-          var values = [tags.map(function(tag) {
-            return [tag];
-          })];
-          return connection.queryAsync('INSERT IGNORE INTO tags VALUES ?', values);
-        }).then(function() {
-          var values = [tags.map(function(tag) {
-            return [youtubeId, tag];
-          })];
-          return connection.queryAsync('INSERT INTO screencastTags VALUES ?', values);
-        }).then(function() {
-          winston.info('Successfully saved screencast %s.', youtubeId);
-          res.status(201).send();
-          return connection.commit();
-        }).error(function(error) {
-          connection.rollback();
-          winston.error('Something went wrong while saving screencast:', error);
-          res.status(500).send({
-            message: 'An unexpected error occured. It\'s not you, it\'s us. Detailed information about the error has automatically been recorded and we have been notified. Please try again in a couple of minutes.'
+        models.sequelize.transaction(function(t) {
+          return models.Tag.bulkCreate(tagsToInsert, {
+            transaction: t,
+            ignoreDuplicates: true
+          }).then(function() {
+            return models.Channel.create(screencastDetails.channel, {
+              transaction: t
+            });
+          }).then(function(channel) {
+            return models.Screencast.create({
+              screencastId: youtubeId,
+              title: screencastDetails.title,
+              durationInSeconds: screencastDetails.durationInSeconds,
+              description: screencastDetails.description,
+              channelId: channel.dataValues.channelId
+            }, {
+              transaction: t
+            });
+          }).then(function() {
+            var screencastTags = tagsToInsert.map(function(tag) {
+              return {
+                screencastId: youtubeId,
+                tagName: tag.tagName
+              };
+            });
+            return models.ScreencastTag.bulkCreate(screencastTags, {
+              transaction: t
+            });
           });
         });
+      }).then(function() {
+        res.status(201).send();
       });
     });
   }
-  return {
-    sendScreencasts: sendScreencasts,
-    sendScreencastsWithTag: sendScreencastsWithTag,
-    redirectToScreencast: redirectToScreencast,
-    saveScreencast: saveScreencast,
-    searchScreencasts: searchScreencasts
-  };
+
+return {
+  sendScreencasts: sendScreencasts,
+  sendScreencastsWithTag: sendScreencastsWithTag,
+  redirectToScreencast: redirectToScreencast,
+  saveScreencast: saveScreencast,
+  searchScreencasts: searchScreencasts
+};
 };
