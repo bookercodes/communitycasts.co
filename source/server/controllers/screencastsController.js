@@ -30,7 +30,9 @@ module.exports = function() {
         channel: {
           channelId: screencast.Channel.channelId,
           channelName: screencast.Channel.channelName
-        }
+        },
+        featured: screencast.featured,
+        referralCount: screencast.referralCount
       };
     });
   }
@@ -56,9 +58,10 @@ module.exports = function() {
       }]
     };
     if (sort === 'popular') {
-      options.order = '(`Screencast`.`referralCount`) / pow(((unix_timestamp(now()) - unix_timestamp(`Screencast`.`submissionDate`)) / 3600) + 2, 1.5)';
+      options.order = 'featured DESC, (`Screencast`.`referralCount`) / pow(((unix_timestamp(now()) - unix_timestamp(`Screencast`.`submissionDate`)) / 3600) + 2, 1.5) DESC';
     } else {
       options.order = [
+        ['featured', 'DESC'],
         ['submissionDate', 'DESC']
       ];
     }
