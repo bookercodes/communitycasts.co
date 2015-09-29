@@ -45,9 +45,11 @@
       $window.open(link);
     };
     $scope.search = function () {
-      //init();
-      //$scope.fetchScreencasts();
-      $state.go('search', {query: $scope.searchQuery});
+      if ($scope.searchQuery === '') {
+        $state.go('home');
+      }  else {
+        $state.go('search', {query: $scope.searchQuery});
+      }
     };
     init();
     $scope.sortOption = $stateParams.sort;
