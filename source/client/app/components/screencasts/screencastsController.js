@@ -1,7 +1,7 @@
 (function() {
   'use strict';
   var screencastsController = function($scope, $http, $stateParams, $window,
-    $location, config) {
+    $location, config, $state) {
     $scope.loadBtnText = 'Load More';
 
     function init() {
@@ -10,6 +10,7 @@
       $scope.hasMore = true;
       $scope.loaded = false;
       $scope.busy = false;
+      $scope.searchQuery = $stateParams.query;
     }
     $scope.fetchScreencasts = function() {
       $scope.busy = true;
@@ -44,9 +45,9 @@
       $window.open(link);
     };
     $scope.search = function () {
-      init();
-      $scope.fetchScreencasts();
-      $scope.tagged = '';
+      //init();
+      //$scope.fetchScreencasts();
+      $state.go('search', {query: $scope.searchQuery});
     };
     init();
     $scope.sortOption = $stateParams.sort;
