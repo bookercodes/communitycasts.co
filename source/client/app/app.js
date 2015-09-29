@@ -61,6 +61,11 @@
 					sort: 'popular',
 					tagged: '',
 					query: ''
+				},
+				resolve: {
+					$title: ['$stateParams', function ($stateParams) {
+						return $stateParams.query  + ' Screencasts';
+					}]
 				}
 			});
 		}
