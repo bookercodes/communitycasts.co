@@ -1,6 +1,5 @@
 <div class="screencasts1">
-
-  <div class="toolbar">
+  <!-- <div class="toolbar">
     <div class="toolbar__btn-group">
       <button ui-sref-active="toolbar__btn--active" ui-sref="{sort:'popular'}" class="toolbar__btn">
         <md-icon class="toolbar__icon material-icons">
@@ -32,18 +31,19 @@
       ng-model="searchQuery"
       ng-change="search()"
       ng-model-options="{ debounce: 600 }">
-  </div>
+  </div> -->
 
-  <div class="screencasts1__filter-caption" ng-show="loaded && searchQuery">
+
+  <!-- <div class="screencasts1__filter-caption" ng-show="loaded && searchQuery">
     <p ng-show="screencasts.length > 0">
       Showing {{screencasts.length}} of <strong>{{totalCount}}</strong> screencasts whose titles contain <strong>{{searchQuery}}</strong>...
     </p>
     <p ng-show="screencasts.length === 0">
       No screencasts with the text <strong>{{searchQuery}}</strong> in their titles...
     </p>
-  </div>
+  </div> -->
 
-  <div class="screencasts1__filter-caption" ng-show="loaded && tagged">
+  <!-- <div class="screencasts1__filter-caption" ng-show="loaded && tagged">
     <p>
       Showing <strong>{{totalCount}}</strong> screencasts with the <strong>{{tagged}}</strong> tag...
     </p>
@@ -56,9 +56,10 @@
       </md-icon>
       Remove Filter
     </md-button>
-  </div>
+  </div> -->
 
-  <div ng-show="loaded">
+  <div ng-show="screencastsLoaded">
+    {{page}}
     <div class="screencast" ng-repeat="screencast in screencasts">
       <div class="thumbnail">
         <a href="{{screencast.href}}">
@@ -92,8 +93,10 @@
       </div>
     </div>
   </div>
-  <md-progress-linear ng-show="busy" class="progress-bar" md-mode="indeterminate"></md-progress-linear>
-  <md-button class="load-more-btn" ng-click="fetchScreencasts()" ng-disabled="busy || !hasMore">
+  <md-progress-linear ng-show="loadingScreencasts" class="progress-bar" md-mode="indeterminate"></md-progress-linear>
+  <md-button class="load-more-btn" ng-click="fetchNextPage()" ng-disabled="!screencastsLoaded || !moreScreencastsToLoad">Load</md-button>
+
+  <!--< md-button class="load-more-btn" ng-click="fetchScreencasts()" ng-disabled="busy || !hasMore">
     <md-icon>
       <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
         <path d="M7.41 7.84L12 12.42l4.59-4.58L18 9.25l-6 6-6-6z"/>
@@ -101,5 +104,5 @@
       </svg>
     </md-icon>
     {{loadBtnText}}
-  </md-button>
+  </md-button> -->
 </div>
