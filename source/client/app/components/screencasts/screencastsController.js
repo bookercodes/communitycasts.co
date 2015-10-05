@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  var screencastsController = function($scope, screencasts) {
+  var screencastsController = function($scope, screencasts, $stateParams) {
     $scope.page = 1;
     $scope.screencasts = [];
     $scope.screencastsLoaded = false;
@@ -8,7 +8,7 @@
       $scope.loadingScreencasts = true;
       screencasts.get({
         page: $scope.page,
-        sort: 'popular'
+        sort: $stateParams.sort
       }, function(response) {
         $scope.screencasts = $scope.screencasts.concat(response.screencasts);
         $scope.loadingScreencasts = false;
@@ -25,7 +25,8 @@
   };
   screencastsController.$inject = [
     '$scope',
-    'screencasts'
+    'screencasts',
+    '$stateParams'
   ];
   angular.module('communityCasts')
     .controller('screencastsController', screencastsController);
