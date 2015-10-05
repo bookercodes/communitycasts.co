@@ -10,7 +10,8 @@
 			'ngMessages',
 			'angulartics',
 			'angulartics.google.analytics',
-			'ui.router.title'
+			'ui.router.title',
+			'ngResource'
 		]);
 	app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider) {
 			$locationProvider.html5Mode(true);
