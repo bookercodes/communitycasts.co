@@ -6,10 +6,16 @@
     $scope.screencastsLoaded = false;
     $scope.fetchScreencasts = function () {
       $scope.loadingScreencasts = true;
-      screencasts.get({
+      var opts = {
         page: $scope.page,
-        sort: $stateParams.sort
-      }, function(response) {
+        sort: $stateParams.sort,
+        tagged: $stateParams.tagged,
+        url: 'screencasts'
+      };
+      if (opts.tagged !== '') {
+        opts.url = 'screencasts/tagged';
+      }
+      screencasts.get(opts, function(response) {
         $scope.screencasts = $scope.screencasts.concat(response.screencasts);
         $scope.loadingScreencasts = false;
         $scope.screencastsLoaded = true;

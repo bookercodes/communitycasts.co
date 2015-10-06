@@ -13,8 +13,9 @@
 			'ui.router.title',
 			'ngResource'
 		]);
-	app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider) {
-			$locationProvider.html5Mode(true);
+	app.config(['$stateProvider', '$httpProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $httpProvider, $urlRouterProvider, $locationProvider) {
+      $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike';
+      $locationProvider.html5Mode(true);
 			$urlRouterProvider.otherwise('/');
 			$stateProvider.state('about', {
 				url: '/about',
