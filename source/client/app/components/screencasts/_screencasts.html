@@ -1,5 +1,5 @@
 <div class="screencasts1">
-  <!-- <div class="toolbar">
+  <div class="toolbar">
     <div class="toolbar__btn-group">
       <button ui-sref-active="toolbar__btn--active" ui-sref="{sort:'popular'}" class="toolbar__btn">
         <md-icon class="toolbar__icon material-icons">
@@ -12,6 +12,7 @@
           Find what screencasts the community is most excited about today.
         </md-tooltip>
       </button>
+
       <button ui-sref-active="toolbar__btn--active" ui-sref="{sort:'newest'}" class="toolbar__btn">
         <md-icon class="toolbar__icon material-icons">
           <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
@@ -31,21 +32,30 @@
       ng-model="searchQuery"
       ng-change="search()"
       ng-model-options="{ debounce: 600 }">
-  </div> -->
+  </div>
 
-
-  <!-- <div class="screencasts1__filter-caption" ng-show="loaded && searchQuery">
+  <div class="screencasts1__filter-caption" ng-show="screencastsLoaded && searchQuery">
     <p ng-show="screencasts.length > 0">
-      Showing {{screencasts.length}} of <strong>{{totalCount}}</strong> screencasts whose titles contain <strong>{{searchQuery}}</strong>...
+      <strong>{{screencasts.length}}</strong> search results for <strong>"{{searchQuery}}"</strong>
     </p>
     <p ng-show="screencasts.length === 0">
-      No screencasts with the text <strong>{{searchQuery}}</strong> in their titles...
+      Sorry we didn't find any results for <strong>{{searchQuery}}</strong>
     </p>
-  </div> -->
+    <md-button ui-sref="home({sort:'popular',tagged:''})" ui-sref-opts="{reload:true}">
+      <md-icon>
+        <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+          <path d="M0 0h24v24H0z" fill="none"/>
+        </svg>
+      </md-icon>
+      Remove Filter
+    </md-button>
+  </div>
 
-  <!-- <div class="screencasts1__filter-caption" ng-show="loaded && tagged">
+  <div class="screencasts1__filter-caption" ng-show="screencastsLoaded &&
+    tagged">
     <p>
-      Showing <strong>{{totalCount}}</strong> screencasts with the <strong>{{tagged}}</strong> tag...
+      Showing <strong>{{screencasts.length}}</strong> screencasts with the <strong>{{tagged}}</strong> tag...
     </p>
     <md-button ui-sref="home({sort:'popular',tagged:''})">
       <md-icon>
@@ -56,10 +66,9 @@
       </md-icon>
       Remove Filter
     </md-button>
-  </div> -->
+  </div>
 
   <div ng-show="screencastsLoaded">
-    {{page}}
     <div class="screencast" ng-repeat="screencast in screencasts">
       <div class="thumbnail">
         <a href="{{screencast.href}}">

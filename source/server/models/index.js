@@ -13,7 +13,8 @@ var sequelize = new Sequelize(
     host: 'localhost',
     define: {
       timestamps: false
-    }
+    },
+    logging: false
   });
 var db = {};
 

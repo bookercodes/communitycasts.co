@@ -15,7 +15,8 @@
   </div>
   <h2>Navigate</h2>
   <nav class="nav">
-    <md-button ui-sref="home({sort:'popular',tagged:''})" class="nav__btn">
+    <md-button ui-sref="home({sort:'popular',tagged:''})"
+    ui-sref-opts="{reload:true}" class="nav__btn">
       <md-icon>
         <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
             <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
