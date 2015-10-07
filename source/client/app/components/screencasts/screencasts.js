@@ -5,6 +5,9 @@
     if (options.tagged !== '') {
       url += '/tagged/' + encodeURIComponent(options.tagged);
     }
+    if (options.search) {
+      url += '/search/' + encodeURIComponent(options.search);
+    }
     url += '?page=' + options.page;
     url += '&sort=' + options.sort;
     return url;

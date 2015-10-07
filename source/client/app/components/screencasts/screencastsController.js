@@ -12,7 +12,8 @@
         sort: $stateParams.sort,
         tagged: $stateParams.tagged,
         url: 'screencasts',
-        baseUrl: config.serverHost
+        baseUrl: config.serverHost,
+        search: $scope.searchQuery
       };
       if (opts.tagged !== '') {
         opts.url = 'screencasts/tagged';
@@ -27,6 +28,10 @@
     };
     $scope.fetchNextPage = function() {
       $scope.page += 1;
+      $scope.fetchScreencasts();
+    };
+    $scope.search = function() {
+      $scope.screencasts = [];
       $scope.fetchScreencasts();
     };
     $scope.fetchScreencasts();
