@@ -6,6 +6,7 @@
     $scope.screencastsLoaded = false;
     $scope.fetchScreencasts = function () {
       $scope.loadingScreencasts = true;
+      $scope.tagged = $stateParams.tagged;
       var opts = {
         page: $scope.page,
         sort: $stateParams.sort,

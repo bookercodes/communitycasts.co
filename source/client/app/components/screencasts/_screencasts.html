@@ -44,9 +44,10 @@
     </p>
   </div> -->
 
-  <!-- <div class="screencasts1__filter-caption" ng-show="loaded && tagged">
+  <div class="screencasts1__filter-caption" ng-show="screencastsLoaded &&
+    tagged">
     <p>
-      Showing <strong>{{totalCount}}</strong> screencasts with the <strong>{{tagged}}</strong> tag...
+      Showing <strong>{{screencasts.length}}</strong> screencasts with the <strong>{{tagged}}</strong> tag...
     </p>
     <md-button ui-sref="home({sort:'popular',tagged:''})">
       <md-icon>
@@ -57,7 +58,7 @@
       </md-icon>
       Remove Filter
     </md-button>
-  </div> -->
+  </div>
 
   <div ng-show="screencastsLoaded">
     {{page}}
