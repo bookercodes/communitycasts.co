@@ -55,21 +55,6 @@
 					tagged: '',
 				}
 			});
-			$stateProvider.state('search', {
-				url: '/search/:query',
-				templateUrl: '/app/components/screencasts/_screencasts.html',
-				controller: 'screencastsController',
-				params: {
-					sort: 'popular',
-					tagged: '',
-					query: ''
-				},
-				resolve: {
-					$title: ['$stateParams', function ($stateParams) {
-						return $stateParams.query  + ' Screencasts';
-					}]
-				}
-			});
 		}
 	]);
 })();
