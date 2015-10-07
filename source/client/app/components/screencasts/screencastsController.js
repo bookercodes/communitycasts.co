@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  var screencastsController = function($scope, screencasts, $stateParams) {
+  var screencastsController = function($scope, screencasts, $stateParams, config) {
     $scope.page = 1;
     $scope.screencasts = [];
     $scope.screencastsLoaded = false;
@@ -10,7 +10,8 @@
         page: $scope.page,
         sort: $stateParams.sort,
         tagged: $stateParams.tagged,
-        url: 'screencasts'
+        url: 'screencasts',
+        baseUrl: config.serverHost
       };
       if (opts.tagged !== '') {
         opts.url = 'screencasts/tagged';
@@ -32,7 +33,8 @@
   screencastsController.$inject = [
     '$scope',
     'screencasts',
-    '$stateParams'
+    '$stateParams',
+    'config'
   ];
   angular.module('communityCasts')
     .controller('screencastsController', screencastsController);

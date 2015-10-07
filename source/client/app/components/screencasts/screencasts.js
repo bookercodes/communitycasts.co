@@ -1,7 +1,7 @@
 (function () {
   'use strict';
   function _buildUrl(options) {
-    var url = 'http://communitycasts.co/api/screencasts';
+    var url = options.baseUrl + 'api/screencasts';
     if (options.tagged !== '') {
       url += '/tagged/' + encodeURIComponent(options.tagged);
     }
