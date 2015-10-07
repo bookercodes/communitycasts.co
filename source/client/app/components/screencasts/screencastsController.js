@@ -35,7 +35,6 @@
       $scope.fetchScreencasts();
     };
     $scope.fetchScreencasts();
-    console.log('foo');
   };
   screencastsController.$inject = [
     '$scope',
