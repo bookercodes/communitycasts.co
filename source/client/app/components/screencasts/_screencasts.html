@@ -34,15 +34,14 @@
       ng-model-options="{ debounce: 600 }">
   </div>
 
-
-  <!-- <div class="screencasts1__filter-caption" ng-show="loaded && searchQuery">
+  <div class="screencasts1__filter-caption" ng-show="screencastsLoaded && searchQuery">
     <p ng-show="screencasts.length > 0">
-      Showing {{screencasts.length}} of <strong>{{totalCount}}</strong> screencasts whose titles contain <strong>{{searchQuery}}</strong>...
+    Showing <strong>{{screencasts.length}}</strong> of <strong>{{totalCount}}</strong> screencasts whose titles contain <strong>{{searchQuery}}</strong>...
     </p>
     <p ng-show="screencasts.length === 0">
       No screencasts with the text <strong>{{searchQuery}}</strong> in their titles...
     </p>
-  </div> -->
+  </div>
 
   <div class="screencasts1__filter-caption" ng-show="screencastsLoaded &&
     tagged">
