@@ -36,10 +36,10 @@
 
   <div class="screencasts1__filter-caption" ng-show="screencastsLoaded && searchQuery">
     <p ng-show="screencasts.length > 0">
-    Showing <strong>{{screencasts.length}}</strong> of <strong>{{totalCount}}</strong> screencasts whose titles contain <strong>{{searchQuery}}</strong>...
+      <strong>{{screencasts.length}}</strong> search results for <strong>"{{searchQuery}}"</strong>
     </p>
     <p ng-show="screencasts.length === 0">
-      No screencasts with the text <strong>{{searchQuery}}</strong> in their titles...
+      Sorry we didn't find any results for <strong>{{searchQuery}}</strong>
     </p>
   </div>
 
