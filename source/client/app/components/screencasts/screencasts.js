@@ -1,6 +1,7 @@
 (function () {
   'use strict';
-  function _buildUrl(options) {
+
+  function buildUrl(options) {
     var url = options.baseUrl + 'api/screencasts';
     if (options.tagged !== '') {
       url += '/tagged/' + encodeURIComponent(options.tagged);
@@ -14,20 +15,13 @@
   }
 
   var screencasts = function($http) {
-    return {
-      get: function(options, done) {
-        var url = _buildUrl(options);
-        return $http.get(url).then(function(response) {
-          done(response.data);
-        });
-      }
+    return function(options, done) {
+      return $http.get(buildUrl(options));
     };
   };
-
   screencasts.$inject = [
     '$http'
   ];
-
   angular.module('communityCasts')
     .service('screencasts', screencasts);
 })();
