@@ -9,8 +9,13 @@ import winston from 'winston';
 import youtubeUrl from 'youtube-url';
 import models from '../models';
 import 'moment-duration-format';
+// const youtube = require('../youtube')(config.youtubeApiKey);
 
-const youtube = require('../youtube')(config.youtubeApiKey);
+import youtube from 'youtube-api';
+youtube.authenticate({
+  type: 'key',
+  key: config.youtubeApiKey
+});
 
 module.exports = function() {
 
@@ -181,7 +186,29 @@ module.exports = function() {
           message: 'Screencast already exists'
         });
       }
-      youtube.getDetails(youtubeId).then(function(screencastDetails) {
+      youtube.videos.list({
+        id: youtubeId,
+        part: 'snippet,contentDetails'
+      }, function(err, details) {
+        const screencast = details.items.shift();
+        if (screencast === undefined) {
+        winston.info('Could not save screencast because screencast %s does not exist on YouTube.', youtubeId);
+          return res.status(400).send({
+            message: 'Screencast does not exist.'
+          });
+        }
+        var screencastDetails = {
+          screencastId: youtubeId,
+          description: screencast.snippet.description,
+          title: screencast.snippet.title,
+          durationInSeconds: moment.duration(screencast.contentDetails.duration)
+            .asSeconds(),
+          channel: {
+            channelName: screencast.snippet.channelTitle,
+            channelId: screencast.snippet.channelId,
+          }
+        };
+        console.log(screencast);
         models.sequelize.transaction(function(t) {
           return models.Tag.bulkCreate(tags, {
             transaction: t,
@@ -210,10 +237,10 @@ module.exports = function() {
             return models.ScreencastTag.bulkCreate(screencastTags, {
               transaction: t
             });
+          }).then(function() {
+            res.status(201).send();
           });
         });
-      }).then(function() {
-        res.status(201).send();
       });
     });
   }

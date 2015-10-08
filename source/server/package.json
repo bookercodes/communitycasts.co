@@ -16,6 +16,7 @@
     "truncate": "^1.0.5",
     "winston": "^1.0.1",
     "winston-loggly": "^1.1.0",
+    "youtube-api": "^1.2.1",
     "youtube-url": "^0.2.1"
   }
 }
