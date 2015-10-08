@@ -1,14 +1,11 @@
 'use strict';
 
-var paperwork = require('paperwork');
-var youtubeUrl = require('youtube-url');
+import paperwork from 'paperwork';
+import youtubeUrl from 'youtube-url';
 
 module.exports.submissionValidator = paperwork.accept({
   tags: String,
-  url: paperwork.all(String,
-    function(url) {
-      return youtubeUrl.valid(url);
-    })
+  url: paperwork.all(String, url => youtubeUrl.valid(url))
 });
 
 module.exports.paginationValidator = function(req, res, next) {
