@@ -11,9 +11,9 @@ module.exports.submissionValidator = paperwork.accept({
 module.exports.paginationValidator = function(req, res, next) {
   var page = req.query.page || 1;
   var sort = req.query.sort || 'popular';
-  if (sort !== 'popular' && sort !== 'newest') {
+  if (sort !== 'popular' && sort !== 'new') {
     return res.status(400).json({
-      message: 'invalid sort option. valid options are popular and newest.'
+      message: 'invalid sort option. valid options are popular and new.'
     });
   }
   if (page < 1) {
