@@ -37,9 +37,9 @@ module.exports = function() {
     });
   }
 
-  function _buildScreencastsQuery(req) {
-    var page = req.query.page || 1;
-    var sort = req.query.sort || 'popular';
+  function _buildScreencastsQuery(options) {
+    var page = options.page || 1;
+    var sort = options.sort || 'popular';
     var limit = config.screencastsPerPage;
     var offset = (page - 1) * limit;
     var options = {
@@ -81,7 +81,7 @@ module.exports = function() {
   }
 
   function sendScreencastsWithTag(req, res) {
-    var query = _buildScreencastsQuery(req, res);
+    var query = _buildScreencastsQuery(req.query);
     query.where.screencastId = {
       $in: Sequelize.literal('(SELECT DISTINCT screencastId FROM screencastTags WHERE tagName = :tagName)')
     };
@@ -92,7 +92,8 @@ module.exports = function() {
   }
 
   function sendScreencasts(req, res) {
-    _executeScreencastsQuery(_buildScreencastsQuery(req), req).then(model => res.json(model));
+    var query = _buildScreencastsQuery(req.query);
+    _executeScreencastsQuery(query, req).then(model => res.json(model));
   }
 
   function searchScreencasts(req, res) {
