@@ -1,7 +1,7 @@
 'use strict';
 
-module.exports = function(sequelize, DataTypes) {
-  var Referral = sequelize.define('Referral', {
+export default function(sequelize, DataTypes) {
+  const Referral = sequelize.define('Referral', {
     screencastId: {
       type: DataTypes.STRING,
       primaryKey: true
@@ -21,4 +21,4 @@ module.exports = function(sequelize, DataTypes) {
     }
   });
   return Referral;
-};
+}

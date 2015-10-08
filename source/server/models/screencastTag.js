@@ -1,6 +1,7 @@
 'use strict';
-module.exports = function(sequelize, DataTypes) {
-  var ScreencastTag = sequelize.define('ScreencastTag', {
+
+export default function(sequelize, DataTypes) {
+  const ScreencastTag = sequelize.define('ScreencastTag', {
     screencastId: {
       type: DataTypes.STRING,
       primaryKey: true
@@ -20,4 +21,4 @@ module.exports = function(sequelize, DataTypes) {
     }
   });
   return ScreencastTag;
-};
+}

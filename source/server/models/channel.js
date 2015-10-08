@@ -1,7 +1,7 @@
 'use strict';
 
-module.exports = function(sequelize, DataTypes) {
-  var Channel = sequelize.define('Channel', {
+export default function(sequelize, DataTypes) {
+  const Channel = sequelize.define('Channel', {
     channelId: {
       type: DataTypes.STRING,
       primaryKey: true
@@ -13,4 +13,4 @@ module.exports = function(sequelize, DataTypes) {
     tableName: 'channels'
   });
   return Channel;
-};
+}

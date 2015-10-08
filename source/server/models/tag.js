@@ -1,7 +1,7 @@
 'use strict';
 
-module.exports = function(sequelize, DataTypes) {
-  var Tag = sequelize.define('Tag', {
+export default function(sequelize, DataTypes) {
+  const Tag = sequelize.define('Tag', {
     tagName: {
       type: DataTypes.STRING,
       primaryKey: true
@@ -18,4 +18,4 @@ module.exports = function(sequelize, DataTypes) {
     }
   });
   return Tag;
-};
+}
