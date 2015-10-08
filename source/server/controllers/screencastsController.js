@@ -1,16 +1,16 @@
 'use strict';
 
-var config = require('config');
-var Sequelize = require('sequelize');
-var moment = require('moment');
-var commaSplit = require('comma-split');
-var truncate = require('truncate');
-var winston = require('winston');
-var youtubeUrl = require('youtube-url');
-var youtube = require('../youtube')(config.youtubeApiKey);
-var models = require('../models');
+import config from 'config';
+import Sequelize from 'sequelize';
+import moment from 'moment';
+import commaSplit from 'comma-split';
+import truncate from 'truncate';
+import winston from 'winston';
+import youtubeUrl from 'youtube-url';
+import models from '../models';
+import 'moment-duration-format';
 
-require('moment-duration-format');
+const youtube = require('../youtube')(config.youtubeApiKey);
 
 module.exports = function() {
 
