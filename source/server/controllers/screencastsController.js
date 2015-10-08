@@ -9,7 +9,6 @@ import winston from 'winston';
 import youtubeUrl from 'youtube-url';
 import models from '../models';
 import 'moment-duration-format';
-// const youtube = require('../youtube')(config.youtubeApiKey);
 
 import youtube from 'youtube-api';
 youtube.authenticate({
