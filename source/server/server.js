@@ -46,3 +46,5 @@ process.on('uncaughtException', err => {
   winston.error(err.stack);
   process.exit(1);
 });
+
+export default app;
