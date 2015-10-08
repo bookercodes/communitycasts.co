@@ -1,32 +1,27 @@
 'use strict';
 
-var cors = require('cors');
-var config = require('config');
-var express = require('express');
-var bodyParser = require('body-parser');
-var path = require('path');
-var compression = require('compression');
-var validators = require('./validators');
-var winston = require('winston');
+import cors from 'cors';
+import config from 'config';
+import express from 'express';
+import bodyParser from 'body-parser';
+import path from 'path';
+import compression from 'compression';
+import validators from './validators';
+import winston from 'winston';
+import 'winston-loggly';
 
-require('winston-loggly');
 winston.add(winston.transports.Loggly, config.logglyOptions);
 
-var app = express();
+const app = express();
 
 app.use(compression());
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../client/')));
 
-app.use(function(req, res, next) {
-  console.log(req.originalUrl);
-  next();
-});
-
 app.enable('trust proxy');
 
-var screencastsController = require('./controllers/screencastsController')();
+const screencastsController = require('./controllers/screencastsController')();
 app.get('/api/screencasts/', validators.paginationValidator,
   screencastsController.sendScreencasts);
 app.get('/api/screencasts/tagged/:tag', validators.paginationValidator,
@@ -37,7 +32,7 @@ app.get('/api/screencasts/:screencastId', screencastsController.redirectToScreen
 app.get('/api/screencasts/search/:query', validators.paginationValidator,
   screencastsController.searchScreencasts);
 
-var tagsController = require('./controllers/tagsController');
+import tagsController from './controllers/tagsController';
 app.get('/api/tags', tagsController.send20Tags);
 
 app.all('/*', (req, res) =>
@@ -47,7 +42,7 @@ app.all('/*', (req, res) =>
 
 app.listen(config.port, () => winston.info('Server was started on port %s.', config.port));
 
-process.on('uncaughtException', function (err) {
+process.on('uncaughtException', err => {
   winston.error(err.stack);
   process.exit(1);
 });
