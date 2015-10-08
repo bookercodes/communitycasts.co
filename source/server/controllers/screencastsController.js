@@ -58,7 +58,10 @@ module.exports = function() {
       }]
     };
     if (sort === 'popular') {
-      options.order = 'featured DESC, (`Screencast`.`referralCount`) / pow(((unix_timestamp(now()) - unix_timestamp(`Screencast`.`submissionDate`)) / 3600) + 2, 1.5) DESC';
+      options.order = [
+        ['featured', 'DESC'],
+        models.sequelize.literal('(`Screencast`.`referralCount`) / pow(((unix_timestamp(now()) - unix_timestamp(`Screencast`.`submissionDate`)) / 3600) + 2, 1.5) DESC')
+      ];
     } else {
       options.order = [
         ['featured', 'DESC'],
