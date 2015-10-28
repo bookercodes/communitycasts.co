@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "babel": "^5.8.29",
     "bluebird": "^2.10.1",
     "body-parser": "^1.13.2",
     "comma-split": "^1.0.0",

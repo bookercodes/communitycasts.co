@@ -8,6 +8,7 @@ import path from 'path';
 import compression from 'compression';
 import validators from './validators';
 import winston from 'winston';
+import models from './models';
 import 'winston-loggly';
 
 winston.add(winston.transports.Loggly, config.logglyOptions);
@@ -40,7 +41,12 @@ app.all('/*', (req, res) =>
     root: path.join(__dirname, '../client/')
   }));
 
-app.listen(config.port, () => winston.info('Server was started on port %s.', config.port));
+
+models.sequelize.sync({
+  force: true
+}).then(function() {
+  app.listen(config.port, () => winston.info('Server was started on port %s.', config.port));
+});
 
 process.on('uncaughtException', err => {
   winston.error(err.stack);
