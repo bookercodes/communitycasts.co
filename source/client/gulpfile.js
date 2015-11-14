@@ -81,7 +81,7 @@ gulp.task('local', function() {
       gulp.watch([
         './dist/main.css',
         './dist/main.js',
-        '*.html'
+        './**/*.html'
       ]).on('change', reload);
       browserSync.init({
         ui: false,
