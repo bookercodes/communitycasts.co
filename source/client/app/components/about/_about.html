@@ -1,39 +1,24 @@
-<md-dialog ng-cloak>
+<md-dialog ng-cloak class="about-dialog">
 
-  <div class="about">
-    <h1 class="about__logo">Community Casts</h1>
-    <p class="about__paragraph">
-      <span class="about__foo">$ ~</span> Community Casts is <em>the</em> place for developers and designers of all skill levels to find awesome, free educational screencasts about technology and design. It was built by <a class="about__link" href="https://twitter.com/bookercodes">Alex Booker</a> and is 100% <a class="about__link" href="https://github.com/alexbooker/communitycasts.co">open source</a>.
-    </p>
-    <p class="about__paragraph">
-      The <a href="/" class="about__link">home page</a> shows a list of popular screencasts. If you want to view screencasts about a specific topic, click on a topic under the "Learn" header on the right-hand-side menu. If you want to submit a screencast, click "Submit".
-    <h1 class="about__heading">Open Source</h1>
-    <p class="about__paragraph">
-      <span class="about__foo">$ ~</span> Community Casts is 100% <a class="about__link" href="https://github.com/alexbooker/communitycasts.co">open source</a>. I am always looking for people to help out. If you want to get involved, check out the <a class="about__link" href="https://github.com/alexbooker/communitycasts.co/issues">open issues</a>. You can always support the project by becoming a <a class="about__link" href="https://github.com/alexbooker/communitycasts.co/stargazers">GitHub stargazer</a>, too!
-    </p>
-    <p class="about__paragraph">
-      Community Casts is built using a bunch of cool open-source software. The main stack is <a class="about__link" href="http://expressjs.com/">Express</a> (for the server), <a class="about__link" href="https://angularjs.org/">Angular</a> (for the client), and <a class="about__link" href="https://www.mysql.com/">MySQL</a> (for the database).
-    </p>
-    <h1 class="about__heading">Privacy</h1>
-    <p class="about__paragraph">
-      <span class="about__foo">$ ~</span> Community Casts logs your IP address when you click a screencast. This so we can avoid counting the same view twice for ranking purposes.
-    </p>
-    <h1 class="about__heading" id="guidelines">Submission Guidelines</h1>
-    <p class="about__paragraph">
-      Please do:
-      <ul class="about__list">
-        <li class="about__list-item about__list-item--good">Submit screencasts about technology and design</li>
-        <li class="about__list-item about__list-item--good">Submit screencasts, webcasts, or conference videos - we do not mind so long as they are good!</li>
-        <li class="about__list-item about__list-item--good">Use tags which are consistent with other screencasts e.g. tag JavaScript instead of JS</li>
-      </ul>
-    </p>
-    <p class="about__paragraph">
-      Please do <em>not</em>:
-      <ul class="about__list">
-        <li class="about__list-item about__list-item--bad">Submit screencasts that are part of a series e.g. "Node.Js tutorial (part 1 of 10)".</li>
-        <li class="about__list-item about__list-item--bad">Submit videos that have nothing to do with technology or design.</li>
-        <li class="about__list-item about__list-item--bad">Submit videos that violate copyright.</li>
-      </ul>
-    </p>
+  <div class="about-dialog-toolbar">
+    <div class="about-dialog-toolbar__tools">
+      <h2 class="about-dialog-toolbar__header">About Community Casts</h2>
+      <md-button class="about-dialog-toolbar__close-btn">
+        <md-icon>
+          <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+    <path fill="#000000" d="M19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V5H19V19M17,8.4L13.4,12L17,15.6L15.6,17L12,13.4L8.4,17L7,15.6L10.6,12L7,8.4L8.4,7L12,10.6L15.6,7L17,8.4Z" />
+</svg>
+        </md-icon>
+      </md-button>
+    </div>
   </div>
+
+  <md-dialog-content style="max-width:800px;max-height:810px; ">
+    <p class="about-dialog__para">
+      Welcome to Community Casts.
+    </p>
+
+    <p class="about-dialog__para">
+      Community Casts is a place for developers and designers of all skill levels to find awesome, free educational screencasts about technology and design. It was built by <a class="about-dialog__link" href="https://twitter.com/bookercodes">Alex Booker</a>      and is 100% <a class="about-dialog__link" href="https://github.com/alexbooker/communitycasts.co">open source</a>. </p>
+  </md-dialog-content>
 </md-dialog>

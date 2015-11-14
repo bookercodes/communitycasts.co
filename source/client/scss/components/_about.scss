@@ -1,20 +1,22 @@
-.about {
-  padding: 20px;
-  text-align: justify;
-  max-width: 450px;
-  font-size: 0.9em;
-  &__logo {
-    @include logo;
-    font-size: 1.8em;
-    margin-bottom: 24px;
-    text-align: center;
-    color: $accent-color;
+.about-dialog-toolbar {
+  background-color: $accent-color;
+  &__tools {
+    display: flex;
+    flex-direction: row;
   }
-  &__heading {
-    margin-bottom: 16px;
-    font-size: 1.6em;
+  &__header {
+    margin-bottom: 0;
+    padding: 10px;
+    font-size: 1.4em;
+    color: white;
   }
-  &__paragraph {
+  &__close-btn {
+    margin-left: auto;
+  }
+}
+.about-dialog {
+  border-radius: 0;
+  &__para {
     margin-bottom: 16px;
   }
   &__link {
@@ -22,22 +24,6 @@
     &:hover {
       // move to global?
       color: $accent-color;
-    }
-  }
-  &__foo {
-    color: $accent-color;
-  }
-  &__list {
-    margin-bottom: 16px;
-  }
-  &__list-item {
-    list-style: circle;
-    margin-left: 20px;
-    &--bad {
-      color: #EF5350 ;
-    }
-    &--good {
-      color: #4CAF50;
     }
   }
 }
