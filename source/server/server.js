@@ -43,7 +43,7 @@ app.all('/*', (req, res) =>
 
 
 models.sequelize.sync({
-  force: true
+  force: false
 }).then(function() {
   app.listen(config.port, () => winston.info('Server was started on port %s.', config.port));
 });
