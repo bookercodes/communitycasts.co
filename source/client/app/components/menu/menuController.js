@@ -10,7 +10,7 @@
     };
     $scope.renderAboutDialog = function(ev) {
       $mdDialog.show({
-        //controller: DialogController,
+        controller: "aboutController",
         templateUrl: '/app/components/about/_about.html',
         parent: angular.element(document.body),
         targetEvent: ev,
