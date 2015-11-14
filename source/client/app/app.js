@@ -17,13 +17,6 @@
       $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike';
       $locationProvider.html5Mode(true);
 			$urlRouterProvider.otherwise('/');
-			$stateProvider.state('about', {
-				url: '/about',
-				templateUrl: '/app/components/about/_about.html',
-				resolve: {
-	      $title: function() { return 'About'; }
-	    }
-			});
 			$stateProvider.state('submit', {
 				url: '/submit',
 				templateUrl: '/app/components/submit/_submit.html',
