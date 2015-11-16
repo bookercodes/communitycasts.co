@@ -18,9 +18,11 @@ export default function(sequelize, DataTypes) {
     },
     submissionDate: {
       type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW
     },
     referralCount: {
       type: DataTypes.INTEGER(11),
+      defaultValue: 0
     },
     channelId: {
       type: DataTypes.STRING,
@@ -30,6 +32,7 @@ export default function(sequelize, DataTypes) {
     },
     featured: {
       type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
   }, {
     tableName: 'screencasts',
