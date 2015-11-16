@@ -207,7 +207,6 @@ module.exports = function() {
             channelId: screencast.snippet.channelId,
           }
         };
-        console.log(screencast);
         models.sequelize.transaction(function(t) {
           return models.Tag.bulkCreate(tags, {
             transaction: t,
