@@ -5,6 +5,7 @@
   "port": 8080,
   "youtubeApiKey": "",
   "descriptionLength": 150,
+  "approvalRequired": false,
   "logglyOptions": {
     "inputToken": "",
     "subdomain": "",

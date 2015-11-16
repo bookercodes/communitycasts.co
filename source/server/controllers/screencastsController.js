@@ -222,7 +222,8 @@ module.exports = function() {
               title: screencastDetails.title,
               durationInSeconds: screencastDetails.durationInSeconds,
               description: screencastDetails.description,
-              channelId: screencastDetails.channel.channelId
+              channelId: screencastDetails.channel.channelId,
+              approved: !config.approvalRequired
             }, {
               transaction: t
             });
