@@ -1,3 +1,16 @@
-<h1>Test</h1>
+<div class="screencast-details">
+  <h1 class="screencast-details__title">
+    {{screencast.title}}
+    <span class="screencast-details__link">(source)</span>
+  </h1>
 
-{{screencast | json}}
+  <ul>
+    <li ng-repeat="tag in screencast.tags">{{tag}}</li>
+  </ul>
+
+  <a href="" class="screencast-details__channel-link">
+    {{screencast.channel.channelName}}
+  </a>
+
+  <span class="screencast-details__duration">{{screencast.duration}}</span>
+</div>
