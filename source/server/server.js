@@ -25,11 +25,13 @@ app.enable('trust proxy');
 const screencastsController = require('./controllers/screencastsController')();
 app.get('/api/screencasts/', validators.paginationValidator,
   screencastsController.sendScreencasts);
+
+app.get('/api/screencasts/:screencastId', screencastsController.sendScreencast);
+
 app.get('/api/screencasts/tagged/:tag', validators.paginationValidator,
   screencastsController.sendScreencastsWithTag);
 app.post('/api/screencasts/', validators.submissionValidator,
   screencastsController.saveScreencast);
-app.get('/api/screencasts/:screencastId', screencastsController.redirectToScreencast);
 app.get('/api/screencasts/search/:query', validators.paginationValidator,
   screencastsController.searchScreencasts);
 
@@ -43,7 +45,7 @@ app.all('/*', (req, res) =>
 
 
 models.sequelize.sync({
-  force: true
+  force: false
 }).then(function() {
   app.listen(config.port, () => winston.info('Server was started on port %s.', config.port));
 });

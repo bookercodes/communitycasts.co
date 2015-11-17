@@ -18,8 +18,7 @@ youtube.authenticate({
 
 module.exports = function() {
 
-  function _mapScreencasts(screencasts) {
-    return screencasts.map(function(screencast) {
+  function _mapScreencast(screencast) {
       screencast = screencast.dataValues;
       return {
         screencastId: screencast.screencastId,
@@ -38,7 +37,10 @@ module.exports = function() {
         featured: screencast.featured,
         referralCount: screencast.referralCount
       };
-    });
+  }
+
+  function _mapScreencasts(screencasts) {
+    return screencasts.map(_mapScreencast);
   }
 
   function _buildScreencastsQuery(options) {
@@ -87,42 +89,30 @@ module.exports = function() {
     });
   }
 
-  function sendScreencastsWithTag(req, res) {
-    var query = _buildScreencastsQuery(req.query);
-    query.where.screencastId = {
-      $in: Sequelize.literal('(SELECT DISTINCT screencastId FROM screencastTags WHERE tagName = :tagName)')
-    };
-    query.replacements = {
-      tagName: req.params.tag
-    };
-    _executeScreencastsQuery(query, req).then(model => res.json(model));
-  }
+  function sendScreencast(req, res) {
 
-  function sendScreencasts(req, res) {
-    var query = _buildScreencastsQuery(req.query);
-    _executeScreencastsQuery(query, req).then(model => res.json(model));
-  }
-
-  function searchScreencasts(req, res) {
-    winston.info('User searched for', req.params.query);
-    var query = _buildScreencastsQuery(req);
-    query.where.title = {
-      $like: '%' + req.params.query + '%'
-    };
-    _executeScreencastsQuery(query, req).then(model => res.json(model));
-  }
-
-  function redirectToScreencast(req, res) {
     var screencastId = req.params.screencastId;
     var remoteAddress = req.ip;
-    models.Screencast.findById(screencastId).then(function(screencast) {
+    models.Screencast.find({
+      where: {
+        screencastId: screencastId,
+      },
+      include: [{
+        model: models.Channel
+      }, {
+        model: models.Tag,
+        through: {
+          attributes: []
+        }
+      }]
+    }).then(function(screencast) {
       if (screencast === null) {
         winston.info(
           'Could not redirect user %s to screencast %s because screencast %s does not exist. Sending 404 instead.',
           remoteAddress, screencastId, screencastId);
         return res.status(404).send();
       }
-      res.redirect('https://www.youtube.com/watch?v=' + screencast.screencastId);
+      res.json(_mapScreencast(screencast));
       winston.info(
         'Successfully redirected user %s to screencast %s. Attempting to count redirect...',
         remoteAddress, screencastId);
@@ -166,6 +156,31 @@ module.exports = function() {
         });
       });
     });
+  }
+
+  function sendScreencastsWithTag(req, res) {
+    var query = _buildScreencastsQuery(req.query);
+    query.where.screencastId = {
+      $in: Sequelize.literal('(SELECT DISTINCT screencastId FROM screencastTags WHERE tagName = :tagName)')
+    };
+    query.replacements = {
+      tagName: req.params.tag
+    };
+    _executeScreencastsQuery(query, req).then(model => res.json(model));
+  }
+
+  function sendScreencasts(req, res) {
+    var query = _buildScreencastsQuery(req.query);
+    _executeScreencastsQuery(query, req).then(model => res.json(model));
+  }
+
+  function searchScreencasts(req, res) {
+    winston.info('User searched for', req.params.query);
+    var query = _buildScreencastsQuery(req);
+    query.where.title = {
+      $like: '%' + req.params.query + '%'
+    };
+    _executeScreencastsQuery(query, req).then(model => res.json(model));
   }
 
   function saveScreencast(req, res) {
@@ -247,8 +262,8 @@ module.exports = function() {
   return {
     sendScreencasts: sendScreencasts,
     sendScreencastsWithTag: sendScreencastsWithTag,
-    redirectToScreencast: redirectToScreencast,
     saveScreencast: saveScreencast,
-    searchScreencasts: searchScreencasts
+    searchScreencasts: searchScreencasts,
+    sendScreencast: sendScreencast
   };
 };
