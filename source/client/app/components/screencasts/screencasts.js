@@ -15,7 +15,7 @@
   }
 
   var screencasts = function($http) {
-    return function(options, done) {
+    return function(options) {
       return $http.get(buildUrl(options));
     };
   };
