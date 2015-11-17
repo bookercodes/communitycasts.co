@@ -17,6 +17,11 @@
       $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike';
       $locationProvider.html5Mode(true);
 			$urlRouterProvider.otherwise('/');
+			$stateProvider.state('screencast', {
+				url: '/screencast/:screencastId',
+				templateUrl: '/app/components/screencast/_screencast.html',
+			  controller: 'screencastController',
+			});
 			$stateProvider.state('submit', {
 				url: '/submit',
 				templateUrl: '/app/components/submit/_submit.html',
