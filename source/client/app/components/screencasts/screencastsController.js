@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  var screencastsController = function($scope, screencasts, $stateParams, config) {
+  var screencastsController = function($scope, screencasts, $stateParams) {
     $scope.page = 1;
     $scope.screencasts = [];
     $scope.screencastsLoaded = false;
@@ -11,7 +11,6 @@
       var opts = {
         page: $scope.page,
         sort: $stateParams.sort,
-        baseUrl: config.serverHost,
         tagged: $stateParams.tagged,
         search: $scope.searchQuery
       };
@@ -35,8 +34,7 @@
   screencastsController.$inject = [
     '$scope',
     'screencasts',
-    '$stateParams',
-    'config'
+    '$stateParams'
   ];
   angular.module('communityCasts')
     .controller('screencastsController', screencastsController);
