@@ -23,5 +23,13 @@
       player-vars="playerVars">
     </youtube-video>
   </div>
-  <h1 class="screencast-details__title">{{screencast.title}}</h1>
+  <md-card>
+    <md-list-item class="md-2-line">
+        <img ng-src="http://lorempixel.com/50/50" class="md-avatar" alt="{{item.who}}" />
+        <div class="md-list-item-text" layout="column">
+          <h3>{{screencast.title}}</h3>
+          <h4><a href="">{{screencast.channel.channelName}}</a></h4>
+        </div>
+      </md-list-item>
+  </md-card>
 </div>
