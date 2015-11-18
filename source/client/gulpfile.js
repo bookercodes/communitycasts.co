@@ -62,7 +62,7 @@ gulp.task('processJs', function() {
   return gulp.src(sources)
     .pipe(plumber())
     .pipe(concat('main.js'))
-    .pipe(uglify())
+    // .pipe(uglify())
     .pipe(gulp.dest('./dist/'));
 });
 
