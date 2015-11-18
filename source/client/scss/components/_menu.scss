@@ -3,6 +3,9 @@
   border-left: 1px $divider-color solid;
   display: flex;
   flex-direction: column;
+  @media only screen and (max-width: 670px) {
+    border: none;
+  }
   &__burger {
     fill: white;
     background-color: $accent-color;
@@ -22,7 +25,8 @@
     }
     @media only screen and (max-width: 670px) {
       display: none;
-      background-color: lighten($accent-color, 20%);
+      // background-color: lighten($accent-color, 20%);
+      background-color: #262626;
     }
   }
   .tag-list {
