@@ -1,4 +1,7 @@
 .screencast-details {
+  padding: 5px;
+  border: 1px dashed $divider-color;
+  border-top: none;
   &__title {
     font-size: 2em;
     line-height: 2.5em;
