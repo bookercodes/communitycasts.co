@@ -112,46 +112,55 @@ module.exports = function() {
           remoteAddress, screencastId, screencastId);
         return res.status(404).send();
       }
-      res.json(_mapScreencast(screencast));
-      winston.info(
-        'Successfully redirected user %s to screencast %s. Attempting to count redirect...',
-        remoteAddress, screencastId);
-      models.Referral.find({
-        where: {
-          screencastId: screencastId,
-          refereeRemoteAddress: remoteAddress
-        }
-      }).then(function(referrals) {
-        if (referrals !== null) {
-          winston.info(
-            'User %s has already been redirected to screencast %s. Deliberately *not* counting redirect again.',
-            remoteAddress, screencastId);
-          return;
-        }
-        models.Screencast.findById(screencastId).then(function(screencast) {
-          models.sequelize.transaction(function(transaction) {
-            return screencast.increment({
-              referralCount: 1
-            }, {
-              transaction: transaction
-            }).then(function() {
-              models.Referral
-                .create({
-                  screencastId: screencastId,
-                  refereeRemoteAddress: remoteAddress
-                }, {
-                  transaction: transaction
-                });
-            });
-          }).then(function() {
+      var screencastModel = _mapScreencast(screencast);
+      youtube.channels.list({
+        id: screencastModel.channel.channelId,
+        part:'snippet'
+      }, function(err, details){
+        const channel = details.items.shift();
+        const thumbUrl = channel.snippet.thumbnails.default.url;
+        screencastModel.channel.thumbUrl = thumbUrl;
+        res.json(screencastModel);
+        winston.info(
+          'Successfully redirected user %s to screencast %s. Attempting to count redirect...',
+          remoteAddress, screencastId);
+        models.Referral.find({
+          where: {
+            screencastId: screencastId,
+            refereeRemoteAddress: remoteAddress
+          }
+        }).then(function(referrals) {
+          if (referrals !== null) {
             winston.info(
-              'Successfully counted redirect to %s for user %s',
-              screencastId,
-              remoteAddress);
-          }).catch(function(error) {
-            winston.error(
-              'Something went wrong while counting referral:',
-              error);
+              'User %s has already been redirected to screencast %s. Deliberately *not* counting redirect again.',
+              remoteAddress, screencastId);
+            return;
+          }
+          models.Screencast.findById(screencastId).then(function(screencast) {
+            models.sequelize.transaction(function(transaction) {
+              return screencast.increment({
+                referralCount: 1
+              }, {
+                transaction: transaction
+              }).then(function() {
+                models.Referral
+                  .create({
+                    screencastId: screencastId,
+                    refereeRemoteAddress: remoteAddress
+                  }, {
+                    transaction: transaction
+                  });
+              });
+            }).then(function() {
+              winston.info(
+                'Successfully counted redirect to %s for user %s',
+                screencastId,
+                remoteAddress);
+            }).catch(function(error) {
+              winston.error(
+                'Something went wrong while counting referral:',
+                error);
+            });
           });
         });
       });
