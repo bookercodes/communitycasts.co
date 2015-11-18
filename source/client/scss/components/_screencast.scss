@@ -1,3 +1,10 @@
-.screencast-details{
-  border: 1px red solid;
+.screencast-details {
+  &__title {
+    font-size: 2em;
+    line-height: 2.5em;
+    color: darken($dark-accent-color, 7%);
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }

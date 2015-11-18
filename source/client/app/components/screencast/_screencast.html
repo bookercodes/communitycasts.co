@@ -1,8 +1,16 @@
-<div>
-  {{screencast.screencastId}}
+<div class="screencast-details">
   <youtube
-    width="560"
-    height="315"
+    width="718"
+    height="400"
     videoid="{{screencast.screencastId}}">
   </youtube>
+  <h1 class="screencast-details__title">{{screencast.title}}</h1>
+  <div class="screencast-channel">
+    <a
+      href="https://youtube.com/channel/{{screencast.channel.channelId}}"
+      class="screencast-channel__link">
+        {{screencast.channel.channelName}}
+    </a>
+
+   </div>
 </div>
