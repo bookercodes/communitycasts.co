@@ -15,7 +15,13 @@
 <div class="screencast-details">
 
   <div class="embed-responsive embed-responsive-16by9">
-    <youtube-video class="embed-responsive-item" player-height="393" player-width="718" video-id="screencast.screencastId" player-vars="{enablejsapi: 1, autoplay:1, theme:'light', color: 'white', origin: 'communitycasts.co'}"></youtube-video>
+    <youtube-video
+      class="embed-responsive-item"
+      player-height="393"
+      player-width="718"
+      video-id="screencast.screencastId"
+      player-vars="playerVars">
+    </youtube-video>
   </div>
   <h1 class="screencast-details__title">{{screencast.title}}</h1>
 </div>
