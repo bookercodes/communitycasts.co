@@ -8,6 +8,7 @@
     "angular-ui-router-title": "~0.0.4",
     "angulartics-google-analytics": "~0.1.1",
     "ngSmoothScroll": "~1.7.1",
-    "angular-resource": "~1.4.7"
+    "angular-resource": "~1.4.7",
+    "angular-youtube-mb": "~1.1.1"
   }
 }

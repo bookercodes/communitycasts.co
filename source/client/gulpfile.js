@@ -24,7 +24,8 @@ gulp.task('processDependencies', function() {
     './bower_components/angular-messages/angular-messages.min.js',
     './bower_components/ngSmoothScroll/angular-smooth-scroll.min.js',
     './bower_components/angular-ui-router-title/angular-ui-router-title.js',
-    './bower_components/angular-resource/angular-resource.min.js'
+    './bower_components/angular-resource/angular-resource.min.js',
+    './bower_components/angular-youtube-mb/dist/angular-youtube-embed.min.js'
   ];
   return gulp.src(sources)
     .pipe(concat('vendor.js'))

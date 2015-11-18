@@ -11,7 +11,8 @@
 			'angulartics',
 			'angulartics.google.analytics',
 			'ui.router.title',
-			'ngResource'
+			'ngResource',
+			'youtube-embed'
 		]);
 	app.config(['$stateProvider', '$httpProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $httpProvider, $urlRouterProvider, $locationProvider) {
       $httpProvider.defaults.paramSerializer = '$httpParamSerializerJQLike';
