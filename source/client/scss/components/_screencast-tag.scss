@@ -1,0 +1,13 @@
+.screencast-tag {
+  @include tag;
+  line-height: 30px;
+  margin-right: 4px;
+  padding: 0;
+  font-size: 0.9em;
+  padding: 2px 9px;
+  &:hover {
+
+    // override hover effect from @include tag.
+    background-color: $tag-bg-color !important;
+  }
+}
