@@ -16,6 +16,10 @@
       display: block;
     }
   }
+  &__header {
+    @media only screen and (max-width: 670px) {
+    }
+  }
 
   &__inner {
     flex: 1;
@@ -25,8 +29,7 @@
     }
     @media only screen and (max-width: 670px) {
       display: none;
-      // background-color: lighten($accent-color, 20%);
-      background-color: #262626;
+      background-color: $background-color;
     }
   }
   .tag-list {
@@ -38,6 +41,9 @@
       flex-grow: 1;
       margin-right: 4px;
       margin-bottom: 4px;
+      @media only screen and (max-width: 670px) {
+        border: 1px #cccccc solid;
+      }
     }
   }
   .nav {
@@ -48,8 +54,18 @@
       text-align: left;
       font-size: 0.875em;
       border-bottom: 1px solid $divider-color;
-      &:last-child {
-        border: none;
+      @media only screen and (min-width: 670px) {
+        &:last-child {
+          border: none;
+        }
+      }
+      @media only screen and (max-width: 670px) {
+        border-right: 1px solid #cccccc;
+        border-left: 1px solid #cccccc;
+        border-top: 1px solid #cccccc;
+        &:last-child {
+          border-bottom: 1px solid #cccccc;
+        }
       }
     }
   }

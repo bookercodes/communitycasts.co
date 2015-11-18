@@ -6,14 +6,14 @@
 </button>
 
 <div class="menu__inner" ng-class="{visible: menuVisible}">
-  <h2>Learn</h2>
+  <h2 class="menu__header">Learn</h2>
   <div class="tag-list">
     <md-button ui-sref="tagged({tagged:tag.tagName,sort:'popular'})" ng-repeat="tag in tags" class="tag-list__tag tag">
       {{tag.tagName}}
       <span class="tag__badge">({{tag.count}})</span>
     </md-button>
   </div>
-  <h2>Navigate</h2>
+  <h2 class="menu__header">Navigate</h2>
   <nav class="nav">
     <md-button ui-sref="home({sort:'popular',tagged:''})"
     ui-sref-opts="{reload:true}" class="nav__btn">
@@ -44,7 +44,7 @@
       About
     </md-button>
   </nav>
-  <h2>Connect</h2>
+  <h2 class="menu__header">Connect</h2>
   <nav class="nav">
       <md-button href="http://twitter.com/communitycasts_" class="nav__btn" analytics-on="click" analytics-event="Twitter">
       <md-icon>
