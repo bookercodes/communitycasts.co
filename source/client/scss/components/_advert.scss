@@ -19,29 +19,11 @@
     background-color: $twitter-blue;
   }
 
-  &__icon {
-    border: 1px red solid;
-    width: 48px;
-    height: 48px;
-  }
-
-  &__header {
-    font-size: 1.3em;
-    line-height: 1.6em;
-  }
-
   &__desc {
-    font-size: 1.1em;
+    font-family: "Clear Sans";
+    font-size: 0.9em;
   }
-
-  &__btn {
-    color: black;
-    font-size: 1.2em;
-    &:hover {
-      background-color: $off-white !important;
-    }
+  .twitter-follow-button {
+    margin-left: auto;
   }
 }
-
-
-// advert--twt
