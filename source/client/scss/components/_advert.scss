@@ -1,0 +1,47 @@
+
+.advert {
+  $twitter-blue: #00aced;
+  $off-white: #ebf0f0;
+  display: flex;
+  align-items: center;
+
+  margin: 20px 10px 20px 10px;
+  padding: 10px;
+
+  ::-moz-selection,
+  ::selection {
+    color: black;
+    background-color: $off-white;
+  }
+
+  &--twitter {
+    color: $off-white;
+    background-color: $twitter-blue;
+  }
+
+  &__icon {
+    border: 1px red solid;
+    width: 48px;
+    height: 48px;
+  }
+
+  &__header {
+    font-size: 1.3em;
+    line-height: 1.6em;
+  }
+
+  &__desc {
+    font-size: 1.1em;
+  }
+
+  &__btn {
+    color: black;
+    font-size: 1.2em;
+    &:hover {
+      background-color: $off-white !important;
+    }
+  }
+}
+
+
+// advert--twt
