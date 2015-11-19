@@ -5,6 +5,10 @@
   display: flex;
   align-items: center;
 
+  @media only screen and (max-width: 960px) {
+    flex-direction: column;
+  }
+
   margin: 20px 10px 20px 10px;
   padding: 10px;
 
@@ -25,5 +29,8 @@
   }
   .twitter-follow-button {
     margin-left: auto;
+    @media only screen and (max-width: 960px) {
+      margin: 10px 0;
+    }
   }
 }
