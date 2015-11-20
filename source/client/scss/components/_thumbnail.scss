@@ -3,18 +3,24 @@
   position: relative;
   min-width: 196px;
   cursor: pointer;
+  height: 110px;
+  background-color: $accent-color;
   @media only screen and (max-width: 850px) {
     margin-bottom: 15px;
   }
   &__img {
+    transition: .3s ease-in-out;
     width: 196px;
     height: 110px;
+    &:hover {
+      opacity: .5;
+    }
   }
   &__caption {
     background-color: goldenrod;
     position: absolute;
     right: 0px;
-    bottom: 4px;
+    bottom: 0px;
     color: #F8F8F8;
     font-size: 0.9em;
     background-color: rgba(0, 0, 0, 0.4);
