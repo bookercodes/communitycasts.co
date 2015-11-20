@@ -30,9 +30,8 @@
       $scope.fetchScreencasts();
     };
     $scope.renderScreencast = function (screencastId) {
-      $state.go('screencast', {screencastId: screencastId}).then(function () {
-        smoothScroll(document.getElementById('main'));
-      });
+      smoothScroll(document.getElementById('main'));
+      $state.go('screencast', {screencastId: screencastId});
     };
     $scope.fetchScreencasts();
   };
