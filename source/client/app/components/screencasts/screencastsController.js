@@ -30,10 +30,13 @@
       $scope.fetchScreencasts();
     };
     $scope.renderScreencast = function (screencastId) {
-      smoothScroll(document.getElementById('main'));
-      $state.go('screencast', {
-        screencastId: screencastId
-      });
+      $state
+        .go('screencast', {
+          screencastId: screencastId
+        })
+        .then(function () {
+          smoothScroll(document.getElementById('main'));
+        });
     };
     $scope.fetchScreencasts();
   };
