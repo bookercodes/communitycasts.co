@@ -67,7 +67,9 @@
   </div>
 
   <div ng-show="screencastsLoaded">
-    <div class="advert advert--twitter">
+  </div>
+  <div ng-repeat="screencast in screencasts">
+    <div ng-if="$index !== 0 && $index % 5 === 0" class="advert advert--twitter">
       <p class="advert__desc">
         Follow Community Casts on Twitter for the latest screencasts.
       </p>
@@ -81,38 +83,37 @@
         @CommunityCasts_
       </md-button>
     </div>
-  </div>
-  <div class="screencast" ng-repeat="screencast in screencasts">
-
-    <div class="thumbnail">
-      <a ng-click="renderScreencast(screencast.screencastId)">
-        <img class="thumbnail__img" src="https://i.ytimg.com/vi/{{screencast.screencastId}}/mqdefault.jpg" alt="{{screencast.title}}" />
-      </a>
-      <span class="thumbnail__caption">
-        {{screencast.duration}}
-      </span>
-    </div>
-    <div>
-      <span class="screencast__featured-annotation" ng-show="screencast.featured">
-        <md-icon class="screencast__featured-icon">
-          <svg height="14" viewBox="0 0 18 18" width="14" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9 11.3l3.71 2.7-1.42-4.36L15 7h-4.55L9 2.5 7.55 7H3l3.71 2.64L5.29 14z" />
-            <path d="M0 0h18v18H0z" fill="none" />
-          </svg>
-        </md-icon>
-        Featured screencast
-      </span>
-      <a ng-click="renderScreencast(screencast.screencastId)" class="screencast__link">
-          {{screencast.title}}</a>
-      <p class="screencast__channel">
-        by
-        <a class="screencast__channel-link" href="https://youtube.com/channel/{{screencast.channel.channelId}}">
-            {{screencast.channel.channelName}}
-          </a>
-      </p>
-      <p class="screencast__description">{{screencast.description}}</p>
+    <div class="screencast">
+      <div class="thumbnail">
+        <a ng-click="renderScreencast(screencast.screencastId)">
+          <img class="thumbnail__img" src="https://i.ytimg.com/vi/{{screencast.screencastId}}/mqdefault.jpg" alt="{{screencast.title}}" />
+        </a>
+        <span class="thumbnail__caption">
+          {{screencast.duration}}
+        </span>
+      </div>
       <div>
-        <button class="screencast-tag" ui-sref="tagged({tagged:tag,sort:'popular'})" ng-repeat="tag in screencast.tags">{{tag}}</button>
+        <span class="screencast__featured-annotation" ng-show="screencast.featured">
+          <md-icon class="screencast__featured-icon">
+            <svg height="14" viewBox="0 0 18 18" width="14" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 11.3l3.71 2.7-1.42-4.36L15 7h-4.55L9 2.5 7.55 7H3l3.71 2.64L5.29 14z" />
+              <path d="M0 0h18v18H0z" fill="none" />
+            </svg>
+          </md-icon>
+          Featured screencast
+        </span>
+        <a ng-click="renderScreencast(screencast.screencastId)" class="screencast__link">
+            {{screencast.title}}</a>
+        <p class="screencast__channel">
+          by
+          <a class="screencast__channel-link" href="https://youtube.com/channel/{{screencast.channel.channelId}}">
+              {{screencast.channel.channelName}}
+            </a>
+        </p>
+        <p class="screencast__description">{{screencast.description}}</p>
+        <div>
+          <button class="screencast-tag" ui-sref="tagged({tagged:tag,sort:'popular'})" ng-repeat="tag in screencast.tags">{{tag}}</button>
+        </div>
       </div>
     </div>
   </div>
