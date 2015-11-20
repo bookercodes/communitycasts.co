@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  var screencastsController = function($scope, screencasts, $stateParams, $state) {
+  var screencastsController = function($scope, screencasts, $stateParams, $state, smoothScroll) {
     $scope.page = 1;
     $scope.screencasts = [];
     $scope.screencastsLoaded = false;
@@ -30,8 +30,9 @@
       $scope.fetchScreencasts();
     };
     $scope.renderScreencast = function (screencastId) {
-      console.log(screencastId);
-      $state.go('screencast', {screencastId: screencastId});
+      $state.go('screencast', {screencastId: screencastId}).then(function () {
+        smoothScroll(document.getElementById('main'));
+      });
     };
     $scope.fetchScreencasts();
   };
@@ -39,7 +40,8 @@
     '$scope',
     'screencasts',
     '$stateParams',
-    '$state'
+    '$state',
+    'smoothScroll'
   ];
   angular.module('communityCasts')
     .controller('screencastsController', screencastsController);
