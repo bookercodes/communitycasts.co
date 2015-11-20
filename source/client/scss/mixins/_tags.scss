@@ -1,7 +1,10 @@
 @mixin tag () {
   background-color: $tag-bg-color;
   font-size: $tag-font-size;
-
+  transition: background-color 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+  &:hover {
+    background-color: $button-hover-background !important;
+  }
   .tag__badge {
     color: lighten($tag-color, 20%);
     font-size: 12px;
