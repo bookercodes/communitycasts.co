@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  var screencastsController = function($scope, screencasts, $stateParams) {
+  var screencastsController = function($scope, screencasts, $stateParams, $state) {
     $scope.page = 1;
     $scope.screencasts = [];
     $scope.screencastsLoaded = false;
@@ -29,12 +29,17 @@
       $scope.screencasts = [];
       $scope.fetchScreencasts();
     };
+    $scope.renderScreencast = function (screencastId) {
+      console.log(screencastId);
+      $state.go('screencast', {screencastId: screencastId});
+    };
     $scope.fetchScreencasts();
   };
   screencastsController.$inject = [
     '$scope',
     'screencasts',
-    '$stateParams'
+    '$stateParams',
+    '$state'
   ];
   angular.module('communityCasts')
     .controller('screencastsController', screencastsController);
