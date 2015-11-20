@@ -5,6 +5,7 @@
   display: flex;
   align-items: center;
   font-family: "Clear Sans";
+  justify-content: space-between;
 
   @media only screen and (max-width: 960px) {
     flex-direction: column;
@@ -29,6 +30,5 @@
 
   &__btn {
     width: 210px;
-    margin-left: auto;
   }
 }
