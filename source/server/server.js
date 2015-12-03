@@ -10,6 +10,7 @@ import validators from './validators';
 import winston from 'winston';
 import models from './models';
 import 'winston-loggly';
+import tweeter from './cron/tweeter';
 
 winston.add(winston.transports.Loggly, config.logglyOptions);
 
@@ -48,6 +49,7 @@ models.sequelize.sync({
   force: false
 }).then(function() {
   app.listen(config.port, () => winston.info('Server was started on port %s.', config.port));
+  tweeter.start();
 });
 
 process.on('uncaughtException', err => {
