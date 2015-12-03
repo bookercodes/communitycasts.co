@@ -33,6 +33,9 @@ export default function(sequelize, DataTypes) {
     featured: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
+    },
+    tweetedAt: {
+      type: DataTypes.DATE
     }
   }, {
     tableName: 'screencasts',
