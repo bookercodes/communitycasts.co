@@ -1,0 +1,21 @@
+{
+  "scripts": {
+    "flow": "flow; test $? -eq 0 -o $? -eq 2",
+    "start": "node source/index.js",
+    "dev": "nodemon -w source -w tests --exec npm run flow -q",
+    "test": "ava tests --watch"
+  },
+  "dependencies": {
+    "babel-plugin-transform-flow-strip-types": "^6.7.0",
+    "babel-preset-node5": "^11.0.1",
+    "babel-register": "^6.7.2",
+    "express": "^4.13.4"
+  },
+  "devDependencies": {
+    "ava": "^0.13.0",
+    "flow-bin": "^0.22.1",
+    "nodemon": "^1.9.1",
+    "supertest": "^1.2.0",
+    "supertest-as-promised": "^3.0.0"
+  }
+}

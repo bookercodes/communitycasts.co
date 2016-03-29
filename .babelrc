@@ -1,0 +1,4 @@
+{
+  "presets": ["node5"],
+  "plugins": ["transform-flow-strip-types"]
+}
