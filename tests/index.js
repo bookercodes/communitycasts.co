@@ -4,7 +4,7 @@ import db from 'sequelize-connect'
 import test from 'ava'
 import path from 'path'
 import request from 'supertest-as-promised'
-import server from '../source'
+import server from '../source/server'
 import config from '../source/config/config.json'
 
 test.before(function initializeDb() {

@@ -1,9 +1,9 @@
 {
   "scripts": {
     "flow": "flow; test $? -eq 0 -o $? -eq 2",
-    "start": "node source/index.js",
+    "start": "node source/bin/www",
     "dev": "nodemon -w source -w tests --exec npm run flow -q",
-    "test": "ava tests --watch"
+    "test": "ava --require 'babel-register' tests --watch"
   },
   "dependencies": {
     "babel-plugin-transform-flow-strip-types": "^6.7.0",

@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+
+require('babel-register');
+
+const db = require('sequelize-connect')
+const path = require('path')
+const config = require('../config/config.json')
+const app = require('../server.js').default
+
+db.matcher = () => true
+db.discover = [path.join(__dirname, '../models')]
+
+db.connect(
+  config.development.database,
+  config.development.username,
+  config.development.password, {
+  force: true
+}).then(function() {
+  app.listen(3000)
+})
