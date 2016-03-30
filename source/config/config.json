@@ -9,7 +9,7 @@
   "test": {
     "username": "root",
     "password": null,
-    "database": "database_test",
+    "database": "communitycasts_test_schema",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
