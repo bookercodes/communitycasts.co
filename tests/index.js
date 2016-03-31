@@ -1,11 +1,12 @@
 // @flow
+process.cwd(process.env.NODE_CONFIG_DIR);
 
 import db from 'sequelize-connect'
 import test from 'ava'
 import path from 'path'
 import request from 'supertest-as-promised'
 import server from '../source/server'
-import config from '../source/config/config.json'
+import config from 'config'
 
 test.beforeEach(function connectToAndResetTestDatabase() {
   db.logger.level = null
@@ -13,11 +14,10 @@ test.beforeEach(function connectToAndResetTestDatabase() {
   db.matcher = function shouldImportModel(modelFileName) {
     return true
   }
-  return db
-    .connect(config.test.database, config.test.username, config.test.password, {
-      force: true,
-      logging: false
-    })
+  return db.connect(config.database, config.username, config.password, {
+    force: true,
+    logging: false
+  })
 })
 
 test('POST without Authorization header should return 401', async t => {

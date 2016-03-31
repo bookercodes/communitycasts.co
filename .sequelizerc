@@ -1,0 +1,6 @@
+var config = require("config");
+
+module.exports = {
+  "config": config.util.getConfigSources()[0].name,
+  "migrations-path": "./source/migrations"
+};
