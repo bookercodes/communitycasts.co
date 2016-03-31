@@ -7,38 +7,89 @@ import request from 'supertest-as-promised'
 import server from '../source/server'
 import config from '../source/config/config.json'
 
-test.before(function initializeDb() {
-  db.matcher = () => true
+test.beforeEach(function connectToAndResetTestDatabase() {
+  db.logger.level = null
   db.discover = [path.join(__dirname, '../source/models')]
-  const { database, username, password } = config.test
-  return db.connect(database, username, password, {
-    force: true
-  })
+  db.matcher = function shouldImportModel(modelFileName) {
+    return true
+  }
+  return db
+    .connect(config.test.database, config.test.username, config.test.password, {
+      force: true,
+      logging: false
+    })
 })
 
-test('POST to /api/screencasts with valid screencast should return status 201', async t => {
-  const response = await request(server)
+test('POST without Authorization header should return 401', async t => {
+  const {statusCode} = await request(server)
     .post('/api/screencasts')
     .send({
       url: 'https://www.youtube.com/watch?v=qsDvJrGMSUY'
     })
-  const actual = response.statusCode
 
-  t.true(actual === 201)
+  t.true(statusCode === 401)
 })
 
-test('POST to /api/screencasts with valid screencast should store screencast in db', async t => {
-  const screencastUrl = 'https://www.youtube.com/watch?v=qsDvJrGMSUY'
+test('POST without Authorization header shouldn\'t save screencast', async t => {
+  const screencastUrl = 'https://www.youtube.com/watch?v=abc'
   await request(server)
     .post('/api/screencasts')
     .send({
       url: screencastUrl
     })
-  const actual = await db.models.Screencast.findOne({
+  const screencast = await db.models.Screencast.findOne({
     where: {
       url: screencastUrl
     }
   })
 
-  t.true(actual !== null)
+  t.true(screencast === null)
+})
+
+test('POST with invalid credentails should return 401', async t => {
+  const password = 'invalid password'
+  const encodedPassword = new Buffer(password).toString('base64')
+  const authHeader = `Basic: ${encodedPassword}`
+  const {statusCode} = await request(server)
+    .post('/api/screencasts')
+    .set('Authorization', authHeader)
+    .send({
+      url: 'https://www.youtube.com/watch?v=qsDvJrGMSUY'
+    })
+
+  t.true(statusCode === 401)
+}) 
+
+test('Valid POST should return 201', async t => {
+  const password = 'password'
+  const encodedPassword = new Buffer(password).toString('base64')
+  const authHeader = `Basic: ${encodedPassword}`
+  const {statusCode} = await request(server)
+    .post('/api/screencasts')
+    .set('Authorization', authHeader)
+    .send({
+      url: 'https://www.youtube.com/watch?v=qsDvJrGMSUY'
+    })
+
+  t.true(statusCode === 201)
+}) 
+
+test('Valid POST should save screencast', async t => {
+  const password = 'password'
+  const encodedPassword = new Buffer(password).toString('base64')
+  const authHeader = `Basic: ${encodedPassword}`
+  const screencastUrl = 'https://www.youtube.com/watch?v=qsDvJrGMSUY'
+  await request(server)
+    .post('/api/screencasts')
+    .set('Authorization', authHeader)
+    .send({
+      url: screencastUrl
+    })
+  const screencast = await db.models.Screencast.findOne({
+    where: {
+      url: screencastUrl
+    }
+  })
+
+  t.true(screencast !== null)
 })
