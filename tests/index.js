@@ -74,7 +74,7 @@ test('Valid POST should return 201', async t => {
   t.true(statusCode === 201)
 }) 
 
-test.only('Valid POST should save screencast', async t => {
+test('Valid POST should save screencast', async t => {
   const password = config.adminPassword
   const encodedPassword = new Buffer(password).toString('base64')
   const authHeader = `Basic: ${encodedPassword}`
