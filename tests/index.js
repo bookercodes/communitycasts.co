@@ -74,8 +74,8 @@ test('Valid POST should return 201', async t => {
   t.true(statusCode === 201)
 }) 
 
-test('Valid POST should save screencast', async t => {
-  const password = 'password'
+test.only('Valid POST should save screencast', async t => {
+  const password = config.adminPassword
   const encodedPassword = new Buffer(password).toString('base64')
   const authHeader = `Basic: ${encodedPassword}`
   const screencastUrl = 'https://www.youtube.com/watch?v=qsDvJrGMSUY'
