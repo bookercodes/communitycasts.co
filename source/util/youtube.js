@@ -5,8 +5,10 @@ import youtubeApiClient from 'youtube-api'
 import moment from 'moment'
 
 export default class YouTube {
-  constructor(youtubeApiKey) {
-    this.apiKey = youtubeApiKey
+  apiKey: string;
+
+  constructor(youtubeApiKey: string) {
+    this.apiKey = youtubeApiKey;
 
     youtubeApiClient.authenticate({
       type: 'key',
@@ -14,7 +16,7 @@ export default class YouTube {
     })
   }
 
-  fetchVideoDetails(youtubeUrl) {
+  fetchVideoDetails(youtubeUrl: string) : Promise {
     const videoId = extractId(youtubeUrl)
     return new Promise(function(resolve) {
       youtubeApiClient.videos.list({
