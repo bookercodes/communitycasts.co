@@ -1,4 +1,5 @@
 {
+  "adminPassword": "foo",
   "username": "root",
   "password": null,
   "database": "communitycasts_test_schema",

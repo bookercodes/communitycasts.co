@@ -20,7 +20,7 @@ test.beforeEach(function connectToAndResetTestDatabase() {
   })
 })
 
-test('POST without Authorization header should return 401', async t => {
+test('POST without authorization header should return 401', async t => {
   const {statusCode} = await request(server)
     .post('/api/screencasts')
     .send({
@@ -61,7 +61,7 @@ test('POST with invalid credentails should return 401', async t => {
 }) 
 
 test('Valid POST should return 201', async t => {
-  const password = 'password'
+  const password = config.adminPassword
   const encodedPassword = new Buffer(password).toString('base64')
   const authHeader = `Basic: ${encodedPassword}`
   const {statusCode} = await request(server)
