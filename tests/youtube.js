@@ -1,27 +1,31 @@
 // @flow
 
-import test from 'ava'
 import config from 'config'
+import {expect} from 'chai'
+import {suite, test} from 'mocha';
 import Youtube from '../source/util/youtube'
 
-test('youtube exports a function', t => {
-  t.ok(typeof Youtube === 'function')
-})
+suite('youtube', () => {
 
-test('youtube has apiKey property', t => {
-  const { apiKey } = new Youtube(config.youtubeApiKey)
+  test('youtube exports a function', () => {
+    expect(Youtube).to.be.a('function')
+  })
 
-  t.ok(apiKey === config.youtubeApiKey)
-})
+  test('youtube has apiKey property', () => {
+    const { apiKey } = new Youtube(config.youtubeApiKey)
 
-test('fetchVideoDetails returns correct result', async t => {
-  const youtube = new Youtube(config.youtubeApiKey)
-  const actual = await youtube.fetchVideoDetails('https://youtu.be/jNQXAC9IVRw')
+    expect(apiKey).to.equal(config.youtubeApiKey)
+  })
 
-  t.ok(actual.id  === 'jNQXAC9IVRw')
-  t.ok(actual.title === 'Me at the zoo')
-  t.ok(actual.description.match(/^The first video on YouTube/))
-  t.ok(actual.durationInSeconds === 19)
-  t.ok(actual.channel.title === 'jawed')
-  t.ok(actual.channel.id === 'UC4QobU6STFB0P71PMvOGN5A')
+  test('fetchVideoDetails returns correct result', async () => {
+    const youtube = new Youtube(config.youtubeApiKey)
+    const actual = await youtube.fetchVideoDetails('https://youtu.be/jNQXAC9IVRw')
+
+    expect(actual.id).to.equal('jNQXAC9IVRw')
+    expect(actual.title).to.equal('Me at the zoo')
+    expect(actual.channel.id).to.equal('UC4QobU6STFB0P71PMvOGN5A')
+    expect(actual.channel.title).to.equal('jawed')
+    expect(actual.durationInSeconds).to.equal(19)
+    expect(actual.description).to.match(/^The first video on YouTube/)
+  })
 })

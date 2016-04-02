@@ -1,88 +1,92 @@
 // @flow
 
-import test from 'ava'
+import {expect} from 'chai'
+import {suite, test, suiteSetup, setup, teardown, suiteTeardown} from 'mocha';
 import sinon from 'sinon'
 import httpMocks from "node-mocks-http";
 import mockery from 'mockery'
 
-const adminPassword = 'some password'
+suite('authenticateRequest', () => {
 
-test.before(() => {
-  mockery.enable({
-    warnOnReplace: false,
-    warnOnUnregistered: false
-  });
-  mockery.registerMock('config', {
-    adminPassword
+  const adminPassword = 'some password'
+
+  suiteSetup(() => {
+    mockery.enable({
+      warnOnReplace: false,
+      warnOnUnregistered: false,
+      useCleanCache: true
+    });
+    mockery.registerMock('config', {
+      adminPassword
+    })
   })
-})
 
-test('authenticateRequest returns a function', t => {
-  const authenticateRequest = 
-    require('../source/middleware/authenticateRequest').default
+  test('authenticateRequest returns a function', () => {
+    const authenticateRequest =
+      require('../source/middleware/authenticateRequest').default
 
-  t.ok(typeof authenticateRequest === 'function')
-})
-
-test('authenticateRequest with invalid password returns 401', t => {
-  const authenticateRequest = 
-    require('../source/middleware/authenticateRequest').default
-  const encodedPassword = new Buffer('invalid password').toString('base64')
-  const req = httpMocks.createRequest({
-    headers: {
-      authorization: `Basic: ${encodedPassword}`
-    }
+    expect(authenticateRequest).to.be.a('function')
   })
-  const res = httpMocks.createResponse()
-  const next = sinon.spy()
 
-  authenticateRequest(req, res, next)
+  test('authenticateRequest with invalid password returns 401', () => {
+    const authenticateRequest =
+      require('../source/middleware/authenticateRequest').default
+    const encodedPassword = new Buffer('invalid password').toString('base64')
+    const req = httpMocks.createRequest({
+      headers: {
+        authorization: `Basic: ${encodedPassword}`
+      }
+    })
+    const res = httpMocks.createResponse()
+    const next = sinon.spy()
 
-  t.ok(res.statusCode === 401)
-  t.ok(next.called === false)
-})
+    authenticateRequest(req, res, next)
 
-test('authenticateRequest with valid password calls next middleware', t => {
-  const authenticateRequest = 
-    require('../source/middleware/authenticateRequest').default
-  const encodedPassword = new Buffer(adminPassword).toString('base64')
-  const req = httpMocks.createRequest({
-    headers: {
-      authorization: `Basic: ${encodedPassword}`
-    }
+    expect(res.statusCode).to.equal(401)
+    expect(next.called).to.equal(false)
   })
-  const res = httpMocks.createResponse()
-  const next = sinon.spy()
 
-  authenticateRequest(req, res, next)
+  test('authenticateRequest with valid password calls next middleware', () => {
+    const authenticateRequest =
+      require('../source/middleware/authenticateRequest').default
+    const encodedPassword = new Buffer(adminPassword).toString('base64')
+    const req = httpMocks.createRequest({
+      headers: {
+        authorization: `Basic: ${encodedPassword}`
+      }
+    })
+    const res = httpMocks.createResponse()
+    const next = sinon.spy()
 
-  t.ok(next.called === true)
-})
+    authenticateRequest(req, res, next)
 
-test('authenticateRequest without authorization header returns 401', t => {
-  const authenticateRequest = 
-    require('../source/middleware/authenticateRequest').default
-  const req = httpMocks.createRequest()
-  const res = httpMocks.createResponse()
-
-  authenticateRequest(req, res)
-
-  t.ok(res.statusCode === 401)
-})
-
-test('authenticateRequest with malformed authorization header returns 401 ', t => {
-  const authenticateRequest = 
-    require('../source/middleware/authenticateRequest').default
-  const req = httpMocks.createRequest({
-    headers: {
-      authorization: 'Basic: dsfs'
-    }
+    expect(next.called).to.be.true
   })
-  const res = httpMocks.createResponse()
-  const next = sinon.spy()
 
-  authenticateRequest(req, res, next)
+  test('authenticateRequest without authorization header returns 401', () => {
+    const authenticateRequest =
+      require('../source/middleware/authenticateRequest').default
+    const req = httpMocks.createRequest()
+    const res = httpMocks.createResponse()
 
-  t.ok(res.statusCode === 401)
-  t.ok(next.called === false)
+    authenticateRequest(req, res)
+
+    expect(res.statusCode).to.equal(401)
+  })
+
+  test('authenticateRequest with malformed authorization header returns 401 ', () => {
+    const authenticateRequest =
+      require('../source/middleware/authenticateRequest').default
+    const req = httpMocks.createRequest({
+      headers: {
+        authorization: 'Basic: dsfs'
+      }
+    })
+    const res = httpMocks.createResponse()
+    const next = sinon.spy()
+
+    authenticateRequest(req, res, next)
+    expect(res.statusCode).equal(401)
+    expect(next.called).to.equal(false)
+  })
 })

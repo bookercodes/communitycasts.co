@@ -3,7 +3,7 @@
     "flow": "flow; test $? -eq 0 -o $? -eq 2",
     "start": "node source/bin/www",
     "dev": "nodemon -w source -w tests --exec npm run flow -q",
-    "test": "NODE_ENV=test NODE_CONFIG_DIR=$(pwd)/config ava --serial --require 'babel-register' tests --watch"
+    "test": "NODE_ENV=test mocha ./tests --recursive --compilers js:babel-core/register --ui tdd --timeout 500"
   },
   "dependencies": {
     "babel-plugin-transform-flow-strip-types": "^6.7.0",
@@ -19,8 +19,9 @@
     "youtube-url": "^0.2.1"
   },
   "devDependencies": {
-    "ava": "^0.13.0",
+    "chai": "^3.5.0",
     "flow-bin": "^0.22.1",
+    "mocha": "^2.4.5",
     "mockery": "^1.4.1",
     "node-mocks-http": "^1.5.2",
     "nodemon": "^1.9.1",
