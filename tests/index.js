@@ -80,19 +80,25 @@ suite('index', () => {
     const password = config.adminPassword
     const encodedPassword = new Buffer(password).toString('base64')
     const authHeader = `Basic: ${encodedPassword}`
-    const screencastUrl = 'https://www.youtube.com/watch?v=qsDvJrGMSUY'
+    const screencastUrl = 'https://youtu.be/jNQXAC9IVRw'
     await request(server)
       .post('/api/screencasts')
       .set('Authorization', authHeader)
       .send({
         url: screencastUrl
       })
-    const screencast = await db.models.Screencast.findOne({
+    const result = await db.models.Screencast.findOne({
       where: {
         url: screencastUrl
       }
     })
 
-    expect(screencast).to.exist
+    expect(result).to.exist
+    const screencast = result.dataValues
+    expect(screencast.url).to.equal(screencastUrl)
+    expect(screencast.id).to.equal('jNQXAC9IVRw')
+    expect(screencast.title).to.equal('Me at the zoo')
+    expect(screencast.description).to.match(/^The first video on YouTube/)
+    expect(screencast.durationInSeconds).to.equal(19)
   })
 })

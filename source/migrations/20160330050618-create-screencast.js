@@ -1,16 +1,19 @@
+// @flow
+
 'use strict';
 module.exports = {
   up: function(queryInterface, Sequelize) {
     return queryInterface.createTable('Screencasts', {
       id: {
-        allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       url: {
         type: Sequelize.TEXT
       },
+      title: Sequelize.STRING,
+      description: Sequelize.TEXT,
+      durationInSeconds: Sequelize.INTEGER,
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
