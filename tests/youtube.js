@@ -2,22 +2,19 @@
 
 import test from 'ava'
 import config from 'config'
+import Youtube from '../source/util/youtube'
 
 test('youtube exports a function', t => {
-  const youtube = require('../source/util/youtube').default
-
-  t.ok(typeof youtube === 'function')
+  t.ok(typeof Youtube === 'function')
 })
 
 test('youtube has apiKey property', t => {
-  const Youtube = require('../source/util/youtube').default
-  const {apiKey} = new Youtube(config.youtubeApiKey)
+  const { apiKey } = new Youtube(config.youtubeApiKey)
 
   t.ok(apiKey === config.youtubeApiKey)
 })
 
 test('fetchVideoDetails returns correct result', async t => {
-  const Youtube = require('../source/util/youtube').default
   const youtube = new Youtube(config.youtubeApiKey)
   const actual = await youtube.fetchVideoDetails('https://youtu.be/jNQXAC9IVRw')
 
