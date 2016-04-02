@@ -43,6 +43,8 @@ suite('authenticateRequest', () => {
     authenticateRequest(req, res, next)
 
     expect(res.statusCode).to.equal(401)
+    const resBody = res._getData()
+    expect(resBody).to.equal('Invalid password')
     expect(next.called).to.equal(false)
   })
 
@@ -72,6 +74,8 @@ suite('authenticateRequest', () => {
     authenticateRequest(req, res)
 
     expect(res.statusCode).to.equal(401)
+    const resBody = res._getData()
+    expect(resBody).to.equal('Authorization header missing')
   })
 
   test('authenticateRequest with malformed authorization header returns 401 ', () => {
@@ -79,14 +83,16 @@ suite('authenticateRequest', () => {
       require('../source/middleware/authenticateRequest').default
     const req = httpMocks.createRequest({
       headers: {
-        authorization: 'Basic: dsfs'
+        authorization: 'Basic: '
       }
     })
     const res = httpMocks.createResponse()
     const next = sinon.spy()
 
     authenticateRequest(req, res, next)
-    expect(res.statusCode).equal(401)
+    expect(res.statusCode).to.equal(401)
+    const resBody = res._getData()
+    expect(resBody).to.equal('Invalid Authorization header')
     expect(next.called).to.equal(false)
   })
 })
