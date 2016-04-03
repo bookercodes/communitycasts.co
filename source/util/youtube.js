@@ -8,7 +8,11 @@ type VideoDetails = {
   id: string,
   title: string,
   description: string,
-  durationInSeconds: string
+  durationInSeconds: string,
+  channel: {
+    id: string,
+    title: string
+  }
 }
 
 export default class YouTube {
