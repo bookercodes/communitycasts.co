@@ -76,6 +76,26 @@ suite('index', () => {
     expect(statusCode).to.equal(201)
   })
 
+  test('', async() => {
+    const password = config.adminPassword
+    const encodedPassword = new Buffer(password).toString('base64')
+    const authHeader = `Basic: ${encodedPassword}`
+    const screencastUrl = 'https://youtu.be/jNQXAC9IVRw'
+    await request(server)
+      .post('/api/screencasts')
+      .set('Authorization', authHeader)
+      .send({
+        url: screencastUrl
+      })
+    const result = await request(server)
+      .post('/api/screencasts')
+      .set('Authorization', authHeader)
+      .send({
+        url: screencastUrl
+      })
+    expect(result.statusCode).to.equal(409)
+  })
+
   test('Valid POST should save screencast', async () => {
     const password = config.adminPassword
     const encodedPassword = new Buffer(password).toString('base64')

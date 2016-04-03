@@ -8,11 +8,18 @@ const screencasts = {
   post: async (req: any, res: any) : any => {
     const youtube = new Youtube(config.youtubeApiKey)
     const videoDetails = await youtube.fetchVideoDetails(req.body.url)
-    await db.models.Screencast.create({
-      ...videoDetails,
-      url: req.body.url
-    })
-    res.sendStatus(201)
+    try {
+      await db.models.Screencast.create({
+        ...videoDetails,
+        url: req.body.url
+      })
+      res.sendStatus(201)
+    } catch (error) {
+      if (error.name === 'SequelizeUniqueConstraintError') {
+        res.sendStatus(409)
+      }
+    }
   }
 }
+
 export default screencasts
