@@ -1,8 +1,6 @@
 // @flow
 
-'use strict';
-
-module.exports = function(sequelize, DataTypes) {
+export default function(sequelize: any, DataTypes: any) : any {
   var Screencast = sequelize.define('Screencast', {
     id: {
       primaryKey: true,
