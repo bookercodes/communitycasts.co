@@ -4,6 +4,13 @@ import {extractId} from 'youtube-url'
 import youtubeApiClient from 'youtube-api'
 import moment from 'moment'
 
+type VideoDetails = {
+  id: string,
+  title: string,
+  description: string,
+  durationInSeconds: string
+}
+
 export default class YouTube {
   apiKey: string;
 
@@ -16,9 +23,9 @@ export default class YouTube {
     })
   }
 
-  fetchVideoDetails(youtubeUrl: string) : Promise {
+  fetchVideoDetails(youtubeUrl: string) : Promise<VideoDetails> {
     const videoId = extractId(youtubeUrl)
-    return new Promise(function(resolve) {
+    return new Promise(resolve => {
       youtubeApiClient.videos.list({
         id: videoId,
         part: 'snippet,contentDetails'
