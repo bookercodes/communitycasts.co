@@ -9,12 +9,13 @@ import Youtube from './util/youtube.js';
 import config from 'config';
 import home from './routes/home'
 import screencast from './routes/screencasts.js'
+import validateScreencastInput from './middleware/validateScreencastInput.js'
 
 const app = express()
 
 app.use(bodyParser.json())
 
 app.get('/', home.get)
-app.post('/api/screencasts', authenticateRequest, screencast.post)
+app.post('/api/screencasts', validateScreencastInput, authenticateRequest, screencast.post)
 
 export default app

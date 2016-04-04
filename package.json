@@ -3,7 +3,7 @@
     "flow": "flow; test $? -eq 0 -o $? -eq 2",
     "start": "node source/bin/www",
     "dev": "nodemon -w source -w tests --exec npm run flow -q",
-    "test": "NODE_ENV=test mocha ./tests --recursive --compilers js:babel-core/register --ui tdd --timeout 500"
+    "test": "NODE_ENV=test mocha ./tests/ --recursive --compilers js:babel-core/register --ui tdd --timeout 500"
   },
   "dependencies": {
     "babel-plugin-transform-flow-strip-types": "^6.7.0",

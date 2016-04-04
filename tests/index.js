@@ -76,26 +76,6 @@ suite('index', () => {
     expect(statusCode).to.equal(201)
   })
 
-  test('', async() => {
-    const password = config.adminPassword
-    const encodedPassword = new Buffer(password).toString('base64')
-    const authHeader = `Basic: ${encodedPassword}`
-    const screencastUrl = 'https://youtu.be/jNQXAC9IVRw'
-    await request(server)
-      .post('/api/screencasts')
-      .set('Authorization', authHeader)
-      .send({
-        url: screencastUrl
-      })
-    const result = await request(server)
-      .post('/api/screencasts')
-      .set('Authorization', authHeader)
-      .send({
-        url: screencastUrl
-      })
-    expect(result.statusCode).to.equal(409)
-  })
-
   test('Valid POST should save screencast', async () => {
     const password = config.adminPassword
     const encodedPassword = new Buffer(password).toString('base64')
@@ -120,5 +100,52 @@ suite('index', () => {
     expect(screencast.title).to.equal('Me at the zoo')
     expect(screencast.description).to.match(/^The first video on YouTube/)
     expect(screencast.durationInSeconds).to.equal(19)
+  })
+
+  test('Invalid POST with duplicate screencast should return 409', async() => {
+    const password = config.adminPassword
+    const encodedPassword = new Buffer(password).toString('base64')
+    const authHeader = `Basic: ${encodedPassword}`
+    const screencastUrl = 'https://youtu.be/jNQXAC9IVRw'
+    await request(server)
+      .post('/api/screencasts')
+      .set('Authorization', authHeader)
+      .send({
+        url: screencastUrl
+      })
+    const result = await request(server)
+      .post('/api/screencasts')
+      .set('Authorization', authHeader)
+      .send({
+        url: screencastUrl
+      })
+    expect(result.statusCode).to.equal(409)
+  })
+
+  test('Invalid POST with invalid url should return 400', async () => {
+    const password = config.adminPassword
+    const encodedPassword = new Buffer(password).toString('base64')
+    const authHeader = `Basic: ${encodedPassword}`
+    const {statusCode} = await request(server)
+      .post('/api/screencasts')
+      .set('Authorization', authHeader)
+      .send({
+        url: 'foo'
+      })
+
+    expect(statusCode).to.equal(400)
+  })
+
+  test('Invalid POST with missing req body should return 400', async () => {
+    const password = config.adminPassword
+    const encodedPassword = new Buffer(password).toString('base64')
+    const authHeader = `Basic: ${encodedPassword}`
+    const {statusCode} = await request(server)
+      .post('/api/screencasts')
+      .set('Authorization', authHeader)
+      .send({
+      })
+
+    expect(statusCode).to.equal(400)
   })
 })
