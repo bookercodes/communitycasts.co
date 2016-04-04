@@ -3,13 +3,14 @@
     "flow": "flow; test $? -eq 0 -o $? -eq 2",
     "start": "node source/bin/www",
     "dev": "nodemon -w source -w tests --exec npm run flow -q",
-    "test": "NODE_ENV=test mocha ./tests/ --recursive --compilers js:babel-core/register --ui tdd --timeout 10000"
+    "test": "NODE_ENV=test mocha ./tests/ --recursive --compilers js:babel-core/register --ui tdd --timeout 2000"
   },
   "dependencies": {
     "babel-plugin-transform-flow-strip-types": "^6.7.0",
     "babel-preset-node5": "^11.0.1",
     "babel-register": "^6.7.2",
     "body-parser": "^1.15.0",
+    "comma-split": "^1.0.0",
     "config": "^1.19.0",
     "express": "^4.13.4",
     "moment": "^2.12.0",

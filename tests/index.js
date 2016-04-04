@@ -70,7 +70,8 @@ suite('index', () => {
       .post('/api/screencasts')
       .set('Authorization', authHeader)
       .send({
-        url: 'https://www.youtube.com/watch?v=qsDvJrGMSUY'
+        url: 'https://www.youtube.com/watch?v=qsDvJrGMSUY',
+        tags: 'foo,bar'
       })
 
     expect(statusCode).to.equal(201)
@@ -85,12 +86,16 @@ suite('index', () => {
       .post('/api/screencasts')
       .set('Authorization', authHeader)
       .send({
-        url: screencastUrl
+        url: screencastUrl,
+        tags: 'foo,bar'
       })
     const result = await db.models.Screencast.findOne({
       where: {
-        url: screencastUrl
-      }
+        url: screencastUrl,
+      },
+      include: [{
+        model: db.models.Tag
+      }]
     })
 
     expect(result).to.exist
@@ -100,6 +105,7 @@ suite('index', () => {
     expect(screencast.title).to.equal('Me at the zoo')
     expect(screencast.description).to.match(/^The first video on YouTube/)
     expect(screencast.durationInSeconds).to.equal(19)
+    expect(screencast.Tags).to.have.lengthOf(2)
   })
 
   test('Invalid POST with duplicate screencast should return 409', async() => {
@@ -111,13 +117,15 @@ suite('index', () => {
       .post('/api/screencasts')
       .set('Authorization', authHeader)
       .send({
-        url: screencastUrl
+        url: screencastUrl,
+        tags: 'foo,bar'
       })
     const result = await request(server)
       .post('/api/screencasts')
       .set('Authorization', authHeader)
       .send({
-        url: screencastUrl
+        url: screencastUrl,
+        tags: 'foo,bar'
       })
     expect(result.statusCode).to.equal(409)
   })

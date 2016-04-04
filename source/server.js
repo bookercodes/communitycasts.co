@@ -16,6 +16,10 @@ const app = express()
 app.use(bodyParser.json())
 
 app.get('/', home.get)
-app.post('/api/screencasts', validateScreencastInput, authenticateRequest, screencast.post)
+app.post(
+  '/api/screencasts',
+  validateScreencastInput,
+  authenticateRequest,
+  screencast.post)
 
 export default app
