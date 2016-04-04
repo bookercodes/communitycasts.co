@@ -10,6 +10,15 @@ export default function(sequelize: any, DataTypes: any) : any {
     title: DataTypes.STRING,
     description: DataTypes.TEXT,
     durationInSeconds: DataTypes.INTEGER,
+  }, {
+    classMethods: {
+      associate: function(models) {
+        Screencast.belongsToMany(models.Tag, {
+          through: models.ScreencastTag,
+          foreignKey: 'screencastId'
+        })
+      }
+    }
   });
   return Screencast;
 };
