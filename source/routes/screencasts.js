@@ -8,10 +8,10 @@ import commaSplit from 'comma-split'
 const screencasts = {
   post: async (req: any, res: any) : any => {
     const youtube = new Youtube(config.youtubeApiKey)
-    const videoDetails = await youtube.fetchVideoDetails(req.body.url)
-    const tags = commaSplit(req.body.tags).map(tag => ({ id: tag }))
-
     try {
+      const videoDetails = await youtube.fetchVideoDetails(req.body.url)
+      const tags = commaSplit(req.body.tags).map(tag => ({ id: tag }))
+
       await db.sequelize.transaction(async transaction => {
         await db.models.Tag.bulkCreate(tags, {
           transaction
@@ -36,6 +36,11 @@ const screencasts = {
     } catch (error) {
       if (error.name === 'SequelizeUniqueConstraintError') {
         res.sendStatus(409)
+        return
+      }
+      if (error.name === 'YoutubeVideoDoesNotExist') {
+        res.status(400).send('This screencast cannot be found')
+        res.sendStatus(400)
       }
     }
   }

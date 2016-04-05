@@ -29,12 +29,18 @@ export default class YouTube {
 
   fetchVideoDetails(youtubeUrl: string) : Promise<VideoDetails> {
     const videoId = extractId(youtubeUrl)
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       youtubeApiClient.videos.list({
         id: videoId,
         part: 'snippet,contentDetails'
       }, function(err, details) {
         const screencast = details.items.shift();
+        if (!screencast) {
+          reject({
+            name: 'YoutubeVideoDoesNotExist'
+          })
+          return
+        }
         resolve({
           id: videoId,
           title: screencast.snippet.title,

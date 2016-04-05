@@ -77,6 +77,21 @@ suite('index', () => {
     expect(statusCode).to.equal(201)
   })
 
+  test.only('missing url', async () => {
+    const password = config.adminPassword
+    const encodedPassword = new Buffer(password).toString('base64')
+    const authHeader = `Basic: ${encodedPassword}`
+    const screencastUrl = 'https://www.youtube.com/watch?v=Tx_lyya-Sea'
+    const res = await request(server)
+      .post('/api/screencasts')
+      .set('Authorization', authHeader)
+      .send({
+        url: screencastUrl,
+        tags: 'foo,bar'
+      })
+    expect(res.statusCode).to.equal(400)
+    expect(res.text).to.equal('This screencast cannot be found')
+  })
   test('Valid POST should save screencast', async () => {
     const password = config.adminPassword
     const encodedPassword = new Buffer(password).toString('base64')
