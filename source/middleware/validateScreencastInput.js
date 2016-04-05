@@ -11,5 +11,9 @@ export default function(req: any, res: any, next: any) {
     res.status(400).send('Url is invalid')
     return
   }
+  if (!req.body.tags) {
+    res.status(400).send('Tags are missing')
+    return
+  }
   next()
 }

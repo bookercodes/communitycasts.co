@@ -16,7 +16,8 @@ suite('validateScreencastInput', () => {
   test('should call next middleware function when input is valid', () => {
     const req = httpMocks.createRequest({
       body: {
-        url: 'https://www.youtube.com/watch?v=qsDvJrGMSUY'
+        url: 'https://www.youtube.com/watch?v=qsDvJrGMSUY',
+        tags: 'tag1, tags2'
       }
     })
     const res = httpMocks.createResponse()
@@ -44,7 +45,8 @@ suite('validateScreencastInput', () => {
   test('should send 400 when url is invalid', () => {
     const req = httpMocks.createRequest({
       body: {
-        url: 'foo'
+        url: 'foo',
+        tags: 'foo,bar'
       }
     })
     const res = httpMocks.createResponse()
@@ -55,6 +57,23 @@ suite('validateScreencastInput', () => {
     expect(res.statusCode).to.equal(400)
     const resBody = res._getData()
     expect(resBody).to.equal('Url is invalid')
+    expect(next.called).to.equal(false)
+  })
+
+  test('should send 400 when tags are missing', () => {
+    const req = httpMocks.createRequest({
+      body: {
+        url: 'https://www.youtube.com/watch?v=qsDvJrGMSUY'
+      }
+    })
+    const res = httpMocks.createResponse()
+    const next = sinon.spy()
+
+    validator(req, res, next)
+
+    expect(res.statusCode).to.equal(400)
+    const resBody = res._getData()
+    expect(resBody).to.equal('Tags are missing')
     expect(next.called).to.equal(false)
   })
 })

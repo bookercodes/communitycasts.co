@@ -18,8 +18,8 @@ app.use(bodyParser.json())
 app.get('/', home.get)
 app.post(
   '/api/screencasts',
-  validateScreencastInput,
   authenticateRequest,
+  validateScreencastInput,
   screencast.post)
 
 export default app
