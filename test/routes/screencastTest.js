@@ -5,14 +5,14 @@ import {expect} from 'chai'
 import {suite, test, setup} from 'mocha';
 import path from 'path'
 import request from 'supertest-as-promised'
-import app from '../source/app'
+import app from '../../source/app'
 import config from 'config'
 
 suite('index', () => {
 
   setup(function connectToAndResetTestDatabase() {
     db.logger.level = null
-    db.discover = [path.join(__dirname, '../source/models')]
+    db.discover = [path.join(__dirname, '../../source/models')]
     db.matcher = function shouldImportModel(modelFileName) {
       return true
     }

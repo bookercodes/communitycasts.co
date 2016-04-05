@@ -2,7 +2,7 @@
 
 import {expect} from 'chai'
 import {suite, test} from 'mocha';
-import validator from '../source/middleware/validateScreencastInput.js'
+import validator from '../../source/middleware/validateScreencastInput.js'
 import sinon from 'sinon'
 import httpMocks from "node-mocks-http";
 import mockery from 'mockery'

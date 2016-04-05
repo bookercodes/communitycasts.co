@@ -3,7 +3,7 @@
 import config from 'config'
 import {expect} from 'chai'
 import {suite, test} from 'mocha';
-import Youtube from '../source/util/youtube'
+import Youtube from '../../source/util/youtube'
 
 suite('youtube', () => {
 

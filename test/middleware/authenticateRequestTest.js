@@ -23,14 +23,14 @@ suite('authenticateRequest', () => {
 
   test('authenticateRequest returns a function', () => {
     const authenticateRequest =
-      require('../source/middleware/authenticateRequest').default
+      require('../../source/middleware/authenticateRequest').default
 
     expect(authenticateRequest).to.be.a('function')
   })
 
   test('authenticateRequest with invalid password returns 401', () => {
     const authenticateRequest =
-      require('../source/middleware/authenticateRequest').default
+      require('../../source/middleware/authenticateRequest').default
     const encodedPassword = new Buffer('invalid password').toString('base64')
     const req = httpMocks.createRequest({
       headers: {
@@ -50,7 +50,7 @@ suite('authenticateRequest', () => {
 
   test('authenticateRequest with valid password calls next middleware', () => {
     const authenticateRequest =
-      require('../source/middleware/authenticateRequest').default
+      require('../../source/middleware/authenticateRequest').default
     const encodedPassword = new Buffer(adminPassword).toString('base64')
     const req = httpMocks.createRequest({
       headers: {
@@ -67,7 +67,7 @@ suite('authenticateRequest', () => {
 
   test('authenticateRequest without authorization header returns 401', () => {
     const authenticateRequest =
-      require('../source/middleware/authenticateRequest').default
+      require('../../source/middleware/authenticateRequest').default
     const req = httpMocks.createRequest()
     const res = httpMocks.createResponse()
 
@@ -80,7 +80,7 @@ suite('authenticateRequest', () => {
 
   test('authenticateRequest with malformed authorization header returns 401 ', () => {
     const authenticateRequest =
-      require('../source/middleware/authenticateRequest').default
+      require('../../source/middleware/authenticateRequest').default
     const req = httpMocks.createRequest({
       headers: {
         authorization: 'Basic: '
