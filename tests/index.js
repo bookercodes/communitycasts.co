@@ -5,7 +5,7 @@ import {expect} from 'chai'
 import {suite, test, setup} from 'mocha';
 import path from 'path'
 import request from 'supertest-as-promised'
-import server from '../source/server'
+import app from '../source/app'
 import config from 'config'
 
 suite('index', () => {
@@ -23,7 +23,7 @@ suite('index', () => {
   })
 
   test('POST without authorization header should return 401', async () => {
-    const {statusCode} = await request(server)
+    const {statusCode} = await request(app)
     .post('/api/screencasts')
     .send({
       url: 'https://www.youtube.com/watch?v=qsDvJrGMSUY'
@@ -34,7 +34,7 @@ suite('index', () => {
 
   test('POST without Authorization header shouldn\'t save screencast', async () => {
     const screencastUrl = 'https://www.youtube.com/watch?v=abc'
-    await request(server)
+    await request(app)
       .post('/api/screencasts')
       .send({
         url: screencastUrl
@@ -52,7 +52,7 @@ suite('index', () => {
     const password = 'invalid password'
     const encodedPassword = new Buffer(password).toString('base64')
     const authHeader = `Basic: ${encodedPassword}`
-    const {statusCode} = await request(server)
+    const {statusCode} = await request(app)
       .post('/api/screencasts')
       .set('Authorization', authHeader)
       .send({
@@ -66,7 +66,7 @@ suite('index', () => {
     const password = config.adminPassword
     const encodedPassword = new Buffer(password).toString('base64')
     const authHeader = `Basic: ${encodedPassword}`
-    const {statusCode} = await request(server)
+    const {statusCode} = await request(app)
       .post('/api/screencasts')
       .set('Authorization', authHeader)
       .send({
@@ -77,12 +77,12 @@ suite('index', () => {
     expect(statusCode).to.equal(201)
   })
 
-  test.only('missing url', async () => {
+  test('missing url', async () => {
     const password = config.adminPassword
     const encodedPassword = new Buffer(password).toString('base64')
     const authHeader = `Basic: ${encodedPassword}`
     const screencastUrl = 'https://www.youtube.com/watch?v=Tx_lyya-Sea'
-    const res = await request(server)
+    const res = await request(app)
       .post('/api/screencasts')
       .set('Authorization', authHeader)
       .send({
@@ -97,7 +97,7 @@ suite('index', () => {
     const encodedPassword = new Buffer(password).toString('base64')
     const authHeader = `Basic: ${encodedPassword}`
     const screencastUrl = 'https://youtu.be/jNQXAC9IVRw'
-    await request(server)
+    await request(app)
       .post('/api/screencasts')
       .set('Authorization', authHeader)
       .send({
@@ -128,14 +128,14 @@ suite('index', () => {
     const encodedPassword = new Buffer(password).toString('base64')
     const authHeader = `Basic: ${encodedPassword}`
     const screencastUrl = 'https://youtu.be/jNQXAC9IVRw'
-    await request(server)
+    await request(app)
       .post('/api/screencasts')
       .set('Authorization', authHeader)
       .send({
         url: screencastUrl,
         tags: 'foo,bar'
       })
-    const result = await request(server)
+    const result = await request(app)
       .post('/api/screencasts')
       .set('Authorization', authHeader)
       .send({
@@ -149,7 +149,7 @@ suite('index', () => {
     const password = config.adminPassword
     const encodedPassword = new Buffer(password).toString('base64')
     const authHeader = `Basic: ${encodedPassword}`
-    const {statusCode} = await request(server)
+    const {statusCode} = await request(app)
       .post('/api/screencasts')
       .set('Authorization', authHeader)
       .send({
@@ -163,7 +163,7 @@ suite('index', () => {
     const password = config.adminPassword
     const encodedPassword = new Buffer(password).toString('base64')
     const authHeader = `Basic: ${encodedPassword}`
-    const {statusCode} = await request(server)
+    const {statusCode} = await request(app)
       .post('/api/screencasts')
       .set('Authorization', authHeader)
       .send({
