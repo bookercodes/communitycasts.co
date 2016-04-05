@@ -10,12 +10,16 @@ import config from 'config';
 import home from './routes/home'
 import screencast from './routes/screencasts.js'
 import validateScreencastInput from './middleware/validateScreencastInput.js'
+import errorHandler from './middleware/errorHandler.js'
+
 
 const app = express()
 
+// app.use(errorHandler)
 app.use(bodyParser.json())
 
 app.get('/', home.get)
+
 app.post(
   '/api/screencasts',
   authenticateRequest,

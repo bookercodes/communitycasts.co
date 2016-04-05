@@ -3,7 +3,8 @@
     "flow": "flow; test $? -eq 0 -o $? -eq 2",
     "start": "node source/bin/www",
     "dev": "nodemon -w source -w ./test --exec npm run flow -q",
-    "test": "NODE_ENV=test mocha ./test --recursive"
+    "test": "NODE_ENV=test mocha ./test --recursive",
+    "mocha": "NODE_ENV=test mocha "
   },
   "dependencies": {
     "babel-plugin-transform-flow-strip-types": "^6.7.0",

@@ -6,7 +6,7 @@ import Youtube from '../util/youtube.js'
 import commaSplit from 'comma-split'
 
 const screencasts = {
-  post: async (req: any, res: any) : any => {
+  post: async (req: any, res: any, next: any) : any => {
     const youtube = new Youtube(config.youtubeApiKey)
     try {
       const videoDetails = await youtube.fetchVideoDetails(req.body.url)
@@ -41,7 +41,9 @@ const screencasts = {
       if (error.name === 'YoutubeVideoDoesNotExist') {
         res.status(400).send('This screencast cannot be found')
         res.sendStatus(400)
+        return
       }
+      next(error)
     }
   }
 }
