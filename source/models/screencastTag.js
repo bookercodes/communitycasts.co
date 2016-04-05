@@ -11,13 +11,6 @@ export default function(sequelize: any, DataTypes: any) : any {
       type: DataTypes.STRING,
       primaryKey: true
     }
-  }, {
-    classMethods: {
-      associate: function(models) {
-        // ScreencastTag.belongsTo(models.Screencast, {
-        // })
-      }
-    }
   })
   return ScreencastTag
 }
