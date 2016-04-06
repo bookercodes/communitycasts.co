@@ -2,9 +2,9 @@
   "scripts": {
     "flow": "flow; test $? -eq 0 -o $? -eq 2",
     "start": "node source/bin/www",
-    "dev": "nodemon -w source -w ./test --exec npm run flow -q",
-    "test": "NODE_ENV=test mocha ./test --recursive",
-    "mocha": "NODE_ENV=test mocha "
+    "test": "NODE_ENV=test mocha --compilers js:babel-core/register",
+    "test:all": "npm run test -- ./test --recursive",
+    "watch:test:all": "nodemon --watch test --exec npm run test:all"
   },
   "dependencies": {
     "babel-plugin-transform-flow-strip-types": "^6.7.0",
@@ -15,6 +15,7 @@
     "config": "^1.19.0",
     "express": "^4.13.4",
     "moment": "^2.12.0",
+    "mysql": "^2.10.2",
     "sequelize": "^3.20.0",
     "sequelize-connect": "^1.2.1",
     "youtube-api": "^1.4.0",
