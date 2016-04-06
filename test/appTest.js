@@ -15,9 +15,10 @@ describe('app', () => {
     const error = new Error('foo')
     app.get(route, ({next}) => next(error))
 
-    const res = await request(app).get(route)
+    const res: any = await request(app).get(route)
 
     expect(res.statusCode).to.equal(500)
     expect(res.text).to.contain(error.message)
   })
 })
+
