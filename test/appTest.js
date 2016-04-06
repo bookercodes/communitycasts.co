@@ -1,19 +1,23 @@
 // @flow
 
-import app from '../source/app.js'
-import request from 'supertest-as-promised'
 import {expect} from 'chai'
-import {suite, test, setup} from 'mocha';
+import {describe, it} from 'mocha';
+import request from 'supertest-as-promised'
+import app from '../source/app.js'
 
-suite('app', function() {
-  test('returns 500 and error when error occurs', async () => {
-    const route = '/foo_bar'
-    const err = new Error('some err')
-    app.get(route, (req, res, next) => {
-      next(err)
-    })
+describe('app', () => {
+  it ('should export a function', () => {
+    expect(app).to.be.a('function')
+  })
+
+  it('should return 500 when unhandled error occurs', async () => {
+    const route = '/foo'
+    const error = new Error('foo')
+    app.get(route, ({next}) => next(error))
+
     const res = await request(app).get(route)
+
     expect(res.statusCode).to.equal(500)
-    expect(res.text).to.match(/some err/)
+    expect(res.text).to.contain(error.message)
   })
 })
