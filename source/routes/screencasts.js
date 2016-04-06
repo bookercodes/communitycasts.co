@@ -4,6 +4,7 @@ import db from 'sequelize-connect'
 import config from 'config'
 import Youtube from '../util/youtube.js'
 import commaSplit from 'comma-split'
+import statusCodes from '../util/statusCodes'
 
 const screencasts = {
   post: async (req: any, res: any, next: any) : any => {
@@ -39,7 +40,7 @@ const screencasts = {
         return
       }
       if (error.name === 'YoutubeVideoDoesNotExist') {
-        res.status(400).send('This screencast cannot be found')
+        res.status(400).send(statusCodes.castNotFound)
         res.sendStatus(400)
         return
       }
