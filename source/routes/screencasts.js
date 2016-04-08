@@ -2,12 +2,12 @@
 
 import db from 'sequelize-connect'
 import config from 'config'
-import Youtube from '../util/youtube.js'
+import {createYoutubeClient} from '../util/youtube.js'
 import commaSplit from 'comma-split'
 
 const screencasts = {
   post: async (req: any, res: any, next: any) : any => {
-    const youtube = new Youtube(config.youtubeApiKey)
+    const youtube = createYoutubeClient(config.youtubeApiKey)
     try {
       const videoDetails = await youtube.fetchVideoDetails(req.body.url)
       const tags = commaSplit(req.body.tags).map(tag => ({ id: tag }))
@@ -38,7 +38,11 @@ const screencasts = {
         res.sendStatus(409)
         return
       }
-      if (error.name === 'YoutubeVideoDoesNotExist') {
+      
+      // This is too generic but it's ok. Soon I will validate whether or not
+      // the video exists before executing this route handler. If it somehow
+      // exists after validation, a generic 500 error should be thrown.
+      if (error.name === 'Error') {
         res.status(400).send('This screencast cannot be found')
         res.sendStatus(400)
         return

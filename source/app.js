@@ -5,7 +5,6 @@ import path from 'path'
 import db from 'sequelize-connect'
 import bodyParser from 'body-parser'
 import authenticateRequest from './middleware/authenticateRequest'
-import Youtube from './util/youtube.js';
 import config from 'config';
 import home from './routes/home'
 import screencast from './routes/screencasts.js'

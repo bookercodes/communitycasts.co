@@ -1,57 +1,77 @@
-// @flow
+// @flow weak
 
-import {extractId} from 'youtube-url'
-import youtubeApiClient from 'youtube-api'
 import moment from 'moment'
+import Promise from 'bluebird'
+import youtubeUrl from 'youtube-url'
+import youtubeApi from 'youtube-api'
 
-type VideoDetails = {
-  id: string,
-  title: string,
-  description: string,
-  durationInSeconds: string,
-  channel: {
-    id: string,
-    title: string
-  }
-}
+/**
+ * createYoutubeClient
+ * Creates a YouTube client.
+ *
+ * @name createYoutubeClient
+ * @function
+ * @param {String} key A simple YouTube API key.
+ * @returns {Object} The YouTube client.
+ */
+export function createYoutubeClient(key) {
 
-export default class YouTube {
-  apiKey: string;
+  youtubeApi.authenticate({
+    type: 'key',
+    key
+  })
 
-  constructor(youtubeApiKey: string) {
-    this.apiKey = youtubeApiKey;
+  const youtubeClient = {}
 
-    youtubeApiClient.authenticate({
-      type: 'key',
-      key: this.apiKey
+  /**
+   * fetchVideoDetails
+   * Fetches details about a video from the YouTube API.
+   *
+   * @name fetchVideoDetails
+   * @function
+   * @param {String} url The url of the video to fetch details about.
+   * @returns {Object} Details about the video.
+   */
+  youtubeClient.fetchVideoDetails = async function(url) {
+    const videoId = youtubeUrl.extractId(url)
+    const list = Promise.promisify(youtubeApi.videos.list)
+    const details = await list({
+      id: videoId,
+      part: 'snippet,contentDetails'
     })
+    if (details.items.length === 0) {
+      throw new Error(`Could not find video with id ${videoId}.`)
+    }
+    const video = details.items[0];
+    return {
+      id: videoId,
+      title: video.snippet.title,
+      description: video.snippet.description,
+      durationInSeconds: moment.duration(video.contentDetails.duration).asSeconds(),
+      channel: {
+        id: video.snippet.channelId,
+        title: video.snippet.channelTitle,
+      }
+    }
   }
 
-  fetchVideoDetails(youtubeUrl: string) : Promise<VideoDetails> {
-    const videoId = extractId(youtubeUrl)
-    return new Promise((resolve, reject) => {
-      youtubeApiClient.videos.list({
-        id: videoId,
-        part: 'snippet,contentDetails'
-      }, function(err, details) {
-        const screencast = details.items.shift();
-        if (!screencast) {
-          reject({
-            name: 'YoutubeVideoDoesNotExist'
-          })
-          return
-        }
-        resolve({
-          id: videoId,
-          title: screencast.snippet.title,
-          description: screencast.snippet.description,
-          durationInSeconds: moment.duration(screencast.contentDetails.duration).asSeconds(),
-          channel: {
-            id: screencast.snippet.channelId,
-            title: screencast.snippet.channelTitle,
-          }
-        })
-      })
-    })
+  /**
+   * videoExists
+   * Determines whether or not a video exists.
+   *
+   * @name videoExists
+   * @function
+   * @param {String} url - The url of the video whose existence to check
+   * @returns {Boolean} True if the video exists; otherwise, false
+   */
+  youtubeClient.videoExists = async function(url) {
+    try {
+      await this.fetchVideoDetails(url)
+      return true
+    } catch(error) {
+      return false
+    }
   }
+
+  return youtubeClient
 }
