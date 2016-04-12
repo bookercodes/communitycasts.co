@@ -8,7 +8,7 @@ import authenticateRequest from './middleware/authenticateRequest'
 import config from 'config';
 import home from './routes/home'
 import screencast from './routes/screencasts.js'
-import validateScreencastInput from './middleware/validateScreencastInput.js'
+import validateScreencastInput from './middleware/submitScreencastValidator.js'
 import errorHandler from './middleware/errorHandler.js'
 
 
