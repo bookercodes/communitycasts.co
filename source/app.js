@@ -8,7 +8,7 @@ import authenticateRequest from './middleware/authenticateRequest'
 import config from 'config';
 import home from './routes/home'
 import screencast from './routes/screencasts.js'
-import validateScreencastInput from './middleware/submitScreencastValidator.js'
+import validateSubmitScreencastReq from './middleware/submitScreencastValidator.js'
 import errorHandler from './middleware/errorHandler.js'
 
 
@@ -22,7 +22,7 @@ app.get('/', home.get)
 app.post(
   '/api/screencasts',
   authenticateRequest,
-  validateScreencastInput,
+  validateSubmitScreencastReq,
   screencast.post)
 
 export default app

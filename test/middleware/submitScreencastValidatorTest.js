@@ -30,7 +30,7 @@ describe('submitScreencastValidator', () => {
     const sequelizeConnectMock = {
       models: {
         Screencast: {
-          findOne: async () => undefined
+          findOne: async () => null
         }
       }
     }
@@ -108,7 +108,7 @@ describe('submitScreencastValidator', () => {
     const sequelizeConnectMock = {
       models: {
         Screencast: {
-          findOne: async () => undefined
+          findOne: async () => null
         }
       }
     }

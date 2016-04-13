@@ -70,7 +70,7 @@ suite('index', () => {
       .post('/api/screencasts')
       .set('Authorization', authHeader)
       .send({
-        url: 'https://www.youtube.com/watch?v=qsDvJrGMSUY',
+        url: 'https://www.youtube.com/watch?v=b4JCF01NR6s',
         tags: 'foo,bar'
       })
 
@@ -90,7 +90,9 @@ suite('index', () => {
         tags: 'foo,bar'
       })
     expect(res.statusCode).to.equal(400)
-    expect(res.text).to.equal('This screencast cannot be found')
+    const response = JSON.parse(res.text)
+    expect(response.errors).to.have.lengthOf(1)
+    expect(response.errors[0].message).to.match(/url must link to/)
   })
   test('Valid POST should save screencast', async () => {
     const password = config.adminPassword
@@ -142,7 +144,7 @@ suite('index', () => {
         url: screencastUrl,
         tags: 'foo,bar'
       })
-    expect(result.statusCode).to.equal(409)
+    expect(result.statusCode).to.equal(400)
   })
 
   test('Invalid POST with invalid url should return 400', async () => {

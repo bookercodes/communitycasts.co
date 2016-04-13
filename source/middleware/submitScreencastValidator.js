@@ -34,7 +34,7 @@ async function validateUrl(url: string) {
       url: url
     }
   })
-  if (screencast !== undefined) {
+  if (screencast !== null) {
     return 'url has already been submitted'
   }
 
