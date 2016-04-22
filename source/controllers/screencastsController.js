@@ -23,12 +23,12 @@ screencastsController.handlePost = async (req: any, res: any, next: any) : any =
       }, {
         transaction
       })
-      var screencastTags = tags.map(function(tag) {
+      var screencastTags = tags.map(function (tag) {
         return {
           screencastId: videoDetails.id,
           tagId: tag.id
-        };
-      });
+        }
+      })
       await db.models.ScreencastTag.bulkCreate(screencastTags, {
         transaction
       })

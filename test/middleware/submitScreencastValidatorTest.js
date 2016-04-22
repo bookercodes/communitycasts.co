@@ -3,17 +3,16 @@
 import sinon from 'sinon'
 import {expect} from 'chai'
 import mockery from 'mockery'
-import httpMocks from "node-mocks-http";
+import httpMocks from 'node-mocks-http'
 import {beforeEach, afterEach, describe, it} from 'mocha'
 
 describe('submitScreencastValidator', () => {
-
   beforeEach(() => {
     mockery.enable({
       warnOnReplace: false,
       warnOnUnregistered: false,
       useCleanCache: true
-    });
+    })
   })
 
   afterEach(() => {
@@ -140,7 +139,7 @@ describe('submitScreencastValidator', () => {
       }
     ]
     expect(errors).to.deep.equal(expected)
-  });
+  })
 
   it('should return 400 when "url" is undefined', async () => {
     const reqMock = httpMocks.createRequest({
@@ -159,10 +158,10 @@ describe('submitScreencastValidator', () => {
       {
         field: 'url',
         message: 'url cannot be undefined'
-      },
+      }
     ]
     expect(errors).to.deep.equal(expected)
-  });
+  })
 
   it('should return 400 when "url" links to a non-existent YouTube video', async () => {
     // Setup
@@ -179,7 +178,7 @@ describe('submitScreencastValidator', () => {
       }
     })
     const resMock = httpMocks.createResponse()
-    const nextSpyDummy = function() {}
+    const nextSpyDummy = function () {}
     const sut = require('../../source/middleware/submitScreencastValidator.js').default
 
     // Exercise
@@ -192,10 +191,10 @@ describe('submitScreencastValidator', () => {
       {
         field: 'url',
         message: 'url must link to an existent, public YouTube video'
-      },
+      }
     ]
     expect(errors).to.deep.equal(expected)
-  });
+  })
 
   it('should return 400 when "url" has already been submitted', async () => {
     // Setup
@@ -220,7 +219,7 @@ describe('submitScreencastValidator', () => {
       }
     })
     const resMock = httpMocks.createResponse()
-    const nextDummy = function() {}
+    const nextDummy = function () {}
     const sut = require('../../source/middleware/submitScreencastValidator.js').default
 
     // Exercise
@@ -233,7 +232,7 @@ describe('submitScreencastValidator', () => {
       {
         field: 'url',
         message: 'url has already been submitted'
-      },
+      }
     ]
     expect(errors).to.deep.equal(expected)
   })

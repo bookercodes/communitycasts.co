@@ -10,7 +10,7 @@ var menuUl = document.getElementById('action-panel-overflow-menu')
 var submitLi = document.createElement('li')
 var submitBtn = document.createElement('button')
 submitBtn.innerHTML = 'Submit'
-submitBtn.onclick = function() {
+submitBtn.onclick = function () {
   alert('clicked')
 }
 submitBtn.classList.add('yt-ui-menu-item')

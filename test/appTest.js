@@ -1,12 +1,12 @@
 // @flow
 
 import {expect} from 'chai'
-import {describe, it} from 'mocha';
+import {describe, it} from 'mocha'
 import request from 'supertest-as-promised'
 import app from '../source/app.js'
 
 describe('app', () => {
-  it ('should export a function', () => {
+  it('should export a function', () => {
     expect(app).to.be.a('function')
   })
 
@@ -21,4 +21,3 @@ describe('app', () => {
     expect(res.text).to.contain(error.message)
   })
 })
-

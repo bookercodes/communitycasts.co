@@ -2,21 +2,19 @@
 
 import config from 'config'
 import chaiAsPromised from 'chai-as-promised'
-import chai, {expect, assert, AssertionError} from 'chai'
-import {describe, it, test} from 'mocha';
+import chai, {expect} from 'chai'
+import {describe, it} from 'mocha'
 import {createYoutubeClient} from '../../source/util/youtube'
 
 chai.use(chaiAsPromised)
 
 describe('youtube', () => {
-
   it('createYoutubeClient should return an object', () => {
     const actual = createYoutubeClient(config.youtubeApiKey)
     expect(actual).to.be.an('object')
   })
 
   describe('fetchVideoDetails', () => {
-
     it('should return video details', async () => {
       const client = createYoutubeClient(config.youtubeApiKey)
       const actual = await client.fetchVideoDetails('https://youtu.be/jNQXAC9IVRw')
@@ -63,18 +61,17 @@ describe('youtube', () => {
     })
   })
 
-  describe ('videoExists', () => {
-    it ('should return true when video exists', async () => {
+  describe('videoExists', () => {
+    it('should return true when video exists', async () => {
       const client = createYoutubeClient(config.youtubeApiKey)
       const exists = await client.videoExists('https://youtu.be/jNQXAC9IVRw')
       expect(exists).to.be.true
     })
 
-    it ('should return false when video doesn\'t exist', async () => {
+    it('should return false when video doesn\'t exist', async () => {
       const client = createYoutubeClient(config.youtubeApiKey)
       const exists = await client.videoExists('https://youtu.be/dNAXAC8KVRw')
       expect(exists).to.be.false
     })
   })
-
 })

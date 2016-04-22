@@ -1,13 +1,12 @@
 // @flow
 
 import {expect} from 'chai'
-import {describe, it, before} from 'mocha';
+import {describe, it, before} from 'mocha'
 import sinon from 'sinon'
-import httpMocks from "node-mocks-http";
+import httpMocks from 'node-mocks-http'
 import mockery from 'mockery'
 
 describe('authenticateRequest', () => {
-
   const adminPassword = 'some password'
 
   before(() => {
@@ -15,7 +14,7 @@ describe('authenticateRequest', () => {
       warnOnReplace: false,
       warnOnUnregistered: false,
       useCleanCache: true
-    });
+    })
     mockery.registerMock('config', {
       adminPassword
     })
@@ -82,7 +81,6 @@ describe('authenticateRequest', () => {
 
     sut(reqMock, resMock, nextSpy)
     expect(resMock.statusCode).to.equal(401)
-    const resBody = resMock._getData()
     const {errors} = JSON.parse(resMock._getData())
     const expected = [{ message: 'Authorization header format is invalid' }]
     expect(errors).to.deep.equal(expected)

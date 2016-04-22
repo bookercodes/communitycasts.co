@@ -14,8 +14,7 @@ import youtubeApi from 'youtube-api'
  * @param {String} key A simple YouTube API key.
  * @returns {Object} The YouTube client.
  */
-export function createYoutubeClient(key) {
-
+export function createYoutubeClient (key) {
   youtubeApi.authenticate({
     type: 'key',
     key
@@ -32,7 +31,7 @@ export function createYoutubeClient(key) {
    * @param {String} url The url of the video to fetch details about.
    * @returns {Object} Details about the video.
    */
-  youtubeClient.fetchVideoDetails = async function(url) {
+  youtubeClient.fetchVideoDetails = async function (url) {
     const videoId = youtubeUrl.extractId(url)
     const list = Promise.promisify(youtubeApi.videos.list)
     const details = await list({
@@ -42,7 +41,7 @@ export function createYoutubeClient(key) {
     if (details.items.length === 0) {
       throw new Error(`Could not find video with id ${videoId}.`)
     }
-    const video = details.items[0];
+    const video = details.items[0]
     return {
       id: videoId,
       title: video.snippet.title,
@@ -50,7 +49,7 @@ export function createYoutubeClient(key) {
       durationInSeconds: moment.duration(video.contentDetails.duration).asSeconds(),
       channel: {
         id: video.snippet.channelId,
-        title: video.snippet.channelTitle,
+        title: video.snippet.channelTitle
       }
     }
   }
@@ -64,11 +63,11 @@ export function createYoutubeClient(key) {
    * @param {String} url - The url of the video whose existence to check
    * @returns {Boolean} True if the video exists; otherwise, false
    */
-  youtubeClient.videoExists = async function(url) {
+  youtubeClient.videoExists = async function (url) {
     try {
       await this.fetchVideoDetails(url)
       return true
-    } catch(error) {
+    } catch (error) {
       return false
     }
   }

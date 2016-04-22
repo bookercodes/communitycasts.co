@@ -7,7 +7,7 @@
  * @param sequelize - A Sequelize connection
  * @param DataTypes - A quasi enumeration of SQL data types
  */
-const createScreencastModel = function(sequelize: any, DataTypes: any) : any {
+const createScreencastModel = function (sequelize: any, DataTypes: any) : any {
   const Screencast: any = sequelize.define('Screencast', {
     id: {
       primaryKey: true,
@@ -16,19 +16,18 @@ const createScreencastModel = function(sequelize: any, DataTypes: any) : any {
     url: DataTypes.TEXT,
     title: DataTypes.STRING,
     description: DataTypes.TEXT,
-    durationInSeconds: DataTypes.INTEGER,
+    durationInSeconds: DataTypes.INTEGER
   }, {
     classMethods: {
-      associate: function(models: any): any {
+      associate: function (models: any): any {
         Screencast.belongsToMany(models.Tag, {
           through: models.ScreencastTag,
           foreignKey: 'screencastId'
         })
       }
     }
-  });
-  return Screencast;
-};
-
+  })
+  return Screencast
+}
 
 export default createScreencastModel

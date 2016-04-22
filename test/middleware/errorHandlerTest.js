@@ -1,6 +1,6 @@
 import {expect} from 'chai'
-import {suite, test} from 'mocha';
-import httpMocks from "node-mocks-http";
+import {suite, test} from 'mocha'
+import httpMocks from 'node-mocks-http'
 import errorHandler from '../../source/middleware/errorHandler.js'
 
 suite('errorHandler', () => {

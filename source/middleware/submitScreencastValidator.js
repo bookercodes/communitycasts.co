@@ -14,8 +14,7 @@ import {createYoutubeClient} from '../../source/util/youtube'
  * @param {String} url The url value to validate.
  * @returns {String} An error message if the urlv value is invalid; otherwise, undefined.
  */
-async function validateUrl(url: string) {
-
+async function validateUrl (url: string) {
   if (!url) {
     return 'url cannot be undefined'
   }
@@ -25,7 +24,7 @@ async function validateUrl(url: string) {
   }
 
   const youtubeClient = createYoutubeClient(config.youtubeApiKey)
-  if (!await youtubeClient.videoExists(url))  {
+  if (!await youtubeClient.videoExists(url)) {
     return 'url must link to an existent, public YouTube video'
   }
 
@@ -50,12 +49,11 @@ async function validateUrl(url: string) {
  * @param {String} tags The tags value to validate.
  * @returns {String} An error message if the tags value is invalid; otherwise, undefined.
  */
-function validateTags(tags) {
+function validateTags (tags) {
   if (!tags) {
     return 'tags cannot be undefined'
   }
 }
-
 
 /**
  * validateSubmitScreencastReq
@@ -64,7 +62,7 @@ function validateTags(tags) {
  * @name validateSubmitScreencastReq
  * @function
  */
-export default async function validateSubmitScreencastReq(req: any, res:any, next:any): any {
+export default async function validateSubmitScreencastReq (req: any, res:any, next:any): any {
   const urlError = await validateUrl(req.body.url)
   const tagError = validateTags(req.body.tags)
 
