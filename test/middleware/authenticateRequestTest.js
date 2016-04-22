@@ -1,16 +1,16 @@
 // @flow
 
 import {expect} from 'chai'
-import {suite, test, suiteSetup, setup, teardown, suiteTeardown} from 'mocha';
+import {describe, it, before} from 'mocha';
 import sinon from 'sinon'
 import httpMocks from "node-mocks-http";
 import mockery from 'mockery'
 
-suite('authenticateRequest', () => {
+describe('authenticateRequest', () => {
 
   const adminPassword = 'some password'
 
-  suiteSetup(() => {
+  before(() => {
     mockery.enable({
       warnOnReplace: false,
       warnOnUnregistered: false,
@@ -21,78 +21,71 @@ suite('authenticateRequest', () => {
     })
   })
 
-  test('authenticateRequest returns a function', () => {
-    const authenticateRequest =
-      require('../../source/middleware/authenticateRequest').default
+  it('should export a function', () => {
+    const sut = require('../../source/middleware/authenticateRequest').default
 
-    expect(authenticateRequest).to.be.a('function')
+    expect(sut).to.be.a('function')
   })
 
-  test('authenticateRequest with invalid password returns 401', () => {
-    const authenticateRequest =
-      require('../../source/middleware/authenticateRequest').default
+  it('should return 401 when password is invalid', () => {
+    const sut = require('../../source/middleware/authenticateRequest').default
     const encodedPassword = new Buffer('invalid password').toString('base64')
-    const req = httpMocks.createRequest({
-      headers: {
-        authorization: `Basic: ${encodedPassword}`
-      }
+    const reqMock = httpMocks.createRequest({
+      headers: { authorization: `Basic: ${encodedPassword}` }
     })
-    const res = httpMocks.createResponse()
-    const next = sinon.spy()
+    const resMock = httpMocks.createResponse()
+    const nextSpy = sinon.spy()
 
-    authenticateRequest(req, res, next)
+    sut(reqMock, resMock, nextSpy)
 
-    expect(res.statusCode).to.equal(401)
-    const resBody = res._getData()
-    expect(resBody).to.equal('Invalid password')
-    expect(next.called).to.equal(false)
+    expect(resMock.statusCode).to.equal(401)
+    const {errors} = JSON.parse(resMock._getData())
+    const expected = [{ message: 'Invalid password' }]
+    expect(errors).to.deep.equal(expected)
+    expect(nextSpy.called).to.equal(false)
   })
 
-  test('authenticateRequest with valid password calls next middleware', () => {
-    const authenticateRequest =
-      require('../../source/middleware/authenticateRequest').default
+  it('should call next middleware when password is valid', () => {
+    const sut = require('../../source/middleware/authenticateRequest').default
     const encodedPassword = new Buffer(adminPassword).toString('base64')
-    const req = httpMocks.createRequest({
-      headers: {
-        authorization: `Basic: ${encodedPassword}`
-      }
+    const reqMock = httpMocks.createRequest({
+      headers: { authorization: `Basic: ${encodedPassword}` }
     })
-    const res = httpMocks.createResponse()
-    const next = sinon.spy()
+    const resMock = httpMocks.createResponse()
+    const nextSpy = sinon.spy()
 
-    authenticateRequest(req, res, next)
+    sut(reqMock, resMock, nextSpy)
 
-    expect(next.called).to.be.true
+    expect(nextSpy.called).to.be.true
   })
 
-  test('authenticateRequest without authorization header returns 401', () => {
-    const authenticateRequest =
-      require('../../source/middleware/authenticateRequest').default
-    const req = httpMocks.createRequest()
-    const res = httpMocks.createResponse()
+  it('should return 404 when authorization header is missing', () => {
+    const sut = require('../../source/middleware/authenticateRequest').default
+    const reqMock = httpMocks.createRequest()
+    const resMock = httpMocks.createResponse()
 
-    authenticateRequest(req, res)
+    sut(reqMock, resMock)
 
-    expect(res.statusCode).to.equal(401)
-    const resBody = res._getData()
-    expect(resBody).to.equal('Authorization header missing')
+    expect(resMock.statusCode).to.equal(401)
+    const {errors} = JSON.parse(resMock._getData())
+    const expected = [{ message: 'Authorization header missing' }]
+    expect(errors).to.deep.equal(expected)
   })
 
-  test('authenticateRequest with malformed authorization header returns 401 ', () => {
-    const authenticateRequest =
-      require('../../source/middleware/authenticateRequest').default
-    const req = httpMocks.createRequest({
-      headers: {
-        authorization: 'Basic: '
-      }
+  it('should return 401 when authorization header is malformed', () => {
+    const sut = require('../../source/middleware/authenticateRequest').default
+    const reqMock = httpMocks.createRequest({
+      headers: { authorization: 'Basic: ' }
     })
-    const res = httpMocks.createResponse()
-    const next = sinon.spy()
+    const resMock = httpMocks.createResponse()
+    const nextSpy = sinon.spy()
 
-    authenticateRequest(req, res, next)
-    expect(res.statusCode).to.equal(401)
-    const resBody = res._getData()
-    expect(resBody).to.equal('Invalid Authorization header')
-    expect(next.called).to.equal(false)
+    sut(reqMock, resMock, nextSpy)
+    expect(resMock.statusCode).to.equal(401)
+    const resBody = resMock._getData()
+    const {errors} = JSON.parse(resMock._getData())
+    const expected = [{ message: 'Authorization header format is invalid' }]
+    expect(errors).to.deep.equal(expected)
+    expect(nextSpy.called).to.equal(false)
   })
 })
