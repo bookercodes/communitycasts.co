@@ -1,6 +1,5 @@
 {
   "scripts": {
-    "flow": "flow; test $? -eq 0 -o $? -eq 2",
     "start": "node source/bin/www",
     "test": "NODE_ENV=test mocha --compilers js:babel-core/register",
     "test:all": "npm run test -- ./test --recursive",
