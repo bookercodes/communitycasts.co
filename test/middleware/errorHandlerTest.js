@@ -1,22 +1,22 @@
 import {expect} from 'chai'
-import {suite, test} from 'mocha'
+import {describe, it} from 'mocha'
 import httpMocks from 'node-mocks-http'
 import errorHandler from '../../source/middleware/errorHandler.js'
 
-suite('errorHandler', () => {
-  test('exports a function', () => {
+describe('errorHandler', () => {
+  it('should exports a function', () => {
     expect(errorHandler).to.be.a('function')
   })
 
-  test('sends correct response', () => {
-    const req = httpMocks.createRequest()
-    const res = httpMocks.createResponse()
+  it('should send correct response', () => {
+    const reqMock = httpMocks.createRequest()
+    const resMock = httpMocks.createResponse()
     const err = new Error('some err')
 
-    errorHandler(err, req, res)
+    errorHandler(err, reqMock, resMock)
 
-    const resBody = res._getData()
+    const resBody = resMock._getData()
     expect(resBody).to.equal(err)
-    expect(res.statusCode).to.equal(500)
+    expect(resMock.statusCode).to.equal(500)
   })
 })
