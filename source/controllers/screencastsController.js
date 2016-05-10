@@ -35,19 +35,6 @@ screencastsController.handlePost = async (req: any, res: any, next: any) : any =
     })
     res.sendStatus(201)
   } catch (error) {
-    if (error.name === 'SequelizeUniqueConstraintError') {
-      res.sendStatus(409)
-      return
-    }
-
-    // This is too generic but it's ok. Soon I will validate whether or not
-    // the video exists before executing this route handler. If it somehow
-    // exists after validation, a generic 500 error should be thrown.
-    if (error.name === 'Error') {
-      res.status(400).send('This screencast cannot be found')
-      res.sendStatus(400)
-      return
-    }
     next(error)
   }
 }

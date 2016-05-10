@@ -4,16 +4,11 @@ import config from 'config'
 import chaiAsPromised from 'chai-as-promised'
 import chai, {expect} from 'chai'
 import {describe, it} from 'mocha'
-import {createYoutubeClient} from '../../source/util/youtube'
+import {createYoutubeClient} from '../../../source/util/youtube'
 
 chai.use(chaiAsPromised)
 
 describe('youtube', () => {
-  it('createYoutubeClient should return an object', () => {
-    const actual = createYoutubeClient(config.youtubeApiKey)
-    expect(actual).to.be.an('object')
-  })
-
   describe('fetchVideoDetails', () => {
     it('should return video details', async () => {
       const client = createYoutubeClient(config.youtubeApiKey)

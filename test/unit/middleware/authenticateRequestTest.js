@@ -21,13 +21,13 @@ describe('authenticateRequest', () => {
   })
 
   it('should export a function', () => {
-    const sut = require('../../source/middleware/authenticateRequest').default
+    const sut = require('../../../source/middleware/authenticateRequest').default
 
     expect(sut).to.be.a('function')
   })
 
   it('should return 401 when password is invalid', () => {
-    const sut = require('../../source/middleware/authenticateRequest').default
+    const sut = require('../../../source/middleware/authenticateRequest').default
     const encodedPassword = new Buffer('invalid password').toString('base64')
     const reqMock = httpMocks.createRequest({
       headers: { authorization: `Basic: ${encodedPassword}` }
@@ -45,7 +45,7 @@ describe('authenticateRequest', () => {
   })
 
   it('should call next middleware when password is valid', () => {
-    const sut = require('../../source/middleware/authenticateRequest').default
+    const sut = require('../../../source/middleware/authenticateRequest').default
     const encodedPassword = new Buffer(adminPassword).toString('base64')
     const reqMock = httpMocks.createRequest({
       headers: { authorization: `Basic: ${encodedPassword}` }
@@ -59,7 +59,7 @@ describe('authenticateRequest', () => {
   })
 
   it('should return 404 when authorization header is missing', () => {
-    const sut = require('../../source/middleware/authenticateRequest').default
+    const sut = require('../../../source/middleware/authenticateRequest').default
     const reqMock = httpMocks.createRequest()
     const resMock = httpMocks.createResponse()
 
@@ -72,7 +72,7 @@ describe('authenticateRequest', () => {
   })
 
   it('should return 401 when authorization header is malformed', () => {
-    const sut = require('../../source/middleware/authenticateRequest').default
+    const sut = require('../../../source/middleware/authenticateRequest').default
     const reqMock = httpMocks.createRequest({
       headers: { authorization: 'Basic: ' }
     })

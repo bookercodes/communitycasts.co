@@ -19,11 +19,6 @@ describe('submitScreencastValidator', () => {
     mockery.disable()
   })
 
-  it('should export a function', () => {
-    const sut = require('../../source/middleware/submitScreencastValidator.js').default
-    expect(sut).to.be.a('function')
-  })
-
   it('should invoke next middleware when req.body is valid', async () => {
     // Setup
     const sequelizeConnectMock = {
@@ -48,7 +43,7 @@ describe('submitScreencastValidator', () => {
     })
     const resMock = httpMocks.createResponse()
     const nextSpy = sinon.spy()
-    const sut = require('../../source/middleware/submitScreencastValidator.js').default
+    const sut = require('../../../source/middleware/submitScreencastValidator.js').default
 
     // Exercise
     await sut(reqMock, resMock, nextSpy)
@@ -60,7 +55,7 @@ describe('submitScreencastValidator', () => {
   it('should return 400 when req.body is totally invalid', async () => {
     const reqMock = httpMocks.createRequest()
     const resMock = httpMocks.createResponse()
-    const sut = require('../../source/middleware/submitScreencastValidator.js').default
+    const sut = require('../../../source/middleware/submitScreencastValidator.js').default
 
     await sut(reqMock, resMock)
 
@@ -87,7 +82,7 @@ describe('submitScreencastValidator', () => {
       }
     })
     const resMock = httpMocks.createResponse()
-    const sut = require('../../source/middleware/submitScreencastValidator.js').default
+    const sut = require('../../../source/middleware/submitScreencastValidator.js').default
 
     await sut(reqMock, resMock)
 
@@ -124,7 +119,7 @@ describe('submitScreencastValidator', () => {
       }
     })
     const resMock = httpMocks.createResponse()
-    const sut = require('../../source/middleware/submitScreencastValidator.js').default
+    const sut = require('../../../source/middleware/submitScreencastValidator.js').default
 
     // Exercise
     await sut(reqMock, resMock)
@@ -148,7 +143,7 @@ describe('submitScreencastValidator', () => {
       }
     })
     const resMock = httpMocks.createResponse()
-    const sut = require('../../source/middleware/submitScreencastValidator.js').default
+    const sut = require('../../../source/middleware/submitScreencastValidator.js').default
 
     await sut(reqMock, resMock)
 
@@ -179,7 +174,7 @@ describe('submitScreencastValidator', () => {
     })
     const resMock = httpMocks.createResponse()
     const nextSpyDummy = function () {}
-    const sut = require('../../source/middleware/submitScreencastValidator.js').default
+    const sut = require('../../../source/middleware/submitScreencastValidator.js').default
 
     // Exercise
     await sut(reqMock, resMock, nextSpyDummy)
@@ -220,7 +215,7 @@ describe('submitScreencastValidator', () => {
     })
     const resMock = httpMocks.createResponse()
     const nextDummy = function () {}
-    const sut = require('../../source/middleware/submitScreencastValidator.js').default
+    const sut = require('../../../source/middleware/submitScreencastValidator.js').default
 
     // Exercise
     await sut(reqMock, resMock, nextDummy)

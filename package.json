@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "node source/bin/www",
+    "start": "node ./bin/www",
     "test": "NODE_ENV=test mocha --compilers js:babel-core/register",
     "test:all": "npm run test -- ./test --recursive",
     "watch:test:all": "nodemon --watch ./ --recursive --exec npm run test:all",

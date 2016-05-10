@@ -8,7 +8,7 @@ import app from '../../source/app'
 import supertest from 'supertest-as-promised'
 import {describe, it, beforeEach} from 'mocha'
 
-describe('screencastsController', () => {
+describe('screencasts route', () => {
   beforeEach(function connectToAndResetTestDatabase () {
     db.logger.level = null // Disable sequelize-connect logging
     db.discover = path.join(__dirname, '../../source/models')
