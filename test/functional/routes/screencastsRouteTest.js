@@ -155,4 +155,38 @@ describe('screencasts route', () => {
       .send({ })
     expect(statusCode).to.equal(400)
   })
+
+  it('should return correct response when valid GET is sent', async () => {
+    const encodedValidPassword = new Buffer(config.adminPassword).toString('base64')
+    const authHeader = `Basic: ${encodedValidPassword}`
+    await supertest(app)
+      .post('/api/screencasts')
+      .set('Authorization', authHeader)
+      .send({
+        url: 'https://youtu.be/jNQXAC9IVRw',
+        tags: 'foo,bar'
+      })
+    const {statusCode, text} = await supertest(app)
+      .get('/api/screencasts')
+    expect(statusCode).to.equal(200)
+    const responseBody = JSON.parse(text)
+    expect(responseBody).to.be.an('array')
+    expect(responseBody).to.deep.equal([
+      {
+        id: 'jNQXAC9IVRw',
+        url: 'https://youtu.be/jNQXAC9IVRw',
+        title: 'Me at the zoo',
+        description: `The first video on YouTube.\n\nMaybe it's time to go back to the zoo?`,
+        durationInSeconds: 19,
+        channel: {
+          id: 'UC4QobU6STFB0P71PMvOGN5A',
+          name: 'jawed'
+        },
+        tags: [
+          'bar',
+          'foo'
+        ]
+      }
+    ])
+  })
 })

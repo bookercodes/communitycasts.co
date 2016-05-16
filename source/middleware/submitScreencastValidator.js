@@ -62,26 +62,30 @@ function validateTags (tags) {
  * @function
  */
 export default async function validateSubmitScreencastReq (req: any, res:any, next:any): any {
-  const urlError = await validateUrl(req.body.url)
-  const tagError = validateTags(req.body.tags)
+  try {
+    const urlError = await validateUrl(req.body.url)
+    const tagError = validateTags(req.body.tags)
 
-  const errors = []
-  if (urlError) {
-    errors.push({
-      field: 'url',
-      message: urlError
-    })
-  }
-  if (tagError) {
-    errors.push({
-      field: 'tags',
-      message: tagError
-    })
-  }
+    const errors = []
+    if (urlError) {
+      errors.push({
+        field: 'url',
+        message: urlError
+      })
+    }
+    if (tagError) {
+      errors.push({
+        field: 'tags',
+        message: tagError
+      })
+    }
 
-  if (errors.length !== 0) {
-    res.status(400).json({errors})
-  } else {
-    next()
+    if (errors.length !== 0) {
+      res.status(400).json({errors})
+    } else {
+      next()
+    }
+  } catch (error) {
+    next(error)
   }
 }

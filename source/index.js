@@ -5,7 +5,7 @@ import config from 'config'
 
 async function connectToDatabase () {
   db.logger.level = null // Disable sequelize-connect logging
-  db.discover = [path.join(__dirname, '../models')]
+  db.discover = [path.join(__dirname, './models')]
   db.matcher = function shouldImportModel (modelFileName) {
     return true
   }
@@ -14,5 +14,12 @@ async function connectToDatabase () {
 
 (async function () {
   await connectToDatabase()
-  app.listen(3000)
+  const port = 3000
+  app.listen(port, error => {
+    if (error) {
+      console.log(`An error occured: ${error}`)
+    } else {
+      console.log(`Running on port ${port}`)
+    }
+  })
 })()

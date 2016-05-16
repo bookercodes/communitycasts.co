@@ -44,4 +44,36 @@ screencastsController.handlePost = async (req: any, res: any, next: any) : any =
   }
 }
 
+screencastsController.handleGet = async (req: any, res: any, next: any) => {
+  try {
+    const foundScreencasts = await db
+      .models
+      .screencast
+      .findAll({
+        include: [
+          { model: db.models.channel },
+          { model: db.models.tag }
+        ]
+      })
+      .map(screencast => {
+        screencast = screencast.dataValues
+        return {
+          id: screencast.id,
+          url: screencast.url,
+          title: screencast.title,
+          description: screencast.description,
+          durationInSeconds: screencast.durationInSeconds,
+          channel: {
+            id: screencast.channel.dataValues.id,
+            name: screencast.channel.dataValues.name
+          },
+          tags: screencast.tags.map(tag => tag.dataValues.id)
+        }
+      })
+    res.status(200).json(foundScreencasts)
+  } catch (err) {
+    next(err)
+  }
+}
+
 export default screencastsController

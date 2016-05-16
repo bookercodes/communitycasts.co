@@ -18,4 +18,9 @@ app.post(
   validateSubmitScreencastReq,
   screencastsController.handlePost)
 
+app.get(
+  '/api/screencasts',
+  screencastsController.handleGet
+)
+
 export default app
