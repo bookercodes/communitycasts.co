@@ -9,7 +9,7 @@
  * @param DataTypes - A quasi enumeration of SQL data types
  */
 const createScreencastTagModel = function (sequelize: any, DataTypes: any) : any {
-  const ScreencastTag: any = sequelize.define('ScreencastTag', {
+  const screencastTag: any = sequelize.define('screencastTag', {
     screencastId: {
       type: DataTypes.STRING,
       primaryKey: true
@@ -19,7 +19,7 @@ const createScreencastTagModel = function (sequelize: any, DataTypes: any) : any
       primaryKey: true
     }
   })
-  return ScreencastTag
+  return screencastTag
 }
 
 export default createScreencastTagModel

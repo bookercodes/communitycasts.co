@@ -8,7 +8,7 @@
  * @param DataTypes - A quasi enumeration of SQL data types
  */
 const createScreencastModel = function (sequelize: any, DataTypes: any) : any {
-  const Screencast: any = sequelize.define('Screencast', {
+  const screencast: any = sequelize.define('screencast', {
     id: {
       primaryKey: true,
       type: DataTypes.STRING
@@ -20,15 +20,15 @@ const createScreencastModel = function (sequelize: any, DataTypes: any) : any {
   }, {
     classMethods: {
       associate: function (models: any): any {
-        Screencast.belongsTo(models.Channel)
-        Screencast.belongsToMany(models.Tag, {
-          through: models.ScreencastTag,
+        screencast.belongsTo(models.channel)
+        screencast.belongsToMany(models.tag, {
+          through: models.screencastTag,
           foreignKey: 'screencastId'
         })
       }
     }
   })
-  return Screencast
+  return screencast
 }
 
 export default createScreencastModel

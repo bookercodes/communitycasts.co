@@ -9,7 +9,7 @@
  * @param DataTypes - A quasi enumeration of SQL data types
  */
 const createChannelModel = function (sequelize: any, DataTypes: any) : any {
-  const Channel: any = sequelize.define('Channel', {
+  const channel: any = sequelize.define('channel', {
     id: {
       primaryKey: true,
       type: DataTypes.STRING
@@ -18,11 +18,11 @@ const createChannelModel = function (sequelize: any, DataTypes: any) : any {
   }, {
     classMethods: {
       associate: function (models: any): any {
-        Channel.hasMany(models.Screencast)
+        channel.hasMany(models.screencast)
       }
     }
   })
-  return Channel
+  return channel
 }
 
 export default createChannelModel

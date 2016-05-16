@@ -8,7 +8,7 @@
  * @param DataTypes - A quasi enumeration of SQL data types
  */
 const createTagModel = function (sequelize: any, DataTypes: any) : any {
-  const Tag = sequelize.define('Tag', {
+  const tag = sequelize.define('tag', {
     id: {
       primaryKey: true,
       type: DataTypes.STRING
@@ -16,14 +16,14 @@ const createTagModel = function (sequelize: any, DataTypes: any) : any {
   }, {
     classMethods: {
       associate: function (models: any): any {
-        Tag.belongsToMany(models.Screencast, {
-          through: models.ScreencastTag,
+        tag.belongsToMany(models.screencast, {
+          through: models.screencastTag,
           foreignKey: 'tagId'
         })
       }
     }
   })
-  return Tag
+  return tag
 }
 
 export default createTagModel

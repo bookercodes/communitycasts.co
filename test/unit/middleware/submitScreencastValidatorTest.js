@@ -22,7 +22,7 @@ describe('submitScreencastValidator', () => {
   it('should invoke next middleware when req.body is valid', async () => {
     const sequelizeConnectMock = {
       models: {
-        Screencast: {
+        screencast: {
           findOne: async () => null
         }
       }
@@ -91,7 +91,7 @@ describe('submitScreencastValidator', () => {
   it('should return 400 when "tags" is undefined', async () => {
     const sequelizeConnectMock = {
       models: {
-        Screencast: {
+        screencast: {
           findOne: async () => null
         }
       }
@@ -173,7 +173,7 @@ describe('submitScreencastValidator', () => {
   it('should return 400 when "url" has already been submitted', async () => {
     const sequelizeConnectMock = {
       models: {
-        Screencast: {
+        screencast: {
           findOne: async () => ({})
         }
       }

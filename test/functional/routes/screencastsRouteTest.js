@@ -33,7 +33,7 @@ describe('screencasts route', () => {
     await supertest(app)
       .post('/api/screencasts')
       .send({ url: screencastUrl })
-    const screencast = await db.models.Screencast.findOne({
+    const screencast = await db.models.screencast.findOne({
       where: {
         url: screencastUrl
       }
@@ -75,14 +75,14 @@ describe('screencasts route', () => {
         url: screencastUrl,
         tags: 'foo,bar'
       })
-    const screencast = await db.models.Screencast.findOne({
+    const screencast = await db.models.screencast.findOne({
       where: {
         url: screencastUrl
       },
       include: [{
-        model: db.models.Tag
+        model: db.models.tag
       }, {
-        model: db.models.Channel
+        model: db.models.channel
       }]
     })
     expect(screencast).to.exist
@@ -91,9 +91,9 @@ describe('screencasts route', () => {
     expect(screencast.dataValues.title).to.equal('Me at the zoo')
     expect(screencast.dataValues.description).to.match(/^The first video on YouTube/)
     expect(screencast.dataValues.durationInSeconds).to.equal(19)
-    expect(screencast.dataValues.Tags).to.have.lengthOf(2)
-    expect(screencast.dataValues.Channel.id).to.equal('UC4QobU6STFB0P71PMvOGN5A')
-    expect(screencast.dataValues.Channel.name).to.equal('jawed')
+    expect(screencast.dataValues.tags).to.have.lengthOf(2)
+    expect(screencast.dataValues.channel.id).to.equal('UC4QobU6STFB0P71PMvOGN5A')
+    expect(screencast.dataValues.channel.name).to.equal('jawed')
   })
 
   it('should return 400 when url links to a non-existent/non-accessible YouTube video', async () => {

@@ -13,17 +13,17 @@ screencastsController.handlePost = async (req: any, res: any, next: any) : any =
     const videoDetails = await youtube.fetchVideoDetails(req.body.url)
     const tags = commaSplit(req.body.tags).map(tag => ({ id: tag }))
     await db.sequelize.transaction(async transaction => {
-      await db.models.Channel.create({
+      await db.models.channel.create({
         id: videoDetails.channel.id,
         name: videoDetails.channel.title
       })
-      await db.models.Tag.bulkCreate(tags, {
+      await db.models.tag.bulkCreate(tags, {
         transaction
       })
-      await db.models.Screencast.create({
+      await db.models.screencast.create({
         ...videoDetails,
         url: req.body.url,
-        ChannelId: videoDetails.channel.id
+        channelId: videoDetails.channel.id
       }, {
         transaction
       })
@@ -33,7 +33,7 @@ screencastsController.handlePost = async (req: any, res: any, next: any) : any =
           tagId: tag.id
         }
       })
-      await db.models.ScreencastTag.bulkCreate(screencastTags, {
+      await db.models.screencastTag.bulkCreate(screencastTags, {
         transaction
       })
     })

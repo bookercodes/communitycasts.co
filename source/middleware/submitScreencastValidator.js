@@ -27,8 +27,7 @@ async function validateUrl (url: string) {
   if (!await youtubeClient.videoExists(url)) {
     return 'url must link to an existent, public YouTube video'
   }
-
-  const screencast = await db.models.Screencast.findOne({
+  const screencast = await db.models.screencast.findOne({
     where: {
       url: url
     }
