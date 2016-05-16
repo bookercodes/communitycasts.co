@@ -25,7 +25,6 @@ describe('screencasts route', () => {
     const {statusCode} = await supertest(app)
       .post('/api/screencasts')
       .send({ url: 'https://www.youtube.com/watch?v=qsDvJrGMSUY' })
-
     expect(statusCode).to.equal(401)
   })
 
@@ -34,31 +33,27 @@ describe('screencasts route', () => {
     await supertest(app)
       .post('/api/screencasts')
       .send({ url: screencastUrl })
-
     const screencast = await db.models.Screencast.findOne({
       where: {
         url: screencastUrl
       }
     })
-
     expect(screencast).to.not.exist
   })
 
   it('should return 401 when POST request has an invalid Authorization header', async () => {
-    const encodedPassword = new Buffer('invalid password').toString('base64')
-    const authHeader = `Basic: ${encodedPassword}`
+    const encodedInvalidPasword = new Buffer('invalid password').toString('base64')
+    const authHeader = `Basic: ${encodedInvalidPasword}`
     const {statusCode} = await supertest(app)
       .post('/api/screencasts')
       .set('Authorization', authHeader)
       .send({ url: 'https://www.youtube.com/watch?v=qsDvJrGMSUY' })
-
     expect(statusCode).to.equal(401)
   })
 
   it('should return 201 when POST request is valid', async () => {
-    const password = config.adminPassword
-    const encodedPassword = new Buffer(password).toString('base64')
-    const authHeader = `Basic: ${encodedPassword}`
+    const encodedValidPassword = new Buffer(config.adminPassword).toString('base64')
+    const authHeader = `Basic: ${encodedValidPassword}`
     const {statusCode} = await supertest(app)
       .post('/api/screencasts')
       .set('Authorization', authHeader)
@@ -66,14 +61,12 @@ describe('screencasts route', () => {
         url: 'https://www.youtube.com/watch?v=qsDvJrGMSUY',
         tags: 'foo,bar'
       })
-
     expect(statusCode).to.equal(201)
   })
 
   it('should save screencast when POST request is valid', async () => {
-    const password = config.adminPassword
-    const encodedPassword = new Buffer(password).toString('base64')
-    const authHeader = `Basic: ${encodedPassword}`
+    const encodedValidPassword = new Buffer(config.adminPassword).toString('base64')
+    const authHeader = `Basic: ${encodedValidPassword}`
     const screencastUrl = 'https://youtu.be/jNQXAC9IVRw'
     await supertest(app)
       .post('/api/screencasts')
@@ -90,7 +83,6 @@ describe('screencasts route', () => {
         model: db.models.Tag
       }]
     })
-
     expect(screencast).to.exist
     expect(screencast.dataValues.url).to.equal(screencastUrl)
     expect(screencast.dataValues.id).to.equal('jNQXAC9IVRw')
@@ -101,28 +93,25 @@ describe('screencasts route', () => {
   })
 
   it('should return 400 when url links to a non-existent/non-accessible YouTube video', async () => {
-    const password = config.adminPassword
-    const encodedPassword = new Buffer(password).toString('base64')
-    const authHeader = `Basic: ${encodedPassword}`
+    const encodedValidPassword = new Buffer(config.adminPassword).toString('base64')
+    const authHeader = `Basic: ${encodedValidPassword}`
     const screencastUrl = 'https://www.youtube.com/watch?v=Tx_lyya-Sea'
-    const res = await supertest(app)
+    const {statusCode, text} = await supertest(app)
       .post('/api/screencasts')
       .set('Authorization', authHeader)
       .send({
         url: screencastUrl,
         tags: 'foo,bar'
       })
-
-    expect(res.statusCode).to.equal(400)
-    const response = JSON.parse(res.text)
-    expect(response.errors).to.have.lengthOf(1)
-    expect(response.errors[0].message).to.match(/url must link to/)
+    expect(statusCode).to.equal(400)
+    const responseBody = JSON.parse(text)
+    expect(responseBody.errors).to.have.lengthOf(1)
+    expect(responseBody.errors[0].message).to.match(/url must link to/)
   })
 
   it('should return 409 when url has already been submitted', async() => {
-    const password = config.adminPassword
-    const encodedPassword = new Buffer(password).toString('base64')
-    const authHeader = `Basic: ${encodedPassword}`
+    const encodedValidPassword = new Buffer(config.adminPassword).toString('base64')
+    const authHeader = `Basic: ${encodedValidPassword}`
     const screencastUrl = 'https://youtu.be/jNQXAC9IVRw'
     await supertest(app)
       .post('/api/screencasts')
@@ -131,39 +120,35 @@ describe('screencasts route', () => {
         url: screencastUrl,
         tags: 'foo,bar'
       })
-    const result = await supertest(app)
+    const {statusCode} = await supertest(app)
       .post('/api/screencasts')
       .set('Authorization', authHeader)
       .send({
         url: screencastUrl,
         tags: 'foo,bar'
       })
-    expect(result.statusCode).to.equal(400)
+    expect(statusCode).to.equal(400)
   })
 
   it('should return 400 when url format is invalid', async () => {
-    const password = config.adminPassword
-    const encodedPassword = new Buffer(password).toString('base64')
-    const authHeader = `Basic: ${encodedPassword}`
+    const encodedValidPassword = new Buffer(config.adminPassword).toString('base64')
+    const authHeader = `Basic: ${encodedValidPassword}`
     const {statusCode} = await supertest(app)
       .post('/api/screencasts')
       .set('Authorization', authHeader)
       .send({
         url: 'foo'
       })
-
     expect(statusCode).to.equal(400)
   })
 
   it('should return 400 when POST request body is empty', async () => {
-    const password = config.adminPassword
-    const encodedPassword = new Buffer(password).toString('base64')
-    const authHeader = `Basic: ${encodedPassword}`
+    const encodedValidPassword = new Buffer(config.adminPassword).toString('base64')
+    const authHeader = `Basic: ${encodedValidPassword}`
     const {statusCode} = await supertest(app)
       .post('/api/screencasts')
       .set('Authorization', authHeader)
       .send({ })
-
     expect(statusCode).to.equal(400)
   })
 })

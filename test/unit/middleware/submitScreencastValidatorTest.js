@@ -20,7 +20,6 @@ describe('submitScreencastValidator', () => {
   })
 
   it('should invoke next middleware when req.body is valid', async () => {
-    // Setup
     const sequelizeConnectMock = {
       models: {
         Screencast: {
@@ -44,11 +43,7 @@ describe('submitScreencastValidator', () => {
     const resMock = httpMocks.createResponse()
     const nextSpy = sinon.spy()
     const sut = require('../../../source/middleware/submitScreencastValidator.js').default
-
-    // Exercise
     await sut(reqMock, resMock, nextSpy)
-
-    // Verify
     expect(nextSpy.called).to.be.true
   })
 
@@ -56,9 +51,7 @@ describe('submitScreencastValidator', () => {
     const reqMock = httpMocks.createRequest()
     const resMock = httpMocks.createResponse()
     const sut = require('../../../source/middleware/submitScreencastValidator.js').default
-
     await sut(reqMock, resMock)
-
     expect(resMock.statusCode).to.equal(400)
     const {errors} = JSON.parse(resMock._getData())
     const expected = [
@@ -83,9 +76,7 @@ describe('submitScreencastValidator', () => {
     })
     const resMock = httpMocks.createResponse()
     const sut = require('../../../source/middleware/submitScreencastValidator.js').default
-
     await sut(reqMock, resMock)
-
     expect(resMock.statusCode).to.equal(400)
     const {errors} = JSON.parse(resMock._getData())
     const expected = [
@@ -98,7 +89,6 @@ describe('submitScreencastValidator', () => {
   })
 
   it('should return 400 when "tags" is undefined', async () => {
-    // Setup
     const sequelizeConnectMock = {
       models: {
         Screencast: {
@@ -120,11 +110,7 @@ describe('submitScreencastValidator', () => {
     })
     const resMock = httpMocks.createResponse()
     const sut = require('../../../source/middleware/submitScreencastValidator.js').default
-
-    // Exercise
     await sut(reqMock, resMock)
-
-    // Verify
     expect(resMock.statusCode).to.equal(400)
     const {errors} = JSON.parse(resMock._getData())
     const expected = [
@@ -144,9 +130,7 @@ describe('submitScreencastValidator', () => {
     })
     const resMock = httpMocks.createResponse()
     const sut = require('../../../source/middleware/submitScreencastValidator.js').default
-
     await sut(reqMock, resMock)
-
     expect(resMock.statusCode).to.equal(400)
     const {errors} = JSON.parse(resMock._getData())
     const expected = [
@@ -159,7 +143,6 @@ describe('submitScreencastValidator', () => {
   })
 
   it('should return 400 when "url" links to a non-existent YouTube video', async () => {
-    // Setup
     const youtubeMock = {
       createYoutubeClient: () => ({
         videoExists: () => false
@@ -175,11 +158,7 @@ describe('submitScreencastValidator', () => {
     const resMock = httpMocks.createResponse()
     const nextSpyDummy = function () {}
     const sut = require('../../../source/middleware/submitScreencastValidator.js').default
-
-    // Exercise
     await sut(reqMock, resMock, nextSpyDummy)
-
-    // Verify
     expect(resMock.statusCode).to.equal(400)
     const {errors} = JSON.parse(resMock._getData())
     const expected = [
@@ -192,7 +171,6 @@ describe('submitScreencastValidator', () => {
   })
 
   it('should return 400 when "url" has already been submitted', async () => {
-    // Setup
     const sequelizeConnectMock = {
       models: {
         Screencast: {
@@ -216,11 +194,7 @@ describe('submitScreencastValidator', () => {
     const resMock = httpMocks.createResponse()
     const nextDummy = function () {}
     const sut = require('../../../source/middleware/submitScreencastValidator.js').default
-
-    // Exercise
     await sut(reqMock, resMock, nextDummy)
-
-    // Verify
     expect(resMock.statusCode).to.equal(400)
     const {errors} = JSON.parse(resMock._getData())
     const expected = [

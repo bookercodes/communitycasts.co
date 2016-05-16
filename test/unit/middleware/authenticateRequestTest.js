@@ -22,21 +22,18 @@ describe('authenticateRequest', () => {
 
   it('should export a function', () => {
     const sut = require('../../../source/middleware/authenticateRequest').default
-
     expect(sut).to.be.a('function')
   })
 
   it('should return 401 when password is invalid', () => {
     const sut = require('../../../source/middleware/authenticateRequest').default
-    const encodedPassword = new Buffer('invalid password').toString('base64')
+    const encodedInvalidPassword = new Buffer('invalid password').toString('base64')
     const reqMock = httpMocks.createRequest({
-      headers: { authorization: `Basic: ${encodedPassword}` }
+      headers: { authorization: `Basic: ${encodedInvalidPassword}` }
     })
     const resMock = httpMocks.createResponse()
     const nextSpy = sinon.spy()
-
     sut(reqMock, resMock, nextSpy)
-
     expect(resMock.statusCode).to.equal(401)
     const {errors} = JSON.parse(resMock._getData())
     const expected = [{ message: 'Invalid password' }]
@@ -46,15 +43,13 @@ describe('authenticateRequest', () => {
 
   it('should call next middleware when password is valid', () => {
     const sut = require('../../../source/middleware/authenticateRequest').default
-    const encodedPassword = new Buffer(adminPassword).toString('base64')
+    const encodedValidPassword = new Buffer(adminPassword).toString('base64')
     const reqMock = httpMocks.createRequest({
-      headers: { authorization: `Basic: ${encodedPassword}` }
+      headers: { authorization: `Basic: ${encodedValidPassword}` }
     })
     const resMock = httpMocks.createResponse()
     const nextSpy = sinon.spy()
-
     sut(reqMock, resMock, nextSpy)
-
     expect(nextSpy.called).to.be.true
   })
 
@@ -62,9 +57,7 @@ describe('authenticateRequest', () => {
     const sut = require('../../../source/middleware/authenticateRequest').default
     const reqMock = httpMocks.createRequest()
     const resMock = httpMocks.createResponse()
-
     sut(reqMock, resMock)
-
     expect(resMock.statusCode).to.equal(401)
     const {errors} = JSON.parse(resMock._getData())
     const expected = [{ message: 'Authorization header missing' }]
@@ -78,7 +71,6 @@ describe('authenticateRequest', () => {
     })
     const resMock = httpMocks.createResponse()
     const nextSpy = sinon.spy()
-
     sut(reqMock, resMock, nextSpy)
     expect(resMock.statusCode).to.equal(401)
     const {errors} = JSON.parse(resMock._getData())

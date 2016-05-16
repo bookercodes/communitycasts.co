@@ -10,10 +10,9 @@ chai.use(chaiAsPromised)
 
 describe('youtube', () => {
   describe('fetchVideoDetails', () => {
-    it('should return video details', async () => {
+    it('should return correct video details', async () => {
       const client = createYoutubeClient(config.youtubeApiKey)
       const actual = await client.fetchVideoDetails('https://youtu.be/jNQXAC9IVRw')
-
       expect(actual.id).to.equal('jNQXAC9IVRw')
       expect(actual.title).to.equal('Me at the zoo')
       expect(actual.channel.id).to.equal('UC4QobU6STFB0P71PMvOGN5A')
