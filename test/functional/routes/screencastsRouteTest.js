@@ -4,14 +4,14 @@ import path from 'path'
 import config from 'config'
 import {expect} from 'chai'
 import db from 'sequelize-connect'
-import app from '../../source/app'
+import app from '../../../source/app'
 import supertest from 'supertest-as-promised'
 import {describe, it, beforeEach} from 'mocha'
 
 describe('screencasts route', () => {
   beforeEach(function connectToAndResetTestDatabase () {
     db.logger.level = null // Disable sequelize-connect logging
-    db.discover = path.join(__dirname, '../../source/models')
+    db.discover = path.join(__dirname, '../../../source/models')
     db.matcher = function shouldImportModel (modelFileName) {
       return true
     }
@@ -34,6 +34,7 @@ describe('screencasts route', () => {
     await supertest(app)
       .post('/api/screencasts')
       .send({ url: screencastUrl })
+
     const screencast = await db.models.Screencast.findOne({
       where: {
         url: screencastUrl
