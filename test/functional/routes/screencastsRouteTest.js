@@ -64,7 +64,7 @@ describe('screencasts route', () => {
     expect(statusCode).to.equal(201)
   })
 
-  it('should save screencast when POST request is valid', async () => {
+  it('should save screencast data when POST request is valid', async () => {
     const encodedValidPassword = new Buffer(config.adminPassword).toString('base64')
     const authHeader = `Basic: ${encodedValidPassword}`
     const screencastUrl = 'https://youtu.be/jNQXAC9IVRw'
@@ -81,6 +81,8 @@ describe('screencasts route', () => {
       },
       include: [{
         model: db.models.Tag
+      }, {
+        model: db.models.Channel
       }]
     })
     expect(screencast).to.exist
@@ -90,6 +92,8 @@ describe('screencasts route', () => {
     expect(screencast.dataValues.description).to.match(/^The first video on YouTube/)
     expect(screencast.dataValues.durationInSeconds).to.equal(19)
     expect(screencast.dataValues.Tags).to.have.lengthOf(2)
+    expect(screencast.dataValues.Channel.id).to.equal('UC4QobU6STFB0P71PMvOGN5A')
+    expect(screencast.dataValues.Channel.name).to.equal('jawed')
   })
 
   it('should return 400 when url links to a non-existent/non-accessible YouTube video', async () => {

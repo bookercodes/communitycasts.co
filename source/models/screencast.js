@@ -20,6 +20,7 @@ const createScreencastModel = function (sequelize: any, DataTypes: any) : any {
   }, {
     classMethods: {
       associate: function (models: any): any {
+        Screencast.belongsTo(models.Channel)
         Screencast.belongsToMany(models.Tag, {
           through: models.ScreencastTag,
           foreignKey: 'screencastId'
