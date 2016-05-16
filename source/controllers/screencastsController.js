@@ -11,14 +11,13 @@ screencastsController.handlePost = async (req: any, res: any, next: any) : any =
   const youtube = createYoutubeClient(config.youtubeApiKey)
   try {
     const videoDetails = await youtube.fetchVideoDetails(req.body.url)
-    const tags = commaSplit(req.body.tags).map(tag => ({ id: tag }))
+    const tags = commaSplit(req.body.tags).map(tag => {
+      return { id: tag }
+    })
     await db.sequelize.transaction(async transaction => {
       const createdChannel = await db.models.channel.create({
         id: videoDetails.channel.id,
         name: videoDetails.channel.title
-      })
-      await db.models.tag.bulkCreate(tags, {
-        transaction
       })
       await createdChannel.createScreencast({
         ...videoDetails,
@@ -26,7 +25,10 @@ screencastsController.handlePost = async (req: any, res: any, next: any) : any =
       }, {
         transaction
       })
-      var screencastTags = tags.map(function (tag) {
+      await db.models.tag.bulkCreate(tags, {
+        transaction
+      })
+      const screencastTags = tags.map(tag => {
         return {
           screencastId: videoDetails.id,
           tagId: tag.id
