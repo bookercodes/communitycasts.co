@@ -88,6 +88,40 @@ describe('submitScreencastValidator', () => {
     expect(errors).to.deep.equal(expected)
   })
 
+  it('should return 400 when "tags" isn\'t a string', async () => {
+    const sequelizeConnectMock = {
+      models: {
+        screencast: {
+          findOne: async () => null
+        }
+      }
+    }
+    const youtubeMock = {
+      createYoutubeClient: () => ({
+        videoExists: () => true
+      })
+    }
+    mockery.registerMock('sequelize-connect', sequelizeConnectMock)
+    mockery.registerMock('../../source/util/youtube', youtubeMock)
+    const reqMock = httpMocks.createRequest({
+      body: {
+        url: 'https://www.youtube.com/watch?v=qsDvJrGMSUY',
+        tags: ['tag1', 'tag2']
+      }
+    })
+    const resMock = httpMocks.createResponse()
+    const sut = require('../../../source/middleware/submitScreencastValidator.js').default
+    await sut(reqMock, resMock)
+    expect(resMock.statusCode).to.equal(400)
+    const {errors} = JSON.parse(resMock._getData())
+    const expected = [
+      {
+        field: 'tags',
+        message: 'tags must be a string'
+      }
+    ]
+    expect(errors).to.deep.equal(expected)
+  })
   it('should return 400 when "tags" is undefined', async () => {
     const sequelizeConnectMock = {
       models: {

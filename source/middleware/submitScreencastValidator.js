@@ -52,6 +52,9 @@ function validateTags (tags) {
   if (!tags) {
     return 'tags cannot be undefined'
   }
+  if (typeof tags !== 'string') {
+    return 'tags must be a string'
+  }
 }
 
 /**
