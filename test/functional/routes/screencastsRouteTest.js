@@ -6,7 +6,7 @@ import {expect} from 'chai'
 import db from 'sequelize-connect'
 import app from '../../../source/app'
 import supertest from 'supertest-as-promised'
-import {describe, it, beforeEach} from 'mocha'
+import {describe, it, beforeEach, afterEach} from 'mocha'
 
 describe('screencasts route', () => {
   beforeEach(function connectToAndResetTestDatabase () {
@@ -19,6 +19,10 @@ describe('screencasts route', () => {
       force: true,
       logging: false
     })
+  })
+
+  afterEach(function disconnectFromTestDatabase () {
+    db.sequelize.close()
   })
 
   it('should return 401 when POST request doesn\'t have an Authorization header', async () => {
