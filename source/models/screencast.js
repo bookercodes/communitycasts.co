@@ -21,14 +21,19 @@ const createScreencastModel = (sequelize: any, DataTypes: any) : any => {
         })
       },
 
-      async findAllScreencasts (): any {
-        return screencast
-          .findAll({
-            include: [
-              { model: db.models.channel },
-              { model: db.models.tag }
-            ]
-          })
+      async paginate (limit, page = 1): any {
+        const {rows, count} = await screencast.findAndCountAll({
+          include: [
+            { model: db.models.channel },
+            { model: db.models.tag }
+          ],
+          limit,
+          offset: (page - 1) * limit
+        })
+        return {
+          screencasts: rows,
+          hasMore: page < Math.ceil(count / limit)
+        }
       },
 
       async createScreencast (screencast): any {

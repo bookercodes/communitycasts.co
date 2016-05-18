@@ -174,9 +174,9 @@ describe('screencasts route', () => {
       .get('/api/screencasts')
     expect(statusCode).to.equal(200)
     const responseBody = JSON.parse(text)
-    expect(responseBody).to.be.an('array')
-    expect(responseBody).to.deep.equal([
-      {
+    expect(responseBody).to.deep.equal({
+      hasMore: false,
+      screencasts: [{
         id: 'jNQXAC9IVRw',
         url: 'https://youtu.be/jNQXAC9IVRw',
         title: 'Me at the zoo',
@@ -191,6 +191,48 @@ describe('screencasts route', () => {
           'foo'
         ]
       }
-    ])
+    ]})
+  })
+
+  it('page 1', async () => {
+    config.screencastsPerPage = 2
+    const screencasts = require('./screencatsFixture.json')
+    for (const screencast of screencasts) {
+      await db.models.screencast.createScreencast(screencast)
+    }
+
+    const foo = supertest(app)
+    const {text} = await foo.get('/api/screencasts')
+    const responseBody = JSON.parse(text)
+    expect(responseBody.screencasts).to.have.lengthOf(config.screencastsPerPage)
+    expect(responseBody.hasMore).to.be.true
+  })
+
+  it('page 2', async () => {
+    config.screencastsPerPage = 2
+    const screencasts = require('./screencatsFixture.json')
+    for (const screencast of screencasts) {
+      await db.models.screencast.createScreencast(screencast)
+    }
+
+    const foo = supertest(app)
+    const {text} = await foo.get('/api/screencasts?page=2')
+    const responseBody = JSON.parse(text)
+    expect(responseBody.screencasts).to.have.lengthOf(config.screencastsPerPage)
+    expect(responseBody.hasMore).to.be.true
+  })
+
+  it('page 3', async () => {
+    config.screencastsPerPage = 2
+    const screencasts = require('./screencatsFixture.json')
+    for (const screencast of screencasts) {
+      await db.models.screencast.createScreencast(screencast)
+    }
+
+    const foo = supertest(app)
+    const {text} = await foo.get('/api/screencasts?page=3')
+    const responseBody = JSON.parse(text)
+    expect(responseBody.screencasts).to.have.lengthOf(1)
+    expect(responseBody.hasMore).to.be.false
   })
 })

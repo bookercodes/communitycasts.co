@@ -24,7 +24,10 @@ screencastsController.handlePost = async (req: any, res: any, next: any) : any =
 
 screencastsController.handleGet = async (req: any, res: any, next: any) => {
   try {
-    const foundScreencasts = (await db.models.screencast.findAllScreencasts()).map(screencast => {
+    const result = await db.models.screencast.paginate(
+      config.screencastsPerPage,
+      req.query.page)
+    result.screencasts = result.screencasts.map(screencast => {
       screencast = screencast.dataValues
       return {
         id: screencast.id,
@@ -39,7 +42,7 @@ screencastsController.handleGet = async (req: any, res: any, next: any) => {
         tags: screencast.tags.map(tag => tag.dataValues.id)
       }
     })
-    res.status(200).json(foundScreencasts)
+    res.status(200).json(result)
   } catch (err) {
     console.log(err)
     next(err)
