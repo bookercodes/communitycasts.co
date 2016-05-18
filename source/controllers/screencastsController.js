@@ -3,19 +3,19 @@
 import db from 'sequelize-connect'
 import config from 'config'
 import {createYoutubeClient} from '../util/youtube.js'
-import commaSplit from 'comma-split'
+import mapper from '../util/modelMapper.js'
 
 const screencastsController = { }
 
-screencastsController.handlePost = async (req: any, res: any, next: any) : any => {
+screencastsController.handlePost = async (req: any, res: any, next: any) => {
   try {
-    const youtube = createYoutubeClient(config.youtubeApiKey)
-    const screencast = await youtube.fetchVideoDetails(req.body.url)
-    screencast.tags = commaSplit(req.body.tags).map(tag => {
-      return { id: tag }
+    const client = createYoutubeClient(config.youtubeApiKey)
+    const details = await client.fetchVideoDetails(req.body.url)
+    await db.models.screencast.createScreencast({
+      ...details,
+      url: req.body.url,
+      tags: mapper.mapTags(req.body.tags)
     })
-    screencast.url = req.body.url
-    await db.models.screencast.createScreencast(screencast)
     res.sendStatus(201)
   } catch (error) {
     next(error)
