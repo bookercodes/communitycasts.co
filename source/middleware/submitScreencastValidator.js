@@ -2,8 +2,9 @@
 
 import config from 'config'
 import youtubeUrl from 'youtube-url'
-import db from 'sequelize-connect'
+import Connection from 'sequelize-connect'
 import {createYoutubeClient} from '../../source/util/youtube'
+const db = new Connection()
 
 /**
  * validateUrl
