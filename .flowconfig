@@ -1,0 +1,7 @@
+[ignore]
+.*/node_modules/fbjs/.*
+.*/node_modules/.*[^e]\.json$
+.*/node_modules/.*\(lib\|test\).*\.json
+
+[libs]
+declarations/express.js.flow

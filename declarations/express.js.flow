@@ -1,0 +1,15 @@
+declare module "express" {
+  declare type NextFunction = (error?: Object) => void
+
+  declare class Request {
+    headers: {[key: string]: string};
+  }
+
+  declare class Response {
+    status(statusCode: number): Response;
+    json(body: any): Response;
+  }
+  declare class Express {
+  }
+  declare var exports: () => Express;
+}

@@ -57,7 +57,8 @@ describe('authenticateRequest', () => {
     const sut = require('../../../source/middleware/authenticateRequest').default
     const reqMock = httpMocks.createRequest()
     const resMock = httpMocks.createResponse()
-    sut(reqMock, resMock)
+    const nextDummy = () =>
+    sut(reqMock, resMock, nextDummy)
     expect(resMock.statusCode).to.equal(401)
     const {errors} = JSON.parse(resMock._getData())
     const expected = [{ message: 'Authorization header missing' }]
