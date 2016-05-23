@@ -3,11 +3,11 @@
 import db from 'sequelize-connect'
 import config from 'config'
 import {createYoutubeClient} from '../util/youtube.js'
-import mapper from '../util/modelMapper.js'
+import mapper from '../util/modelMapper'
 
 const screencastsController = { }
 
-screencastsController.handlePost = async (req: any, res: any, next: any) => {
+screencastsController.handlePost = async (req: Request, res: Response, next: NextFunction): any => {
   try {
     const client = createYoutubeClient(config.youtubeApiKey)
     const details = await client.fetchVideoDetails(req.body.url)
@@ -22,7 +22,7 @@ screencastsController.handlePost = async (req: any, res: any, next: any) => {
   }
 }
 
-screencastsController.handleGet = async (req: any, res: any, next: any) => {
+screencastsController.handleGet = async (req: Request, res: Response, next: NextFunction): any => {
   try {
     const result = await db.models.screencast.paginate(
       config.screencastsPerPage,

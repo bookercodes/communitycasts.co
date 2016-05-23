@@ -1,9 +1,8 @@
 // @flow
 
 import config from 'config'
-import express from 'express'
 
-const authenticateRequest = function (req: express.Request, res: express.Response, next: express.NextFunction) {
+const authenticateRequest = function (req: Request, res: Response, next: NextFunction) {
   const authHeader: string = req.headers['authorization']
   if (!authHeader) {
     res.status(401).json({

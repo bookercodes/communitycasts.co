@@ -53,11 +53,11 @@ describe('authenticateRequest', () => {
     expect(nextSpy.called).to.be.true
   })
 
-  it('should return 404 when authorization header is missing', () => {
+  it('should return 401 when authorization header is missing', () => {
     const sut = require('../../../source/middleware/authenticateRequest').default
     const reqMock = httpMocks.createRequest()
     const resMock = httpMocks.createResponse()
-    const nextDummy = () =>
+    const nextDummy = function () { }
     sut(reqMock, resMock, nextDummy)
     expect(resMock.statusCode).to.equal(401)
     const {errors} = JSON.parse(resMock._getData())

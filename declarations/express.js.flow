@@ -1,15 +1,19 @@
+declare class Request {
+  headers: {[key: string]: string};
+  body: any,
+  query: any
+}
+
+declare type NextFunction = (error?: Object) => void
+
+declare class Response {
+  status(statusCode: number): Response;
+  sendStatus(statusCode: number): Response;
+  json(body: any): Response;
+}
+
 declare module "express" {
-  declare type NextFunction = (error?: Object) => void
   declare type RequestHandler = (req: Request, res: Response, next: NextFunction) => void
-
-  declare class Request {
-    headers: {[key: string]: string};
-  }
-
-  declare class Response {
-    status(statusCode: number): Response;
-    json(body: any): Response;
-  }
 
   declare class Express {
     use(...handler: RequestHandler[]): Express;
