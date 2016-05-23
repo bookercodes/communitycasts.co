@@ -11,7 +11,9 @@ async function connectToDatabase () {
   db.matcher = function shouldImportModel (modelFileName) {
     return true
   }
-  db.connect(config.database, config.username, config.password)
+  db.connect(config.database, config.username, config.password, {
+    force: true
+  })
 }
 
 (async function () {
