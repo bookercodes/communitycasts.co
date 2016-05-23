@@ -1,3 +1,5 @@
+// @flow
+
 import db from 'sequelize-connect'
 import path from 'path'
 import app from './app'

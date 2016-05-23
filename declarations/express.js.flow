@@ -1,5 +1,6 @@
 declare module "express" {
   declare type NextFunction = (error?: Object) => void
+  declare type RequestHandler = (req: Request, res: Response, next: NextFunction) => void
 
   declare class Request {
     headers: {[key: string]: string};
@@ -9,7 +10,13 @@ declare module "express" {
     status(statusCode: number): Response;
     json(body: any): Response;
   }
+
   declare class Express {
+    use(...handler: RequestHandler[]): Express;
+    post(route: string, ...handler: RequestHandler[]): Express;
+    get(route: string, ...handler: RequestHandler[]): Express;
+    listen(port: number, callback?: Function): Express;
   }
-  declare var exports: () => Express;
+
+  declare module.exports: () => Express;
 }

@@ -7,7 +7,7 @@ import screencastsController from './controllers/screencastsController.js'
 import validateSubmitScreencastReq from './middleware/submitScreencastValidator.js'
 // import errorHandler from './middleware/errorHandler.js'
 
-const app: any = express()
+const app = express()
 
 // app.use(errorHandler)
 app.use(bodyParser.json())
