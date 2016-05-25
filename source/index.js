@@ -4,6 +4,7 @@ import db from 'sequelize-connect'
 import path from 'path'
 import app from './app'
 import config from 'config'
+import cron from './cron'
 
 async function connectToDatabase () {
   db.logger.level = null // Disable sequelize-connect logging
@@ -18,6 +19,7 @@ async function connectToDatabase () {
 
 (async function () {
   await connectToDatabase()
+  cron.scheduleJobs()
   const port = 3000
   app.listen(port, error => {
     if (error) {
