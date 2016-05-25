@@ -59,9 +59,21 @@ screencastsController.sendScreencast = async (req: Request, res: Response, next:
     if (foundScreencast === null) {
       res.sendStatus(404)
     } else {
-      await foundScreencast.increment({
-        referralCount: 1
+      const foundReferral = await db.models.referral.findOne({
+        where: {
+          screencastId: req.params.screencastId,
+          refereeIp: req.ip
+        }
       })
+      if (foundReferral === null) {
+        await foundScreencast.increment({
+          referralCount: 1
+        })
+        await db.models.referral.create({
+          screencastId: req.params.screencastId,
+          refereeIp: req.ip
+        })
+      }
       res.redirect(foundScreencast.dataValues.url)
     }
   } catch (err) {

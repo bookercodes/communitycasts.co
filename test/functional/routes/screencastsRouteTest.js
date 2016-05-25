@@ -226,6 +226,21 @@ describe('"api/screencasts" route', () => {
       })
       expect(foundScreencast.dataValues.referralCount).to.equal(1)
     })
+
+    it.only('should not count view twice', async () => {
+      const screencast = require('./screencatsFixture.json')[0]
+      await db.models.screencast.createScreencast(screencast)
+      await supertest(app)
+        .get(`/api/screencasts/${screencast.id}`)
+      await supertest(app)
+        .get(`/api/screencasts/${screencast.id}`)
+      const foundScreencast = await db.models.screencast.findOne({
+        where: {
+          id: screencast.id
+        }
+      })
+      expect(foundScreencast.dataValues.referralCount).to.equal(1)
+    })
   })
 
   describe('GET request to "api/screencasts"', () => {
