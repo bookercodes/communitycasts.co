@@ -46,10 +46,29 @@ describe('postToTwitter', () => {
       require('../../../functional/routes/screencatsFixture.json')[0]
     await db.models.screencast.createScreencast(screencast)
     await sut()
+    // expect(postSpy.calledWith('status/update')).to.be.true
     expect(postSpy.called)
       .to
       .be
       .true
+  })
+
+  it('should Tweet screencast link', async () => {
+    const postSpy = sinon.spy()
+    function TwitMock () {
+      return {
+        post: postSpy
+      }
+    }
+    const sut = proxyquire('../../../../source/cron/jobs/postToTwitter', {
+      'twit': TwitMock
+    }).default
+    const screencast =
+      require('../../../functional/routes/screencatsFixture.json')[0]
+    await db.models.screencast.createScreencast(screencast)
+    await sut()
+    const status = postSpy.getCalls()[0].args[1].status
+    expect(status).to.contain(screencast.url)
   })
 
   it('should not Tweet same screencast more than once', async () => {
