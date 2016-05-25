@@ -1,25 +1,12 @@
 // @flow
 
 import {expect} from 'chai'
-import {describe, it, before} from 'mocha'
+import {describe, it} from 'mocha'
 import sinon from 'sinon'
 import httpMocks from 'node-mocks-http'
-import mockery from 'mockery'
+import config from 'config'
 
 describe('authenticateRequest', () => {
-  const adminPassword = 'some password'
-
-  before(() => {
-    mockery.enable({
-      warnOnReplace: false,
-      warnOnUnregistered: false,
-      useCleanCache: true
-    })
-    mockery.registerMock('config', {
-      adminPassword
-    })
-  })
-
   it('should export a function', () => {
     const sut = require('../../../source/middleware/authenticateRequest').default
     expect(sut).to.be.a('function')
@@ -43,7 +30,7 @@ describe('authenticateRequest', () => {
 
   it('should call next middleware when password is valid', () => {
     const sut = require('../../../source/middleware/authenticateRequest').default
-    const encodedValidPassword = new Buffer(adminPassword).toString('base64')
+    const encodedValidPassword = new Buffer(config.adminPassword).toString('base64')
     const reqMock = httpMocks.createRequest({
       headers: { authorization: `Basic: ${encodedValidPassword}` }
     })

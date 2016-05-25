@@ -2,23 +2,11 @@
 
 import sinon from 'sinon'
 import {expect} from 'chai'
-import mockery from 'mockery'
+import proxyquire from 'proxyquire'
 import httpMocks from 'node-mocks-http'
-import {beforeEach, afterEach, describe, it} from 'mocha'
+import {describe, it} from 'mocha'
 
 describe('submitScreencastValidator', () => {
-  beforeEach(() => {
-    mockery.enable({
-      warnOnReplace: false,
-      warnOnUnregistered: false,
-      useCleanCache: true
-    })
-  })
-
-  afterEach(() => {
-    mockery.disable()
-  })
-
   it('should invoke next middleware when req.body is valid', async () => {
     const sequelizeConnectMock = {
       models: {
@@ -32,8 +20,6 @@ describe('submitScreencastValidator', () => {
         videoExists: () => true
       })
     }
-    mockery.registerMock('sequelize-connect', sequelizeConnectMock)
-    mockery.registerMock('../../source/util/youtube', youtubeMock)
     const reqMock = httpMocks.createRequest({
       body: {
         url: 'https://www.youtube.com/watch?v=correctly_formatted_youtube_url',
@@ -42,7 +28,10 @@ describe('submitScreencastValidator', () => {
     })
     const resMock = httpMocks.createResponse()
     const nextSpy = sinon.spy()
-    const sut = require('../../../source/middleware/submitScreencastValidator.js').default
+    const sut = proxyquire('../../../source/middleware/submitScreencastValidator.js', {
+      'sequelize-connect': sequelizeConnectMock,
+      '../../source/util/youtube': youtubeMock
+    }).default
     await sut(reqMock, resMock, nextSpy)
     expect(nextSpy.called).to.be.true
   })
@@ -101,8 +90,6 @@ describe('submitScreencastValidator', () => {
         videoExists: () => true
       })
     }
-    mockery.registerMock('sequelize-connect', sequelizeConnectMock)
-    mockery.registerMock('../../source/util/youtube', youtubeMock)
     const reqMock = httpMocks.createRequest({
       body: {
         url: 'https://www.youtube.com/watch?v=qsDvJrGMSUY',
@@ -110,7 +97,10 @@ describe('submitScreencastValidator', () => {
       }
     })
     const resMock = httpMocks.createResponse()
-    const sut = require('../../../source/middleware/submitScreencastValidator.js').default
+    const sut = proxyquire('../../../source/middleware/submitScreencastValidator.js', {
+      'sequelize-connect': sequelizeConnectMock,
+      '../../source/util/youtube': youtubeMock
+    }).default
     await sut(reqMock, resMock)
     expect(resMock.statusCode).to.equal(400)
     const {errors} = JSON.parse(resMock._getData())
@@ -122,6 +112,7 @@ describe('submitScreencastValidator', () => {
     ]
     expect(errors).to.deep.equal(expected)
   })
+
   it('should return 400 when "tags" is undefined', async () => {
     const sequelizeConnectMock = {
       models: {
@@ -135,15 +126,16 @@ describe('submitScreencastValidator', () => {
         videoExists: () => true
       })
     }
-    mockery.registerMock('sequelize-connect', sequelizeConnectMock)
-    mockery.registerMock('../../source/util/youtube', youtubeMock)
     const reqMock = httpMocks.createRequest({
       body: {
         url: 'https://www.youtube.com/watch?v=qsDvJrGMSUY'
       }
     })
     const resMock = httpMocks.createResponse()
-    const sut = require('../../../source/middleware/submitScreencastValidator.js').default
+    const sut = proxyquire('../../../source/middleware/submitScreencastValidator.js', {
+      'sequelize-connect': sequelizeConnectMock,
+      '../../source/util/youtube': youtubeMock
+    }).default
     await sut(reqMock, resMock)
     expect(resMock.statusCode).to.equal(400)
     const {errors} = JSON.parse(resMock._getData())
@@ -182,7 +174,6 @@ describe('submitScreencastValidator', () => {
         videoExists: () => false
       })
     }
-    mockery.registerMock('../../source/util/youtube', youtubeMock)
     const reqMock = httpMocks.createRequest({
       body: {
         url: 'https://www.youtube.com/watch?v=doesnotexist',
@@ -191,7 +182,9 @@ describe('submitScreencastValidator', () => {
     })
     const resMock = httpMocks.createResponse()
     const nextSpyDummy = function () {}
-    const sut = require('../../../source/middleware/submitScreencastValidator.js').default
+    const sut = proxyquire('../../../source/middleware/submitScreencastValidator.js', {
+      '../../source/util/youtube': youtubeMock
+    }).default
     await sut(reqMock, resMock, nextSpyDummy)
     expect(resMock.statusCode).to.equal(400)
     const {errors} = JSON.parse(resMock._getData())
@@ -217,8 +210,6 @@ describe('submitScreencastValidator', () => {
         videoExists: () => true
       })
     }
-    mockery.registerMock('sequelize-connect', sequelizeConnectMock)
-    mockery.registerMock('../../source/util/youtube', youtubeMock)
     const reqMock = httpMocks.createRequest({
       body: {
         url: 'https://www.youtube.com/watch?v=doesnotexist',
@@ -227,7 +218,10 @@ describe('submitScreencastValidator', () => {
     })
     const resMock = httpMocks.createResponse()
     const nextDummy = function () {}
-    const sut = require('../../../source/middleware/submitScreencastValidator.js').default
+    const sut = proxyquire('../../../source/middleware/submitScreencastValidator.js', {
+      'sequelize-connect': sequelizeConnectMock,
+      '../../source/util/youtube': youtubeMock
+    }).default
     await sut(reqMock, resMock, nextDummy)
     expect(resMock.statusCode).to.equal(400)
     const {errors} = JSON.parse(resMock._getData())
