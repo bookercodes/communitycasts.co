@@ -46,8 +46,7 @@ describe('postToTwitter', () => {
       require('../../../functional/routes/screencatsFixture.json')[0]
     await db.models.screencast.createScreencast(screencast)
     await sut()
-    // expect(postSpy.calledWith('status/update')).to.be.true
-    expect(postSpy.called)
+    expect(postSpy.calledOnce)
       .to
       .be
       .true
