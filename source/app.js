@@ -23,4 +23,9 @@ app.get(
   screencastsController.handleGet
 )
 
+app.get(
+  '/api/screencasts/:screencastId',
+  screencastsController.sendScreencast
+)
+
 export default app

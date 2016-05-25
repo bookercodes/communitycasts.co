@@ -198,6 +198,36 @@ describe('"api/screencasts" route', () => {
     })
   })
 
+  describe.only('GET request to "api/screencasts/:screencastId"', () => {
+    it('should return 404 if screencast doesn\'t exist', async () => {
+      const {statusCode} = await supertest(app)
+        .get('/api/screencasts/1')
+      expect(statusCode).to.equal(404)
+    })
+
+    it('should redirect if screencast does exists', async () => {
+      const screencast = require('./screencatsFixture.json')[0]
+      await db.models.screencast.createScreencast(screencast)
+      const {statusCode, headers} = await supertest(app)
+        .get(`/api/screencasts/${screencast.id}`)
+      expect(statusCode).to.equal(302)
+      expect(headers.location).to.equal(screencast.url)
+    })
+
+    it('should increment screencast referral count', async () => {
+      const screencast = require('./screencatsFixture.json')[0]
+      await db.models.screencast.createScreencast(screencast)
+      await supertest(app)
+        .get(`/api/screencasts/${screencast.id}`)
+      const foundScreencast = await db.models.screencast.findOne({
+        where: {
+          id: screencast.id
+        }
+      })
+      expect(foundScreencast.dataValues.referralCount).to.equal(1)
+    })
+  })
+
   describe('GET request to "api/screencasts"', () => {
     beforeEach(async () => {
       config.screencastsPerPage = 2

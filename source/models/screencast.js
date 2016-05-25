@@ -10,7 +10,11 @@ const createScreencastModel = (sequelize: any, DataTypes: any) : any => {
     url: DataTypes.TEXT,
     title: DataTypes.STRING,
     description: DataTypes.TEXT,
-    durationInSeconds: DataTypes.INTEGER
+    durationInSeconds: DataTypes.INTEGER,
+    referralCount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    }
   }, {
     classMethods: {
       associate (models: any): any {

@@ -1,7 +1,9 @@
 declare class Request {
   headers: {[key: string]: string};
   body: any,
-  query: any
+  query: any,
+  params: any,
+  ip: string
 }
 
 declare type NextFunction = (error?: Object) => void
@@ -10,6 +12,7 @@ declare class Response {
   status(statusCode: number): Response;
   sendStatus(statusCode: number): Response;
   json(body: any): Response;
+  redirect(url: string): void;
 }
 
 declare module "express" {

@@ -49,4 +49,25 @@ screencastsController.handleGet = async (req: Request, res: Response, next: Next
   }
 }
 
+screencastsController.sendScreencast = async (req: Request, res: Response, next: NextFunction): any => {
+  try {
+    const foundScreencast = await db.models.screencast.findOne({
+      where: {
+        id: req.params.screencastId
+      }
+    })
+    if (foundScreencast === null) {
+      res.sendStatus(404)
+    } else {
+      await foundScreencast.increment({
+        referralCount: 1
+      })
+      res.redirect(foundScreencast.dataValues.url)
+    }
+  } catch (err) {
+    console.log(err)
+    next(err)
+  }
+}
+
 export default screencastsController
