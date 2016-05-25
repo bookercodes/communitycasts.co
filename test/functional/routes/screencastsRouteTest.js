@@ -9,13 +9,13 @@ import supertest from 'supertest-as-promised'
 import {describe, it, beforeEach, afterEach} from 'mocha'
 
 describe('"api/screencasts" route', () => {
-  beforeEach(function connectToAndResetTestDatabase () {
+  beforeEach(async function connectToAndResetTestDatabase () {
     db.logger.level = null // Disable sequelize-connect logging
     db.discover = path.join(__dirname, '../../../source/models')
     db.matcher = function shouldImportModel (modelFileName) {
       return true
     }
-    return db.connect(config.database, config.username, config.password, {
+    await db.connect(config.database, config.username, config.password, {
       force: true,
       logging: false
     })
