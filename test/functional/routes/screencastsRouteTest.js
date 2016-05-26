@@ -198,7 +198,7 @@ describe('"api/screencasts" route', () => {
     })
   })
 
-  describe.only('GET request to "api/screencasts/:screencastId"', () => {
+  describe('GET request to "api/screencasts/:screencastId"', () => {
     it('should return 404 if screencast doesn\'t exist', async () => {
       const {statusCode} = await supertest(app)
         .get('/api/screencasts/1')
@@ -227,7 +227,7 @@ describe('"api/screencasts" route', () => {
       expect(foundScreencast.dataValues.referralCount).to.equal(1)
     })
 
-    it.only('should not count view twice', async () => {
+    it('should not count view twice', async () => {
       const screencast = require('./screencatsFixture.json')[0]
       await db.models.screencast.createScreencast(screencast)
       await supertest(app)
