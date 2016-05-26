@@ -30,8 +30,7 @@ screencastsController.handleGet = async (req: Request, res: Response, next: Next
     result.screencasts = result.screencasts.map(screencast => {
       screencast = screencast.dataValues
       return {
-        id: screencast.id,
-        url: screencast.url,
+        href: `${req.protocol}://${req.headers.host}/api/screencasts/${screencast.id}`,
         title: screencast.title,
         description: screencast.description,
         durationInSeconds: screencast.durationInSeconds,

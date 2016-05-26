@@ -174,27 +174,19 @@ describe('"api/screencasts" route', () => {
           tags: 'foo,bar'
         })
       const {statusCode, text} = await supertest(app)
-      .get('/api/screencasts')
+        .get('/api/screencasts')
       expect(statusCode).to.equal(200)
       const responseBody = JSON.parse(text)
-      expect(responseBody).to.deep.equal({
-        hasMore: false,
-        screencasts: [{
-          id: 'jNQXAC9IVRw',
-          url: 'https://youtu.be/jNQXAC9IVRw',
-          title: 'Me at the zoo',
-          description: `The first video on YouTube.\n\nMaybe it's time to go back to the zoo?`,
-          durationInSeconds: 19,
-          channel: {
-            id: 'UC4QobU6STFB0P71PMvOGN5A',
-            name: 'jawed'
-          },
-          tags: [
-            'bar',
-            'foo'
-          ]
-        }
-      ]})
+      expect(responseBody.hasMore).to.be.false
+
+      const screencast = responseBody.screencasts[0]
+      expect(screencast.channel).to.deep.equal({
+        id: 'UC4QobU6STFB0P71PMvOGN5A',
+        name: 'jawed'
+      })
+      expect(screencast.id).to.equal('jNQXAC9IVRw')
+      expect(screencast.durationInSeconds).to.equal(19)
+      expect(screencast.href).to.match(new RegExp(`http://.*/api/screencasts/${screencast.id}$`))
     })
   })
 

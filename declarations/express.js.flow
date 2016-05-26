@@ -3,7 +3,8 @@ declare class Request {
   body: any,
   query: any,
   params: any,
-  ip: string
+  ip: string,
+  protocol: string
 }
 
 declare type NextFunction = (error?: Object) => void
