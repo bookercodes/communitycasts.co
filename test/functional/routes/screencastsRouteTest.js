@@ -8,6 +8,7 @@ import db from 'sequelize-connect'
 import app from '../../../source/app'
 import supertest from 'supertest-as-promised'
 import {describe, it, beforeEach, afterEach} from 'mocha'
+import testScreencasts from '../../util/fixtures/testScreencasts.json'
 
 describe('"api/screencasts" route', () => {
   beforeEach(async function connectToAndResetTestDatabase () {
@@ -167,11 +168,12 @@ describe('"api/screencasts" route', () => {
     it('should return correct response', async () => {
       const encodedValidPassword = new Buffer(config.adminPassword).toString('base64')
       const authHeader = `Basic: ${encodedValidPassword}`
+      const screencastId = 'jNQXAC9IVRw'
       await supertest(app)
         .post('/api/screencasts')
         .set('Authorization', authHeader)
         .send({
-          url: 'https://youtu.be/jNQXAC9IVRw',
+          url: `https://youtu.be/${screencastId}`,
           tags: 'foo,bar'
         })
       const {statusCode, text} = await supertest(app)
@@ -185,9 +187,8 @@ describe('"api/screencasts" route', () => {
         id: 'UC4QobU6STFB0P71PMvOGN5A',
         name: 'jawed'
       })
-      expect(screencast.id).to.equal('jNQXAC9IVRw')
       expect(screencast.durationInSeconds).to.equal(19)
-      expect(screencast.href).to.match(new RegExp(`http://.*/api/screencasts/${screencast.id}$`))
+      expect(screencast.href).to.match(new RegExp(`http://.*/api/screencasts/${screencastId}$`))
     })
   })
 
@@ -199,7 +200,7 @@ describe('"api/screencasts" route', () => {
     })
 
     it('should redirect if screencast does exists', async () => {
-      const screencast = require('./screencatsFixture.json')[0]
+      const screencast = testScreencasts[0]
       await db.models.screencast.createScreencast(screencast)
       const {statusCode, headers} = await supertest(app)
         .get(`/api/screencasts/${screencast.id}`)
@@ -208,7 +209,7 @@ describe('"api/screencasts" route', () => {
     })
 
     it('should increment screencast referral count', async () => {
-      const screencast = require('./screencatsFixture.json')[0]
+      const screencast = testScreencasts[0]
       await db.models.screencast.createScreencast(screencast)
       await supertest(app)
         .get(`/api/screencasts/${screencast.id}`)
@@ -221,7 +222,7 @@ describe('"api/screencasts" route', () => {
     })
 
     it('should not count view twice', async () => {
-      const screencast = require('./screencatsFixture.json')[0]
+      const screencast = testScreencasts[0]
       await db.models.screencast.createScreencast(screencast)
       await supertest(app)
         .get(`/api/screencasts/${screencast.id}`)
@@ -236,9 +237,7 @@ describe('"api/screencasts" route', () => {
     })
   })
 
-  describe.only('GET request to "api/screencasts"', () => {
-    const testScreencasts = require('./screencatsFixture.json')
-
+  describe('GET request to "api/screencasts"', () => {
     beforeEach(async function createTestScreencasts () {
       let createdAt = moment()
       for (const screencast of testScreencasts) {

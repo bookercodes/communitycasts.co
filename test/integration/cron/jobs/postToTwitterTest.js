@@ -8,6 +8,7 @@ import db from 'sequelize-connect'
 import path from 'path'
 import proxyquire from 'proxyquire'
 import sinon from 'sinon'
+import testScreencasts from '../../../util/fixtures/testScreencasts.json'
 
 chai.use(chaiAsPromised)
 
@@ -42,8 +43,7 @@ describe('postToTwitter', () => {
     const sut = proxyquire('../../../../source/cron/jobs/postToTwitter', {
       'twit': TwitMock
     }).default
-    const screencast =
-      require('../../../functional/routes/screencatsFixture.json')[0]
+    const screencast = testScreencasts[0]
     await db.models.screencast.createScreencast(screencast)
     await sut()
     expect(postSpy.calledOnce)
@@ -62,8 +62,7 @@ describe('postToTwitter', () => {
     const sut = proxyquire('../../../../source/cron/jobs/postToTwitter', {
       'twit': TwitMock
     }).default
-    const screencast =
-      require('../../../functional/routes/screencatsFixture.json')[0]
+    const screencast = testScreencasts[0]
     await db.models.screencast.createScreencast(screencast)
     await sut()
     const status = postSpy.getCalls()[0].args[1].status
@@ -77,8 +76,7 @@ describe('postToTwitter', () => {
     const sut = proxyquire('../../../../source/cron/jobs/postToTwitter', {
       'twit': TwitMock
     }).default
-    const screencast =
-      require('../../../functional/routes/screencatsFixture.json')[0]
+    const screencast = testScreencasts[0]
     await db.models.screencast.createScreencast(screencast)
     await sut()
     return expect(sut())
