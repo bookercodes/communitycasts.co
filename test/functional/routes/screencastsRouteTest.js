@@ -1,6 +1,7 @@
 // @flow
 
 import path from 'path'
+import moment from 'moment'
 import config from 'config'
 import {expect} from 'chai'
 import db from 'sequelize-connect'
@@ -235,34 +236,49 @@ describe('"api/screencasts" route', () => {
     })
   })
 
-  describe('GET request to "api/screencasts"', () => {
-    beforeEach(async () => {
-      config.screencastsPerPage = 2
-      const screencasts = require('./screencatsFixture.json')
-      for (const screencast of screencasts) {
+  describe.only('GET request to "api/screencasts"', () => {
+    const testScreencasts = require('./screencatsFixture.json')
+
+    beforeEach(async function createTestScreencasts () {
+      let createdAt = moment()
+      for (const screencast of testScreencasts) {
+        screencast.createdAt = createdAt.toDate()
+        // Add one minute between submissions so we can test that screencasts
+        //  are sorted by their creation date
+        createdAt.add(1, 'minute')
         await db.models.screencast.createScreencast(screencast)
       }
     })
 
+    it('should return screencasts sorted by their creation date (descending) by default', async () => {
+      config.screencastsPerPage = testScreencasts.length
+      const {text} = await supertest(app).get('/api/screencasts')
+      const responseBody = JSON.parse(text)
+      const selectTitle = screencast => screencast.title
+      const expected = testScreencasts.map(selectTitle).reverse()
+      const actual = responseBody.screencasts.map(selectTitle)
+      expect(actual).to.deep.equal(expected)
+    })
+
     it('should return correct screencasts for page 1', async () => {
-      const foo = supertest(app)
-      const {text} = await foo.get('/api/screencasts')
+      config.screencastsPerPage = 2
+      const {text} = await supertest(app).get('/api/screencasts')
       const responseBody = JSON.parse(text)
       expect(responseBody.screencasts).to.have.lengthOf(config.screencastsPerPage)
       expect(responseBody.hasMore).to.be.true
     })
 
     it('should return correct screencasts for page 2', async () => {
-      const foo = supertest(app)
-      const {text} = await foo.get('/api/screencasts?page=2')
+      config.screencastsPerPage = 2
+      const {text} = await supertest(app).get('/api/screencasts')
       const responseBody = JSON.parse(text)
       expect(responseBody.screencasts).to.have.lengthOf(config.screencastsPerPage)
       expect(responseBody.hasMore).to.be.true
     })
 
     it('should return correct screencasts for page 3', async () => {
-      const foo = supertest(app)
-      const {text} = await foo.get('/api/screencasts?page=3')
+      config.screencastsPerPage = 2
+      const {text} = await supertest(app).get('/api/screencasts?page=3')
       const responseBody = JSON.parse(text)
       expect(responseBody.screencasts).to.have.lengthOf(1)
       expect(responseBody.hasMore).to.be.false

@@ -32,6 +32,7 @@ const createScreencastModel = (sequelize: any, DataTypes: any) : any => {
             { model: db.models.tag }
           ],
           limit,
+          order: [['createdAt', 'DESC']],
           offset: (page - 1) * limit
         })
         return {
