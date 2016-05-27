@@ -58,6 +58,47 @@ describe('"api/screencasts" route', () => {
       expect(statusCode).to.equal(401)
     })
 
+    it('should return 201 when screencast tag already exists', async () => {
+      const encodedValidPassword = new Buffer(config.adminPassword).toString('base64')
+      const authHeader = `Basic: ${encodedValidPassword}`
+      const duplicateTag = 'tag1'
+      await supertest(app)
+        .post('/api/screencasts')
+        .set('Authorization', authHeader)
+        .send({
+          url: 'https://youtu.be/1q8DRltaHkQ',
+          tags: duplicateTag
+        })
+      const {statusCode} = await supertest(app)
+        .post('/api/screencasts')
+        .set('Authorization', authHeader)
+        .send({
+          url: 'https://www.youtube.com/watch?v=6NKNfXtKk0c',
+          tags: duplicateTag
+        })
+      expect(statusCode).to.equal(201)
+    })
+
+    it('should return 201 when channel already exists', async () => {
+      const encodedValidPassword = new Buffer(config.adminPassword).toString('base64')
+      const authHeader = `Basic: ${encodedValidPassword}`
+      await supertest(app)
+        .post('/api/screencasts')
+        .set('Authorization', authHeader)
+        .send({
+          url: 'https://www.youtube.com/watch?v=qsDvJrGMSUY',
+          tags: 'tag1'
+        })
+      const {statusCode} = await supertest(app)
+        .post('/api/screencasts')
+        .set('Authorization', authHeader)
+        .send({
+          url: 'https://www.youtube.com/watch?v=6NKNfXtKk0c',
+          tags: 'tag2'
+        })
+      expect(statusCode).to.equal(201)
+    })
+
     it('should return 201 when request is valid', async () => {
       const encodedValidPassword = new Buffer(config.adminPassword).toString('base64')
       const authHeader = `Basic: ${encodedValidPassword}`
@@ -302,7 +343,7 @@ describe('"api/screencasts" route', () => {
         createdAt: moment().subtract(1, 'hour'),
         referralCount: 100
       }
-    await db.models.screencast.createScreencast(unpopularScreencast)
+      await db.models.screencast.createScreencast(unpopularScreencast)
       await db.models.screencast.createScreencast(popularScreencast)
 
       const {text} = await supertest(app).get('/api/screencasts?sort=popular')

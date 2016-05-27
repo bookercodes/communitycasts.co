@@ -49,17 +49,23 @@ const createScreencastModel = (sequelize: any, DataTypes: any) : any => {
 
       async createScreencast (screencast): any {
         await db.sequelize.transaction(async transaction => {
-          const createdChannel = await db.models.channel.create({
-            id: screencast.channel.id,
-            name: screencast.channel.title
+          const results = await db.models.channel.findOrCreate({
+            where: {
+              id: screencast.channel.id
+            },
+            defaults: {
+              name: screencast.channel.title
+            }
           })
-          await createdChannel.createScreencast({
+          const channel = results[0]
+          await channel.createScreencast({
             ...screencast
           }, {
             transaction
           })
           await db.models.tag.bulkCreate(screencast.tags, {
-            transaction
+            transaction,
+            ignoreDuplicates: true
           })
           const screencastTags = screencast.tags.map(tag => {
             return {
