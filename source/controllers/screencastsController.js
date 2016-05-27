@@ -26,7 +26,8 @@ screencastsController.handleGet = async (req: Request, res: Response, next: Next
   try {
     const result = await db.models.screencast.paginate(
       config.screencastsPerPage,
-      req.query.page)
+      req.query.page,
+      req.query.sort)
     result.screencasts = result.screencasts.map(screencast => {
       screencast = screencast.dataValues
       return {

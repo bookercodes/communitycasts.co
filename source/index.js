@@ -13,7 +13,7 @@ async function connectToDatabase () {
     return true
   }
   db.connect(config.database, config.username, config.password, {
-    force: true
+    force: false
   })
 }
 

@@ -25,8 +25,8 @@ const createScreencastModel = (sequelize: any, DataTypes: any) : any => {
         })
       },
 
-      async paginate (limit, page = 1): any {
-        const {rows, count} = await screencast.findAndCountAll({
+      async paginate (limit, page = 1, sort = 'new'): any {
+        const options = {
           include: [
             { model: db.models.channel },
             { model: db.models.tag }
@@ -34,7 +34,13 @@ const createScreencastModel = (sequelize: any, DataTypes: any) : any => {
           limit,
           order: [['createdAt', 'DESC']],
           offset: (page - 1) * limit
-        })
+        }
+        if (sort === 'popular') {
+          options.order = [
+            [db.sequelize.literal('screencast.referralCount / POW(((UNIX_TIMESTAMP(NOW()) - UNIX_TIMESTAMP(screencast.createdAt)) / 3600) + 2, 1.5) DESC')]
+          ]
+        }
+        const {rows, count} = await screencast.findAndCountAll(options)
         return {
           screencasts: rows,
           hasMore: page < Math.ceil(count / limit)

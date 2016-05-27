@@ -237,6 +237,134 @@ describe('"api/screencasts" route', () => {
     })
   })
 
+  describe('GET request to "api/screencasts" with the "popular" sort option', () => {
+    it('should return screencasts sorted by their popularity (descending)', async () => {
+      const unpopularScreencast = {
+        ...testScreencasts[1],
+        // this screencast was submitted so long ago it is no longer 'popular'
+        createdAt: moment().subtract(5, 'months'),
+        referralCount: 5
+      }
+      const popularScreencast = {
+        ...testScreencasts[0],
+        createdAt: moment(),
+        referralCount: 1
+      }
+      await db.models.screencast.createScreencast(unpopularScreencast)
+      await db.models.screencast.createScreencast(popularScreencast)
+
+      const {text} = await supertest(app).get('/api/screencasts?sort=popular')
+      const responseBody = JSON.parse(text)
+
+      expect(
+        responseBody.screencasts[0].title,
+        'expected popularScreencast to be first').to.equal(popularScreencast.title)
+      expect(
+          responseBody.screencasts[1].title,
+         'expected unpopularScreencast to be second').to.equal(unpopularScreencast.title)
+    })
+    it('should return screencasts sorted by their popularity (descending)', async () => {
+      const unpopularScreencast = {
+        ...testScreencasts[1],
+        // this screencast was submitted so long ago it is no longer 'popular'
+        createdAt: moment().subtract(1, 'month'),
+        referralCount: 100
+      }
+      const popularScreencast = {
+        ...testScreencasts[0],
+        createdAt: moment(),
+        referralCount: 50
+      }
+      await db.models.screencast.createScreencast(unpopularScreencast)
+      await db.models.screencast.createScreencast(popularScreencast)
+
+      const {text} = await supertest(app).get('/api/screencasts?sort=popular')
+      const responseBody = JSON.parse(text)
+
+      expect(
+        responseBody.screencasts[0].title,
+        'expected popularScreencast to be first').to.equal(popularScreencast.title)
+      expect(
+          responseBody.screencasts[1].title,
+         'expected unpopularScreencast to be second').to.equal(unpopularScreencast.title)
+    })
+
+    it('should return screencasts sorted by their popularity (descending)', async () => {
+      const unpopularScreencast = {
+        ...testScreencasts[0],
+        createdAt: moment(),
+        referralCount: 50
+      }
+      const popularScreencast = {
+        ...testScreencasts[1],
+        // despite being created one hour ago, this screencast is still more
+        //  popular
+        createdAt: moment().subtract(1, 'hour'),
+        referralCount: 100
+      }
+    await db.models.screencast.createScreencast(unpopularScreencast)
+      await db.models.screencast.createScreencast(popularScreencast)
+
+      const {text} = await supertest(app).get('/api/screencasts?sort=popular')
+      const responseBody = JSON.parse(text)
+
+      expect(
+        responseBody.screencasts[0].title,
+        'expected popularScreencast to be first').to.equal(popularScreencast.title)
+      expect(
+          responseBody.screencasts[1].title,
+         'expected unpopularScreencast to be second').to.equal(unpopularScreencast.title)
+    })
+
+    it('should return correct results for page 1', async () => {
+      config.screencastsPerPage = 1
+      const unpopularScreencast = {
+        ...testScreencasts[0],
+        createdAt: moment(),
+        referralCount: 50
+      }
+      const popularScreencast = {
+        ...testScreencasts[1],
+        // despite being created one hour ago, this screencast is still more
+        //  popular
+        createdAt: moment().subtract(1, 'hour'),
+        referralCount: 100
+      }
+      await db.models.screencast.createScreencast(unpopularScreencast)
+      await db.models.screencast.createScreencast(popularScreencast)
+
+      const {text} = await supertest(app).get('/api/screencasts?page=1&sort=popular')
+      const responseBody = JSON.parse(text)
+      expect(
+        responseBody.screencasts[0].title,
+        'expected popularScreencast to be first').to.equal(popularScreencast.title)
+    })
+
+    it('should return correct results for page 2', async () => {
+      config.screencastsPerPage = 1
+      const unpopularScreencast = {
+        ...testScreencasts[0],
+        createdAt: moment(),
+        referralCount: 50
+      }
+      const popularScreencast = {
+        ...testScreencasts[1],
+        // despite being created one hour ago, this screencast is still more
+        //  popular
+        createdAt: moment().subtract(1, 'hour'),
+        referralCount: 100
+      }
+      await db.models.screencast.createScreencast(unpopularScreencast)
+      await db.models.screencast.createScreencast(popularScreencast)
+
+      const {text} = await supertest(app).get('/api/screencasts?page=2&sort=popular')
+      const responseBody = JSON.parse(text)
+      expect(
+        responseBody.screencasts[0].title,
+        'expected unpopularScreencast to be second').to.equal(unpopularScreencast.title)
+    })
+  })
+
   describe('GET request to "api/screencasts"', () => {
     beforeEach(async function createTestScreencasts () {
       let createdAt = moment()
