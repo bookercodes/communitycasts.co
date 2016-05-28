@@ -1,7 +1,7 @@
 // @flow weak
 
 import moment from 'moment'
-import Promise from 'bluebird'
+import promisify from 'pify'
 import youtubeUrl from 'youtube-url'
 import youtubeApi from 'youtube-api'
 
@@ -33,8 +33,7 @@ export function create (key) {
    */
   youtubeClient.fetchVideoDetails = async function (url) {
     const videoId = youtubeUrl.extractId(url)
-    const list = Promise.promisify(youtubeApi.videos.list)
-    const details = await list({
+    const details = await promisify(youtubeApi.videos.list)({
       id: videoId,
       part: 'snippet,contentDetails'
     })
