@@ -1,8 +1,9 @@
+// @flow
+
 import commaSplit from 'comma-split'
-export default {
-  mapTags (tags) {
-    return commaSplit(tags).map(tag => {
-      return { id: tag }
-    })
-  }
+
+export function mapTags (tags: string): Object[] {
+  return commaSplit(tags).map(tag => ({
+    id: tag
+  }))
 }

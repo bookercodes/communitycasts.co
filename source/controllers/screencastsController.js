@@ -3,7 +3,7 @@
 import db from 'sequelize-connect'
 import config from 'config'
 import * as youtubeClient from '../util/youtubeClient.js'
-import mapper from '../util/modelMapper'
+import * as modelMapper from '../util/modelMapper'
 
 const screencastsController = { }
 
@@ -22,7 +22,7 @@ screencastsController.handlePost = async (req: Request, res: Response, next: Nex
       durationInSeconds: screencast.durationInSeconds,
       channel: screencast.channel,
       url: req.body.url,
-      tags: mapper.mapTags(req.body.tags)
+      tags: modelMapper.mapTags(req.body.tags)
     })
     res.sendStatus(201)
   } catch (error) {
