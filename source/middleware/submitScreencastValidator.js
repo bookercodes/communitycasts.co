@@ -3,7 +3,7 @@
 import config from 'config'
 import youtubeUrl from 'youtube-url'
 import db from 'sequelize-connect'
-import {createYoutubeClient} from '../../source/util/youtube'
+import * as youtubeClient from '../../source/util/youtubeClient'
 
 /**
  * validateUrl
@@ -23,8 +23,8 @@ async function validateUrl (url: string) {
     return 'url must be a valid YouTube URL'
   }
 
-  const youtubeClient = createYoutubeClient(config.youtubeApiKey)
-  if (!await youtubeClient.videoExists(url)) {
+  const client = youtubeClient.create(config.youtubeApiKey)
+  if (!await client.videoExists(url)) {
     return 'url must link to an existent, public YouTube video'
   }
   const screencast = await db.models.screencast.findOne({

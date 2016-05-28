@@ -14,7 +14,7 @@ import youtubeApi from 'youtube-api'
  * @param {String} key A simple YouTube API key.
  * @returns {Object} The YouTube client.
  */
-export function createYoutubeClient (key) {
+export function create (key) {
   youtubeApi.authenticate({
     type: 'key',
     key

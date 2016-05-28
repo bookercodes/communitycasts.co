@@ -2,14 +2,14 @@
 
 import db from 'sequelize-connect'
 import config from 'config'
-import {createYoutubeClient} from '../util/youtube.js'
+import * as youtubeClient from '../util/youtubeClient.js'
 import mapper from '../util/modelMapper'
 
 const screencastsController = { }
 
 screencastsController.handlePost = async (req: Request, res: Response, next: NextFunction): any => {
   try {
-    const client = createYoutubeClient(config.youtubeApiKey)
+    const client = youtubeClient.create(config.youtubeApiKey)
     const details = await client.fetchVideoDetails(req.body.url)
     await db.models.screencast.createScreencast({
       ...details,

@@ -16,7 +16,7 @@ describe('submitScreencastValidator', () => {
       }
     }
     const youtubeMock = {
-      createYoutubeClient: () => ({
+      create: () => ({
         videoExists: () => true
       })
     }
@@ -30,7 +30,7 @@ describe('submitScreencastValidator', () => {
     const nextSpy = sinon.spy()
     const sut = proxyquire('../../../source/middleware/submitScreencastValidator.js', {
       'sequelize-connect': sequelizeConnectMock,
-      '../../source/util/youtube': youtubeMock
+      '../../source/util/youtubeClient': youtubeMock
     }).default
     await sut(reqMock, resMock, nextSpy)
     expect(nextSpy.called).to.be.true
@@ -86,7 +86,7 @@ describe('submitScreencastValidator', () => {
       }
     }
     const youtubeMock = {
-      createYoutubeClient: () => ({
+      create: () => ({
         videoExists: () => true
       })
     }
@@ -99,7 +99,7 @@ describe('submitScreencastValidator', () => {
     const resMock = httpMocks.createResponse()
     const sut = proxyquire('../../../source/middleware/submitScreencastValidator.js', {
       'sequelize-connect': sequelizeConnectMock,
-      '../../source/util/youtube': youtubeMock
+      '../../source/util/youtubeClient': youtubeMock
     }).default
     await sut(reqMock, resMock)
     expect(resMock.statusCode).to.equal(400)
@@ -122,7 +122,7 @@ describe('submitScreencastValidator', () => {
       }
     }
     const youtubeMock = {
-      createYoutubeClient: () => ({
+      create: () => ({
         videoExists: () => true
       })
     }
@@ -134,7 +134,7 @@ describe('submitScreencastValidator', () => {
     const resMock = httpMocks.createResponse()
     const sut = proxyquire('../../../source/middleware/submitScreencastValidator.js', {
       'sequelize-connect': sequelizeConnectMock,
-      '../../source/util/youtube': youtubeMock
+      '../../source/util/youtubeClient': youtubeMock
     }).default
     await sut(reqMock, resMock)
     expect(resMock.statusCode).to.equal(400)
@@ -170,7 +170,7 @@ describe('submitScreencastValidator', () => {
 
   it('should return 400 when "url" links to a non-existent YouTube video', async () => {
     const youtubeMock = {
-      createYoutubeClient: () => ({
+      create: () => ({
         videoExists: () => false
       })
     }
@@ -183,7 +183,7 @@ describe('submitScreencastValidator', () => {
     const resMock = httpMocks.createResponse()
     const nextSpyDummy = function () {}
     const sut = proxyquire('../../../source/middleware/submitScreencastValidator.js', {
-      '../../source/util/youtube': youtubeMock
+      '../../source/util/youtubeClient': youtubeMock
     }).default
     await sut(reqMock, resMock, nextSpyDummy)
     expect(resMock.statusCode).to.equal(400)
@@ -206,7 +206,7 @@ describe('submitScreencastValidator', () => {
       }
     }
     const youtubeMock = {
-      createYoutubeClient: () => ({
+      create: () => ({
         videoExists: () => true
       })
     }
@@ -220,7 +220,7 @@ describe('submitScreencastValidator', () => {
     const nextDummy = function () {}
     const sut = proxyquire('../../../source/middleware/submitScreencastValidator.js', {
       'sequelize-connect': sequelizeConnectMock,
-      '../../source/util/youtube': youtubeMock
+      '../../source/util/youtubeClient': youtubeMock
     }).default
     await sut(reqMock, resMock, nextDummy)
     expect(resMock.statusCode).to.equal(400)
