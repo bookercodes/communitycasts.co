@@ -7,7 +7,7 @@ declare class Request {
   protocol: string
 }
 
-declare type NextFunction = (error?: Object) => void
+declare type NextFunction = (error?: any) => void
 
 declare class Response {
   status(statusCode: number): Response;

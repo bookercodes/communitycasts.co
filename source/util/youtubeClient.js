@@ -23,14 +23,14 @@ export function create (key: string) {
   })
 
   return {
-    async fetchVideoDetails (url: string): Promise<YoutubeVideoDetails> {
+    async fetchVideoDetails (url: string): Promise<?YoutubeVideoDetails> {
       const videoId = youtubeUrl.extractId(url)
       const videoList = await promisify(youtubeApi.videos.list)({
         id: videoId,
         part: 'snippet,contentDetails'
       })
       if (videoList.items.length === 0) {
-        throw new Error(`Could not find video with id ${videoId}.`)
+        return null
       }
       const video = videoList.items[0]
       return {
@@ -46,12 +46,11 @@ export function create (key: string) {
     },
 
     async videoExists (url: string): Promise<boolean> {
-      try {
-        await this.fetchVideoDetails(url)
+      const videoDetails = await this.fetchVideoDetails(url)
+      if (videoDetails) {
         return true
-      } catch (error) {
-        return false
       }
+      return false
     }
   }
 }

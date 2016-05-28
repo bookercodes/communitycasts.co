@@ -10,9 +10,17 @@ const screencastsController = { }
 screencastsController.handlePost = async (req: Request, res: Response, next: NextFunction): any => {
   try {
     const client = youtubeClient.create(config.youtubeApiKey)
-    const details = await client.fetchVideoDetails(req.body.url)
+    const screencast = await client.fetchVideoDetails(req.body.url)
+    if (!screencast) {
+      next(`Could not find video at ${req.body.url}.`)
+      return
+    }
     await db.models.screencast.createScreencast({
-      ...details,
+      id: screencast.id,
+      title: screencast.title,
+      description: screencast.description,
+      durationInSeconds: screencast.durationInSeconds,
+      channel: screencast.channel,
       url: req.body.url,
       tags: mapper.mapTags(req.body.tags)
     })
