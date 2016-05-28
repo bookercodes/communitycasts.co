@@ -1,27 +1,38 @@
-// @flow weak
+// @flow
 
 import moment from 'moment'
 import promisify from 'pify'
 import youtubeUrl from 'youtube-url'
 import youtubeApi from 'youtube-api'
 
-export function create (key) {
+type YoutubeVideoDetails = {
+  id: string,
+  title: string,
+  description: string,
+  durationInSeconds: number,
+  channel: {
+    id: string,
+    title: string
+  }
+}
+
+export function create (key: string) {
   youtubeApi.authenticate({
     type: 'key',
     key
   })
 
   return {
-    async fetchVideoDetails (url) {
+    async fetchVideoDetails (url: string): Promise<YoutubeVideoDetails> {
       const videoId = youtubeUrl.extractId(url)
-      const details = await promisify(youtubeApi.videos.list)({
+      const videoList = await promisify(youtubeApi.videos.list)({
         id: videoId,
         part: 'snippet,contentDetails'
       })
-      if (details.items.length === 0) {
+      if (videoList.items.length === 0) {
         throw new Error(`Could not find video with id ${videoId}.`)
       }
-      const video = details.items[0]
+      const video = videoList.items[0]
       return {
         id: videoId,
         title: video.snippet.title,
@@ -34,7 +45,7 @@ export function create (key) {
       }
     },
 
-    async videoExists (url) {
+    async videoExists (url: string): Promise<boolean> {
       try {
         await this.fetchVideoDetails(url)
         return true
