@@ -1,10 +1,10 @@
 // @flow
 
-export default (connection: any) => {
+export default function createSocialNetworkPostModel (connection: any) {
   const socialNetworkPost = connection.define('socialNetworkPost', {
   }, {
     classMethods: {
-      associate (models) {
+      associate (models): void {
         socialNetworkPost.belongsTo(models.screencast)
       }
     }

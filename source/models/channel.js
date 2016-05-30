@@ -1,8 +1,7 @@
-
 // @flow
 
-const createChannelModel = function (sequelize: any, DataTypes: DataTypes) : any {
-  const channel: any = sequelize.define('channel', {
+export default function createChannelModel (connection: any, DataTypes: DataTypes) : any {
+  const channel = connection.define('channel', {
     id: {
       primaryKey: true,
       type: DataTypes.STRING
@@ -10,12 +9,10 @@ const createChannelModel = function (sequelize: any, DataTypes: DataTypes) : any
     name: DataTypes.TEXT
   }, {
     classMethods: {
-      associate: function (models: any): any {
+      associate: function (models): void {
         channel.hasMany(models.screencast)
       }
     }
   })
   return channel
 }
-
-export default createChannelModel

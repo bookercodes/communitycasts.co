@@ -1,7 +1,7 @@
 // @flow
 
-const createReferralModel = function (sequelize: any, DataTypes: DataTypes) : any {
-  const referral: any = sequelize.define('referral', {
+export default function createReferralModel (connection: any, DataTypes: DataTypes) : any {
+  const referral = connection.define('referral', {
     screencastId: {
       type: DataTypes.STRING,
       primaryKey: true
@@ -12,7 +12,7 @@ const createReferralModel = function (sequelize: any, DataTypes: DataTypes) : an
     }
   }, {
     classMethods: {
-      associate (models) {
+      associate (models): void {
         referral.belongsTo(models.screencast, {
           foreignKey: 'screencastId'
         })
@@ -21,5 +21,3 @@ const createReferralModel = function (sequelize: any, DataTypes: DataTypes) : an
   })
   return referral
 }
-
-export default createReferralModel

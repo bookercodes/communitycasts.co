@@ -1,8 +1,8 @@
 // @flow
 import db from 'sequelize-connect'
 
-const createScreencastModel = (sequelize: any, DataTypes: DataTypes) : any => {
-  const screencast = sequelize.define('screencast', {
+export default function createScreencastModel (connection: any, DataTypes: DataTypes) : any {
+  const screencast = connection.define('screencast', {
     id: {
       primaryKey: true,
       type: DataTypes.STRING
@@ -17,7 +17,7 @@ const createScreencastModel = (sequelize: any, DataTypes: DataTypes) : any => {
     }
   }, {
     classMethods: {
-      associate (models: any): any {
+      associate (models): void {
         screencast.belongsTo(models.channel)
         screencast.belongsToMany(models.tag, {
           through: models.screencastTag,
@@ -47,7 +47,7 @@ const createScreencastModel = (sequelize: any, DataTypes: DataTypes) : any => {
         }
       },
 
-      async createScreencast (screencast): any {
+      async createScreencast (screencast): Promise {
         await db.sequelize.transaction(async transaction => {
           const results = await db.models.channel.findOrCreate({
             where: {
@@ -82,5 +82,3 @@ const createScreencastModel = (sequelize: any, DataTypes: DataTypes) : any => {
   })
   return screencast
 }
-
-export default createScreencastModel
