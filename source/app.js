@@ -2,14 +2,12 @@
 
 import express from 'express'
 import bodyParser from 'body-parser'
-import authenticateRequest from './middleware/authenticateRequest'
-import screencastsController from './controllers/screencastsController.js'
-import validateSubmitScreencastReq from './middleware/submitScreencastValidator.js'
-// import errorHandler from './middleware/errorHandler.js'
+import {authenticateRequest} from './middleware/authenticateRequest'
+import * as screencastsController from './controllers/screencastsController.js'
+import {validateSubmitScreencastReq} from './middleware/submitScreencastValidator.js'
 
 const app = express()
 
-// app.use(errorHandler)
 app.use(bodyParser.json())
 
 app.post(

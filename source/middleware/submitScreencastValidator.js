@@ -64,7 +64,7 @@ function validateTags (tags) {
  * @name validateSubmitScreencastReq
  * @function
  */
-export default async function validateSubmitScreencastReq (req: any, res:any, next:any): any {
+export async function validateSubmitScreencastReq (req: any, res:any, next:any): any {
   try {
     const urlError = await validateUrl(req.body.url)
     const tagError = validateTags(req.body.tags)

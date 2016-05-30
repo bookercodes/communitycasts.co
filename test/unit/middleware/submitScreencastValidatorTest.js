@@ -28,18 +28,18 @@ describe('submitScreencastValidator', () => {
     })
     const resMock = httpMocks.createResponse()
     const nextSpy = sinon.spy()
-    const sut = proxyquire('../../../source/middleware/submitScreencastValidator.js', {
+    const {validateSubmitScreencastReq} = proxyquire('../../../source/middleware/submitScreencastValidator.js', {
       'sequelize-connect': sequelizeConnectMock,
       '../../source/util/youtubeClient': youtubeMock
-    }).default
-    await sut(reqMock, resMock, nextSpy)
+    })
+    await validateSubmitScreencastReq(reqMock, resMock, nextSpy)
     expect(nextSpy.called).to.be.true
   })
 
   it('should return 400 when req.body is totally invalid', async () => {
     const reqMock = httpMocks.createRequest()
     const resMock = httpMocks.createResponse()
-    const sut = require('../../../source/middleware/submitScreencastValidator.js').default
+    const sut = require('../../../source/middleware/submitScreencastValidator.js').validateSubmitScreencastReq
     await sut(reqMock, resMock)
     expect(resMock.statusCode).to.equal(400)
     const {errors} = JSON.parse(resMock._getData())
@@ -64,7 +64,7 @@ describe('submitScreencastValidator', () => {
       }
     })
     const resMock = httpMocks.createResponse()
-    const sut = require('../../../source/middleware/submitScreencastValidator.js').default
+    const sut = require('../../../source/middleware/submitScreencastValidator.js').validateSubmitScreencastReq
     await sut(reqMock, resMock)
     expect(resMock.statusCode).to.equal(400)
     const {errors} = JSON.parse(resMock._getData())
@@ -97,11 +97,11 @@ describe('submitScreencastValidator', () => {
       }
     })
     const resMock = httpMocks.createResponse()
-    const sut = proxyquire('../../../source/middleware/submitScreencastValidator.js', {
+    const {validateSubmitScreencastReq} = proxyquire('../../../source/middleware/submitScreencastValidator.js', {
       'sequelize-connect': sequelizeConnectMock,
       '../../source/util/youtubeClient': youtubeMock
-    }).default
-    await sut(reqMock, resMock)
+    })
+    await validateSubmitScreencastReq(reqMock, resMock)
     expect(resMock.statusCode).to.equal(400)
     const {errors} = JSON.parse(resMock._getData())
     const expected = [
@@ -132,11 +132,11 @@ describe('submitScreencastValidator', () => {
       }
     })
     const resMock = httpMocks.createResponse()
-    const sut = proxyquire('../../../source/middleware/submitScreencastValidator.js', {
+    const {validateSubmitScreencastReq} = proxyquire('../../../source/middleware/submitScreencastValidator.js', {
       'sequelize-connect': sequelizeConnectMock,
       '../../source/util/youtubeClient': youtubeMock
-    }).default
-    await sut(reqMock, resMock)
+    })
+    await validateSubmitScreencastReq(reqMock, resMock)
     expect(resMock.statusCode).to.equal(400)
     const {errors} = JSON.parse(resMock._getData())
     const expected = [
@@ -155,7 +155,7 @@ describe('submitScreencastValidator', () => {
       }
     })
     const resMock = httpMocks.createResponse()
-    const sut = require('../../../source/middleware/submitScreencastValidator.js').default
+    const sut = require('../../../source/middleware/submitScreencastValidator.js').validateSubmitScreencastReq
     await sut(reqMock, resMock)
     expect(resMock.statusCode).to.equal(400)
     const {errors} = JSON.parse(resMock._getData())
@@ -182,10 +182,10 @@ describe('submitScreencastValidator', () => {
     })
     const resMock = httpMocks.createResponse()
     const nextSpyDummy = function () {}
-    const sut = proxyquire('../../../source/middleware/submitScreencastValidator.js', {
+    const {validateSubmitScreencastReq} = proxyquire('../../../source/middleware/submitScreencastValidator.js', {
       '../../source/util/youtubeClient': youtubeMock
-    }).default
-    await sut(reqMock, resMock, nextSpyDummy)
+    })
+    await validateSubmitScreencastReq(reqMock, resMock, nextSpyDummy)
     expect(resMock.statusCode).to.equal(400)
     const {errors} = JSON.parse(resMock._getData())
     const expected = [
@@ -218,11 +218,11 @@ describe('submitScreencastValidator', () => {
     })
     const resMock = httpMocks.createResponse()
     const nextDummy = function () {}
-    const sut = proxyquire('../../../source/middleware/submitScreencastValidator.js', {
+    const {validateSubmitScreencastReq} = proxyquire('../../../source/middleware/submitScreencastValidator.js', {
       'sequelize-connect': sequelizeConnectMock,
       '../../source/util/youtubeClient': youtubeMock
-    }).default
-    await sut(reqMock, resMock, nextDummy)
+    })
+    await validateSubmitScreencastReq(reqMock, resMock, nextDummy)
     expect(resMock.statusCode).to.equal(400)
     const {errors} = JSON.parse(resMock._getData())
     const expected = [

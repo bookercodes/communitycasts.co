@@ -5,9 +5,7 @@ import config from 'config'
 import * as youtubeClient from '../util/youtubeClient.js'
 import * as modelMapper from '../util/modelMapper'
 
-const screencastsController = { }
-
-screencastsController.handlePost = async (req: Request, res: Response, next: NextFunction): any => {
+export const handlePost = async (req: Request, res: Response, next: NextFunction): any => {
   try {
     const client = youtubeClient.create(config.youtubeApiKey)
     const screencast = await client.fetchVideoDetails(req.body.url)
@@ -30,7 +28,7 @@ screencastsController.handlePost = async (req: Request, res: Response, next: Nex
   }
 }
 
-screencastsController.handleGet = async (req: Request, res: Response, next: NextFunction): any => {
+export const handleGet = async (req: Request, res: Response, next: NextFunction): any => {
   try {
     const result = await db.models.screencast.paginate(
       config.screencastsPerPage,
@@ -57,7 +55,7 @@ screencastsController.handleGet = async (req: Request, res: Response, next: Next
   }
 }
 
-screencastsController.sendScreencast = async (req: Request, res: Response, next: NextFunction): any => {
+export const sendScreencast = async (req: Request, res: Response, next: NextFunction): any => {
   try {
     const foundScreencast = await db.models.screencast.findOne({
       where: {
@@ -89,5 +87,3 @@ screencastsController.sendScreencast = async (req: Request, res: Response, next:
     next(err)
   }
 }
-
-export default screencastsController

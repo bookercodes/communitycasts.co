@@ -2,7 +2,7 @@
 
 import config from 'config'
 
-const authenticateRequest = function (req: Request, res: Response, next: NextFunction) {
+export const authenticateRequest = function (req: Request, res: Response, next: NextFunction) {
   const authHeader: string = req.headers['authorization']
   if (!authHeader) {
     res.status(401).json({
@@ -28,5 +28,3 @@ const authenticateRequest = function (req: Request, res: Response, next: NextFun
   }
   next()
 }
-
-export default authenticateRequest

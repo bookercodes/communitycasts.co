@@ -32,7 +32,7 @@ async function tweet (status) {
   await twitter.post('statuses/update', { status })
 }
 
-const postToTwitter = async function () {
+export const postToTwitter = async function () {
   const screencast = await findScreencast()
   if (screencast === null) {
     throw new Error('couldn\'t find a screencast to post')
@@ -42,5 +42,3 @@ const postToTwitter = async function () {
     await save(screencast.id)
   }
 }
-
-export default postToTwitter

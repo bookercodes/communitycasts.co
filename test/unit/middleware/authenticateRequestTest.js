@@ -8,12 +8,12 @@ import config from 'config'
 
 describe('authenticateRequest', () => {
   it('should export a function', () => {
-    const sut = require('../../../source/middleware/authenticateRequest').default
+    const sut = require('../../../source/middleware/authenticateRequest').authenticateRequest
     expect(sut).to.be.a('function')
   })
 
   it('should return 401 when password is invalid', () => {
-    const sut = require('../../../source/middleware/authenticateRequest').default
+    const sut = require('../../../source/middleware/authenticateRequest').authenticateRequest
     const encodedInvalidPassword = new Buffer('invalid password').toString('base64')
     const reqMock = httpMocks.createRequest({
       headers: { authorization: `Basic: ${encodedInvalidPassword}` }
@@ -29,7 +29,7 @@ describe('authenticateRequest', () => {
   })
 
   it('should call next middleware when password is valid', () => {
-    const sut = require('../../../source/middleware/authenticateRequest').default
+    const sut = require('../../../source/middleware/authenticateRequest').authenticateRequest
     const encodedValidPassword = new Buffer(config.adminPassword).toString('base64')
     const reqMock = httpMocks.createRequest({
       headers: { authorization: `Basic: ${encodedValidPassword}` }
@@ -41,7 +41,7 @@ describe('authenticateRequest', () => {
   })
 
   it('should return 401 when authorization header is missing', () => {
-    const sut = require('../../../source/middleware/authenticateRequest').default
+    const sut = require('../../../source/middleware/authenticateRequest').authenticateRequest
     const reqMock = httpMocks.createRequest()
     const resMock = httpMocks.createResponse()
     const nextDummy = function () { }
@@ -53,7 +53,7 @@ describe('authenticateRequest', () => {
   })
 
   it('should return 401 when authorization header is malformed', () => {
-    const sut = require('../../../source/middleware/authenticateRequest').default
+    const sut = require('../../../source/middleware/authenticateRequest').authenticateRequest
     const reqMock = httpMocks.createRequest({
       headers: { authorization: 'Basic: ' }
     })

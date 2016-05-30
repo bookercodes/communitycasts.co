@@ -4,7 +4,7 @@ import db from 'sequelize-connect'
 import path from 'path'
 import app from './app'
 import config from 'config'
-import cron from './cron'
+import * as cron from './cron'
 
 async function connectToDatabase () {
   db.logger.level = null // Disable sequelize-connect logging

@@ -26,7 +26,7 @@ describe('postToTwitter', () => {
   })
 
   it('should throw when db is empty', async () => {
-    const sut = require('../../../../source/cron/jobs/postToTwitter').default
+    const sut = require('../../../../source/cron/jobs/postToTwitter').postToTwitter
     return expect(sut())
       .to
       .be
@@ -40,12 +40,12 @@ describe('postToTwitter', () => {
         post: postSpy
       }
     }
-    const sut = proxyquire('../../../../source/cron/jobs/postToTwitter', {
+    const {postToTwitter} = proxyquire('../../../../source/cron/jobs/postToTwitter', {
       'twit': TwitMock
-    }).default
+    })
     const screencast = testScreencasts[0]
     await db.models.screencast.createScreencast(screencast)
-    await sut()
+    await postToTwitter()
     expect(postSpy.calledOnce)
       .to
       .be
@@ -59,12 +59,12 @@ describe('postToTwitter', () => {
         post: postSpy
       }
     }
-    const sut = proxyquire('../../../../source/cron/jobs/postToTwitter', {
+    const {postToTwitter} = proxyquire('../../../../source/cron/jobs/postToTwitter', {
       'twit': TwitMock
-    }).default
+    })
     const screencast = testScreencasts[0]
     await db.models.screencast.createScreencast(screencast)
-    await sut()
+    await postToTwitter()
     const status = postSpy.getCalls()[0].args[1].status
     expect(status).to.contain(screencast.url)
   })
@@ -73,13 +73,13 @@ describe('postToTwitter', () => {
     function TwitMock () {
       return { post: function postDummy () { } }
     }
-    const sut = proxyquire('../../../../source/cron/jobs/postToTwitter', {
+    const {postToTwitter} = proxyquire('../../../../source/cron/jobs/postToTwitter', {
       'twit': TwitMock
-    }).default
+    })
     const screencast = testScreencasts[0]
     await db.models.screencast.createScreencast(screencast)
-    await sut()
-    return expect(sut())
+    await postToTwitter()
+    return expect(postToTwitter())
       .to
       .be
       .rejected
