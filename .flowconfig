@@ -5,3 +5,4 @@
 
 [libs]
 declarations/express.js.flow
+declarations/sequelize.js.flow

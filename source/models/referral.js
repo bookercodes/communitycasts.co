@@ -1,6 +1,6 @@
 // @flow
 
-const createReferralModel = function (sequelize: any, DataTypes: any) : any {
+const createReferralModel = function (sequelize: any, DataTypes: DataTypes) : any {
   const referral: any = sequelize.define('referral', {
     screencastId: {
       type: DataTypes.STRING,

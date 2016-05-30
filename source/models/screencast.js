@@ -1,7 +1,7 @@
 // @flow
 import db from 'sequelize-connect'
 
-const createScreencastModel = (sequelize: any, DataTypes: any) : any => {
+const createScreencastModel = (sequelize: any, DataTypes: DataTypes) : any => {
   const screencast = sequelize.define('screencast', {
     id: {
       primaryKey: true,

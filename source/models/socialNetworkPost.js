@@ -1,6 +1,6 @@
 // @flow
 
-export default (connection: any, dataTypes: any) => {
+export default (connection: any) => {
   const socialNetworkPost = connection.define('socialNetworkPost', {
   }, {
     classMethods: {

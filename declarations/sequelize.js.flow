@@ -1,0 +1,5 @@
+type DataTypes = {
+  STRING: any,
+  TEXT: any,
+  INTEGER: any
+}

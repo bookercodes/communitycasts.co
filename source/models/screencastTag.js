@@ -8,7 +8,7 @@
  * @param sequelize - A Sequelize connection
  * @param DataTypes - A quasi enumeration of SQL data types
  */
-const createScreencastTagModel = function (sequelize: any, DataTypes: any) : any {
+const createScreencastTagModel = function (sequelize: any, DataTypes: DataTypes) : any {
   const screencastTag: any = sequelize.define('screencastTag', {
     screencastId: {
       type: DataTypes.STRING,

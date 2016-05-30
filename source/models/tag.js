@@ -7,7 +7,7 @@
  * @param sequelize - A Sequelize connection
  * @param DataTypes - A quasi enumeration of SQL data types
  */
-const createTagModel = function (sequelize: any, DataTypes: any) : any {
+const createTagModel = function (sequelize: any, DataTypes: DataTypes) : any {
   const tag = sequelize.define('tag', {
     id: {
       primaryKey: true,
