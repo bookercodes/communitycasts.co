@@ -5,7 +5,7 @@ import config from 'config'
 import * as youtubeClient from '../util/youtubeClient.js'
 import * as modelMapper from '../util/modelMapper'
 
-export const handlePost = async (req: Request, res: Response, next: NextFunction): any => {
+export async function handlePost (req: Request, res: Response, next: NextFunction): any {
   try {
     const client = youtubeClient.create(config.youtubeApiKey)
     const screencast = await client.fetchVideoDetails(req.body.url)
@@ -28,7 +28,7 @@ export const handlePost = async (req: Request, res: Response, next: NextFunction
   }
 }
 
-export const handleGet = async (req: Request, res: Response, next: NextFunction): any => {
+export async function handleGet (req: Request, res: Response, next: NextFunction): any {
   try {
     const result = await db.models.screencast.paginate(
       config.screencastsPerPage,
@@ -55,7 +55,7 @@ export const handleGet = async (req: Request, res: Response, next: NextFunction)
   }
 }
 
-export const sendScreencast = async (req: Request, res: Response, next: NextFunction): any => {
+export async function sendScreencast (req: Request, res: Response, next: NextFunction): any {
   try {
     const foundScreencast = await db.models.screencast.findOne({
       where: {
