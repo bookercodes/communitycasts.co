@@ -6,64 +6,74 @@ import sinon from 'sinon'
 import httpMocks from 'node-mocks-http'
 import config from 'config'
 
+function encodePassword (password: string): string {
+  return new Buffer(password).toString('base64')
+}
+
 describe('authenticateRequest', () => {
-  it('should export a function', () => {
-    const sut = require('../../../source/middleware/authenticateRequest').authenticateRequest
-    expect(sut).to.be.a('function')
+  it('exports a function', () => {
+    const {authenticateRequest} = require('../../../source/middleware/authenticateRequest')
+    expect(authenticateRequest).to.be.a('function')
   })
 
-  it('should return 401 when password is invalid', () => {
-    const sut = require('../../../source/middleware/authenticateRequest').authenticateRequest
-    const encodedInvalidPassword = new Buffer('invalid password').toString('base64')
+  it('returns 401 when password is invalid', () => {
+    const {authenticateRequest} = require('../../../source/middleware/authenticateRequest')
     const reqMock = httpMocks.createRequest({
-      headers: { authorization: `Basic: ${encodedInvalidPassword}` }
+      headers: { authorization: `Basic: ${encodePassword('invalid password')}` }
     })
     const resMock = httpMocks.createResponse()
     const nextSpy = sinon.spy()
-    sut(reqMock, resMock, nextSpy)
+
+    authenticateRequest(reqMock, resMock, nextSpy)
+
     expect(resMock.statusCode).to.equal(401)
     const {errors} = JSON.parse(resMock._getData())
     const expected = [{ message: 'Invalid password' }]
     expect(errors).to.deep.equal(expected)
-    expect(nextSpy.called).to.equal(false)
+    expect(nextSpy.called).to.be.false
   })
 
-  it('should call next middleware when password is valid', () => {
-    const sut = require('../../../source/middleware/authenticateRequest').authenticateRequest
-    const encodedValidPassword = new Buffer(config.adminPassword).toString('base64')
+  it('calls next middleware when password is valid', () => {
+    const {authenticateRequest} = require('../../../source/middleware/authenticateRequest')
     const reqMock = httpMocks.createRequest({
-      headers: { authorization: `Basic: ${encodedValidPassword}` }
+      headers: { authorization: `Basic: ${encodePassword(config.adminPassword)}` }
     })
     const resMock = httpMocks.createResponse()
     const nextSpy = sinon.spy()
-    sut(reqMock, resMock, nextSpy)
+
+    authenticateRequest(reqMock, resMock, nextSpy)
+
     expect(nextSpy.called).to.be.true
   })
 
-  it('should return 401 when authorization header is missing', () => {
-    const sut = require('../../../source/middleware/authenticateRequest').authenticateRequest
+  it('returns 401 when authorization header is missing', () => {
+    const {authenticateRequest} = require('../../../source/middleware/authenticateRequest')
     const reqMock = httpMocks.createRequest()
     const resMock = httpMocks.createResponse()
     const nextDummy = function () { }
-    sut(reqMock, resMock, nextDummy)
+
+    authenticateRequest(reqMock, resMock, nextDummy)
+
     expect(resMock.statusCode).to.equal(401)
     const {errors} = JSON.parse(resMock._getData())
     const expected = [{ message: 'Authorization header missing' }]
     expect(errors).to.deep.equal(expected)
   })
 
-  it('should return 401 when authorization header is malformed', () => {
-    const sut = require('../../../source/middleware/authenticateRequest').authenticateRequest
+  it('returns 401 when authorization header is malformed', () => {
+    const {authenticateRequest} = require('../../../source/middleware/authenticateRequest')
     const reqMock = httpMocks.createRequest({
       headers: { authorization: 'Basic: ' }
     })
     const resMock = httpMocks.createResponse()
     const nextSpy = sinon.spy()
-    sut(reqMock, resMock, nextSpy)
+
+    authenticateRequest(reqMock, resMock, nextSpy)
+
     expect(resMock.statusCode).to.equal(401)
     const {errors} = JSON.parse(resMock._getData())
     const expected = [{ message: 'Authorization header format is invalid' }]
     expect(errors).to.deep.equal(expected)
-    expect(nextSpy.called).to.equal(false)
+    expect(nextSpy.called).to.be.false
   })
 })
