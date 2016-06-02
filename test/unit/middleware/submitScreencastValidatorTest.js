@@ -7,7 +7,7 @@ import httpMocks from 'node-mocks-http'
 import {describe, it} from 'mocha'
 
 describe('submitScreencastValidator', () => {
-  it('should invoke next middleware when req.body is valid', async () => {
+  it('invokes next middleware when req.body is valid', async () => {
     const sequelizeConnectMock = {
       models: {
         screencast: {
@@ -32,31 +32,31 @@ describe('submitScreencastValidator', () => {
       'sequelize-connect': sequelizeConnectMock,
       '../../source/util/youtubeClient': youtubeMock
     })
+
     await validateSubmitScreencastReq(reqMock, resMock, nextSpy)
+
     expect(nextSpy.called).to.be.true
   })
 
-  it('should return 400 when req.body is totally invalid', async () => {
+  it('returns 400 when req.body is totally invalid', async () => {
     const reqMock = httpMocks.createRequest()
     const resMock = httpMocks.createResponse()
-    const sut = require('../../../source/middleware/submitScreencastValidator.js').validateSubmitScreencastReq
-    await sut(reqMock, resMock)
+    const {validateSubmitScreencastReq} = require('../../../source/middleware/submitScreencastValidator.js')
+
+    await validateSubmitScreencastReq(reqMock, resMock)
+
     expect(resMock.statusCode).to.equal(400)
     const {errors} = JSON.parse(resMock._getData())
-    const expected = [
-      {
-        field: 'url',
-        message: 'url cannot be undefined'
-      },
-      {
-        field: 'tags',
-        message: 'tags cannot be undefined'
-      }
-    ]
-    expect(errors).to.deep.equal(expected)
+    expect(errors).to.deep.equal([{
+      field: 'url',
+      message: 'url cannot be undefined'
+    }, {
+      field: 'tags',
+      message: 'tags cannot be undefined'
+    }])
   })
 
-  it('should return 400 when "url" isn\'t a correctly formatted YouTube URL', async () => {
+  it('returns 400 when "url" isn\'t a correctly formatted YouTube URL', async () => {
     const reqMock = httpMocks.createRequest({
       body: {
         url: 'invalid URL',
@@ -64,20 +64,19 @@ describe('submitScreencastValidator', () => {
       }
     })
     const resMock = httpMocks.createResponse()
-    const sut = require('../../../source/middleware/submitScreencastValidator.js').validateSubmitScreencastReq
-    await sut(reqMock, resMock)
+    const {validateSubmitScreencastReq} = require('../../../source/middleware/submitScreencastValidator.js')
+
+    await validateSubmitScreencastReq(reqMock, resMock)
+
     expect(resMock.statusCode).to.equal(400)
     const {errors} = JSON.parse(resMock._getData())
-    const expected = [
-      {
-        field: 'url',
-        message: 'url must be a valid YouTube URL'
-      }
-    ]
-    expect(errors).to.deep.equal(expected)
+    expect(errors).to.deep.equal([{
+      field: 'url',
+      message: 'url must be a valid YouTube URL'
+    }])
   })
 
-  it('should return 400 when "tags" isn\'t a string', async () => {
+  it('returns 400 when "tags" isn\'t a string', async () => {
     const sequelizeConnectMock = {
       models: {
         screencast: {
@@ -101,19 +100,18 @@ describe('submitScreencastValidator', () => {
       'sequelize-connect': sequelizeConnectMock,
       '../../source/util/youtubeClient': youtubeMock
     })
+
     await validateSubmitScreencastReq(reqMock, resMock)
+
     expect(resMock.statusCode).to.equal(400)
     const {errors} = JSON.parse(resMock._getData())
-    const expected = [
-      {
-        field: 'tags',
-        message: 'tags must be a string'
-      }
-    ]
-    expect(errors).to.deep.equal(expected)
+    expect(errors).to.deep.equal([{
+      field: 'tags',
+      message: 'tags must be a string'
+    }])
   })
 
-  it('should return 400 when "tags" is undefined', async () => {
+  it('returu 400 when "tags" is undefined', async () => {
     const sequelizeConnectMock = {
       models: {
         screencast: {
@@ -136,39 +134,37 @@ describe('submitScreencastValidator', () => {
       'sequelize-connect': sequelizeConnectMock,
       '../../source/util/youtubeClient': youtubeMock
     })
+
     await validateSubmitScreencastReq(reqMock, resMock)
+
     expect(resMock.statusCode).to.equal(400)
     const {errors} = JSON.parse(resMock._getData())
-    const expected = [
-      {
-        field: 'tags',
-        message: 'tags cannot be undefined'
-      }
-    ]
-    expect(errors).to.deep.equal(expected)
+    expect(errors).to.deep.equal([{
+      field: 'tags',
+      message: 'tags cannot be undefined'
+    }])
   })
 
-  it('should return 400 when "url" is undefined', async () => {
+  it('returns 400 when "url" is undefined', async () => {
     const reqMock = httpMocks.createRequest({
       body: {
         tags: 'tags'
       }
     })
     const resMock = httpMocks.createResponse()
-    const sut = require('../../../source/middleware/submitScreencastValidator.js').validateSubmitScreencastReq
-    await sut(reqMock, resMock)
+    const {validateSubmitScreencastReq} = require('../../../source/middleware/submitScreencastValidator.js')
+
+    await validateSubmitScreencastReq(reqMock, resMock)
+
     expect(resMock.statusCode).to.equal(400)
     const {errors} = JSON.parse(resMock._getData())
-    const expected = [
-      {
-        field: 'url',
-        message: 'url cannot be undefined'
-      }
-    ]
-    expect(errors).to.deep.equal(expected)
+    expect(errors).to.deep.equal([{
+      field: 'url',
+      message: 'url cannot be undefined'
+    }])
   })
 
-  it('should return 400 when "url" links to a non-existent YouTube video', async () => {
+  it('returns 400 when "url" links to a non-existent YouTube video', async () => {
     const youtubeMock = {
       create: () => ({
         videoExists: () => false
@@ -185,19 +181,18 @@ describe('submitScreencastValidator', () => {
     const {validateSubmitScreencastReq} = proxyquire('../../../source/middleware/submitScreencastValidator.js', {
       '../../source/util/youtubeClient': youtubeMock
     })
+
     await validateSubmitScreencastReq(reqMock, resMock, nextSpyDummy)
+
     expect(resMock.statusCode).to.equal(400)
     const {errors} = JSON.parse(resMock._getData())
-    const expected = [
-      {
-        field: 'url',
-        message: 'url must link to an existent, public YouTube video'
-      }
-    ]
-    expect(errors).to.deep.equal(expected)
+    expect(errors).to.deep.equal([{
+      field: 'url',
+      message: 'url must link to an existent, public YouTube video'
+    }])
   })
 
-  it('should return 400 when "url" has already been submitted', async () => {
+  it('returns 400 when "url" has already been submitted', async () => {
     const sequelizeConnectMock = {
       models: {
         screencast: {
@@ -222,15 +217,14 @@ describe('submitScreencastValidator', () => {
       'sequelize-connect': sequelizeConnectMock,
       '../../source/util/youtubeClient': youtubeMock
     })
+
     await validateSubmitScreencastReq(reqMock, resMock, nextDummy)
+
     expect(resMock.statusCode).to.equal(400)
     const {errors} = JSON.parse(resMock._getData())
-    const expected = [
-      {
-        field: 'url',
-        message: 'url has already been submitted'
-      }
-    ]
-    expect(errors).to.deep.equal(expected)
+    expect(errors).to.deep.equal([{
+      field: 'url',
+      message: 'url has already been submitted'
+    }])
   })
 })

@@ -13,7 +13,7 @@ export function authenticateRequest (req: Request, res: Response, next: NextFunc
     return
   }
 
-  const encodedPassword: ?Array<string> = authHeader.match(/^Basic: [^\s]+$/)
+  const encodedPassword: ?Array<string> = authHeader.match(/^Basic:\s([^\s]+$)/)
   if (!encodedPassword) {
     res
       .status(401)
