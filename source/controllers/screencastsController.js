@@ -6,13 +6,11 @@ import * as youtubeClient from '../util/youtubeClient.js'
 import * as modelMapper from '../util/modelMapper'
 
 export async function handlePost (req: Request, res: Response, next: NextFunction): any {
-  try {
-    const client = youtubeClient.create(config.youtubeApiKey)
-    const screencast = await client.fetchVideoDetails(req.body.url)
-    if (!screencast) {
-      next(`Could not find video at ${req.body.url}.`)
-      return
-    }
+  const client = youtubeClient.create(config.youtubeApiKey)
+  const screencast = await client.fetchVideoDetails(req.body.url)
+  if (!screencast) {
+    next(`Could not find video at ${req.body.url}.`)
+  } else {
     await db.models.screencast.createScreencast({
       id: screencast.id,
       title: screencast.title,
@@ -23,67 +21,55 @@ export async function handlePost (req: Request, res: Response, next: NextFunctio
       tags: modelMapper.mapTags(req.body.tags)
     })
     res.sendStatus(201)
-  } catch (error) {
-    next(error)
   }
 }
 
-export async function handleGet (req: Request, res: Response, next: NextFunction): any {
-  try {
-    const result = await db.models.screencast.paginate(
-      config.screencastsPerPage,
-      req.query.page,
-      req.query.sort)
-    result.screencasts = result.screencasts.map(screencast => {
-      screencast = screencast.dataValues
-      return {
-        href: `${req.protocol}://${req.headers.host}/api/screencasts/${screencast.id}`,
-        title: screencast.title,
-        description: screencast.description,
-        durationInSeconds: screencast.durationInSeconds,
-        channel: {
-          id: screencast.channel.dataValues.id,
-          name: screencast.channel.dataValues.name
-        },
-        tags: screencast.tags.map(tag => tag.dataValues.id)
-      }
-    })
-    res.status(200).json(result)
-  } catch (err) {
-    console.log(err)
-    next(err)
-  }
+export async function handleGet (req: Request, res: Response): any {
+  const result = await db.models.screencast.paginate(
+    config.screencastsPerPage,
+    req.query.page,
+    req.query.sort)
+  result.screencasts = result.screencasts.map(screencast => {
+    screencast = screencast.dataValues
+    return {
+      href: `${req.protocol}://${req.headers.host}/api/screencasts/${screencast.id}`,
+      title: screencast.title,
+      description: screencast.description,
+      durationInSeconds: screencast.durationInSeconds,
+      channel: {
+        id: screencast.channel.dataValues.id,
+        name: screencast.channel.dataValues.name
+      },
+      tags: screencast.tags.map(tag => tag.dataValues.id)
+    }
+  })
+  res.status(200).json(result)
 }
 
 export async function sendScreencast (req: Request, res: Response, next: NextFunction): any {
-  try {
-    const foundScreencast = await db.models.screencast.findOne({
+  const foundScreencast = await db.models.screencast.findOne({
+    where: {
+      id: req.params.screencastId
+    }
+  })
+  if (foundScreencast === null) {
+    res.sendStatus(404)
+  } else {
+    const foundReferral = await db.models.referral.findOne({
       where: {
-        id: req.params.screencastId
+        screencastId: req.params.screencastId,
+        refereeIp: req.ip
       }
     })
-    if (foundScreencast === null) {
-      res.sendStatus(404)
-    } else {
-      const foundReferral = await db.models.referral.findOne({
-        where: {
-          screencastId: req.params.screencastId,
-          refereeIp: req.ip
-        }
+    if (foundReferral === null) {
+      await foundScreencast.increment({
+        referralCount: 1
       })
-      if (foundReferral === null) {
-        await foundScreencast.increment({
-          referralCount: 1
-        })
-        await db.models.referral.create({
-          screencastId: req.params.screencastId,
-          refereeIp: req.ip
-        })
-      }
-      res.redirect(foundScreencast.dataValues.url)
+      await db.models.referral.create({
+        screencastId: req.params.screencastId,
+        refereeIp: req.ip
+      })
     }
-  } catch (err) {
-    console.log(err)
-    next(err)
+    res.redirect(foundScreencast.dataValues.url)
   }
 }
