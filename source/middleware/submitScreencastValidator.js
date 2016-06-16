@@ -39,6 +39,10 @@ function validateTags (tags) {
   if (typeof tags !== 'string') {
     return 'tags must be a string'
   }
+
+  if (/[a-zA-Z]/g.exec(tags) === null) {
+    return 'there must be at least one tag'
+  }
 }
 
 export async function validateSubmitScreencastReq (req: any, res:any, next:any): any {
