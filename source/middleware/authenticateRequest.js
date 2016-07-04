@@ -18,7 +18,7 @@ export function authenticateRequest (req: Request, res: Response, next: NextFunc
     res
       .status(401)
       .json({
-        errors: [{ message: 'Authorization header format is invalid' }]
+        errors: [{ message: 'Authorization header format is invalid. Correct format is `Basic: <base64-encoded password>`' }]
       })
     return
   }

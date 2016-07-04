@@ -72,7 +72,7 @@ describe('authenticateRequest', () => {
 
     expect(resMock.statusCode).to.equal(401)
     const {errors} = JSON.parse(resMock._getData())
-    const expected = [{ message: 'Authorization header format is invalid' }]
+    const expected = [{ message: 'Authorization header format is invalid. Correct format is `Basic: <base64-encoded password>`' }]
     expect(errors).to.deep.equal(expected)
     expect(nextSpy.called).to.be.false
   })
