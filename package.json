@@ -4,7 +4,9 @@
     "test": "NODE_ENV=test mocha --compilers js:babel-core/register --timeout 5000",
     "test:all": "npm run test -- ./test --recursive",
     "watch:test:all": "nodemon --watch ./ --recursive --exec npm run test:all",
-    "watch:test": "nodemon --watch ./ --recursive --exec npm run test"
+    "watch:test": "nodemon --watch ./ --recursive --exec npm run test",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "babel-preset-node5": "^11.0.1",
@@ -17,11 +19,12 @@
     "mysql": "^2.10.2",
     "node-schedule": "^1.1.0",
     "pify": "^2.3.0",
-    "sequelize": "^3.20.0",
-    "sequelize-connect": "^1.2.1",
+    "sequelize": "^4.17.2",
+    "sequelize-connect": "^2.1.1",
     "twit": "^2.2.4",
-    "youtube-api": "^1.4.0",
-    "youtube-url": "^0.2.1"
+    "youtube-api": "^2.0.0",
+    "youtube-url": "^0.2.1",
+    "snyk": "^1.110.0"
   },
   "devDependencies": {
     "babel-eslint": "^6.0.4",
@@ -41,5 +44,6 @@
     "sinon": "^1.17.3",
     "supertest": "^1.2.0",
     "supertest-as-promised": "^3.0.0"
-  }
+  },
+  "snyk": true
 }
