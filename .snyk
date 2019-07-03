@@ -1,0 +1,126 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.13.5
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-LODASH-450202:
+    - babel-preset-node5 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-template > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - sequelize > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-register > babel-core > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-es2015-sticky-regex > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - sequelize-connect > commitizen > inquirer > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-es2015-unicode-regex > babel-helper-regex > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-es2015-sticky-regex > babel-helper-regex > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-register > babel-core > babel-generator > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-register > babel-core > babel-template > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-es2015-parameters > babel-template > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-es2015-modules-commonjs > babel-template > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-register > babel-core > babel-traverse > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-es2015-parameters > babel-traverse > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-strict-mode > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-es2015-modules-commonjs > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-register > babel-core > babel-register > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-es2015-parameters > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-register > babel-core > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-es2015-modules-commonjs > babel-plugin-transform-strict-mode > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-es2015-unicode-regex > babel-helper-regex > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-es2015-parameters > babel-helper-get-function-arity > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-es2015-sticky-regex > babel-helper-regex > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-es2015-parameters > babel-helper-call-delegate > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-es2015-modules-commonjs > babel-template > babel-traverse > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-es2015-parameters > babel-template > babel-traverse > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-register > babel-core > babel-template > babel-traverse > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-traverse > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-es2015-parameters > babel-helper-call-delegate > babel-traverse > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - sequelize-connect > commitizen > opencollective > inquirer > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-register > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-register > babel-core > babel-template > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-es2015-parameters > babel-template > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-register > babel-core > babel-helpers > babel-template > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-es2015-modules-commonjs > babel-template > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-register > babel-core > babel-traverse > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-es2015-parameters > babel-traverse > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-register > babel-core > babel-generator > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-traverse > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-traverse > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-register > babel-core > babel-helpers > babel-template > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-es2015-parameters > babel-helper-call-delegate > babel-traverse > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-template > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-es2015-parameters > babel-template > babel-traverse > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - youtube-api > googleapis > request > form-data > async > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-register > babel-core > babel-template > babel-traverse > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-template > babel-traverse > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-template > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-es2015-parameters > babel-helper-call-delegate > babel-helper-hoist-variables > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-register > babel-core > babel-helpers > babel-template > babel-traverse > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-es2015-modules-commonjs > babel-template > babel-traverse > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-template > babel-traverse > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-template > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-traverse > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-register > babel-core > babel-helpers > babel-template > babel-traverse > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-template > babel-traverse > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - youtube-api > googleapis > google-auth-library > request > form-data > async > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-helper-get-function-arity > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
+    - babel-preset-node5 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-template > babel-traverse > babel-types > lodash:
+        patched: '2019-07-03T21:39:52.214Z'
