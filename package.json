@@ -18,7 +18,7 @@
     "node-schedule": "^1.1.0",
     "pify": "^2.3.0",
     "sequelize": "^3.20.0",
-    "sequelize-connect": "^1.2.1",
+    "sequelize-connect": "^2.1.1",
     "twit": "^2.2.4",
     "youtube-api": "^1.4.0",
     "youtube-url": "^0.2.1"
