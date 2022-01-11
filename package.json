@@ -20,7 +20,7 @@
     "sequelize": "^3.20.0",
     "sequelize-connect": "^1.2.1",
     "twit": "^2.2.4",
-    "youtube-api": "^1.4.0",
+    "youtube-api": "^3.0.0",
     "youtube-url": "^0.2.1"
   },
   "devDependencies": {
